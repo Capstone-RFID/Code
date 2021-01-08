@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="" />
+    <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RFIDTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/RFIDTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +17,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RFIDTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+            <state relative-caret-position="223">
+              <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -22,8 +26,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/readerTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-306">
-              <caret line="66" column="38" lean-forward="true" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
+            <state relative-caret-position="170">
+              <caret line="57" column="139" selection-start-line="57" selection-start-column="139" selection-end-line="57" selection-end-column="139" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -40,6 +44,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -48,9 +55,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="547" />
-    <option name="y" value="89" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="195" />
+    <option name="y" value="-16" />
     <option name="width" value="1316" />
     <option name="height" value="780" />
   </component>
@@ -74,6 +81,8 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -166,14 +175,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="547" y="89" width="1316" height="780" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13771518" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09272919" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.4871795" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.48666668" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -204,15 +214,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RFIDTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+        <state relative-caret-position="223">
+          <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/readerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
-          <caret line="66" column="38" lean-forward="true" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="38" />
+        <state relative-caret-position="170">
+          <caret line="57" column="139" selection-start-line="57" selection-start-column="139" selection-end-line="57" selection-end-column="139" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>

@@ -5,8 +5,12 @@ from datetime import datetime
 from datetime import date
 import subprocess
 import keyboard
-
 import logging
+
+
+eqcheck = "undermined"
+
+
 equipmentID = []
 
 # define the server name and the database name
@@ -22,25 +26,42 @@ cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
 # create the connection cursor
 cursor = cnxn.cursor()
 
+
 def filterInfo(tagID):
-    check = any(str(tagID[20:26]) in sublist for sublist in equipmentID) #checnk if the same equipment is already in database
+    check = any(str(tagID[20:26]) in sublist for sublist in equipmentID) #check if the same equipment is already in database
     if check == False:
-        print("Please Enter your Employee ID : ")
+        print ("Please Enter your Asset Number : ")
+        assetNum = str(input())
+        print  ("Please Enter your Employee ID : ")
         EmployeeID = str(input())
-        equipmentID.append([EmployeeID,str(tagID[20:26]),date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S")])
+        print("Please enter a discription for the item")
+        description = str(input())
+        equipmentID.append([assetNum,str(tagID[20:26]),EmployeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
         insert()
-        snapshot()
+        print("Do you want to SYNC: ")
+        sync = str(input())
+        if sync =='T':
+            snapshot()
+
+
+def check_in_status():
+    eqcheck = "check-in"
+
+def check_out_status():
+    eqcheck = "check-out"
+
+
 
 def insert():
 
     # define our insert and update query
-    insert_query = '''INSERT INTO RFID_database(EMPLOYEE_ID,EQUIPMENT_ID,DATE,TIME) 
-                        VALUES (?,?,?,?);'''  # '?' is a placeholder
+    insert_query = '''INSERT INTO Equipment(ASSET_NUMBER,RFID_TAG_#,LAST_USED_BY_EMPLOYEE,LAST_SEEN_DATE,LAST_SEEN_TIME,STATUS,DESCRIPTION) 
+                        VALUES (?,?,?,?,?,?,?);'''  # '?' is a placeholder
 
     # loop thru each row in the matrix
     for row in equipmentID:
         # define the values to insert
-        values = (row[0], row[1],row[2],row[3])
+        values = (row[0], row[1],row[2],row[3],row[4],row[5],row[6])
         print(values)
         # insert the data into the database
         cursor.execute(insert_query, values)
@@ -104,8 +125,7 @@ factory.addTagReportCallback(cb)
 reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
 
-def start():
-    reactor.run()
+reactor.run()
 
 def stop():
     reactor.stop()
