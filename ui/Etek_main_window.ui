@@ -85,6 +85,10 @@
           <pointsize>45</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 255);</string>
+        </property>
         <property name="text">
          <string>CHECK-IN</string>
         </property>
