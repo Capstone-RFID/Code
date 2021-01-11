@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>880</width>
-    <height>510</height>
+    <width>1020</width>
+    <height>745</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="Employee_ID_label">
+       <widget class="QLabel" name="label_2">
         <property name="font">
          <font>
           <pointsize>20</pointsize>
@@ -73,7 +73,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="Check_out_button">
+       <widget class="QPushButton" name="Check_in_button_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -117,7 +117,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>880</width>
+     <width>1020</width>
      <height>21</height>
     </rect>
    </property>

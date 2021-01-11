@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>953</width>
-    <height>652</height>
+    <width>710</width>
+    <height>621</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Select done to check out asset(s)</string>
+        <string>Select done to check-in asset(s)</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -85,6 +85,18 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>208</width>
+         <height>113</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>208</width>
+         <height>113</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>20</pointsize>
@@ -97,6 +109,18 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_3">
+       <property name="minimumSize">
+        <size>
+         <width>208</width>
+         <height>113</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>208</width>
+         <height>113</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>20</pointsize>
@@ -152,6 +176,18 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>208</width>
+           <height>113</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>208</width>
+           <height>113</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -169,6 +205,18 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>208</width>
+           <height>113</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>208</width>
+           <height>113</height>
+          </size>
          </property>
          <property name="baseSize">
           <size>
