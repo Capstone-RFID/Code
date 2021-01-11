@@ -36,7 +36,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="Employee_ID_label">
         <property name="font">
          <font>
           <pointsize>20</pointsize>
@@ -73,7 +73,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="Check_in_button_2">
+       <widget class="QPushButton" name="Check_out_button">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -104,7 +104,7 @@
          </font>
         </property>
         <property name="text">
-         <string>CHECK-IN</string>
+         <string>CHECK-OUT</string>
         </property>
        </widget>
       </item>
