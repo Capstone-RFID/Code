@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>880</width>
+    <width>847</width>
     <height>510</height>
    </rect>
   </property>
@@ -103,6 +103,10 @@
           <pointsize>45</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 255);</string>
+        </property>
         <property name="text">
          <string>CHECK-OUT</string>
         </property>
@@ -117,8 +121,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>880</width>
-     <height>21</height>
+     <width>847</width>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
