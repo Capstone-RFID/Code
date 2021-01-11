@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1018</width>
-    <height>769</height>
+    <width>1017</width>
+    <height>763</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Select done to check-in asset(s)</string>
+        <string>Select done to check-out asset(s)</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
