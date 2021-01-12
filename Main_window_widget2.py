@@ -15,12 +15,18 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(805, 468)
-        self.pushButton = QtWidgets.QPushButton(MainWindow)
-        self.pushButton.setGeometry(QtCore.QRect(94, 160, 331, 211))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(MainWindow)
-        self.pushButton_2.setGeometry(QtCore.QRect(490, 170, 221, 191))
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.Check_In_button = QtWidgets.QPushButton(MainWindow)
+        self.Check_In_button.setGeometry(QtCore.QRect(94, 160, 331, 211))
+        self.Check_In_button.setObjectName("Check_In_button")
+        self.Check_out_button = QtWidgets.QPushButton(MainWindow)
+        self.Check_out_button.setGeometry(QtCore.QRect(450, 160, 321, 211))
+        self.Check_out_button.setObjectName("Check_out_button")
+        self.Employee_ID_input = QtWidgets.QLineEdit(MainWindow)
+        self.Employee_ID_input.setGeometry(QtCore.QRect(280, 80, 113, 20))
+        self.Employee_ID_input.setObjectName("Employee_ID_input")
+        self.Employee_ID_label = QtWidgets.QLabel(MainWindow)
+        self.Employee_ID_label.setGeometry(QtCore.QRect(130, 80, 47, 13))
+        self.Employee_ID_label.setObjectName("Employee_ID_label")
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -28,5 +34,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Form"))
-        self.pushButton.setText(_translate("MainWindow", "Check In"))
-        self.pushButton_2.setText(_translate("MainWindow", "Check Out"))
+        self.Check_In_button.setText(_translate("MainWindow", "Check In"))
+        self.Check_out_button.setText(_translate("MainWindow", "Check Out"))
+        self.Employee_ID_label.setText(_translate("MainWindow", "EmployeeID"))
