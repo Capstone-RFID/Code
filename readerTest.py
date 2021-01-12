@@ -3,28 +3,40 @@ from twisted.internet import reactor
 import pyodbc
 from datetime import datetime
 from datetime import date
+
+from threading import Thread
 import subprocess
 import keyboard
 import logging
 
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QObject, QThread, pyqtSignal
+from PyQt5.QtWidgets import *
+import sys
+from Main_window_widget2 import Ui_MainWindow
+from Etek_check_in_window import Ui_Form
 
+readFlag = False
 eqcheck = "undermined"
-
 
 equipmentID = []
 
-# define the server name and the database name
-server = "BALKARAN09"
-database = 'TEST'
 
-# define a connection string
-cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
-                        SERVER=' + server + ';\
-                          DATABASE=' + database + ';\
-                        Trusted_Connection=yes;')
 
-# create the connection cursor
-cursor = cnxn.cursor()
+
+
+def cb(tagReport):
+    print("running")
+    if keyboard.is_pressed('q'):
+        reactor.stop()
+        mode = 'q'
+    tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
+    if len(tags) != 0:
+        filterInfo(tags[0]['EPC-96'])
+
+
+def shutdown(factory):
+    return factory.politeShutdown()
 
 
 def filterInfo(tagID):
@@ -43,12 +55,6 @@ def filterInfo(tagID):
         if sync =='T':
             snapshot()
 
-
-def check_in_status():
-    eqcheck = "check-in"
-
-def check_out_status():
-    eqcheck = "check-out"
 
 
 
@@ -70,7 +76,7 @@ def insert():
     cnxn.commit()
 
     # grab all the rows in our database table
-    #cursor.execute('SELECT * FROM Employees')
+    #cursor.execute('SELECT ID FROM Employees')
 
    # loop through the results
    # for row in cursor:
@@ -105,47 +111,91 @@ def snapshot():
         # probably add this
         check=True)
 
-logging.getLogger().setLevel(logging.INFO)
-
-def cb (tagReport):
-    if  keyboard.is_pressed('q'):
-        reactor.stop()
-        mode = 'q'
-    tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
-
-    if len(tags) != 0:
-        filterInfo(tags[0]['EPC-96'])
-
-              
-def shutdown(factory):
-    return factory.politeShutdown()
-
-factory = llrp.LLRPClientFactory(antennas=[1],start_inventory = True ,session =0,duration =0.8)
-factory.addTagReportCallback(cb)
-reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
-
-
-reactor.run()
 
 def stop():
     reactor.stop()
 
+def Employee_ID_Check(input):
+    exists = cursor.execute("SELECT TOP 1 Employees.ID FROM Employees WHERE Employees.ID = ?", (input,))
+    # cursor.execute("IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE ID = '?')", (input,))
+    print(exists)
+    if exists is None:
+        print ('not found')
+        return False
+    else:
+        print('ID exists with row #:'%(data[0]))
+        return True
+
+
+class mainWindow(QWidget):
+    def __init__(self):
+        super(mainWindow, self).__init__()
+        self.reactor = reactor
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.show()
+
+        #initialize classes:
+        self.checkIn = CheckInWindow()
+
+        #connect button to functions
+        self.ui.Check_out_button.clicked.connect(self.checkoutClicked)  # button connected
+        self.ui.Check_In_button.clicked.connect(self.checkinClicked)  # button connected
+
+    def checkinClicked(self):
+        self.EmployeeID = self.ui.Employee_ID_input.text()
+        print('Your Employee ID Number: ' + self.EmployeeID)
+        self.ui.Employee_ID_input.clear()
+        Employee_ID_Check(self.EmployeeID)
+        self.checkIn.show()
+
+        # global readFlag
+        # readFlag = True
+
+    def checkoutClicked(self):
+        self.checkIn.show()
 
 
 
+class CheckInWindow(QWidget):
+    def __init__(self):
+        super(CheckInWindow, self).__init__()
+        self.ui = Ui_Form()
+        self.ui.setupUi(self)
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+
+class CheckOutWindow(QWidget):
+    def __init__(self):
+        super(CheckInWindow, self).__init__()
+        self.ui = Ui_Form()
+        self.ui.setupUi(self)
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
 
 
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = mainWindow()
+    #RFID init
+    logging.getLogger().setLevel(logging.INFO)
+    factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
+    factory.addTagReportCallback(cb)
+    reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
-# llrp.LLRPClientFactory(tag_content_selector={
-#     'EnableROSpecID': False,
-#     'EnableSpecIndex': False,
-#     'EnableInventoryParameterSpecID': False,
-#     'EnableAntennaID': True,
-#     'EnableChannelIndex': False,
-#     'EnablePeakRSSI': True,
-#     'EnableFirstSeenTimestamp': False,
-#     'EnableLastSeenTimestamp': True,
-#     'EnableTagSeenCount': True,
-#     'EnableAccessSpecID': False,
-# }, ...)
+    # define the server name and the database name
+    server = "BALKARAN09"
+    database = 'TEST'
+
+    # define a connection string
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
+                            SERVER=' + server + ';\
+                              DATABASE=' + database + ';\
+                            Trusted_Connection=yes;')
+
+    # create the connection cursor
+    cursor = cnxn.cursor()
+
+    #it works now
+    # if readFlag == True:
+    Thread(target=reactor.run, args=(False,)).start()
+    Thread(target=sys.exit(app.exec_()), args=(False,)).start()

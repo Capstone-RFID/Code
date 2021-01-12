@@ -1,0 +1,103 @@
+Metadata-Version: 2.1
+Name: qt5reactor
+Version: 0.6.3
+Summary: Twisted Qt Integration
+Home-page: https://github.com/twisted/qt5reactor
+Author: Christopher R. Wood
+Author-email: chris@leastauthority.com
+License: MIT
+Keywords: Qt,twisted
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: X11 Applications :: Qt
+Classifier: Framework :: Twisted
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Natural Language :: English
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.5
+Requires-Dist: twisted
+Provides-Extra: pyqt5
+Requires-Dist: pyqt5 ; extra == 'pyqt5'
+Provides-Extra: pyside2
+Requires-Dist: pyside2 (!=5.15.0) ; extra == 'pyside2'
+Provides-Extra: test
+Requires-Dist: coverage ; extra == 'test'
+Requires-Dist: pytest ; extra == 'test'
+Requires-Dist: pytest-cov ; extra == 'test'
+Requires-Dist: pytest-twisted ; extra == 'test'
+Requires-Dist: tox (>=3.1) ; extra == 'test'
+
+Qt5Reactor
+==========
+
+|PyPI| |Pythons| |GitHub| |GitHub Actions|
+
+
+.. |PyPI| image:: https://img.shields.io/pypi/v/qt5reactor.svg
+   :alt: PyPI version
+   :target: https://pypi.org/project/qt5reactor/
+
+.. |Pythons| image:: https://img.shields.io/pypi/pyversions/qt5reactor.svg
+   :alt: supported Python versions
+   :target: https://pypi.org/project/qt5reactor/
+
+.. |GitHub| image:: https://img.shields.io/github/last-commit/twisted/qt5reactor/master.svg
+   :alt: source on GitHub
+   :target: https://github.com/twisted/qt5reactor
+
+.. |GitHub Actions| image:: https://github.com/twisted/qt5reactor/workflows/CI/badge.svg
+   :alt: GitHub Actions build status
+   :target: https://github.com/twisted/qt5reactor/actions
+
+
+Using the Qt5Reactor
+--------------------
+
+Qt5Reactor is compatible with both PyQt5 and PySide2.
+
+Install using pip
+
+::
+
+    pip install qt5reactor
+
+Before running / importing any other Twisted code, invoke:
+
+::
+
+    app = QApplication(sys.argv) # your code to init QtCore
+    from twisted.application import reactors
+    reactors.installReactor('qt5')
+
+or
+
+::
+
+    app = QApplication(sys.argv) # your code to init QtCore
+    import qt5reactor
+    qt5reactor.install()
+
+Testing
+~~~~~~~
+
+::
+
+   trial --reactor=qt5 [twisted] [twisted.test] [twisted.test.test_internet]
+
+Make sure the plugin directory is in path or in the current directory for
+reactor discovery to work.
+
+There is also `pytest-twisted`_ for use with pytest_.
+You can specify to use the qt5reactor by adding ``--reactor=qt5reactor``.
+
+.. _pytest-twisted: https://github.com/pytest-dev/pytest-twisted
+.. _pytest: https://github.com/pytest-dev/pytest
+
+

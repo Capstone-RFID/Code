@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>805</width>
+    <height>468</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="Check_In_button">
+   <property name="geometry">
+    <rect>
+     <x>94</x>
+     <y>160</y>
+     <width>331</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Check In</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Check_out_button">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>160</y>
+     <width>321</width>
+     <height>211</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Check Out</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Employee_ID_input">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>80</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Employee_ID_label">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>80</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>EmployeeID</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
