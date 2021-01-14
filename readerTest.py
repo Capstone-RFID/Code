@@ -18,7 +18,8 @@ from Etek_check_in_window import Ui_Form
 
 readFlag = False
 eqcheck = "undermined"
-
+employeeID = '0'
+tagIDtoreturn = 0
 equipmentID = []
 
 
@@ -26,13 +27,17 @@ equipmentID = []
 
 
 def cb(tagReport):
-    print("running")
+    # print("running")
+    global readFlag
     if keyboard.is_pressed('q'):
         reactor.stop()
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
     if len(tags) != 0:
-        filterInfo(tags[0]['EPC-96'])
+        if readFlag == True :
+            filterInfo(tags[0]['EPC-96'])
+
+
 
 
 def shutdown(factory):
@@ -40,20 +45,20 @@ def shutdown(factory):
 
 
 def filterInfo(tagID):
-    check = any(str(tagID[20:26]) in sublist for sublist in equipmentID) #check if the same equipment is already in database
+    check = any(str(tagID) in sublist for sublist in equipmentID) #check if the same equipment is already in database
     if check == False:
-        print ("Please Enter your Asset Number : ")
-        assetNum = str(input())
-        print  ("Please Enter your Employee ID : ")
-        EmployeeID = str(input())
-        print("Please enter a discription for the item")
-        description = str(input())
-        equipmentID.append([assetNum,str(tagID[20:26]),EmployeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
+        assetNum = "Radio"
+        global employeeID
+        description = "tag"
+        equipmentID.append([assetNum,str(tagID),employeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
+        print(str(tagID[20:26]))
         insert()
-        print("Do you want to SYNC: ")
-        sync = str(input())
-        if sync =='T':
-            snapshot()
+        # print("Do you want to SYNC: ")
+        # sync = str(input())
+        # if sync =='T':
+        #     snapshot()
+    global tagIDtoreturn
+    tagIDtoreturn = tagID
 
 
 
@@ -116,16 +121,18 @@ def stop():
     reactor.stop()
 
 def Employee_ID_Check(input):
-    exists = cursor.execute("SELECT TOP 1 Employees.ID FROM Employees WHERE Employees.ID = ?", (input,))
-    # cursor.execute("IF NOT EXISTS (SELECT 1 FROM EMPLOYEES WHERE ID = '?')", (input,))
-    print(exists)
-    if exists is None:
-        print ('not found')
-        return False
-    else:
-        print('ID exists with row #:'%(data[0]))
+    check_query = '''SELECT TOP 1 * FROM EmployeeTable WHERE ID = (?);''' # '?' is a placeholder
+    cursor.execute(check_query, str(input))
+    global readFlag, eqcheck
+    if cursor.fetchone():
+        print ('true')
+        readFlag = True
+        eqcheck = "Check-In"
         return True
-
+    else:
+        print('false')
+        readFlag = False
+        return False
 
 class mainWindow(QWidget):
     def __init__(self):
@@ -145,16 +152,24 @@ class mainWindow(QWidget):
     def checkinClicked(self):
         self.EmployeeID = self.ui.Employee_ID_input.text()
         print('Your Employee ID Number: ' + self.EmployeeID)
+        global employeeID, tagIDtoreturn
+        employeeID = self.EmployeeID
         self.ui.Employee_ID_input.clear()
-        Employee_ID_Check(self.EmployeeID)
-        self.checkIn.show()
+        if Employee_ID_Check(self.EmployeeID):
+            self.checkIn.show()
+        else:
+            return
 
+        # filterInfo(self.EmployeeID)
         # global readFlag
         # readFlag = True
 
     def checkoutClicked(self):
         self.checkIn.show()
 
+
+    def testfunction(self):
+        print('hello')
 
 
 class CheckInWindow(QWidget):
@@ -194,7 +209,6 @@ if __name__ == "__main__":
 
     # create the connection cursor
     cursor = cnxn.cursor()
-
     #it works now
     # if readFlag == True:
     Thread(target=reactor.run, args=(False,)).start()
