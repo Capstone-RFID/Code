@@ -144,7 +144,7 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
     <string>Please enter Employee ID and select mode to continue. </string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="Admin_Button">
    <property name="geometry">
     <rect>
      <x>0</x>

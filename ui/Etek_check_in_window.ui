@@ -184,12 +184,12 @@ QPushButton#Cancel_Button:pressed {
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>100</y>
-     <width>361</width>
+     <width>851</width>
      <height>41</height>
     </rect>
    </property>
@@ -226,13 +226,13 @@ QPushButton#Cancel_Button:pressed {
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>750</x>
+     <x>900</x>
      <y>0</y>
-     <width>438</width>
-     <height>234</height>
+     <width>101</width>
+     <height>251</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -240,14 +240,14 @@ QPushButton#Cancel_Button:pressed {
      <widget class="QPushButton" name="Enter_Asset_Button">
       <property name="minimumSize">
        <size>
-        <width>436</width>
-        <height>113</height>
+        <width>100</width>
+        <height>100</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>208</width>
-        <height>113</height>
+        <width>100</width>
+        <height>100</height>
        </size>
       </property>
       <property name="font">
@@ -291,14 +291,14 @@ QPushButton#Enter_Asset_Button :pressed {
       </property>
       <property name="minimumSize">
        <size>
-        <width>436</width>
-        <height>113</height>
+        <width>100</width>
+        <height>100</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>208</width>
-        <height>113</height>
+        <width>100</width>
+        <height>100</height>
        </size>
       </property>
       <property name="font">
