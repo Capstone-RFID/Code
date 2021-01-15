@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="Home_Tab">
     <attribute name="title">
@@ -424,11 +424,201 @@
     <attribute name="title">
      <string>Create</string>
     </attribute>
+    <widget class="QLabel" name="Create_Name_Label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>100</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Create_Asset_Num_Label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Asset #</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Create_Clear_Fields_Button">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>100</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear Fields</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Create_Confirm_Entry_Button">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>50</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Confirm Entry</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Create_Prompt_Label">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>50</y>
+       <width>301</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enter asset info, then confirm new entry in local database</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Create_Asset_Num_Field">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>50</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Create_Name_Field">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>100</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Create_RFID_Tag_Label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>150</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>RFID Tag #</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Create_Part_Number_Field">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>200</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>150</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Create_Part_Number_Label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>200</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Part Number</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="Resolve_Tab">
     <attribute name="title">
      <string>Resolve</string>
     </attribute>
+    <widget class="QTableWidget" name="Resolve_Display_Conflicts_Table">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>50</y>
+       <width>601</width>
+       <height>401</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>Asset #</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>RFID #</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Employee ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date checked out</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date checked in</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Conflict Msg</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>275</x>
+       <y>450</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Conflict Details</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
