@@ -19,7 +19,6 @@ from Etek_check_in_window import Ui_Form
 readFlag = False
 eqcheck = "undermined"
 employeeID = '0'
-tagIDtoreturn = 0
 equipmentID = []
 
 
@@ -57,10 +56,6 @@ def filterInfo(tagID):
         # sync = str(input())
         # if sync =='T':
         #     snapshot()
-    global tagIDtoreturn
-    tagIDtoreturn = tagID
-
-
 
 
 def insert():
@@ -141,21 +136,20 @@ class mainWindow(QWidget):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.show()
-
         #initialize classes:
         self.checkIn = CheckInWindow()
-
         #connect button to functions
         self.ui.Check_out_button.clicked.connect(self.checkoutClicked)  # button connected
         self.ui.Check_In_button.clicked.connect(self.checkinClicked)  # button connected
 
+
     def checkinClicked(self):
-        self.EmployeeID = self.ui.Employee_ID_input.text()
-        print('Your Employee ID Number: ' + self.EmployeeID)
+        EmployeeID = self.ui.Employee_ID_input.text()
+        print('Your Employee ID Number: ' + EmployeeID)
         global employeeID, tagIDtoreturn
-        employeeID = self.EmployeeID
+        employeeID = EmployeeID
         self.ui.Employee_ID_input.clear()
-        if Employee_ID_Check(self.EmployeeID):
+        if Employee_ID_Check(EmployeeID):
             self.checkIn.show()
         else:
             return
@@ -178,6 +172,26 @@ class CheckInWindow(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.ui.pushButton_3.clicked.connect(self.itemList)
+        self.ui.pushButton_4.clicked.connect(self.clearField)
+
+    def itemList(self):
+        assetNum =self.ui.lineEdit.text()
+        # Get the number of rows in the TableWidget and insert
+        # a new row at the end.
+        print(assetNum)
+        lastrow = self.ui.tableWidget.rowCount()
+        self.ui.tableWidget.insertRow(lastrow)
+        item = QTableWidgetItem(assetNum)
+        # .setItem(row, column, item)
+        self.ui.tableWidget.setItem(lastrow,0,item)
+        self.ui.lineEdit.clear()
+
+    def clearField(self):
+        self.ui.lineEdit.clear()
+
+
+
 
 class CheckOutWindow(QWidget):
     def __init__(self):
@@ -185,6 +199,7 @@ class CheckOutWindow(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+
 
 
 
