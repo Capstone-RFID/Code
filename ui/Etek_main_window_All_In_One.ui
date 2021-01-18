@@ -180,24 +180,20 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QToolButton" name="Asset_Ok_Button">
+         <property name="styleSheet">
+          <string notr="true">QToolButton#Asset_Ok_Button {
+background-color: rgb(127, 127, 127);
+color: rgb(127, 127, 127);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="Instruction_Label">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Scan items or enter asset # above to check-in or check-out</string>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QTableWidget" name="Equipment_List">
@@ -237,6 +233,23 @@ background-color: rgb(78, 78, 78);
          <string>Asset #</string>
         </property>
        </column>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="Instruction_Label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Scan items or enter asset # above to check-in or check-out</string>
+       </property>
       </widget>
      </item>
      <item>
