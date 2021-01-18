@@ -16,11 +16,12 @@ import sys
 from Main_window_widget2 import Ui_MainWindow
 from Etek_check_in_window import Ui_Form
 
-readFlag = False
+readFlag = False #used to check if employeeID is in the database
 eqcheck = "undermined"
 employeeID = '0'
 equipmentID = []
 
+tagIdentity = 0  #lets get rid of a lot of globals
 
 
 
@@ -120,12 +121,10 @@ def Employee_ID_Check(input):
     cursor.execute(check_query, str(input))
     global readFlag, eqcheck
     if cursor.fetchone():
-        print ('true')
         readFlag = True
         eqcheck = "Check-In"
         return True
     else:
-        print('false')
         readFlag = False
         return False
 
