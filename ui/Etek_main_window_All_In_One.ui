@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QWidget" name="MainWindow">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -106,7 +106,7 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Manual_Entry_Field_2">
+        <widget class="QLineEdit" name="Employee_ID_input">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -156,7 +156,7 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Manual_Entry_Field">
+        <widget class="QLineEdit" name="Asset_input">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
