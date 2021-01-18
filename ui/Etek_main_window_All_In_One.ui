@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1019</width>
+    <width>1342</width>
     <height>507</height>
    </rect>
   </property>
@@ -254,7 +254,7 @@ background-color: rgb(78, 78, 78);
          </property>
          <property name="minimumSize">
           <size>
-           <width>326</width>
+           <width>436</width>
            <height>113</height>
           </size>
          </property>
@@ -305,7 +305,7 @@ QPushButton#Cancel_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>326</width>
+           <width>436</width>
            <height>113</height>
           </size>
          </property>
@@ -362,7 +362,7 @@ QPushButton#Finish_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>326</width>
+           <width>436</width>
            <height>113</height>
           </size>
          </property>
