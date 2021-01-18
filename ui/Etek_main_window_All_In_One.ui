@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1025</width>
-    <height>769</height>
+    <width>1017</width>
+    <height>502</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -16,13 +22,13 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(0, 0, 52);</string>
   </property>
-  <widget class="QTableWidget" name="Equipment_List">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>250</y>
-     <width>851</width>
-     <height>401</height>
+     <x>10</x>
+     <y>10</y>
+     <width>990</width>
+     <height>474</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -31,65 +37,19 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">
-QHeaderView::section
-{
-spacing: 10px;
-background-color:lightblue;
-color: white;
-border: 1px solid red;
-margin: 1px;
-text-align: right;
-font-family: arial;
-font-size:12px;
-}
-
-QTableWidget::section
-{
-
-background-color: rgb(78, 78, 78);
-}</string>
-   </property>
-   <column>
-    <property name="text">
-     <string>Asset #</string>
-    </property>
-   </column>
-  </widget>
-  <widget class="QLabel" name="Instruction_Label">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>200</y>
-     <width>701</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
-   </property>
-   <property name="text">
-    <string>Scan items or enter asset # above to check-in or check-out</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Admin_Button">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>436</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton#Admin_Button {
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="Admin_Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#Admin_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -104,104 +64,264 @@ QPushButton#Admin_Button:pressed {
     background-color: rgb(0, 0, 80);
     border-style: inset;
 }</string>
-   </property>
-   <property name="text">
-    <string>Admin Access</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>100</y>
-     <width>901</width>
-     <height>46</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <item>
-     <widget class="QLabel" name="ID_Label">
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);
+        </property>
+        <property name="text">
+         <string>Admin Access</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Admin_Button_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#Admin_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
 font: 26pt &quot;MS Shell Dlg 2&quot;;
-</string>
-      </property>
-      <property name="text">
-       <string>Please enter Employee ID</string>
-      </property>
-     </widget>
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Admin_Button:pressed {
+    background-color: rgb(0, 0, 80);
+    border-style: inset;
+}</string>
+        </property>
+        <property name="text">
+         <string>Admin Access</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Admin_Button_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#Admin_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 26pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Admin_Button:pressed {
+    background-color: rgb(0, 0, 80);
+    border-style: inset;
+}</string>
+        </property>
+        <property name="text">
+         <string>Admin Access</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
-     <widget class="QLineEdit" name="Manual_Entry_Field_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <family>MS Shell Dlg 2</family>
-        <pointsize>26</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="ID_Label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+font: 26pt &quot;MS Shell Dlg 2&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Please enter Employee ID</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="Manual_Entry_Field_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>26</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
 font: 26pt &quot;MS Shell Dlg 2&quot;;
  border-radius: 10px;</string>
-      </property>
-     </widget>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>650</y>
-     <width>851</width>
-     <height>115</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetMinimumSize</enum>
-    </property>
     <item>
-     <widget class="QPushButton" name="Cancel_Button">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255)</string>
+        </property>
+        <property name="text">
+         <string>Asset #:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="Manual_Entry_Field">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>26</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 26pt &quot;MS Shell Dlg 2&quot;;
+ border-radius: 10px;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="Instruction_Label">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>208</width>
-        <height>113</height>
-       </size>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>208</width>
-        <height>113</height>
-       </size>
+      <property name="text">
+       <string>Scan items or enter asset # above to check-in or check-out</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="Equipment_List">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
-        <pointsize>26</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
+        <pointsize>14</pointsize>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton#Cancel_Button {
+       <string notr="true">
+QHeaderView::section
+{
+spacing: 10px;
+	background-color: rgb(0, 0, 255);
+color: white;
+border: 1px solid white;
+margin: 1px;
+text-align: right;
+font-family: arial;
+font-size:12px;
+}
+
+QTableWidget::section
+{
+
+background-color: rgb(78, 78, 78);
+}</string>
+      </property>
+      <column>
+       <property name="text">
+        <string>Asset #</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item>
+       <widget class="QPushButton" name="Cancel_Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>326</width>
+          <height>113</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>208</width>
+          <height>113</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>26</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#Cancel_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -216,49 +336,49 @@ QPushButton#Cancel_Button:pressed {
     background-color: rgb(0, 0, 80);
     border-style: inset;
 }</string>
-      </property>
-      <property name="text">
-       <string>Cancel</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Finish_Button">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>208</width>
-        <height>113</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>208</width>
-        <height>113</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>16</width>
-        <height>16</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>MS Shell Dlg 2</family>
-        <pointsize>26</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton#Finish_Button {
+        </property>
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Finish_Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>326</width>
+          <height>113</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>208</width>
+          <height>113</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>26</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#Finish_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -273,28 +393,34 @@ QPushButton#Finish_Button:pressed {
     background-color: rgb(0, 0, 80);
     border-style: inset;
 }</string>
-      </property>
-      <property name="text">
-       <string>Check-In</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="Check_Out_Button">
-      <property name="minimumSize">
-       <size>
-        <width>208</width>
-        <height>113</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>208</width>
-        <height>113</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton#Check_Out_Button {
+        </property>
+        <property name="text">
+         <string>Check-In</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Check_Out_Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>326</width>
+          <height>113</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>208</width>
+          <height>113</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#Check_Out_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -309,63 +435,13 @@ QPushButton#Check_Out_Button:pressed {
     background-color: rgb(0, 0, 80);
     border-style: inset;
 }</string>
-      </property>
-      <property name="text">
-       <string>Check-Out</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>1</x>
-     <y>151</y>
-     <width>901</width>
-     <height>46</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QLabel" name="label_2">
-      <property name="font">
-       <font>
-        <pointsize>20</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255)</string>
-      </property>
-      <property name="text">
-       <string>Asset #:</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="Manual_Entry_Field">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <family>MS Shell Dlg 2</family>
-        <pointsize>26</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 26pt &quot;MS Shell Dlg 2&quot;;
- border-radius: 10px;</string>
-      </property>
-     </widget>
+        </property>
+        <property name="text">
+         <string>Check-Out</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
