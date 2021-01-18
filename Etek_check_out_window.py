@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Etek_check_in_window.ui'
+# Form implementation generated from reading ui file 'Etek_check_out_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1018, 769)
+        Form.resize(1017, 763)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -135,7 +135,7 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "Scan or manually enter asset #"))
-        self.label_3.setText(_translate("Form", "Select done to check-in asset(s)"))
+        self.label_3.setText(_translate("Form", "Select done to check-out asset(s)"))
         self.label_2.setText(_translate("Form", "Asset #:"))
         self.pushButton_4.setText(_translate("Form", "Clear"))
         self.pushButton_3.setText(_translate("Form", "Enter"))
