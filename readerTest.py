@@ -10,11 +10,10 @@ import keyboard
 import logging
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 import sys
-from Main_window_widget2 import Ui_MainWindow
-from Etek_check_in_window import Ui_Form
+
+from Etek_main_window_All_In_One import Ui_MainWindow
 
 readFlag = False #used to check if employeeID is in the database
 eqcheck = "undermined"
@@ -117,7 +116,7 @@ def stop():
     reactor.stop()
 
 def Employee_ID_Check(input):
-    check_query = '''SELECT TOP 1 * FROM EmployeeTable WHERE ID = (?);''' # '?' is a placeholder
+    check_query = '''SELECT TOP 1 * FROM Employee_Table WHERE EmployeeID = (?);''' # '?' is a placeholder
     cursor.execute(check_query, str(input))
     global readFlag, eqcheck
     if cursor.fetchone():
@@ -128,6 +127,16 @@ def Employee_ID_Check(input):
         readFlag = False
         return False
 
+def Asset_Check(input):
+    check_query = '''SELECT TOP 1 * FROM Asset_Table WHERE AssetID = (?);'''  # '?' is a placeholder
+    cursor.execute(check_query, str(input))
+    if cursor.fetchone():
+        return True
+    else:
+        return False
+
+
+
 class mainWindow(QWidget):
     def __init__(self):
         super(mainWindow, self).__init__()
@@ -135,36 +144,68 @@ class mainWindow(QWidget):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.show()
-        #initialize classes:
-        self.checkIn = CheckInWindow()
         #connect button to functions
-        self.ui.Check_out_button.clicked.connect(self.checkoutClicked)  # button connected
-        self.ui.Check_In_button.clicked.connect(self.checkinClicked)  # button connected
+        self.ui.Check_Out_Button.released.connect(self.check_out_button_clicked)  # button connected
+        self.ui.Finish_Button.released.connect(self.check_in_button_clicked)  # button connected
+        self.ui.Asset_Ok_Button.released.connect(self.asset_ok_button_clicked)
+
+    def asset_ok_button_clicked(self):
+        if self.employee_validation():
+            Asset = self.ui.Asset_input.text()
+            print('Asset Number:' + Asset)
+            if Asset_Check(Asset):
+                print('valid Asset')
+                lastrow = self.ui.Equipment_List.rowCount()
+                self.ui.Equipment_List.insertRow(lastrow)
+                item = QTableWidgetItem(Asset)
+                print(item)
+                self.ui.Equipment_List.setItem(lastrow, 0, item)
+                self.ui.Asset_input.clear()
+            else:
+                print('invalid Asset')
+                error_dialog = QtWidgets.QErrorMessage()
+                error_dialog.showMessage('Enter an Valid Asset Number')
+                error_dialog.setWindowTitle("Error")
+                error_dialog.exec_()
+            return
+        else:
+            error_dialog = QtWidgets.QErrorMessage()
+            error_dialog.showMessage('Enter an Employee ID first')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
 
 
-    def checkinClicked(self):
+
+    def employee_validation(self):
         EmployeeID = self.ui.Employee_ID_input.text()
         print('Your Employee ID Number: ' + EmployeeID)
-        global employeeID, tagIDtoreturn
+        global employeeID
         employeeID = EmployeeID
-        self.ui.Employee_ID_input.clear()
-        if Employee_ID_Check(EmployeeID):
-            self.checkIn.show()
+        return Employee_ID_Check(employeeID)
+
+    def check_in_button_clicked(self):
+        global tagIDtoreturn
+        #self.ui.Employee_ID_input.clear()
+        if self.employee_validation():
+            print('Valid Employee ID. ')
         else:
+            print('invalid employee ID. Please try again. ')
             return
 
         # filterInfo(self.EmployeeID)
         # global readFlag
         # readFlag = True
 
-    def checkoutClicked(self):
-        self.checkIn.show()
+    def check_out_button_clicked(self):
+        print('clicked')
+        return
 
 
     def testfunction(self):
         print('hello')
 
-
+'''
 class CheckInWindow(QWidget):
     def __init__(self):
         super(CheckInWindow, self).__init__()
@@ -189,7 +230,7 @@ class CheckInWindow(QWidget):
     def clearField(self):
         self.ui.lineEdit.clear()
 
-
+'''
 
 
 class CheckOutWindow(QWidget):
@@ -206,6 +247,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = mainWindow()
     #RFID init
+
     logging.getLogger().setLevel(logging.INFO)
     factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
     factory.addTagReportCallback(cb)
@@ -225,5 +267,6 @@ if __name__ == "__main__":
     cursor = cnxn.cursor()
     #it works now
     # if readFlag == True:
+    #sys.exit(app.exec_())
     Thread(target=reactor.run, args=(False,)).start()
     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
