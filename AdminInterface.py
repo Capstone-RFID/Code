@@ -15,15 +15,22 @@ from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
 
-readFlag = False #used to check if employeeID is in the database
-eqcheck = "undermined"
-employeeID = '0'
-equipmentID = []
+#*********************NOTES ON HOW TO USE THIS CLASS*************************
+#Should go without saying that this file needs to be in the same directory as your main
+#
+#1. Need import statement @ top of main .py file: from AdminInterface import Admin_Interface
+#
+#2. Also need this to define admin button connection in init of main window: self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
+#
+#3. Also need the following function defined within the mainWindow class:
+# def adminButtonClicked(self):
+#     print('clicked admin')
+#
+#     self.admin.openAdmin()
+#
+# As of writing (Jan 21, 2021), the rest of this class should be fairly self contained and not need anything else in main file
 
-tagIdentity = 0  #lets get rid of a lot of globals
-
-
-
+#*********************END NOTES ON HOW TO USE THIS CLASS*************************
 
 class Admin_Interface(QWidget):
     def __init__(self):
@@ -34,58 +41,59 @@ class Admin_Interface(QWidget):
         #self.show()
         #initialize classes:
         #self.checkIn = CheckInWindow()
-        #connect button to functions
-        self.ui.Home_Force_Sync_Button.clicked.connect(self.syncClicked)  # button connected
-        #self.ui.Check_In_button.clicked.connect(self.checkinClicked)  # button connected
+        #connect all buttons in tabs to functions
+
+        # ****************************************Home Tab Button(s)*********************************
+        self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
+
+        #****************************************Search Tab Button(s)*********************************
+        self.ui.Search_Search_Query_Button.clicked.connect(self.search_searchButtonClicked)
+        self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
+
+        # ****************************************Edit Tab Button(s)*********************************
+        self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
+        self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
+        self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
+        self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
+
+        # ****************************************Create Tab Button(s)*********************************
+        self.ui.Create_Clear_Fields_Button.clicked.connect(self.create_clearButtonClicked)
+        self.ui.Create_Confirm_Entry_Button.clicked.connect(self.create_confirmEntryButtonClicked)
+
+        # ****************************************Resolve Tab Button(s)*********************************
+        #Nothing here yet, define button connections here when we put something in the GUI
 
 
-    def syncClicked(self):
+    #****************************************Class Methods for Tab Button(s)*********************************
+    def home_syncButtonClicked(self):
 
-        print("Sync Clicked")
-        # global employeeID, tagIDtoreturn
-        # employeeID = EmployeeID
-        # self.ui.Employee_ID_input.clear()
-        # if Employee_ID_Check(EmployeeID):
-        #     self.checkIn.show()
-        # else:
-        #     return
+        print("Home Sync Button Clicked")
 
-        # filterInfo(self.EmployeeID)
-        # global readFlag
-        # readFlag = True
+    def search_searchButtonClicked(self):
+        print('Search Tab Search Button Clicked')
+    def search_printPDFButtonClicked(self):
+        print('Search Tab Print Button Clicked')
 
+    def edit_clearButtonClicked(self):
+        print('Edit Tab Clear Button Clicked')
+    def edit_searchButtonClicked(self):
+        print('Edit Tab Search Button Clicked')
+    def edit_deleteButtonClicked(self):
+        print('Edit Tab Delete Button Clicked')
+    def edit_commitButtonClicked(self):
+        print('Edit Tab Commit Button Clicked')
 
+    def create_clearButtonClicked(self):
+        print('Create Tab Clear Button Clicked')
+    def create_confirmEntryButtonClicked(self):
+        print('Create Tab Confirm Entry Button Clicked')
 
-    def testfunction(self):
+    # ****************************************End Class Methods for Tab Button(s)*****************************
+
+    #open up the admin window from the button on main window
+    def openAdmin(self):
         self.show()
         print('hello')
 
 
 
-
-
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-#     window = mainWindow()
-#     #RFID init
-#     logging.getLogger().setLevel(logging.INFO)
-#     factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
-#     factory.addTagReportCallback(cb)
-#     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
-#
-#     # define the server name and the database name
-#     server = "BALKARAN09"
-#     database = 'TEST'
-#
-#     # define a connection string
-#     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
-#                             SERVER=' + server + ';\
-#                               DATABASE=' + database + ';\
-#                             Trusted_Connection=yes;')
-#
-#     # create the connection cursor
-#     cursor = cnxn.cursor()
-#     #it works now
-#     # if readFlag == True:
-#     Thread(target=reactor.run, args=(False,)).start()
-#     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
