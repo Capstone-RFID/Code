@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
 from AdminInterface import Admin_Interface
-from Etek_main_window_All_In_One import Ui_MainWindow
+from Etek_main_window_All_In_One import Ui_Form
 
 readFlag = False #used to check if employeeID is in the database
 eqcheck = "undermined"
@@ -133,10 +133,11 @@ class mainWindow(QWidget):
     def __init__(self):
         super(mainWindow, self).__init__()
         self.reactor = reactor
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.show()
         #initialize classes:
+        self.admin = Admin_Interface()
         #self.checkIn = CheckInWindow()
         #connect button to functions
         self.ui.Check_Out_Button.clicked.connect(self.checkoutClicked)  # button connected
@@ -146,7 +147,7 @@ class mainWindow(QWidget):
     #When you click Admin on main window, bring up the tabbed admin interface
     def adminButtonClicked(self):
         print('clicked admin')
-        Ui_Admin_Interface.show()
+        Admin_Interface().testfunction()
 
 
 

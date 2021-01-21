@@ -31,7 +31,7 @@ class Admin_Interface(QWidget):
         self.reactor = reactor
         self.ui = Ui_Admin_Interface()
         self.ui.setupUi(self)
-        self.show()
+        #self.show()
         #initialize classes:
         #self.checkIn = CheckInWindow()
         #connect button to functions
@@ -57,6 +57,7 @@ class Admin_Interface(QWidget):
 
 
     def testfunction(self):
+        self.show()
         print('hello')
 
 
