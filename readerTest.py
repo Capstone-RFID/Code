@@ -18,7 +18,8 @@ from Etek_main_window_All_In_One import Ui_MainWindow
 readFlag = False #used to check if employeeID is in the database
 eqcheck = "undermined"
 employeeID = '0'
-equipmentID = []
+State_Log_Entry = []
+Item_Log_Entry = []
 
 tagIdentity = 0  #lets get rid of a lot of globals
 
@@ -32,9 +33,9 @@ def cb(tagReport):
         reactor.stop()
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
-    if len(tags) != 0:
-        if readFlag == True :
-            filterInfo(tags[0]['EPC-96'])
+    # if len(tags) != 0:
+    #     if readFlag == True :
+    #         #filterInfo(tags[0]['EPC-96'])
 
 
 
@@ -43,37 +44,41 @@ def shutdown(factory):
     return factory.politeShutdown()
 
 
-def filterInfo(tagID):
-    check = any(str(tagID) in sublist for sublist in equipmentID) #check if the same equipment is already in database
-    if check == False:
-        assetNum = "Radio"
-        global employeeID
-        description = "tag"
-        equipmentID.append([assetNum,str(tagID),employeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
-        print(str(tagID[20:26]))
-        insert()
+def filterInfo():
+    print(State_Log_Entry)
+    print(Item_Log_Entry)
+
+    # check = any(str(tagID) in sublist for sublist in equipmentID) #check if the same equipment is already in database
+    # if check == False:
+    #     assetNum = "Radio"
+    #     global employeeID
+    #     description = "tag"
+    #     equipmentID.append([assetNum,str(tagID),employeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
+    #     print(str(tagID[20:26]))
+    #     insert()
         # print("Do you want to SYNC: ")
         # sync = str(input())
         # if sync =='T':
         #     snapshot()
 
 
-def insert():
-
-    # define our insert and update query
-    insert_query = '''INSERT INTO Equipment(ASSET_NUMBER,RFID_TAG_#,LAST_USED_BY_EMPLOYEE,LAST_SEEN_DATE,LAST_SEEN_TIME,STATUS,DESCRIPTION) 
-                        VALUES (?,?,?,?,?,?,?);'''  # '?' is a placeholder
-
-    # loop thru each row in the matrix
-    for row in equipmentID:
-        # define the values to insert
-        values = (row[0], row[1],row[2],row[3],row[4],row[5],row[6])
-        print(values)
-        # insert the data into the database
-        cursor.execute(insert_query, values)
-
-    # commit the inserts
-    cnxn.commit()
+# def insert():
+#
+#     # define our insert and update query
+#     insert_query = '''INSERT INTO Item_Log_Table (Timestamp,AssetID)
+#                         VALUES (?,?);'''  # '?' is a placeholder
+#
+#     # loop thru each row in the matrix
+#     for row in equipmentID:
+#         # define the values to insert
+#         values = (row[0], row[1],row[2],row[3],row[4],row[5],row[6])
+#         print(values)
+#         # insert the data into the database
+#
+#     cursor.execute(insert_query, values)
+#
+#     # commit the inserts
+#     cnxn.commit()
 
     # grab all the rows in our database table
     #cursor.execute('SELECT ID FROM Employees')
@@ -87,19 +92,19 @@ def insert():
     cnxn.close
 
 ##work in progress
-def update():
-    update_query = '''
-                    UPDATE TestDB.dbo.Person
-                    SET Age = 29,City = 'Montreal'
-                    WHERE Name = 'Jon'
-                    '''
-    # loop thru each row in the matrix
-    for row in equipmentID:
-        # define the values to insert
-        values = (row[0], row[1],row[2],row[3])
-        print(values)
-        # insert the data into the database
-        cursor.execute(update_query, values)
+# def update():
+#     update_query = '''
+#                     UPDATE TestDB.dbo.Person
+#                     SET Age = 29,City = 'Montreal'
+#                     WHERE Name = 'Jon'
+#                     '''
+#     # loop thru each row in the matrix
+#     for row in equipmentID:
+#         # define the values to insert
+#         values = (row[0], row[1],row[2],row[3])
+#         print(values)
+#         # insert the data into the database
+#         cursor.execute(update_query, values)
 
 
 def snapshot():
@@ -144,13 +149,24 @@ class mainWindow(QWidget):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.show()
+        self.StateEntry = []
+        self.ItemEntry = []
         #connect button to functions
         self.ui.Check_Out_Button.released.connect(self.check_out_button_clicked)  # button connected
         self.ui.Finish_Button.released.connect(self.check_in_button_clicked)  # button connected
         self.ui.Asset_Ok_Button.released.connect(self.asset_ok_button_clicked)
+        self.ui.Cancel_Button.released.connect(self.cancel_button_clicked)  # button connected
+
+    def cancel_button_clicked(self):
+        self.ui.Employee_ID_input.setReadOnly(False)
+        self.ui.Employee_ID_input.clear()
+        self.ui.Asset_input.clear()
+        self.ItemEntry.clear()
+        self.StateEntry.clear()
 
     def asset_ok_button_clicked(self):
         if self.employee_validation():
+            self.ui.Employee_ID_input.setReadOnly(True)
             Asset = self.ui.Asset_input.text()
             print('Asset Number:' + Asset)
             if Asset_Check(Asset):
@@ -161,6 +177,9 @@ class mainWindow(QWidget):
                 print(item)
                 self.ui.Equipment_List.setItem(lastrow, 0, item)
                 self.ui.Asset_input.clear()
+                #apend the entrieds into a list
+                self.StateEntry.append([self.ui.Employee_ID_input.text()])
+                self.ItemEntry.append(Asset)
             else:
                 print('invalid Asset')
                 error_dialog = QtWidgets.QErrorMessage()
@@ -170,12 +189,10 @@ class mainWindow(QWidget):
             return
         else:
             error_dialog = QtWidgets.QErrorMessage()
-            error_dialog.showMessage('Enter an Employee ID first')
+            error_dialog.showMessage('Invalid Employee ID')
             error_dialog.setWindowTitle("Error")
             error_dialog.exec_()
             return
-
-
 
     def employee_validation(self):
         EmployeeID = self.ui.Employee_ID_input.text()
@@ -185,12 +202,19 @@ class mainWindow(QWidget):
         return Employee_ID_Check(employeeID)
 
     def check_in_button_clicked(self):
-        global tagIDtoreturn
+        global State_Log_Entry
+        global Item_Log_Entry
         #self.ui.Employee_ID_input.clear()
         if self.employee_validation():
             print('Valid Employee ID. ')
+            for employee in self.StateEntry:
+                State_Log_Entry.append([employee,date.today().strftime("%d/%m/%Y")+","+datetime.now().strftime("%H:%M:%S"),"1"])
+            for asset in self.ItemEntry:
+                Item_Log_Entry.append([date.today().strftime("%d/%m/%Y") + "," + datetime.now().strftime("%H:%M:%S"), asset,])
+            filterInfo()
         else:
             print('invalid employee ID. Please try again. ')
+
             return
 
         # filterInfo(self.EmployeeID)
