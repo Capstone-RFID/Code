@@ -33,9 +33,18 @@ def cb(tagReport):
         reactor.stop()
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
-    # if len(tags) != 0:
-    #     if readFlag == True :
-    #         #filterInfo(tags[0]['EPC-96'])
+    if len(tags) != 0:
+        print(tags[0]['EPC-96'])
+        rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+        cursor.execute(rfid_check_query, str(tags[0]['EPC-96']))
+        if cursor.fetchone():
+            get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+            cursor.execute(get_asset_query, str(tags[0]['EPC-96']))
+            assetID = cursor.fetchone()
+            fill the asset entry text box in the gui automatically
+        # if readFlag == True :
+        #     filterInfo(tags[0]['EPC-96'])
+
 
 
 
