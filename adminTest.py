@@ -145,9 +145,11 @@ class mainWindow(QWidget):
         self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)  # button connected
 
     #When you click Admin on main window, bring up the tabbed admin interface
+    #Jon Addition
     def adminButtonClicked(self):
         print('clicked admin')
-        Admin_Interface().testfunction()
+
+        self.admin.testfunction()
 
 
 
