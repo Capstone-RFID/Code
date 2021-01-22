@@ -20,7 +20,7 @@ from Admin_Level2_Access import Ui_Admin_Interface
 #
 #1. Need import statement @ top of main .py file: from AdminInterface import Admin_Interface
 #
-#2. Also need this to define admin button connection in init of main window: self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
+#2. Need this line to define admin button connection in __init__ of main window class: self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
 #
 #3. Also need the following function defined within the mainWindow class:
 # def adminButtonClicked(self):
@@ -38,10 +38,6 @@ class Admin_Interface(QWidget):
         self.reactor = reactor
         self.ui = Ui_Admin_Interface()
         self.ui.setupUi(self)
-        #self.show()
-        #initialize classes:
-        #self.checkIn = CheckInWindow()
-        #connect all buttons in tabs to functions
 
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
