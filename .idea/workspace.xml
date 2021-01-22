@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,10 +18,13 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/readerTest.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="323">
-                  <caret line="43" column="66" selection-start-line="43" selection-start-column="66" selection-end-line="43" selection-end-column="66" />
+                <state relative-caret-position="570">
+                  <caret line="198" column="33" lean-forward="true" selection-start-line="198" selection-start-column="33" selection-end-line="198" selection-end-column="33" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
+                    <element signature="e#1429#1544#0" />
+                    <element signature="e#3313#3660#0" />
+                    <element signature="e#3980#4197#0" />
                   </folding>
                 </state>
               </provider>
@@ -43,7 +47,7 @@
             <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="207">
-                  <caret line="47" column="35" lean-forward="true" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
+                  <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
                 </state>
               </provider>
             </entry>
@@ -63,10 +67,13 @@
     <findStrings>
       <find>manual_entry_field</find>
       <find>asset_in</find>
-      <find>employeeID</find>
       <find>cursor</find>
       <find>itemlist</find>
       <find>Equipment_List</find>
+      <find>readFl</find>
+      <find>employeeID</find>
+      <find>tagIdentity</find>
+      <find>employee_validation</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -94,12 +101,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Etek_check_in_window.py" type="b2602c69:ProjectViewProjectNode" />
               <item name="RFID_test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Etek_check_in_window.py" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RFID_test" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Etek_check_in_window.py" type="b2602c69:ProjectViewProjectNode" />
@@ -118,7 +131,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -218,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611195666620</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Started RFID itegration (work in progress)">
+      <created>1611199245046</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611199245046</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -255,7 +274,25 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Able to stote manual entried effectively" />
-    <option name="LAST_COMMIT_MESSAGE" value="Able to stote manual entried effectively" />
+    <MESSAGE value="Started RFID itegration (work in progress)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started RFID itegration (work in progress)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>175</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="ItemEntry" />
+        <watch expression=" self.ItemEntry" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
@@ -292,16 +329,19 @@
     <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
-          <caret line="47" column="35" lean-forward="true" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
+          <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/readerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="43" column="66" selection-start-line="43" selection-start-column="66" selection-end-line="43" selection-end-column="66" />
+        <state relative-caret-position="570">
+          <caret line="198" column="33" lean-forward="true" selection-start-line="198" selection-start-column="33" selection-end-line="198" selection-end-column="33" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#1429#1544#0" />
+            <element signature="e#3313#3660#0" />
+            <element signature="e#3980#4197#0" />
           </folding>
         </state>
       </provider>

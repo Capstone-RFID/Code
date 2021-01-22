@@ -3,55 +3,40 @@ from twisted.internet import reactor
 import pyodbc
 from datetime import datetime
 from datetime import date
-
 from threading import Thread
 import subprocess
 import keyboard
 import logging
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 import sys
-
 from Etek_main_window_All_In_One import Ui_MainWindow
 
-readFlag = False #used to check if employeeID is in the database
-eqcheck = "undermined"
-employeeID = '0'
 State_Log_Entry = []
 Item_Log_Entry = []
 
-tagIdentity = 0  #lets get rid of a lot of globals
-
-
-
-
 def cb(tagReport):
     # print("running")
-    global readFlag
+    global readFlag, asset_to_return
     if keyboard.is_pressed('q'):
         reactor.stop()
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
     if len(tags) != 0:
-        print(tags[0]['EPC-96'])
-        rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
-        cursor.execute(rfid_check_query, str(tags[0]['EPC-96']))
-        if cursor.fetchone():
-            get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
-            cursor.execute(get_asset_query, str(tags[0]['EPC-96']))
-            assetID = cursor.fetchone()
-            fill the asset entry text box in the gui automatically
-        # if readFlag == True :
-        #     filterInfo(tags[0]['EPC-96'])
-
-
-
-
+        if Employee_ID_Check(window.ui.Employee_ID_input.text()):
+            print(tags[0]['EPC-96'])
+            rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+            cursor.execute(rfid_check_query, str(tags[0]['EPC-96']))
+            if cursor.fetchone():
+                get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+                cursor.execute(get_asset_query, str(tags[0]['EPC-96']))
+                assetID = cursor.fetchone()
+                print(assetID)
+                window.rfid_insert(assetID[0])
+                print(assetID[0])
 
 def shutdown(factory):
     return factory.politeShutdown()
-
 
 def filterInfo():
     print(State_Log_Entry)
@@ -115,7 +100,6 @@ def filterInfo():
 #         # insert the data into the database
 #         cursor.execute(update_query, values)
 
-
 def snapshot():
     subprocess.run(
         ["C:\\Program Files\\Microsoft SQL Server\\150\\COM\\snapshot.exe",
@@ -125,20 +109,15 @@ def snapshot():
         # probably add this
         check=True)
 
-
 def stop():
     reactor.stop()
 
 def Employee_ID_Check(input):
     check_query = '''SELECT TOP 1 * FROM Employee_Table WHERE EmployeeID = (?);''' # '?' is a placeholder
     cursor.execute(check_query, str(input))
-    global readFlag, eqcheck
     if cursor.fetchone():
-        readFlag = True
-        eqcheck = "Check-In"
         return True
     else:
-        readFlag = False
         return False
 
 def Asset_Check(input):
@@ -172,23 +151,37 @@ class mainWindow(QWidget):
         self.ui.Asset_input.clear()
         self.ItemEntry.clear()
         self.StateEntry.clear()
-
+    def error_message(self, text):
+        error_dialog = QtWidgets.QErrorMessage()
+        error_dialog.showMessage(text)
+        error_dialog.setWindowTitle("Error")
+        error_dialog.exec_()
+        return
     def asset_ok_button_clicked(self):
-        if self.employee_validation():
+        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
             self.ui.Employee_ID_input.setReadOnly(True)
             Asset = self.ui.Asset_input.text()
+            #self.ItemEntry.append(Asset)
             print('Asset Number:' + Asset)
             if Asset_Check(Asset):
-                print('valid Asset')
-                lastrow = self.ui.Equipment_List.rowCount()
-                self.ui.Equipment_List.insertRow(lastrow)
-                item = QTableWidgetItem(Asset)
-                print(item)
-                self.ui.Equipment_List.setItem(lastrow, 0, item)
+                if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
+                    lastrow = self.ui.Equipment_List.rowCount()
+                    self.ui.Equipment_List.insertRow(lastrow)
+                    item = QTableWidgetItem(Asset)
+
+                    self.ui.Equipment_List.setItem(lastrow, 0, item)
+                    #apend the entrieds into a list
+                    self.StateEntry.append([self.ui.Employee_ID_input.text()])
+                    self.ItemEntry.append(Asset)
+                else:
+                    print('already in list')
+                    text = str('already in list')
+                    self.error_message(text)
+                    # error_dialog = QtWidgets.QErrorMessage()
+                    # error_dialog.showMessage('Enter an Valid Asset Number')
+                    # error_dialog.setWindowTitle("Error")
+                    # error_dialog.exec_()
                 self.ui.Asset_input.clear()
-                #apend the entrieds into a list
-                self.StateEntry.append([self.ui.Employee_ID_input.text()])
-                self.ItemEntry.append(Asset)
             else:
                 print('invalid Asset')
                 error_dialog = QtWidgets.QErrorMessage()
@@ -203,18 +196,15 @@ class mainWindow(QWidget):
             error_dialog.exec_()
             return
 
-    def employee_validation(self):
-        EmployeeID = self.ui.Employee_ID_input.text()
-        print('Your Employee ID Number: ' + EmployeeID)
-        global employeeID
-        employeeID = EmployeeID
-        return Employee_ID_Check(employeeID)
+    def rfid_insert(self, asset):
+        self.ui.Asset_input.insert(asset)
+        self.asset_ok_button_clicked()
 
     def check_in_button_clicked(self):
         global State_Log_Entry
         global Item_Log_Entry
         #self.ui.Employee_ID_input.clear()
-        if self.employee_validation():
+        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
             print('Valid Employee ID. ')
             for employee in self.StateEntry:
                 State_Log_Entry.append([employee,date.today().strftime("%d/%m/%Y")+","+datetime.now().strftime("%H:%M:%S"),"1"])
@@ -234,47 +224,8 @@ class mainWindow(QWidget):
         print('clicked')
         return
 
-
     def testfunction(self):
         print('hello')
-
-'''
-class CheckInWindow(QWidget):
-    def __init__(self):
-        super(CheckInWindow, self).__init__()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.ui.pushButton_3.clicked.connect(self.itemList)
-        self.ui.pushButton_4.clicked.connect(self.clearField)
-
-    def itemList(self):
-        assetNum =self.ui.lineEdit.text()
-        # Get the number of rows in the TableWidget and insert
-        # a new row at the end.
-        print(assetNum)
-        lastrow = self.ui.tableWidget.rowCount()
-        self.ui.tableWidget.insertRow(lastrow)
-        item = QTableWidgetItem(assetNum)
-        # .setItem(row, column, item)
-        self.ui.tableWidget.setItem(lastrow,0,item)
-        self.ui.lineEdit.clear()
-
-    def clearField(self):
-        self.ui.lineEdit.clear()
-
-'''
-
-
-class CheckOutWindow(QWidget):
-    def __init__(self):
-        super(CheckInWindow, self).__init__()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-
-
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
