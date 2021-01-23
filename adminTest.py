@@ -28,6 +28,8 @@ class mainWindow(QWidget):
         self.ui.setupUi(self)
         self.show()
         #initialize classes:
+        #Need this instance to use AdminInterface class
+        #Jon Addition
         self.admin = Admin_Interface()
         #self.checkIn = CheckInWindow()
         #connect button to functions

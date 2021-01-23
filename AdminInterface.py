@@ -22,7 +22,12 @@ from Admin_Level2_Access import Ui_Admin_Interface
 #
 #2. Need this line to define admin button connection in __init__ of main window class: self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
 #
-#3. Also need the following function defined within the mainWindow class:
+#
+#3. Need this instance to use AdminInterface class
+#       self.admin = Admin_Interface()
+#
+#
+#4. Also need the following function defined within the mainWindow class:
 # def adminButtonClicked(self):
 #     print('clicked admin')
 #

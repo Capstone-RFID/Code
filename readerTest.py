@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 import sys
-from Main_window_widget2 import Ui_MainWindow
+from Etek_main_window_All_In_One import Ui_Form
 from Etek_check_in_window import Ui_Form
 
 readFlag = False #used to check if employeeID is in the database
@@ -132,14 +132,14 @@ class mainWindow(QWidget):
     def __init__(self):
         super(mainWindow, self).__init__()
         self.reactor = reactor
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.show()
         #initialize classes:
         self.checkIn = CheckInWindow()
         #connect button to functions
-        self.ui.Check_out_button.clicked.connect(self.checkoutClicked)  # button connected
-        self.ui.Check_In_button.clicked.connect(self.checkinClicked)  # button connected
+        self.ui.Check_Out_Button.clicked.connect(self.checkoutClicked)  # button connected
+        self.ui.Finish_Button.clicked.connect(self.checkinClicked)  # button connected
 
 
     def checkinClicked(self):
