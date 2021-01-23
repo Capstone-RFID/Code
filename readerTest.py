@@ -3,78 +3,76 @@ from twisted.internet import reactor
 import pyodbc
 from datetime import datetime
 from datetime import date
-
 from threading import Thread
 import subprocess
 import keyboard
 import logging
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 import sys
-from Etek_main_window_All_In_One import Ui_Form
-from Etek_check_in_window import Ui_Form
+from Etek_main_window_All_In_One import Ui_MainWindow
 
-readFlag = False #used to check if employeeID is in the database
-eqcheck = "undermined"
-employeeID = '0'
-equipmentID = []
-
-tagIdentity = 0  #lets get rid of a lot of globals
-
-
-
+State_Log_Entry = []
+Item_Log_Entry = []
 
 def cb(tagReport):
     # print("running")
-    global readFlag
+    global readFlag, asset_to_return
     if keyboard.is_pressed('q'):
         reactor.stop()
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
     if len(tags) != 0:
-        if readFlag == True :
-            filterInfo(tags[0]['EPC-96'])
-
-
-
+        if Employee_ID_Check(window.ui.Employee_ID_input.text()):
+            print(tags[0]['EPC-96'])
+            rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+            cursor.execute(rfid_check_query, str(tags[0]['EPC-96']))
+            if cursor.fetchone():
+                get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+                cursor.execute(get_asset_query, str(tags[0]['EPC-96']))
+                assetID = cursor.fetchone()
+                print(assetID)
+                window.rfid_insert(assetID[0])
+                print(assetID[0])
 
 def shutdown(factory):
     return factory.politeShutdown()
 
+def filterInfo():
+    print(State_Log_Entry)
+    print(Item_Log_Entry)
 
-def filterInfo(tagID):
-    check = any(str(tagID) in sublist for sublist in equipmentID) #check if the same equipment is already in database
-    if check == False:
-        assetNum = "Radio"
-        global employeeID
-        description = "tag"
-        equipmentID.append([assetNum,str(tagID),employeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
-        print(str(tagID[20:26]))
-        insert()
+    # check = any(str(tagID) in sublist for sublist in equipmentID) #check if the same equipment is already in database
+    # if check == False:
+    #     assetNum = "Radio"
+    #     global employeeID
+    #     description = "tag"
+    #     equipmentID.append([assetNum,str(tagID),employeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
+    #     print(str(tagID[20:26]))
+    #     insert()
         # print("Do you want to SYNC: ")
         # sync = str(input())
         # if sync =='T':
         #     snapshot()
 
 
-def insert():
-
-    # define our insert and update query
-    insert_query = '''INSERT INTO Equipment(ASSET_NUMBER,RFID_TAG_#,LAST_USED_BY_EMPLOYEE,LAST_SEEN_DATE,LAST_SEEN_TIME,STATUS,DESCRIPTION) 
-                        VALUES (?,?,?,?,?,?,?);'''  # '?' is a placeholder
-
-    # loop thru each row in the matrix
-    for row in equipmentID:
-        # define the values to insert
-        values = (row[0], row[1],row[2],row[3],row[4],row[5],row[6])
-        print(values)
-        # insert the data into the database
-        cursor.execute(insert_query, values)
-
-    # commit the inserts
-    cnxn.commit()
+# def insert():
+#
+#     # define our insert and update query
+#     insert_query = '''INSERT INTO Item_Log_Table (Timestamp,AssetID)
+#                         VALUES (?,?);'''  # '?' is a placeholder
+#
+#     # loop thru each row in the matrix
+#     for row in equipmentID:
+#         # define the values to insert
+#         values = (row[0], row[1],row[2],row[3],row[4],row[5],row[6])
+#         print(values)
+#         # insert the data into the database
+#
+#     cursor.execute(insert_query, values)
+#
+#     # commit the inserts
+#     cnxn.commit()
 
     # grab all the rows in our database table
     #cursor.execute('SELECT ID FROM Employees')
@@ -88,20 +86,19 @@ def insert():
     cnxn.close
 
 ##work in progress
-def update():
-    update_query = '''
-                    UPDATE TestDB.dbo.Person
-                    SET Age = 29,City = 'Montreal'
-                    WHERE Name = 'Jon'
-                    '''
-    # loop thru each row in the matrix
-    for row in equipmentID:
-        # define the values to insert
-        values = (row[0], row[1],row[2],row[3])
-        print(values)
-        # insert the data into the database
-        cursor.execute(update_query, values)
-
+# def update():
+#     update_query = '''
+#                     UPDATE TestDB.dbo.Person
+#                     SET Age = 29,City = 'Montreal'
+#                     WHERE Name = 'Jon'
+#                     '''
+#     # loop thru each row in the matrix
+#     for row in equipmentID:
+#         # define the values to insert
+#         values = (row[0], row[1],row[2],row[3])
+#         print(values)
+#         # insert the data into the database
+#         cursor.execute(update_query, values)
 
 def snapshot():
     subprocess.run(
@@ -112,100 +109,129 @@ def snapshot():
         # probably add this
         check=True)
 
-
 def stop():
     reactor.stop()
 
 def Employee_ID_Check(input):
-    check_query = '''SELECT TOP 1 * FROM EmployeeTable WHERE ID = (?);''' # '?' is a placeholder
+    check_query = '''SELECT TOP 1 * FROM Employee_Table WHERE EmployeeID = (?);''' # '?' is a placeholder
     cursor.execute(check_query, str(input))
-    global readFlag, eqcheck
     if cursor.fetchone():
-        readFlag = True
-        eqcheck = "Check-In"
         return True
     else:
-        readFlag = False
         return False
+
+def Asset_Check(input):
+    check_query = '''SELECT TOP 1 * FROM Asset_Table WHERE AssetID = (?);'''  # '?' is a placeholder
+    cursor.execute(check_query, str(input))
+    if cursor.fetchone():
+        return True
+    else:
+        return False
+
+
 
 class mainWindow(QWidget):
     def __init__(self):
         super(mainWindow, self).__init__()
         self.reactor = reactor
-        self.ui = Ui_Form()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.show()
-        #initialize classes:
-        self.checkIn = CheckInWindow()
+        self.StateEntry = []
+        self.ItemEntry = []
         #connect button to functions
-        self.ui.Check_Out_Button.clicked.connect(self.checkoutClicked)  # button connected
-        self.ui.Finish_Button.clicked.connect(self.checkinClicked)  # button connected
+        self.ui.Check_Out_Button.released.connect(self.check_out_button_clicked)  # button connected
+        self.ui.Finish_Button.released.connect(self.check_in_button_clicked)  # button connected
+        self.ui.Asset_Ok_Button.released.connect(self.asset_ok_button_clicked)
+        self.ui.Cancel_Button.released.connect(self.cancel_button_clicked)  # button connected
 
-
-    def checkinClicked(self):
-        EmployeeID = self.ui.Employee_ID_input.text()
-        print('Your Employee ID Number: ' + EmployeeID)
-        global employeeID, tagIDtoreturn
-        employeeID = EmployeeID
+    def cancel_button_clicked(self):
+        self.ui.Employee_ID_input.setReadOnly(False)
         self.ui.Employee_ID_input.clear()
-        if Employee_ID_Check(EmployeeID):
-            self.checkIn.show()
+        self.ui.Asset_input.clear()
+        self.ItemEntry.clear()
+        self.StateEntry.clear()
+    def error_message(self, text):
+        error_dialog = QtWidgets.QErrorMessage()
+        error_dialog.showMessage(text)
+        error_dialog.setWindowTitle("Error")
+        error_dialog.exec_()
+        return
+    def asset_ok_button_clicked(self):
+        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
+            self.ui.Employee_ID_input.setReadOnly(True)
+            Asset = self.ui.Asset_input.text()
+            #self.ItemEntry.append(Asset)
+            print('Asset Number:' + Asset)
+            if Asset_Check(Asset):
+                if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
+                    lastrow = self.ui.Equipment_List.rowCount()
+                    self.ui.Equipment_List.insertRow(lastrow)
+                    item = QTableWidgetItem(Asset)
+
+                    self.ui.Equipment_List.setItem(lastrow, 0, item)
+                    #apend the entrieds into a list
+                    self.StateEntry.append([self.ui.Employee_ID_input.text()])
+                    self.ItemEntry.append(Asset)
+                else:
+                    print('already in list')
+                    text = str('already in list')
+                    self.error_message(text)
+                    # error_dialog = QtWidgets.QErrorMessage()
+                    # error_dialog.showMessage('Enter an Valid Asset Number')
+                    # error_dialog.setWindowTitle("Error")
+                    # error_dialog.exec_()
+                self.ui.Asset_input.clear()
+            else:
+                print('invalid Asset')
+                error_dialog = QtWidgets.QErrorMessage()
+                error_dialog.showMessage('Enter an Valid Asset Number')
+                error_dialog.setWindowTitle("Error")
+                error_dialog.exec_()
+            return
         else:
+            error_dialog = QtWidgets.QErrorMessage()
+            error_dialog.showMessage('Invalid Employee ID')
+            error_dialog.setWindowTitle("Error")
+            error_dialog.exec_()
+            return
+
+    def rfid_insert(self, asset):
+        self.ui.Asset_input.insert(asset)
+        self.asset_ok_button_clicked()
+
+    def check_in_button_clicked(self):
+        global State_Log_Entry
+        global Item_Log_Entry
+        #self.ui.Employee_ID_input.clear()
+        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
+            print('Valid Employee ID. ')
+            for employee in self.StateEntry:
+                State_Log_Entry.append([employee,date.today().strftime("%d/%m/%Y")+","+datetime.now().strftime("%H:%M:%S"),"1"])
+            for asset in self.ItemEntry:
+                Item_Log_Entry.append([date.today().strftime("%d/%m/%Y") + "," + datetime.now().strftime("%H:%M:%S"), asset,])
+            filterInfo()
+        else:
+            print('invalid employee ID. Please try again. ')
+
             return
 
         # filterInfo(self.EmployeeID)
         # global readFlag
         # readFlag = True
 
-    def checkoutClicked(self):
-        self.checkIn.show()
-
+    def check_out_button_clicked(self):
+        print('clicked')
+        return
 
     def testfunction(self):
         print('hello')
-
-
-class CheckInWindow(QWidget):
-    def __init__(self):
-        super(CheckInWindow, self).__init__()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.ui.pushButton_3.clicked.connect(self.itemList)
-        self.ui.pushButton_4.clicked.connect(self.clearField)
-
-    def itemList(self):
-        assetNum =self.ui.lineEdit.text()
-        # Get the number of rows in the TableWidget and insert
-        # a new row at the end.
-        print(assetNum)
-        lastrow = self.ui.tableWidget.rowCount()
-        self.ui.tableWidget.insertRow(lastrow)
-        item = QTableWidgetItem(assetNum)
-        # .setItem(row, column, item)
-        self.ui.tableWidget.setItem(lastrow,0,item)
-        self.ui.lineEdit.clear()
-
-    def clearField(self):
-        self.ui.lineEdit.clear()
-
-
-
-
-class CheckOutWindow(QWidget):
-    def __init__(self):
-        super(CheckInWindow, self).__init__()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self)
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-
-
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = mainWindow()
     #RFID init
+
     logging.getLogger().setLevel(logging.INFO)
     factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
     factory.addTagReportCallback(cb)
@@ -225,5 +251,6 @@ if __name__ == "__main__":
     cursor = cnxn.cursor()
     #it works now
     # if readFlag == True:
+    #sys.exit(app.exec_())
     Thread(target=reactor.run, args=(False,)).start()
     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
