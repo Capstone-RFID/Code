@@ -92,6 +92,11 @@ class Admin_Interface(QWidget):
         if self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text()):
             EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
             print(EmployeeNum)
+
+            AssetLowerBound = self.ui.Search_Asset_Numbers_From_Field.text()
+
+            AssetUpperBound = self.ui.Search_Asset_Numbers_To_Field.text()
+
         # Sample select query
         #self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
 
@@ -127,7 +132,15 @@ class Admin_Interface(QWidget):
         else:
             return False
 
+    def Asset_Check(self, LowerBound, UpperBound):
+        check_query = '''SELECT * FROM Asset WHERE (Asset# >=  (?)) OR (Asset# <=  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
 
+
+        if self.cursor.fetchone():
+            return self.cursor.fetchall()
+        else:
+            return False
 
 
 

@@ -259,7 +259,7 @@
         <watch expression="EmployeeNum" />
         <watch expression="self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text())" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="99">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="104">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
