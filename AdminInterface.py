@@ -78,6 +78,10 @@ class Admin_Interface(QWidget):
         # create the connection cursor as a private variable
         self.cursor = self.cnxn.cursor()
 
+    # open up the admin window from the button on main window
+    def openAdmin(self):
+        self.show()
+
     #****************************************Class Methods for Tab Button(s)*********************************
     def home_syncButtonClicked(self):
 
@@ -85,13 +89,16 @@ class Admin_Interface(QWidget):
 
     def search_searchButtonClicked(self):
         print('Search Tab Search Button Clicked')
-
+        if self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text()):
+            EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+            print(EmployeeNum)
         # Sample select query
-        self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
-        row = self.cursor.fetchone()
-        while row:
-            print(row[0])
-            row = self.cursor.fetchone()
+        #self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
+
+      #  for entries in self.cursor.fetchall():
+      #      print(entries)
+      #      test = entries[1]
+      #      print(test)
 
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
@@ -111,11 +118,14 @@ class Admin_Interface(QWidget):
         print('Create Tab Confirm Entry Button Clicked')
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
-
-    #open up the admin window from the button on main window
-    def openAdmin(self):
-        self.show()
-        print('hello')
+    # ****************************************Class Methods for Running Queries*******************************
+    def Employee_ID_Check(self, input):
+        check_query = '''SELECT TOP 1 * FROM Employee WHERE [Employee ID] = (?);'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(input))
+        if self.cursor.fetchone():
+            return True
+        else:
+            return False
 
 
 
