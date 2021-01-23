@@ -48,7 +48,9 @@ class Admin_Interface(QWidget):
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
-        self.ui.Search_Search_Query_Button.clicked.connect(self.search_searchButtonClicked)
+        self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
+        self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_searchAssetButtonClicked)
+        self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
         self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
 
         # ****************************************Edit Tab Button(s)*********************************
@@ -87,12 +89,20 @@ class Admin_Interface(QWidget):
 
         print("Home Sync Button Clicked")
 
-    def search_searchButtonClicked(self):
-        print('Search Tab Search Button Clicked')
+    def search_searchIDButtonClicked(self):
+        print('Search Tab Search ID Button Clicked')
         #if self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text()):
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
-        print(EmployeeNum)
 
+        if self.Employee_ID_Check(EmployeeNum):
+            EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+            print(EmployeeAssetList)
+
+
+
+
+    def search_searchAssetButtonClicked(self):
+        print('Search Tab Search Asset Button Clicked')
         AssetLowerBound = self.ui.Search_Asset_Numbers_From_Field.text()
 
         AssetUpperBound = self.ui.Search_Asset_Numbers_To_Field.text()
@@ -100,6 +110,9 @@ class Admin_Interface(QWidget):
         print(AssetList)
         # Sample select query
         #self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
+
+    def search_searchDateButtonClicked(self):
+        print('Search Tab Search Date Button Clicked')
 
       #  for entries in self.cursor.fetchall():
       #      print(entries)
@@ -130,9 +143,22 @@ class Admin_Interface(QWidget):
         check_query = '''SELECT TOP 1 * FROM Employee WHERE [Employee ID] = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
+            print('This ID exists!')
             return True
         else:
             return False
+
+    def Employee_ID_FindAssets(self, input):
+        check_query = '''SELECT * FROM Asset WHERE ([Employee ID]=  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(input))
+        if self.cursor.fetchone():
+            print('This ID has used assets!')
+            self.cursor.execute(check_query, str(input))
+            return self.cursor.fetchall()
+        else:
+            print('This ID has not used assets!')
+            return False
+
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds

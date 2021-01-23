@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
     </list>
@@ -260,7 +259,7 @@
         <watch expression="EmployeeNum" />
         <watch expression="self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text())" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="105">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="118">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
