@@ -64,6 +64,19 @@ class Admin_Interface(QWidget):
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
+        #
+        # define the server name and the database name
+        server = 'BIGACER'
+        database = 'BALKARAN09'
+
+        # define a connection string
+        self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
+                                        SERVER=' + server + ';\
+                                          DATABASE=' + database + ';\
+                                        Trusted_Connection=yes;')
+
+        # create the connection cursor as a private variable
+        self.cursor = self.cnxn.cursor()
 
     #****************************************Class Methods for Tab Button(s)*********************************
     def home_syncButtonClicked(self):
@@ -72,6 +85,14 @@ class Admin_Interface(QWidget):
 
     def search_searchButtonClicked(self):
         print('Search Tab Search Button Clicked')
+
+        # Sample select query
+        self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
+        row = self.cursor.fetchone()
+        while row:
+            print(row[0])
+            row = self.cursor.fetchone()
+
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
 
@@ -95,6 +116,8 @@ class Admin_Interface(QWidget):
     def openAdmin(self):
         self.show()
         print('hello')
+
+
 
 
 
