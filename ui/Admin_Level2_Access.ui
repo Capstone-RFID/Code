@@ -6,621 +6,1334 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
-    <height>821</height>
+    <width>669</width>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QTabWidget" name="Admin_Select">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>50</y>
-     <width>701</width>
-     <height>601</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>4</number>
-   </property>
-   <widget class="QWidget" name="Home_Tab">
-    <attribute name="title">
-     <string>Home</string>
-    </attribute>
-    <widget class="QPushButton" name="Home_Force_Sync_Button">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>151</width>
-       <height>23</height>
-      </rect>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0, 0, 52);</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_6">
+   <item>
+    <widget class="QTabWidget" name="Admin_Select">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 52);
+QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
-     <property name="text">
-      <string>Force Sync with central</string>
+     <property name="currentIndex">
+      <number>1</number>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>12</width>
+       <height>12</height>
+      </size>
+     </property>
+     <widget class="QWidget" name="Home_Tab">
+      <attribute name="title">
+       <string>Home</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="Home_Welcome_Message">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);
+font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Welcome to Admin Access</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(171, 171, 171);</string>
+         </property>
+         <property name="text">
+          <string>Select Tabs Above To Navigate</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>68</width>
+             <height>38</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="Home_Force_Sync_Button">
+           <property name="styleSheet">
+            <string notr="true">QPushButton#Home_Force_Sync_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 26pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Home_Force_Sync_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+           </property>
+           <property name="text">
+            <string>Force Sync with central</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>68</width>
+             <height>38</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Search_Tab">
+      <attribute name="title">
+       <string>Search</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="2" column="0">
+            <widget class="QLabel" name="Search_Datetime_To_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Date/Time To:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDateTimeEdit" name="Search_Datetime_From">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">
+color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="Search_Datetime_From_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Date/Time From:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2" rowspan="2">
+            <widget class="QPushButton" name="Search_SearchDate_Query_Button">
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Search_SearchDate_Query_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_SearchDate_Query_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Search Date</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="Search_Asset_Num_To_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Assest Numbers To:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLineEdit" name="Search_Asset_Numbers_To_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QDateTimeEdit" name="Search_Datetime_To">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="Search_Employee_ID_Entry_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QPushButton" name="Search_SearchID_Query_Button">
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Search_SearchID_Query_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_SearchID_Query_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Search ID</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="Search_Employee_ID_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Employee ID:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="Search_Asset_Num_From_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Asset Numbers From:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="Search_Asset_Numbers_From_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2" rowspan="2">
+            <widget class="QPushButton" name="Search_SearchAsset_Query_Button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Search_SearchAsset_Query_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_SearchAsset_Query_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Search Asset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="2">
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="0">
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="1">
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="2">
+            <spacer name="horizontalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="0">
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Search Filters</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <spacer name="horizontalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>258</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_12">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>188</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="Search_Display_Results_Table">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(78, 78, 78);</string>
+             </property>
+             <column>
+              <property name="text">
+               <string>Asset#</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Employee ID</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Date checked out</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Date checked in</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <spacer name="horizontalSpacer_13">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>258</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Search_Print_PDF_Button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Search_Print_PDF_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_Print_PDF_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Print to PDF</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Edit_Tab">
+      <attribute name="title">
+       <string>Edit</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <item>
+              <widget class="QLabel" name="Edit_Prompt1_Label">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Enter Asset # to search for existing asset</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="Edit_Prompt2_Label">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Edit fields then click commit to change in local database</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_22">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>298</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0" rowspan="3">
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="4" column="1">
+                <spacer name="horizontalSpacer_15">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="6" column="0">
+                <spacer name="horizontalSpacer_16">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="4" column="0">
+                <spacer name="horizontalSpacer_14">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="6" column="1">
+                <spacer name="horizontalSpacer_17">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="Edit_Status_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Status:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="Edit_Status_Field">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="Edit_Name_Field">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="Edit_Last_Activity_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Last Activity:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <widget class="QDateTimeEdit" name="Edit_Datetime">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="Edit_Asset_Num_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Asset #:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="Edit_Name_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Name:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="Edit_Asset_Num_Field">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="1">
+                <spacer name="horizontalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>25</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="0">
+                <spacer name="horizontalSpacer_18">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="2" column="1">
+                <spacer name="horizontalSpacer_19">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="Edit_Clear_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Edit_Clear_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Edit_Clear_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+               </property>
+               <property name="text">
+                <string>Clear</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="Edit_Search_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Edit_Search_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Edit_Search_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+               </property>
+               <property name="text">
+                <string>Search</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer_20">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>298</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QTableWidget" name="Edit_Display_Results_Table">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>123</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(78, 78, 78);</string>
+             </property>
+             <property name="columnCount">
+              <number>5</number>
+             </property>
+             <column>
+              <property name="text">
+               <string>Asset#</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Employee ID</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Date checked out</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Date checked in</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Status</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QPushButton" name="Edit_Delete_Entry_Button">
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Edit_Delete_Entry_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Edit_Delete_Entry_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Delete Entry</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_21">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>328</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Edit_Commit_Edits_Button">
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Edit_Commit_Edits_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Edit_Commit_Edits_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Commit Edits</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Create_Tab">
+      <attribute name="title">
+       <string>Create</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="Create_Prompt_Label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Enter asset info, then confirm new entry in local database</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>88</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Create_Clear_Fields_Button">
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Create_Clear_Fields_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Create_Clear_Fields_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Clear Fields</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Create_Confirm_Entry_Button">
+             <property name="minimumSize">
+              <size>
+               <width>186</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Create_Confirm_Entry_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Create_Confirm_Entry_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Confirm Entry</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="Create_Asset_Num_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="Create_Asset_Num_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Asset #:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="Create_Name_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="Create_Name_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Name:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="Create_RFID_Tag_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>RFID Tag #:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="Create_Part_Number_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Part Number:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="Create_Part_Number_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Resolve_Tab">
+      <attribute name="title">
+       <string>Resolve</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QTableWidget" name="Resolve_Display_Conflicts_Table">
+         <column>
+          <property name="text">
+           <string>Asset #</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>RFID #</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Employee ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date checked out</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date checked in</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Conflict Msg</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Conflict Details</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QLabel" name="Home_Welcome_Message">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>50</y>
-       <width>301</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Welcome to Admin Access, </string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Home_User_Prompt">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>100</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>please use tabs along top to navigate options</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="Search_Tab">
-    <attribute name="title">
-     <string>Search</string>
-    </attribute>
-    <widget class="QDateTimeEdit" name="Search_Datetime_From">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>0</y>
-       <width>194</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QDateTimeEdit" name="Search_Datetime_To">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>50</y>
-       <width>194</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Search_Datetime_From_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>From:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Search_Datetime_To_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>50</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>To:</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Search_Employee_ID_Entry_Field">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>100</y>
-       <width>151</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Search_Employee_ID_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>100</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Employee ID:</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Search_Search_Query_Button">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>50</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Search</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Search_Print_PDF_Button">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>100</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Print to PDF</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Search_Asset_Num_From_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>150</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Asset numbers from</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Search_Asset_Numbers_From_Field">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>150</y>
-       <width>151</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Search_Asset_Numbers_To_Field">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>200</y>
-       <width>151</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Search_Asset_Num_To_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>200</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Assest numbers to</string>
-     </property>
-    </widget>
-    <widget class="QTableWidget" name="Search_Display_Results_Table">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>250</y>
-       <width>451</width>
-       <height>301</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>Asset#</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Employee ID</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date checked out</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date checked in</string>
-      </property>
-     </column>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="Edit_Tab">
-    <attribute name="title">
-     <string>Edit</string>
-    </attribute>
-    <widget class="QLabel" name="Edit_Name_Label">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>100</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Edit_Name_Field">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>100</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Edit_Asset_Num_Label">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>50</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Asset #</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Edit_Asset_Num_Field">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>50</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Edit_Status_Label">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>150</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Status</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Edit_Status_Field">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>150</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Edit_Clear_Button">
-     <property name="geometry">
-      <rect>
-       <x>400</x>
-       <y>200</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Clear</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Edit_Commit_Edits_Button">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>200</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Commit Edits</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Edit_Search_Button">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>50</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Search</string>
-     </property>
-    </widget>
-    <widget class="QDateTimeEdit" name="Edit_Datetime">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>200</y>
-       <width>194</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Edit_Last_Activity_Label">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>200</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Last Activity</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Edit_Delete_Entry_Button">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>100</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Delete Entry</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Edit_Prompt1_Label">
-     <property name="geometry">
-      <rect>
-       <x>400</x>
-       <y>50</y>
-       <width>251</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Enter Asset # then search for existing asset</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Edit_Prompt2_Label">
-     <property name="geometry">
-      <rect>
-       <x>400</x>
-       <y>100</y>
-       <width>301</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Edit fields then click commit to change in local database</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="Create_Tab">
-    <attribute name="title">
-     <string>Create</string>
-    </attribute>
-    <widget class="QLabel" name="Create_Name_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>100</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Create_Asset_Num_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>50</y>
-       <width>47</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Asset #</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Create_Clear_Fields_Button">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>100</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Clear Fields</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Create_Confirm_Entry_Button">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>50</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Confirm Entry</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Create_Prompt_Label">
-     <property name="geometry">
-      <rect>
-       <x>350</x>
-       <y>50</y>
-       <width>301</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Enter asset info, then confirm new entry in local database</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Create_Asset_Num_Field">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>50</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Create_Name_Field">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>100</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Create_RFID_Tag_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>150</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>RFID Tag #</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Create_Part_Number_Field">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>200</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>150</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Create_Part_Number_Label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>200</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Part Number</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="Resolve_Tab">
-    <attribute name="title">
-     <string>Resolve</string>
-    </attribute>
-    <widget class="QTableWidget" name="Resolve_Display_Conflicts_Table">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>50</y>
-       <width>601</width>
-       <height>401</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>Asset #</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>RFID #</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Employee ID</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date checked out</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Date checked in</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Conflict Msg</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>275</x>
-       <y>450</y>
-       <width>100</width>
-       <height>100</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Conflict Details</string>
-     </property>
-    </widget>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

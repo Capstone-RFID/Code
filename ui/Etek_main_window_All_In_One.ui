@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QWidget" name="MainWindow">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1342</width>
-    <height>507</height>
+    <width>1073</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -106,7 +106,7 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Employee_ID_input">
+        <widget class="QLineEdit" name="Manual_Entry_Field_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -156,7 +156,7 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Asset_input">
+        <widget class="QLineEdit" name="Manual_Entry_Field">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -245,6 +245,48 @@ background-color: rgb(78, 78, 78);
         <enum>QLayout::SetMinimumSize</enum>
        </property>
        <item>
+        <widget class="QPushButton" name="RemoveItem_Button">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>113</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>208</width>
+           <height>113</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#RemoveItem_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 26pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#RemoveItem_Button:pressed {
+    background-color: rgb(0, 0, 80);
+    border-style: inset;
+}</string>
+         </property>
+         <property name="text">
+          <string>Remove Item</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="Cancel_Button">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -254,7 +296,7 @@ background-color: rgb(78, 78, 78);
          </property>
          <property name="minimumSize">
           <size>
-           <width>436</width>
+           <width>200</width>
            <height>113</height>
           </size>
          </property>
@@ -305,7 +347,7 @@ QPushButton#Cancel_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>436</width>
+           <width>200</width>
            <height>113</height>
           </size>
          </property>
@@ -362,7 +404,7 @@ QPushButton#Finish_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>436</width>
+           <width>200</width>
            <height>113</height>
           </size>
          </property>

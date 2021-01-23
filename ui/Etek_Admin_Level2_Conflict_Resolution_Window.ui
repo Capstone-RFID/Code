@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Conflict_Window</class>
+ <widget class="QWidget" name="Conflict_Window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>762</width>
+    <height>514</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="Conflict_Prompt_Label">
+     <property name="text">
+      <string>Select one of the conflicting entries to keep then press confirm to delete all other conflicts</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="Display_Results_Table">
+     <column>
+      <property name="text">
+       <string>Conflict #</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Asset#</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Employee ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date checked out</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date checked in</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Conflict Msg</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="Back_Button">
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Confirm_Button">
+       <property name="text">
+        <string>Confirm</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
