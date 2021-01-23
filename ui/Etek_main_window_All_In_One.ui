@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1073</width>
-    <height>648</height>
+    <width>1342</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -106,7 +106,7 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Manual_Entry_Field_2">
+        <widget class="QLineEdit" name="Employee_ID_input">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -156,7 +156,7 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="Manual_Entry_Field">
+        <widget class="QLineEdit" name="Asset_input">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -180,24 +180,20 @@ font: 26pt &quot;MS Shell Dlg 2&quot;;
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QToolButton" name="Asset_Ok_Button">
+         <property name="styleSheet">
+          <string notr="true">QToolButton#Asset_Ok_Button {
+background-color: rgb(127, 127, 127);
+color: rgb(127, 127, 127);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="Instruction_Label">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
-font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Scan items or enter asset # above to check-in or check-out</string>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QTableWidget" name="Equipment_List">
@@ -240,52 +236,27 @@ background-color: rgb(78, 78, 78);
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="Instruction_Label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);
+font: 20pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Scan items or enter asset # above to check-in or check-out</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="sizeConstraint">
         <enum>QLayout::SetMinimumSize</enum>
        </property>
-       <item>
-        <widget class="QPushButton" name="RemoveItem_Button">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>113</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>208</width>
-           <height>113</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton#RemoveItem_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 26pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#RemoveItem_Button:pressed {
-    background-color: rgb(0, 0, 80);
-    border-style: inset;
-}</string>
-         </property>
-         <property name="text">
-          <string>Remove Item</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QPushButton" name="Cancel_Button">
          <property name="sizePolicy">
@@ -296,7 +267,7 @@ QPushButton#RemoveItem_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>436</width>
            <height>113</height>
           </size>
          </property>
@@ -347,7 +318,7 @@ QPushButton#Cancel_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>436</width>
            <height>113</height>
           </size>
          </property>
@@ -404,7 +375,7 @@ QPushButton#Finish_Button:pressed {
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>436</width>
            <height>113</height>
           </size>
          </property>
