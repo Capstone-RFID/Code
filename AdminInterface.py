@@ -43,6 +43,10 @@ class Admin_Interface(QWidget):
         self.reactor = reactor
         self.ui = Ui_Admin_Interface()
         self.ui.setupUi(self)
+        # ****************************************Private Var(s)*********************************
+
+        self.StateEntry = []
+        self.ItemEntry = []
 
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
@@ -97,6 +101,20 @@ class Admin_Interface(QWidget):
         if self.Employee_ID_Check(EmployeeNum):
             EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
             print(EmployeeAssetList)
+
+            for i in range(len(EmployeeAssetList)):
+                #Create a row
+                lastrow = self.ui.Search_Display_Results_Table.rowCount()
+                self.ui.Search_Display_Results_Table.insertRow(lastrow)
+
+                #
+                #employeeListTest = QTableWidgetItem((EmployeeAssetList[0][0]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EmployeeAssetList[i][0]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EmployeeAssetList[i][2]))
+
+
+
+
 
 
 

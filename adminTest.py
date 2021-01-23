@@ -18,13 +18,13 @@ import sys
 #Jon Addition
 from AdminInterface import Admin_Interface
 
-from Etek_main_window_All_In_One import Ui_Form
+from Etek_main_window_All_In_One import Ui_MainWindow
 
 class mainWindow(QWidget):
     def __init__(self):
         super(mainWindow, self).__init__()
         self.reactor = reactor
-        self.ui = Ui_Form()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.show()
         #initialize classes:

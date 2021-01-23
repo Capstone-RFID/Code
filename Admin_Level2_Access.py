@@ -12,6 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Admin_Interface(object):
+    def __init__(self):
+            self.Employee_ID_input = None
+
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
         Admin_Interface.resize(669, 617)

@@ -4,6 +4,8 @@
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin_Level2_Access.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin_Level2_Access.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adminTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/adminTest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,12 +256,29 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>112</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="EmployeeNum" />
         <watch expression="self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text())" />
+        <watch expression="EmployeeAssetList[0][0]" />
+        <watch expression="i" />
+        <watch expression="len(EmployeeAssetList)" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="118">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="136">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
