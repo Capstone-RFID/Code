@@ -89,14 +89,15 @@ class Admin_Interface(QWidget):
 
     def search_searchButtonClicked(self):
         print('Search Tab Search Button Clicked')
-        if self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text()):
-            EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
-            print(EmployeeNum)
+        #if self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text()):
+        EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+        print(EmployeeNum)
 
-            AssetLowerBound = self.ui.Search_Asset_Numbers_From_Field.text()
+        AssetLowerBound = self.ui.Search_Asset_Numbers_From_Field.text()
 
-            AssetUpperBound = self.ui.Search_Asset_Numbers_To_Field.text()
-
+        AssetUpperBound = self.ui.Search_Asset_Numbers_To_Field.text()
+        AssetList = self.Asset_Check(AssetLowerBound,AssetUpperBound)
+        print(AssetList)
         # Sample select query
         #self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
 
@@ -124,6 +125,7 @@ class Admin_Interface(QWidget):
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************
+    #Searches for employee_ID in database, returns true if it exists else returns false
     def Employee_ID_Check(self, input):
         check_query = '''SELECT TOP 1 * FROM Employee WHERE [Employee ID] = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
@@ -132,15 +134,24 @@ class Admin_Interface(QWidget):
         else:
             return False
 
+    #Searchs for a list of assets specified by lower and upper bound of asset #'s
+    #returns list within and including bounds
     def Asset_Check(self, LowerBound, UpperBound):
-        check_query = '''SELECT * FROM Asset WHERE (Asset# >=  (?)) OR (Asset# <=  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT * FROM Asset WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
-
-
         if self.cursor.fetchone():
-            return self.cursor.fetchall()
+            self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+            return True
         else:
             return False
 
+    def Asset_List_Fetch(self, LowerBound, UpperBound):
+        check_query = '''SELECT * FROM Asset WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+            return self.cursor.fetchall()
+        else:
+            return False
 
 
