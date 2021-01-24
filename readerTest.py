@@ -8,9 +8,10 @@ import subprocess
 import keyboard
 import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
-from Etek_main_window_All_In_One import Ui_MainWindow
+from Etek_main_window_v2 import Ui_MainWindow
 import time
 State_Log_Entry = []
 Item_Log_Entry = []
@@ -32,7 +33,7 @@ def cb(tagReport):
         # else:
         #     window.error_message("haha")
 
-        # if Employee_ID_Check(window.ui.Employee_ID_input.text()):
+        # if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         #     print(tags[0]['EPC-96'])
         #     rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
         #     cursor.execute(rfid_check_query, str(tags[0]['EPC-96']))
@@ -48,7 +49,7 @@ def cb(tagReport):
 
 
 def RFID(tag):
-    if Employee_ID_Check(window.ui.Employee_ID_input.text()):
+    if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         print(tag)
         rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
         cursor.execute(rfid_check_query, str(tag))
@@ -161,24 +162,40 @@ class mainWindow(QWidget):
         self.show()
         self.StateEntry = []
         self.ItemEntry = []
+        self.action_selected = "none"
+
         #connect button to functions
-        self.ui.Check_Out_Button.released.connect(self.check_out_button_clicked)  # button connected
-        self.ui.Finish_Button.released.connect(self.check_in_button_clicked)  # button connected
-        self.ui.Asset_Ok_Button.released.connect(self.asset_ok_button_clicked)
+        self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
+        self.ui.Asset_ID_Enter.released.connect(self.asset_enter_action)
         self.ui.Cancel_Button.released.connect(self.cancel_button_clicked)  # button connected
-        self.ui.Asset_input.returnPressed.connect(self.asset_ok_button_clicked)
-        self.ui.Employee_ID_input.returnPressed.connect(self.Employee_enter)
-        self.ui.Employee_ID_input.setFocus()
+        self.ui.Asset_ID_Input.returnPressed.connect(self.asset_enter_action)
+        self.ui.Employee_ID_Input.returnPressed.connect(self.Employee_enter)
+        self.ui.Employee_ID_Input.setFocus()
+        self.ui.Asset_ID_Input.setEnabled(False)
+
 
     def Employee_enter(self):
-        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
-            self.ui.Asset_input.setFocus()
+        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
+            #self.ui.Check_In_Box.setfocus()
+            self.ui.Asset_ID_Input.setEnabled(True)
+
+    def done_button_clicked(self):
+        if self.ui.Check_In_Box.isChecked():
+            print('Check IN action')
+            self.action_selected="checkout"
+        elif self.ui.Check_Out_Box.isChecked():
+            print('Check OUT action')
+            self.action_selected = "checkout"
+        if self.action_selected == "checkin":
+            self.check_in_action()
+        elif self.action_selected == "checkout":
+            self.check_out_action()
 
 
     def cancel_button_clicked(self):
-        self.ui.Employee_ID_input.setReadOnly(False)
-        self.ui.Employee_ID_input.clear()
-        self.ui.Asset_input.clear()
+        self.ui.Employee_ID_Input.setReadOnly(False)
+        self.ui.Employee_ID_Input.clear()
+        self.ui.Asset_ID_Input.clear()
         self.ItemEntry.clear()
         self.StateEntry.clear()
 
@@ -189,21 +206,17 @@ class mainWindow(QWidget):
         error_dialog.exec_()
         return
 
-    def asset_ok_button_clicked(self):
-        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
-            self.ui.Employee_ID_input.setReadOnly(True)
-            Asset = self.ui.Asset_input.text()
+    def asset_enter_action(self):
+        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
+            self.ui.Employee_ID_Input.setReadOnly(True)
+            Asset = self.ui.Asset_ID_Input.text()
             #self.ItemEntry.append(Asset)
             print('Asset Number:' + Asset)
             if Asset_Check(Asset):
                 if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
-                    lastrow = self.ui.Equipment_List.rowCount()
-                    self.ui.Equipment_List.insertRow(lastrow)
-                    item = QTableWidgetItem(Asset)
-
-                    self.ui.Equipment_List.setItem(lastrow, 0, item)
+                    self.ui.New_Item_List.addItem(Asset)
                     #apend the entrieds into a list
-                    self.StateEntry.append(self.ui.Employee_ID_input.text())
+                    self.StateEntry.append(self.ui.Employee_ID_Input.text())
                     self.ItemEntry.append(Asset)
                 else:
                      print('already in list')
@@ -216,7 +229,7 @@ class mainWindow(QWidget):
                      # duplicate = QMessageBox()
                      # duplicate.setText('duplicate')
 
-                self.ui.Asset_input.clear()
+                self.ui.Asset_ID_Input.clear()
             else:
 
                 print('invalid Asset')
@@ -233,24 +246,24 @@ class mainWindow(QWidget):
             return
 
     def rfid_insert(self, asset):
-        self.ui.Asset_input.clear()
-        self.ui.Asset_input.insert(asset)
-        self.asset_ok_button_clicked()
+        self.ui.Asset_ID_Input.clear()
+        self.ui.Asset_ID_Input.insert(asset)
+        self.asset_enter_action()
 
 
 
-    def check_in_button_clicked(self):
+    def check_in_action(self):
         print("'ha")
 
         # filterInfo(self.EmployeeID)
         # global readFlag
         # readFlag = True
 
-    def check_out_button_clicked(self):
+    def check_out_action(self):
         global State_Log_Entry
         global Item_Log_Entry
         # self.ui.Employee_ID_input.clear()
-        if Employee_ID_Check(self.ui.Employee_ID_input.text()):
+        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             print('Valid Employee ID. ')
             time = datetime.now()
             datevar = date.today()
