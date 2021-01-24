@@ -72,7 +72,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -92,7 +92,7 @@ class Admin_Interface(QWidget):
     def home_syncButtonClicked(self):
 
         print("Home Sync Button Clicked")
-
+    #Generates list of assets in event log based on Employee ID search Filter
     def search_searchIDButtonClicked(self):
         print('Search Tab Search ID Button Clicked')
         #if self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text()):
@@ -111,21 +111,24 @@ class Admin_Interface(QWidget):
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EmployeeAssetList[i][3]))
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EmployeeAssetList[i][2]))
 
-
-
-
-
-
-
-
+    # Generates list of EmployeeID in event log based on Assets in search Filter
     def search_searchAssetButtonClicked(self):
         print('Search Tab Search Asset Button Clicked')
-        AssetLowerBound = self.ui.Search_Asset_Numbers_From_Field.text()
+        AssetNum= self.ui.Search_Asset_Numbers_From_Field.text()
+        #AssetList = self.Asset_Check(AssetNum)
+        #print(self.Asset_List_Fetch(AssetNum))
 
-        AssetUpperBound = self.ui.Search_Asset_Numbers_To_Field.text()
-        AssetList = self.Asset_Check(AssetLowerBound,AssetUpperBound)
-        print(AssetList)
+        if self.Asset_Check(AssetNum):
+            AssetList = self.Asset_List_Fetch(AssetNum)
+            print(AssetList)
 
+            for i in range(len(AssetList)):
+                # Create a row
+                lastrow = self.ui.Search_Display_Results_Table.rowCount()
+                self.ui.Search_Display_Results_Table.insertRow(lastrow)
+                #Show items on row in interface
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(AssetList[i][3]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(AssetList[i][2]))
 
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
@@ -178,20 +181,20 @@ class Admin_Interface(QWidget):
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
-    def Asset_Check(self, LowerBound, UpperBound):
-        check_query = '''SELECT * FROM [Asset Table] WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
-        self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
+    def Asset_Check(self, AssetNum):
+        check_query = '''SELECT * FROM [Asset Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetNum))
         if self.cursor.fetchone():
-            self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+            self.cursor.execute(check_query, str(AssetNum))
             return True
         else:
             return False
 
-    def Asset_List_Fetch(self, LowerBound, UpperBound):
-        check_query = '''SELECT * FROM [Asset Table] WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
-        self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
+    def Asset_List_Fetch(self, AssetNum):
+        check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetNum))
         if self.cursor.fetchone():
-            self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+            self.cursor.execute(check_query, str(AssetNum))
             return self.cursor.fetchall()
         else:
             return False
