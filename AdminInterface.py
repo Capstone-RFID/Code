@@ -109,7 +109,7 @@ class Admin_Interface(QWidget):
 
                 #
                 #employeeListTest = QTableWidgetItem((EmployeeAssetList[0][0]))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EmployeeAssetList[i][0]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EmployeeAssetList[i][3]))
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EmployeeAssetList[i][2]))
 
 
@@ -158,7 +158,7 @@ class Admin_Interface(QWidget):
     # ****************************************Class Methods for Running Queries*******************************
     #Searches for employee_ID in database, returns true if it exists else returns false
     def Employee_ID_Check(self, input):
-        check_query = '''SELECT TOP 1 * FROM Employee WHERE [Employee ID] = (?);'''  # '?' is a placeholder
+        check_query = '''SELECT TOP 1 * FROM Employee WHERE EmployeeID = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
             print('This ID exists!')
@@ -167,7 +167,7 @@ class Admin_Interface(QWidget):
             return False
 
     def Employee_ID_FindAssets(self, input):
-        check_query = '''SELECT * FROM Asset WHERE ([Employee ID]=  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT * FROM [Event Log] WHERE (EmployeeID =  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
             print('This ID has used assets!')
