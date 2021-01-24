@@ -262,7 +262,7 @@
         <watch expression="i" />
         <watch expression="len(EmployeeAssetList)" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="136">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="134">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>

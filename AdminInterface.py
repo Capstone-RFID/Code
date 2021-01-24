@@ -107,8 +107,7 @@ class Admin_Interface(QWidget):
                 lastrow = self.ui.Search_Display_Results_Table.rowCount()
                 self.ui.Search_Display_Results_Table.insertRow(lastrow)
 
-                #
-                #employeeListTest = QTableWidgetItem((EmployeeAssetList[0][0]))
+                #Show items on row in interface
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EmployeeAssetList[i][3]))
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EmployeeAssetList[i][2]))
 
@@ -126,8 +125,7 @@ class Admin_Interface(QWidget):
         AssetUpperBound = self.ui.Search_Asset_Numbers_To_Field.text()
         AssetList = self.Asset_Check(AssetLowerBound,AssetUpperBound)
         print(AssetList)
-        # Sample select query
-        #self.cursor.execute("SELECT Status, [Employee ID] FROM Asset")
+
 
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
@@ -158,7 +156,7 @@ class Admin_Interface(QWidget):
     # ****************************************Class Methods for Running Queries*******************************
     #Searches for employee_ID in database, returns true if it exists else returns false
     def Employee_ID_Check(self, input):
-        check_query = '''SELECT TOP 1 * FROM Employee WHERE EmployeeID = (?);'''  # '?' is a placeholder
+        check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
             print('This ID exists!')
@@ -167,7 +165,7 @@ class Admin_Interface(QWidget):
             return False
 
     def Employee_ID_FindAssets(self, input):
-        check_query = '''SELECT * FROM [Event Log] WHERE (EmployeeID =  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT * FROM [Event Log Table] WHERE (EmployeeID =  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
             print('This ID has used assets!')
@@ -181,7 +179,7 @@ class Admin_Interface(QWidget):
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
     def Asset_Check(self, LowerBound, UpperBound):
-        check_query = '''SELECT * FROM Asset WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT * FROM [Asset Table] WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
@@ -190,7 +188,7 @@ class Admin_Interface(QWidget):
             return False
 
     def Asset_List_Fetch(self, LowerBound, UpperBound):
-        check_query = '''SELECT * FROM Asset WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT * FROM [Asset Table] WHERE (Asset# >=  (?)) AND (Asset# <=  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(LowerBound),str(UpperBound))
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
