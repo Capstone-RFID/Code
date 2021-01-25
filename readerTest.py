@@ -162,10 +162,10 @@ class mainWindow(QWidget):
         self.show()
         self.StateEntry = []
         self.ItemEntry = []
-        self.action_selected = "none"
 
         #connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
+        self.ui.Employee_ID_Enter.released.connect(self.Employee_enter)
         self.ui.Asset_ID_Enter.released.connect(self.asset_enter_action)
         self.ui.Cancel_Button.released.connect(self.cancel_button_clicked)  # button connected
         self.ui.Asset_ID_Input.returnPressed.connect(self.asset_enter_action)
@@ -178,24 +178,28 @@ class mainWindow(QWidget):
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             #self.ui.Check_In_Box.setfocus()
             self.ui.Asset_ID_Input.setEnabled(True)
+            self.ui.Employee_ID_Input.setReadOnly(True)
+        else:
+            self.error_message("Enter a valid Employee ID")
 
     def done_button_clicked(self):
+        self.StateEntry.append(self.ui.Employee_ID_Input.text())
         if self.ui.Check_In_Box.isChecked():
             print('Check IN action')
-            self.action_selected="checkout"
+            self.check_in_action()
         elif self.ui.Check_Out_Box.isChecked():
             print('Check OUT action')
-            self.action_selected = "checkout"
-        if self.action_selected == "checkin":
-            self.check_in_action()
-        elif self.action_selected == "checkout":
             self.check_out_action()
+        else:
+            self.error_message("Please select Check-In or Check-out action")
+            self.StateEntry.clear()
 
 
     def cancel_button_clicked(self):
         self.ui.Employee_ID_Input.setReadOnly(False)
         self.ui.Employee_ID_Input.clear()
         self.ui.Asset_ID_Input.clear()
+        self.ui.Asset_ID_Input.setEnabled(False)
         self.ItemEntry.clear()
         self.StateEntry.clear()
 
@@ -215,34 +219,18 @@ class mainWindow(QWidget):
             if Asset_Check(Asset):
                 if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
                     self.ui.New_Item_List.addItem(Asset)
-                    #apend the entrieds into a list
-                    self.StateEntry.append(self.ui.Employee_ID_Input.text())
+                    #apend the entries into a list
                     self.ItemEntry.append(Asset)
                 else:
                      print('already in list')
-                    # text = str('already in list')
-                     #self.error_message(text)
-                     # error_dialog = QtWidgets.QErrorMessage()
-                     # error_dialog.showMessage('Enter an Valid Asset Number')
-                     # error_dialog.setWindowTitle("Error")
-                     # error_dialog.exec_()
-                     # duplicate = QMessageBox()
-                     # duplicate.setText('duplicate')
-
+                     self.error_message("Asset already selected")
                 self.ui.Asset_ID_Input.clear()
             else:
-
                 print('invalid Asset')
-                error_dialog = QtWidgets.QErrorMessage()
-                error_dialog.showMessage('Enter an Valid Asset Number')
-                error_dialog.setWindowTitle("Error")
-                error_dialog.exec_()
+                self.error_message("Enter a valid Asset ID")
             return
         else:
-            error_dialog = QtWidgets.QErrorMessage()
-            error_dialog.showMessage('Invalid Employee ID')
-            error_dialog.setWindowTitle("Error")
-            error_dialog.exec_()
+            self.error_message('Invalid Employee ID')
             return
 
     def rfid_insert(self, asset):
@@ -253,52 +241,76 @@ class mainWindow(QWidget):
 
 
     def check_in_action(self):
-        print("'ha")
-
-        # filterInfo(self.EmployeeID)
-        # global readFlag
-        # readFlag = True
-
-    def check_out_action(self):
-        global State_Log_Entry
-        global Item_Log_Entry
         # self.ui.Employee_ID_input.clear()
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             print('Valid Employee ID. ')
-            time = datetime.now()
-            datevar = date.today()
-            for employee in self.StateEntry:
-                State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), "2"])
-            for asset in self.ItemEntry:
-                Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
-
-            insert_item_query = '''INSERT INTO Item_Log_Table (TIMESTAMP,ASSETID)
-                                    VALUES (?,?); '''  # '?' is a placeholder
-            insert_state_query = '''INSERT INTO State_Log_Table (EMPLOYEEID,TIMESTAMP,STATUS)
-                                                VALUES (?,?,?);'''  # '?' is a placeholder
-
-            # loop thru each row in the matrix
-            for entry in Item_Log_Entry:
-                # define the values to insert
-                itemValues = (entry[0], entry[1])
-                print(itemValues)
-                # insert the data into the database
-                cursor.execute(insert_item_query, itemValues)
-
-
-            for entry in State_Log_Entry:
-                # define the values to insert
-                stateValues = (entry[0], entry[1],entry[2])
-                print(stateValues)
-                # insert the data into the database
-                cursor.execute(insert_state_query, stateValues)
-
-            # commit the inserts
-            cnxn.commit()
+            self.sql_call("1")
         else:
             print('invalid employee ID. Please try again. ')
-
             return
+
+    def check_out_action(self):
+        # self.ui.Employee_ID_input.clear()
+        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
+            print('Valid Employee ID. ')
+            self.sql_call("2")
+        else:
+            print('invalid employee ID. Please try again. ')
+            return
+
+    def sql_call(self,status):
+        global State_Log_Entry
+        global Item_Log_Entry
+        time = datetime.now()
+        datevar = date.today()
+        for employee in self.StateEntry:
+            State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), status])
+        for asset in self.ItemEntry:
+            Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
+
+        insert_item_query = '''INSERT INTO Item_Log_Table(TIMESTAMP,ASSETID)
+                                           VALUES (?,?);'''  # '?' is a placeholder
+        insert_state_query = '''INSERT INTO State_Log_Table(EMPLOYEEID,TIMESTAMP,STATUS)
+                                                       VALUES (?,?,?);'''  # '?' is a placeholder
+        for entry in State_Log_Entry:
+            # define the values to insert
+            stateValues = (entry[0], entry[1], entry[2])
+            print(stateValues)
+            # insert the data into the database
+            cursor.execute(insert_state_query, stateValues)
+        # commit the inserts
+        cnxn.commit()
+
+        # loop thru each row in the matrix
+        for entry in Item_Log_Entry:
+            # define the values to insert
+            itemValues = (entry[0], entry[1])
+            print(itemValues)
+            # insert the data into the database
+            cursor.execute(insert_item_query,itemValues)
+        cnxn.commit()
+
+
+
+        # insert_event_query = ''' INSERT INTO
+        #                          Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
+        #                          SELECT
+        #                          State_Log_Table.EMPLOYEEID, State_Log_Table.TIMESTAMP,Item_Log_Table.AssetID, State_Log_Table.STATUS
+        #                          FROM
+        #                          State_Log_Table
+        #                          FULL OUTER JOIN Item_Log_Table
+        #                          ON
+        #                          State_Log_Table.TIMESTAMP = Item_Log_Table.TIMESTAMP;
+        #                         '''
+
+        # cursor.execute(insert_event_query)
+        # cnxn.commit()
+        self.StateEntry.clear()
+        self.ItemEntry.clear()
+        State_Log_Entry.clear()
+        Item_Log_Entry.clear()
+        return
+
 
     def testfunction(self):
         print('hello')

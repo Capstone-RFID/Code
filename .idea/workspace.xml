@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Etek_main_window_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Etek_main_window_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" afterDir="false" />
     </list>
@@ -19,8 +19,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/readerTest.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-582">
-                  <caret line="215" column="110" selection-start-line="215" selection-start-column="110" selection-end-line="215" selection-end-column="110" />
+                <state relative-caret-position="187">
+                  <caret line="310" column="30" lean-forward="true" selection-start-line="310" selection-start-column="30" selection-end-line="310" selection-end-column="30" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -44,7 +44,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="366">
+                <state relative-caret-position="2040">
                   <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
                 </state>
               </provider>
@@ -54,7 +54,7 @@
             <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="332">
-                  <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
+                  <caret line="67" selection-start-line="67" selection-end-line="67" />
                 </state>
               </provider>
             </entry>
@@ -265,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611278268187</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="New GUI integrated">
+      <created>1611514390059</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611514390059</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -285,8 +292,8 @@
       <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.09694415" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2588889" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2588889" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -303,7 +310,8 @@
     <MESSAGE value="Able to stote manual entried effectively" />
     <MESSAGE value="Started RFID itegration (work in progress)" />
     <MESSAGE value="Problem with RFID duplicate asset error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Problem with RFID duplicate asset error" />
+    <MESSAGE value="New GUI integrated" />
+    <option name="LAST_COMMIT_MESSAGE" value="New GUI integrated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -313,13 +321,27 @@
           <line>67</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>279</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>289</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="Check_In_Box.checkState()" />
-        <watch expression="self.ui.Check_In_Box.checkState()" />
-        <watch expression="self.ui.Check_Out_Box.checkState()" />
+        <watch expression="State_Log_Entry" />
+        <watch expression="Item_Log_Entry" />
       </configuration>
     </watches-manager>
   </component>
@@ -348,6 +370,9 @@
     <entry file="file://$PROJECT_DIR$/Main_window_widget2.py" />
     <entry file="file://$PROJECT_DIR$/Etek_main_window.py" />
     <entry file="file://$PROJECT_DIR$/Etek_check_in_window.py" />
+    <entry file="file://$PROJECT_DIR$/ui/Etek_main_window_v2.ui">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/sllurp/llrp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6868">
@@ -357,7 +382,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
+        <state relative-caret-position="2040">
           <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
         </state>
       </provider>
@@ -369,23 +394,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/Etek_main_window_v2.ui">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/readerTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="310" column="30" lean-forward="true" selection-start-line="310" selection-start-column="30" selection-end-line="310" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
-          <caret line="67" column="24" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/readerTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-582">
-          <caret line="215" column="110" selection-start-line="215" selection-start-column="110" selection-end-line="215" selection-end-column="110" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
         </state>
       </provider>
     </entry>
