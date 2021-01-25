@@ -12,12 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Admin_Interface(object):
-    def __init__(self):
-            self.Employee_ID_input = None
-
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(669, 617)
+        Admin_Interface.resize(667, 610)
         Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -95,38 +92,6 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Datetime_From_Label.setObjectName("Search_Datetime_From_Label")
         self.gridLayout.addWidget(self.Search_Datetime_From_Label, 1, 0, 1, 1)
-        self.Search_SearchDate_Query_Button = QtWidgets.QPushButton(self.Search_Tab)
-        self.Search_SearchDate_Query_Button.setMinimumSize(QtCore.QSize(186, 51))
-        self.Search_SearchDate_Query_Button.setMaximumSize(QtCore.QSize(186, 51))
-        self.Search_SearchDate_Query_Button.setStyleSheet("QPushButton#Search_SearchDate_Query_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
-"color: rgb(255, 255, 255);\n"
-"border-style: outset;\n"
-"border-width: 2px;\n"
-"border-radius: 10px;\n"
-"border-color: beige;\n"
-"font: 14pt \"MS Shell Dlg 2\";\n"
-"min-width: 10em;\n"
-"padding: 6px;\n"
-"}\n"
-"QPushButton#Search_SearchDate_Query_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
-"    border-style: inset;\n"
-"}")
-        self.Search_SearchDate_Query_Button.setObjectName("Search_SearchDate_Query_Button")
-        self.gridLayout.addWidget(self.Search_SearchDate_Query_Button, 1, 2, 2, 1)
-        self.Search_Asset_Num_To_Label = QtWidgets.QLabel(self.Search_Tab)
-        self.Search_Asset_Num_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Asset_Num_To_Label.setObjectName("Search_Asset_Num_To_Label")
-        self.gridLayout.addWidget(self.Search_Asset_Num_To_Label, 7, 0, 1, 1)
-        self.Search_Asset_Numbers_To_Field = QtWidgets.QLineEdit(self.Search_Tab)
-        self.Search_Asset_Numbers_To_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Search_Asset_Numbers_To_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Asset_Numbers_To_Field.setObjectName("Search_Asset_Numbers_To_Field")
-        self.gridLayout.addWidget(self.Search_Asset_Numbers_To_Field, 7, 1, 1, 1)
         self.Search_Datetime_To = QtWidgets.QDateTimeEdit(self.Search_Tab)
         self.Search_Datetime_To.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -141,43 +106,11 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Employee_ID_Entry_Field.setObjectName("Search_Employee_ID_Entry_Field")
         self.gridLayout.addWidget(self.Search_Employee_ID_Entry_Field, 4, 1, 1, 1)
-        self.Search_SearchID_Query_Button = QtWidgets.QPushButton(self.Search_Tab)
-        self.Search_SearchID_Query_Button.setMinimumSize(QtCore.QSize(186, 51))
-        self.Search_SearchID_Query_Button.setMaximumSize(QtCore.QSize(186, 51))
-        self.Search_SearchID_Query_Button.setStyleSheet("QPushButton#Search_SearchID_Query_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
-"color: rgb(255, 255, 255);\n"
-"border-style: outset;\n"
-"border-width: 2px;\n"
-"border-radius: 10px;\n"
-"border-color: beige;\n"
-"font: 14pt \"MS Shell Dlg 2\";\n"
-"min-width: 10em;\n"
-"padding: 6px;\n"
-"}\n"
-"QPushButton#Search_SearchID_Query_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
-"    border-style: inset;\n"
-"}")
-        self.Search_SearchID_Query_Button.setObjectName("Search_SearchID_Query_Button")
-        self.gridLayout.addWidget(self.Search_SearchID_Query_Button, 4, 2, 1, 1)
         self.Search_Employee_ID_Label = QtWidgets.QLabel(self.Search_Tab)
         self.Search_Employee_ID_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Employee_ID_Label.setObjectName("Search_Employee_ID_Label")
         self.gridLayout.addWidget(self.Search_Employee_ID_Label, 4, 0, 1, 1)
-        self.Search_Asset_Num_From_Label = QtWidgets.QLabel(self.Search_Tab)
-        self.Search_Asset_Num_From_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Asset_Num_From_Label.setObjectName("Search_Asset_Num_From_Label")
-        self.gridLayout.addWidget(self.Search_Asset_Num_From_Label, 6, 0, 1, 1)
-        self.Search_Asset_Numbers_From_Field = QtWidgets.QLineEdit(self.Search_Tab)
-        self.Search_Asset_Numbers_From_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Search_Asset_Numbers_From_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Asset_Numbers_From_Field.setObjectName("Search_Asset_Numbers_From_Field")
-        self.gridLayout.addWidget(self.Search_Asset_Numbers_From_Field, 6, 1, 1, 1)
         self.Search_SearchAsset_Query_Button = QtWidgets.QPushButton(self.Search_Tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -220,6 +153,18 @@ class Ui_Admin_Interface(object):
 "font: Bold 14pt \"MS Shell Dlg 2\";")
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
+        self.Search_Asset_Numbers_Field = QtWidgets.QLineEdit(self.Search_Tab)
+        self.Search_Asset_Numbers_Field.setMinimumSize(QtCore.QSize(0, 25))
+        self.Search_Asset_Numbers_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Asset_Numbers_Field.setObjectName("Search_Asset_Numbers_Field")
+        self.gridLayout.addWidget(self.Search_Asset_Numbers_Field, 7, 1, 1, 1)
+        self.Search_Asset_Num_From_Label = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Asset_Num_From_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Asset_Num_From_Label.setObjectName("Search_Asset_Num_From_Label")
+        self.gridLayout.addWidget(self.Search_Asset_Num_From_Label, 7, 0, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -626,13 +571,10 @@ class Ui_Admin_Interface(object):
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Home_Tab), _translate("Admin_Interface", "Home"))
         self.Search_Datetime_To_Label.setText(_translate("Admin_Interface", "Date/Time To:"))
         self.Search_Datetime_From_Label.setText(_translate("Admin_Interface", "Date/Time From:"))
-        self.Search_SearchDate_Query_Button.setText(_translate("Admin_Interface", "Search Date"))
-        self.Search_Asset_Num_To_Label.setText(_translate("Admin_Interface", "Assest Numbers To:"))
-        self.Search_SearchID_Query_Button.setText(_translate("Admin_Interface", "Search ID"))
         self.Search_Employee_ID_Label.setText(_translate("Admin_Interface", "Employee ID:"))
-        self.Search_Asset_Num_From_Label.setText(_translate("Admin_Interface", "Asset Numbers From:"))
         self.Search_SearchAsset_Query_Button.setText(_translate("Admin_Interface", "Search Asset"))
         self.label_2.setText(_translate("Admin_Interface", "Search Filters"))
+        self.Search_Asset_Num_From_Label.setText(_translate("Admin_Interface", "Asset Numbers:"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset#"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(1)
