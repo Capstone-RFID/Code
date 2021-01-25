@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>669</width>
-    <height>617</height>
+    <width>667</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -176,68 +176,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="2" rowspan="2">
-            <widget class="QPushButton" name="Search_SearchDate_Query_Button">
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Search_SearchDate_Query_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Search_SearchDate_Query_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Search Date</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="Search_Asset_Num_To_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Assest Numbers To:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLineEdit" name="Search_Asset_Numbers_To_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="1">
             <widget class="QDateTimeEdit" name="Search_Datetime_To">
              <property name="minimumSize">
@@ -268,42 +206,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="2">
-            <widget class="QPushButton" name="Search_SearchID_Query_Button">
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Search_SearchID_Query_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Search_SearchID_Query_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Search ID</string>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="0">
             <widget class="QLabel" name="Search_Employee_ID_Label">
              <property name="styleSheet">
@@ -312,32 +214,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
               <string>Employee ID:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="Search_Asset_Num_From_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asset Numbers From:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLineEdit" name="Search_Asset_Numbers_From_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
@@ -469,6 +345,32 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
               <string>Search Filters</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLineEdit" name="Search_Asset_Numbers_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="Search_Asset_Num_From_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Asset Numbers:</string>
              </property>
             </widget>
            </item>
