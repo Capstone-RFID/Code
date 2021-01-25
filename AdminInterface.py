@@ -72,7 +72,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -90,8 +90,8 @@ class Admin_Interface(QWidget):
 
     #****************************************Class Methods for Tab Button(s)*********************************
     def home_syncButtonClicked(self):
-
         print("Home Sync Button Clicked")
+
     #Generates list of assets in event log based on Employee ID search Filter
     def search_searchIDButtonClicked(self):
         print('Search Tab Search ID Button Clicked')
@@ -103,37 +103,24 @@ class Admin_Interface(QWidget):
             self.search_PopulateTable(EmployeeAssetList)
     # Generates list of EmployeeID in event log based on Assets in search Filter
 
-
-
-    def search_fetchAssetAndID(self,Asset,ID):
-
-
-        if self.Employee_ID_Check(ID) and self.Asset_Check(Asset):
-            print('Both the asset and employee ID are valid!')
-            #QUESTION: Do we want to return all entries w/ the asset ID OR the Employee ID or should it be an AND statement?
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID = (?) AND EmployeeID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(Asset),str(ID))
-            if self.cursor.fetchone():
-                print('This employee has used the specified asset')
-                self.cursor.execute(check_query, str(Asset),str(ID))
-                return self.cursor.fetchall()
-            else:
-                print('This employee has not used the specified asset')
-                return False
-
-
-
-
     def search_searchAssetButtonClicked(self):
         print('Search Tab Search Asset Button Clicked')
         AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
 
-        #if AssetNum != ''
-
         if self.Asset_Check(AssetNum):
             AssetList = self.Asset_List_Fetch(AssetNum)
             self.search_PopulateTable(AssetList)
+
+    def search_searchAssetandIDButtonClicked(self):
+        print('Search Tab Search Asset and ID Button Clicked')
+        AssetNum = self.ui.Search_Asset_Numbers_Field.text()
+        EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+
+        if self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum):
+           EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum, EmployeeNum)
+           if EmployeeAndAssetList:
+            self.search_PopulateTable(EmployeeAndAssetList)
 
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
@@ -194,8 +181,7 @@ class Admin_Interface(QWidget):
         elif self.ui.Search_Asset_Numbers_Field.text() and not self.ui.Search_Employee_ID_Entry_Field.text():
             self.search_searchAssetButtonClicked()
         elif self.ui.Search_Asset_Numbers_Field.text() and self.ui.Search_Employee_ID_Entry_Field.text():
-            EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum,EmployeeNum)
-            self.search_PopulateTable(EmployeeAndAssetList)
+            self.search_searchAssetandIDButtonClicked()
         elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
             print("No Asset or Employee ID Entered!")
 
@@ -232,4 +218,18 @@ class Admin_Interface(QWidget):
         else:
             return False
 
+    def search_fetchAssetAndID(self,Asset,ID):
+
+        if self.Employee_ID_Check(ID) and self.Asset_Check(Asset):
+            print('Both the asset and employee ID are valid!')
+            #QUESTION: Do we want to return all entries w/ the asset ID OR the Employee ID or should it be an AND statement?
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID = (?) AND EmployeeID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(Asset),str(ID))
+            if self.cursor.fetchone():
+                print('This employee has used the specified asset')
+                self.cursor.execute(check_query, str(Asset),str(ID))
+                return self.cursor.fetchall()
+            else:
+                print('This employee has not used the specified asset')
+                return False
 
