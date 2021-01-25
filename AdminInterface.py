@@ -178,8 +178,14 @@ class Admin_Interface(QWidget):
         else:
             print('This ID has not used assets!')
             return False
+    def search_clearTableResults(self):
+        self.ui.Search_Display_Results_Table.setRowCount(0)
+
 
     def search_checkFieldInputs(self):
+
+        self.search_clearTableResults()
+
         AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
 
