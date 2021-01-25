@@ -52,9 +52,9 @@ class Admin_Interface(QWidget):
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
-        self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
-        self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_searchAssetButtonClicked)
-        self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
+        #self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
+        self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_checkFieldInputs)
+        #self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
         self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
 
         # ****************************************Edit Tab Button(s)*********************************
@@ -72,7 +72,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'CKERR-THINKPAD'
+        server = 'BIGACER'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -100,43 +100,44 @@ class Admin_Interface(QWidget):
 
         if self.Employee_ID_Check(EmployeeNum):
             EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
-            print(EmployeeAssetList)
-
-            for i in range(len(EmployeeAssetList)):
-                #Create a row
-                lastrow = self.ui.Search_Display_Results_Table.rowCount()
-                self.ui.Search_Display_Results_Table.insertRow(lastrow)
-
-                #Show items on row in interface
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EmployeeAssetList[i][3]))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EmployeeAssetList[i][2]))
-
+            self.search_PopulateTable(EmployeeAssetList)
     # Generates list of EmployeeID in event log based on Assets in search Filter
+
+
+
+    def search_fetchAssetAndID(self,Asset,ID):
+
+
+        if self.Employee_ID_Check(ID) and self.Asset_Check(Asset):
+            print('Both the asset and employee ID are valid!')
+            #QUESTION: Do we want to return all entries w/ the asset ID OR the Employee ID or should it be an AND statement?
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID = (?) AND EmployeeID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(Asset),str(ID))
+            if self.cursor.fetchone():
+                print('This employee has used the specified asset')
+                self.cursor.execute(check_query, str(Asset),str(ID))
+                return self.cursor.fetchall()
+            else:
+                print('This employee has not used the specified asset')
+                return False
+
+
+
+
     def search_searchAssetButtonClicked(self):
         print('Search Tab Search Asset Button Clicked')
-        AssetNum= self.ui.Search_Asset_Numbers_From_Field.text()
-        #AssetList = self.Asset_Check(AssetNum)
-        #print(self.Asset_List_Fetch(AssetNum))
+        AssetNum = self.ui.Search_Asset_Numbers_Field.text()
+        EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+
+        #if AssetNum != ''
 
         if self.Asset_Check(AssetNum):
             AssetList = self.Asset_List_Fetch(AssetNum)
-            print(AssetList)
-
-            for i in range(len(AssetList)):
-                # Create a row
-                lastrow = self.ui.Search_Display_Results_Table.rowCount()
-                self.ui.Search_Display_Results_Table.insertRow(lastrow)
-                #Show items on row in interface
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(AssetList[i][3]))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(AssetList[i][2]))
+            self.search_PopulateTable(AssetList)
 
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
 
-      #  for entries in self.cursor.fetchall():
-      #      print(entries)
-      #      test = entries[1]
-      #      print(test)
 
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
@@ -178,6 +179,32 @@ class Admin_Interface(QWidget):
             print('This ID has not used assets!')
             return False
 
+    def search_checkFieldInputs(self):
+        AssetNum = self.ui.Search_Asset_Numbers_Field.text()
+        EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+
+        if self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
+            self.search_searchIDButtonClicked()
+        elif self.ui.Search_Asset_Numbers_Field.text() and not self.ui.Search_Employee_ID_Entry_Field.text():
+            self.search_searchAssetButtonClicked()
+        elif self.ui.Search_Asset_Numbers_Field.text() and self.ui.Search_Employee_ID_Entry_Field.text():
+            EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum,EmployeeNum)
+            self.search_PopulateTable(EmployeeAndAssetList)
+        elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
+            print("No Asset or Employee ID Entered!")
+
+    def search_PopulateTable(self, EntryList):
+        #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+        print(EntryList)
+
+        for i in range(len(EntryList)):
+            # Create a row
+            lastrow = self.ui.Search_Display_Results_Table.rowCount()
+            self.ui.Search_Display_Results_Table.insertRow(lastrow)
+
+            # Show items on row in interface
+            self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
+            self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds

@@ -254,6 +254,15 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="EmployeeNum" />
@@ -262,7 +271,7 @@
         <watch expression="i" />
         <watch expression="len(EmployeeAssetList)" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="134">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="139">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
