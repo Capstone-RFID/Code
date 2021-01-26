@@ -211,8 +211,6 @@ class mainWindow(QWidget):
         return
 
     def asset_enter_action(self):
-        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
-            self.ui.Employee_ID_Input.setReadOnly(True)
             Asset = self.ui.Asset_ID_Input.text()
             #self.ItemEntry.append(Asset)
             print('Asset Number:' + Asset)
@@ -229,16 +227,11 @@ class mainWindow(QWidget):
                 print('invalid Asset')
                 self.error_message("Enter a valid Asset ID")
             return
-        else:
-            self.error_message('Invalid Employee ID')
-            return
 
     def rfid_insert(self, asset):
         self.ui.Asset_ID_Input.clear()
         self.ui.Asset_ID_Input.insert(asset)
         self.asset_enter_action()
-
-
 
     def check_in_action(self):
         # self.ui.Employee_ID_input.clear()
@@ -311,6 +304,36 @@ class mainWindow(QWidget):
         Item_Log_Entry.clear()
         return
 
+    def current_items(self):
+        '''
+        SELECT AssetID
+FROM
+(
+SELECT *
+FROM
+(
+SELECT TOP(999999999999)
+Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
+FROM
+Event_Log_Table
+WHERE 
+Event_Log_Table.EmployeeID = '00123' 
+ORDER BY Event_Log_Table.Entry DESC
+)AS subquery
+WHERE
+Entry in (Select max(Entry) FROM  (
+SELECT TOP(999999999999)
+Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
+FROM
+Event_Log_Table
+WHERE 
+Event_Log_Table.EmployeeID = '00123' 
+ORDER BY Event_Log_Table.Entry DESC
+)AS subquery group by AssetID)
+)AS final_result 
+WHERE
+Status = '2' '''
+        return
 
     def testfunction(self):
         print('hello')
