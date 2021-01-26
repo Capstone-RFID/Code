@@ -161,7 +161,12 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <string notr="true">
 color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+
+QDateTimeEdit::AmPmSection = 0</string>
+             </property>
+             <property name="displayFormat">
+              <string>M/d/yyyy hh:mm </string>
              </property>
             </widget>
            </item>
@@ -188,6 +193,19 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="minimumDateTime">
+              <datetime>
+               <hour>0</hour>
+               <minute>0</minute>
+               <second>0</second>
+               <year>1752</year>
+               <month>9</month>
+               <day>14</day>
+              </datetime>
+             </property>
+             <property name="displayFormat">
+              <string>M/d/yyyy hh:mm</string>
              </property>
             </widget>
            </item>

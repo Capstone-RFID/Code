@@ -84,7 +84,9 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_From.setStyleSheet("\n"
 "color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"\n"
+"QDateTimeEdit::AmPmSection = 0")
         self.Search_Datetime_From.setObjectName("Search_Datetime_From")
         self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
         self.Search_Datetime_From_Label = QtWidgets.QLabel(self.Search_Tab)
@@ -97,6 +99,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_To.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1752, 9, 14), QtCore.QTime(0, 0, 0)))
         self.Search_Datetime_To.setObjectName("Search_Datetime_To")
         self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
         self.Search_Employee_ID_Entry_Field = QtWidgets.QLineEdit(self.Search_Tab)
@@ -570,7 +573,9 @@ class Ui_Admin_Interface(object):
         self.Home_Force_Sync_Button.setText(_translate("Admin_Interface", "Force Sync with central"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Home_Tab), _translate("Admin_Interface", "Home"))
         self.Search_Datetime_To_Label.setText(_translate("Admin_Interface", "Date/Time To:"))
+        self.Search_Datetime_From.setDisplayFormat(_translate("Admin_Interface", "M/d/yyyy hh:mm "))
         self.Search_Datetime_From_Label.setText(_translate("Admin_Interface", "Date/Time From:"))
+        self.Search_Datetime_To.setDisplayFormat(_translate("Admin_Interface", "M/d/yyyy hh:mm"))
         self.Search_Employee_ID_Label.setText(_translate("Admin_Interface", "Employee ID:"))
         self.Search_SearchAsset_Query_Button.setText(_translate("Admin_Interface", "Search Asset"))
         self.label_2.setText(_translate("Admin_Interface", "Search Filters"))
