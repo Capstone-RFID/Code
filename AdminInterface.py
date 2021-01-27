@@ -72,7 +72,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'CKERR-THINKPAD'
+        server = 'BIGACER'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -175,6 +175,10 @@ class Admin_Interface(QWidget):
 
         AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+        dateTimeLowerBound = str(self.ui.Search_Datetime_From.text())
+        dateTimeUpperBound = str(self.ui.Search_Datetime_To.text())
+
+
 
         if self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
             self.search_searchIDButtonClicked()
@@ -184,6 +188,15 @@ class Admin_Interface(QWidget):
             self.search_searchAssetandIDButtonClicked()
         elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
             print("No Asset or Employee ID Entered!")
+    def search_checkDateTimeBounds(self,LowerBound,UpperBound):
+        check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+        if self.cursor.fetchone():
+            #self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+            print("Found items between these times")
+            return True
+        else:
+            return False
 
     def search_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
@@ -197,6 +210,7 @@ class Admin_Interface(QWidget):
             # Show items on row in interface
             self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
             self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
+            self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds

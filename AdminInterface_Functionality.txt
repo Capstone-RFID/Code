@@ -1,0 +1,26 @@
+######################################################################Home Tab######################################################################
+
+	-Only one button (sync) which does nothing at the moment.  
+	
+	-We might want to find a pyodbc command to make the subscriber take a snapshot of the publisher
+
+
+
+######################################################################Search Tab######################################################################
+
+	-Can enter and sear by EmployeeID and AssetID seperately
+
+	-Can enter in both fields and search for entries in event log that contain both the EmployeeID AND AssetID
+
+
+######################################################################Edit Tab######################################################################
+
+	-Have 1st iteration of GUI, no functionality yet
+
+######################################################################Create Tab######################################################################
+
+	-Have 1st iteration of GUI, no functionality yet
+
+######################################################################Resolve Tab######################################################################
+
+	-Have 1st iteration of GUI, no functionality yet
