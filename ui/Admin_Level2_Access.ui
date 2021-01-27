@@ -137,264 +137,6 @@ QPushButton#Home_Force_Sync_Button:pressed {
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="2" column="0">
-            <widget class="QLabel" name="Search_Datetime_To_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Date/Time To:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDateTimeEdit" name="Search_Datetime_From">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">
-color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;
-
-QDateTimeEdit::AmPmSection = 0</string>
-             </property>
-             <property name="displayFormat">
-              <string>M/d/yyyy hh:mm </string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="Search_Datetime_From_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Date/Time From:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDateTimeEdit" name="Search_Datetime_To">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="minimumDateTime">
-              <datetime>
-               <hour>0</hour>
-               <minute>0</minute>
-               <second>0</second>
-               <year>1752</year>
-               <month>9</month>
-               <day>14</day>
-              </datetime>
-             </property>
-             <property name="displayFormat">
-              <string>M/d/yyyy hh:mm</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QLineEdit" name="Search_Employee_ID_Entry_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="Search_Employee_ID_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Employee ID:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="2" rowspan="2">
-            <widget class="QPushButton" name="Search_SearchAsset_Query_Button">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Search_SearchAsset_Query_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Search_SearchAsset_Query_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Search Asset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <spacer name="horizontalSpacer_9">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="3" column="2">
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="5" column="0">
-            <spacer name="horizontalSpacer_8">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="3" column="1">
-            <spacer name="horizontalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="5" column="2">
-            <spacer name="horizontalSpacer_11">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="3" column="0">
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Search Filters</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLineEdit" name="Search_Asset_Numbers_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="Search_Asset_Num_From_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asset Numbers:</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -419,6 +161,300 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>188</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="Search_Filters_Title">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Search Filters</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="2">
+              <widget class="QPushButton" name="Search_SearchAsset_Query_Button">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Search_SearchAsset_Query_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_SearchAsset_Query_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+               </property>
+               <property name="text">
+                <string>Search Asset</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="Search_Datetime_To_Label">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Date/Time To:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDateTimeEdit" name="Search_Datetime_From">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">
+color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+
+QDateTimeEdit::AmPmSection = 0</string>
+               </property>
+               <property name="displayFormat">
+                <string>M/d/yyyy hh:mm </string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="Search_Datetime_From_Label">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Date/Time From:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="0">
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="3" column="2">
+              <spacer name="horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="Search_Employee_ID_Entry_Field">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDateTimeEdit" name="Search_Datetime_To">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="minimumDateTime">
+                <datetime>
+                 <hour>0</hour>
+                 <minute>0</minute>
+                 <second>0</second>
+                 <year>1752</year>
+                 <month>9</month>
+                 <day>14</day>
+                </datetime>
+               </property>
+               <property name="displayFormat">
+                <string>M/d/yyyy hh:mm</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="Search_Employee_ID_Label">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Employee ID:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="Search_Asset_Num_From_Label">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Asset Numbers:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QPushButton" name="Search_Reset_Fields_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Search_Reset_Fields_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_Reset_Fields_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+               </property>
+               <property name="text">
+                <string>Reset Filters</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QLineEdit" name="Search_Asset_Numbers_Field">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="5" column="1">
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="5" column="2">
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
                  <height>20</height>
                 </size>
                </property>

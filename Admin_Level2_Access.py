@@ -72,48 +72,22 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem3 = QtWidgets.QSpacerItem(258, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem3)
+        spacerItem4 = QtWidgets.QSpacerItem(188, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem4)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        self.Search_Datetime_To_Label = QtWidgets.QLabel(self.Search_Tab)
-        self.Search_Datetime_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Datetime_To_Label.setObjectName("Search_Datetime_To_Label")
-        self.gridLayout.addWidget(self.Search_Datetime_To_Label, 2, 0, 1, 1)
-        self.Search_Datetime_From = QtWidgets.QDateTimeEdit(self.Search_Tab)
-        self.Search_Datetime_From.setMinimumSize(QtCore.QSize(0, 25))
-        self.Search_Datetime_From.setStyleSheet("\n"
-"color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";\n"
-"\n"
-"QDateTimeEdit::AmPmSection = 0")
-        self.Search_Datetime_From.setObjectName("Search_Datetime_From")
-        self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
-        self.Search_Datetime_From_Label = QtWidgets.QLabel(self.Search_Tab)
-        self.Search_Datetime_From_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Datetime_From_Label.setObjectName("Search_Datetime_From_Label")
-        self.gridLayout.addWidget(self.Search_Datetime_From_Label, 1, 0, 1, 1)
-        self.Search_Datetime_To = QtWidgets.QDateTimeEdit(self.Search_Tab)
-        self.Search_Datetime_To.setMinimumSize(QtCore.QSize(0, 25))
-        self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Datetime_To.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1752, 9, 14), QtCore.QTime(0, 0, 0)))
-        self.Search_Datetime_To.setObjectName("Search_Datetime_To")
-        self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
-        self.Search_Employee_ID_Entry_Field = QtWidgets.QLineEdit(self.Search_Tab)
-        self.Search_Employee_ID_Entry_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Search_Employee_ID_Entry_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Employee_ID_Entry_Field.setObjectName("Search_Employee_ID_Entry_Field")
-        self.gridLayout.addWidget(self.Search_Employee_ID_Entry_Field, 4, 1, 1, 1)
-        self.Search_Employee_ID_Label = QtWidgets.QLabel(self.Search_Tab)
-        self.Search_Employee_ID_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Employee_ID_Label.setObjectName("Search_Employee_ID_Label")
-        self.gridLayout.addWidget(self.Search_Employee_ID_Label, 4, 0, 1, 1)
+        self.Search_Filters_Title = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Filters_Title.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: Bold 14pt \"MS Shell Dlg 2\";")
+        self.Search_Filters_Title.setObjectName("Search_Filters_Title")
+        self.gridLayout.addWidget(self.Search_Filters_Title, 0, 0, 1, 1)
         self.Search_SearchAsset_Query_Button = QtWidgets.QPushButton(self.Search_Tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -138,46 +112,92 @@ class Ui_Admin_Interface(object):
 "    border-style: inset;\n"
 "}")
         self.Search_SearchAsset_Query_Button.setObjectName("Search_SearchAsset_Query_Button")
-        self.gridLayout.addWidget(self.Search_SearchAsset_Query_Button, 6, 2, 2, 1)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem3, 5, 1, 1, 1)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem4, 3, 2, 1, 1)
+        self.gridLayout.addWidget(self.Search_SearchAsset_Query_Button, 8, 2, 1, 1)
+        self.Search_Datetime_To_Label = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Datetime_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_To_Label.setObjectName("Search_Datetime_To_Label")
+        self.gridLayout.addWidget(self.Search_Datetime_To_Label, 2, 0, 1, 1)
+        self.Search_Datetime_From = QtWidgets.QDateTimeEdit(self.Search_Tab)
+        self.Search_Datetime_From.setMinimumSize(QtCore.QSize(0, 25))
+        self.Search_Datetime_From.setStyleSheet("\n"
+"color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
+"font: 12pt \"MS Shell Dlg 2\";\n"
+"\n"
+"QDateTimeEdit::AmPmSection = 0")
+        self.Search_Datetime_From.setObjectName("Search_Datetime_From")
+        self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
+        self.Search_Datetime_From_Label = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Datetime_From_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_From_Label.setObjectName("Search_Datetime_From_Label")
+        self.gridLayout.addWidget(self.Search_Datetime_From_Label, 1, 0, 1, 1)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem5, 5, 0, 1, 1)
+        self.gridLayout.addItem(spacerItem5, 3, 1, 1, 1)
         spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem6, 3, 1, 1, 1)
+        self.gridLayout.addItem(spacerItem6, 3, 0, 1, 1)
         spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem7, 5, 2, 1, 1)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem8, 3, 0, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.Search_Tab)
-        self.label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: Bold 14pt \"MS Shell Dlg 2\";")
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
+        self.gridLayout.addItem(spacerItem7, 3, 2, 1, 1)
+        self.Search_Employee_ID_Entry_Field = QtWidgets.QLineEdit(self.Search_Tab)
+        self.Search_Employee_ID_Entry_Field.setMinimumSize(QtCore.QSize(0, 25))
+        self.Search_Employee_ID_Entry_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Employee_ID_Entry_Field.setObjectName("Search_Employee_ID_Entry_Field")
+        self.gridLayout.addWidget(self.Search_Employee_ID_Entry_Field, 4, 1, 1, 1)
+        self.Search_Datetime_To = QtWidgets.QDateTimeEdit(self.Search_Tab)
+        self.Search_Datetime_To.setMinimumSize(QtCore.QSize(0, 25))
+        self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_To.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1752, 9, 14), QtCore.QTime(0, 0, 0)))
+        self.Search_Datetime_To.setObjectName("Search_Datetime_To")
+        self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
+        self.Search_Employee_ID_Label = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Employee_ID_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Employee_ID_Label.setObjectName("Search_Employee_ID_Label")
+        self.gridLayout.addWidget(self.Search_Employee_ID_Label, 4, 0, 1, 1)
+        self.Search_Asset_Num_From_Label = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Asset_Num_From_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Asset_Num_From_Label.setObjectName("Search_Asset_Num_From_Label")
+        self.gridLayout.addWidget(self.Search_Asset_Num_From_Label, 6, 0, 1, 1)
+        self.Search_Reset_Fields_Button = QtWidgets.QPushButton(self.Search_Tab)
+        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Search_Reset_Fields_Button.setMaximumSize(QtCore.QSize(186, 51))
+        self.Search_Reset_Fields_Button.setStyleSheet("QPushButton#Search_Reset_Fields_Button {\n"
+"background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"border-width: 2px;\n"
+"border-radius: 10px;\n"
+"border-color: beige;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Search_Reset_Fields_Button:pressed {\n"
+"    background-color: rgb(80, 80, 80);\n"
+"    border-style: inset;\n"
+"}")
+        self.Search_Reset_Fields_Button.setObjectName("Search_Reset_Fields_Button")
+        self.gridLayout.addWidget(self.Search_Reset_Fields_Button, 7, 2, 1, 1)
         self.Search_Asset_Numbers_Field = QtWidgets.QLineEdit(self.Search_Tab)
         self.Search_Asset_Numbers_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Asset_Numbers_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Asset_Numbers_Field.setObjectName("Search_Asset_Numbers_Field")
-        self.gridLayout.addWidget(self.Search_Asset_Numbers_Field, 7, 1, 1, 1)
-        self.Search_Asset_Num_From_Label = QtWidgets.QLabel(self.Search_Tab)
-        self.Search_Asset_Num_From_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Asset_Num_From_Label.setObjectName("Search_Asset_Num_From_Label")
-        self.gridLayout.addWidget(self.Search_Asset_Num_From_Label, 7, 0, 1, 1)
-        self.verticalLayout_3.addLayout(self.gridLayout)
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        spacerItem9 = QtWidgets.QSpacerItem(258, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem9)
-        spacerItem10 = QtWidgets.QSpacerItem(188, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem10)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.gridLayout.addWidget(self.Search_Asset_Numbers_Field, 6, 1, 1, 1)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem8, 5, 0, 1, 1)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem9, 5, 1, 1, 1)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem10, 5, 2, 1, 1)
+        self.verticalLayout_2.addLayout(self.gridLayout)
         self.Search_Display_Results_Table = QtWidgets.QTableWidget(self.Search_Tab)
         self.Search_Display_Results_Table.setStyleSheet("background-color: rgb(78, 78, 78);")
         self.Search_Display_Results_Table.setObjectName("Search_Display_Results_Table")
@@ -572,14 +592,15 @@ class Ui_Admin_Interface(object):
         self.label.setText(_translate("Admin_Interface", "Select Tabs Above To Navigate"))
         self.Home_Force_Sync_Button.setText(_translate("Admin_Interface", "Force Sync with central"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Home_Tab), _translate("Admin_Interface", "Home"))
+        self.Search_Filters_Title.setText(_translate("Admin_Interface", "Search Filters"))
+        self.Search_SearchAsset_Query_Button.setText(_translate("Admin_Interface", "Search Asset"))
         self.Search_Datetime_To_Label.setText(_translate("Admin_Interface", "Date/Time To:"))
         self.Search_Datetime_From.setDisplayFormat(_translate("Admin_Interface", "M/d/yyyy hh:mm "))
         self.Search_Datetime_From_Label.setText(_translate("Admin_Interface", "Date/Time From:"))
         self.Search_Datetime_To.setDisplayFormat(_translate("Admin_Interface", "M/d/yyyy hh:mm"))
         self.Search_Employee_ID_Label.setText(_translate("Admin_Interface", "Employee ID:"))
-        self.Search_SearchAsset_Query_Button.setText(_translate("Admin_Interface", "Search Asset"))
-        self.label_2.setText(_translate("Admin_Interface", "Search Filters"))
         self.Search_Asset_Num_From_Label.setText(_translate("Admin_Interface", "Asset Numbers:"))
+        self.Search_Reset_Fields_Button.setText(_translate("Admin_Interface", "Reset Filters"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset#"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(1)
