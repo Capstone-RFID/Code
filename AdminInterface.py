@@ -125,6 +125,17 @@ class Admin_Interface(QWidget):
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
 
+        dateTimeLowerBound = str(self.ui.Search_Datetime_From.text())
+        dateTimeUpperBound = str(self.ui.Search_Datetime_To.text())
+
+        if self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound):
+            DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
+            if DateList:
+                self.search_PopulateTable(DateList)
+
+        #self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound)
+        #print(self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound))
+
 
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
@@ -175,9 +186,8 @@ class Admin_Interface(QWidget):
 
         AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
-        dateTimeLowerBound = str(self.ui.Search_Datetime_From.text())
-        dateTimeUpperBound = str(self.ui.Search_Datetime_To.text())
 
+        self.search_searchDateButtonClicked()
 
 
         if self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
@@ -188,6 +198,8 @@ class Admin_Interface(QWidget):
             self.search_searchAssetandIDButtonClicked()
         elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
             print("No Asset or Employee ID Entered!")
+
+
     def search_checkDateTimeBounds(self,LowerBound,UpperBound):
         check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
@@ -196,7 +208,20 @@ class Admin_Interface(QWidget):
             print("Found items between these times")
             return True
         else:
+            print("No items found between these times")
             return False
+
+    def search_fetchDateTime(self,LowerBound,UpperBound):
+        check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+
+            return self.cursor.fetchall()
+        else:
+
+            return False
+
 
     def search_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)

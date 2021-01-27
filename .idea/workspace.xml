@@ -258,7 +258,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>202</line>
+          <line>227</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -272,13 +272,10 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="EmployeeNum" />
-        <watch expression="self.Employee_ID_Check(self.ui.Search_Employee_ID_Entry_Field.text())" />
-        <watch expression="EmployeeAssetList[0][0]" />
-        <watch expression="i" />
-        <watch expression="len(EmployeeAssetList)" />
+        <watch expression="dateTimeLowerBound" />
+        <watch expression="dateTimeUpperBound" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="139">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="150">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
