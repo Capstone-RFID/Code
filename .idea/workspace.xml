@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +17,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/readerTest.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1904">
-                  <caret line="202" column="40" lean-forward="true" selection-start-line="202" selection-start-column="40" selection-end-line="202" selection-end-column="40" />
+                <state relative-caret-position="119">
+                  <caret line="199" lean-forward="true" selection-start-line="199" selection-end-line="199" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                     <element signature="e#862#869#0" />
@@ -287,7 +286,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611693314440</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Current assets can be listed in the GUI.&#10;RFID functionality restored.">
+      <created>1611795746399</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1611795746399</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -329,7 +335,8 @@
     <MESSAGE value="New GUI integrated" />
     <MESSAGE value="code structure changes. &#10;Removed done button crash error.&#10;Event log table can now be populated with join statement.&#10;Few error messages added.&#10;The employee Enter button now functional." />
     <MESSAGE value="SQL querry for current items done&#10;Still needs to be optimised but does work" />
-    <option name="LAST_COMMIT_MESSAGE" value="SQL querry for current items done&#10;Still needs to be optimised but does work" />
+    <MESSAGE value="Current assets can be listed in the GUI.&#10;RFID functionality restored." />
+    <option name="LAST_COMMIT_MESSAGE" value="Current assets can be listed in the GUI.&#10;RFID functionality restored." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -414,8 +421,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/readerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="202" column="40" lean-forward="true" selection-start-line="202" selection-start-column="40" selection-end-line="202" selection-end-column="40" />
+        <state relative-caret-position="119">
+          <caret line="199" lean-forward="true" selection-start-line="199" selection-end-line="199" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
             <element signature="e#862#869#0" />
