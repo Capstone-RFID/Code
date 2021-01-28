@@ -234,27 +234,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QDateTimeEdit" name="Search_Datetime_From">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">
-color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;
-
-QDateTimeEdit::AmPmSection = 0</string>
-               </property>
-               <property name="displayFormat">
-                <string>M/d/yyyy hh:mm </string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="Search_Datetime_From_Label">
                <property name="styleSheet">
@@ -317,34 +296,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QDateTimeEdit" name="Search_Datetime_To">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-               </property>
-               <property name="minimumDateTime">
-                <datetime>
-                 <hour>0</hour>
-                 <minute>0</minute>
-                 <second>0</second>
-                 <year>1752</year>
-                 <month>9</month>
-                 <day>14</day>
-                </datetime>
-               </property>
-               <property name="displayFormat">
-                <string>M/d/yyyy hh:mm</string>
                </property>
               </widget>
              </item>
@@ -459,6 +410,36 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="Search_Datetime_From">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
