@@ -63,6 +63,7 @@ def RFID(result):
                 get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
                 cursor.execute(get_asset_query, str(tag))
                 assetID = cursor.fetchone()
+                window.ItemEntry.append(assetID[0])
                 window.rfid_insert(assetID[0])
 
 
@@ -125,29 +126,46 @@ class mainWindow(QWidget):
         self.show()
         self.StateEntry = []
         self.ItemEntry = []
+        self.RemovedItems = []
 
         #connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
         self.ui.Employee_ID_Enter.released.connect(self.Employee_enter)
+        self.ui.Employee_ID_Enter.setFocusPolicy(Qt.ClickFocus)
         self.ui.Asset_ID_Enter.released.connect(self.asset_enter_action)
+        self.ui.Asset_ID_Enter.setFocusPolicy(Qt.ClickFocus)
         self.ui.Cancel_Button.released.connect(self.cancel_button_clicked)  # button connected
         self.ui.Asset_ID_Input.returnPressed.connect(self.asset_enter_action)
         self.ui.Employee_ID_Input.returnPressed.connect(self.Employee_enter)
+        self.ui.Check_Out_Box.setChecked(True)
+        self.ui.Remove_Button.released.connect(self.remove_action)
+        self.ui.New_Item_List.setAlternatingRowColors(True)
+        self.ui.Existing_Item_list.setAlternatingRowColors(True)
         self.ui.Employee_ID_Input.setFocus()
         self.ui.Asset_ID_Input.setEnabled(False)
         self.timer = QtCore.QTimer()
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.timer_timeout)
 
+    def remove_action(self):
+        row = self.ui.New_Item_List.currentRow()
+        if row != 0:
+            text = self.ui.New_Item_List.currentItem().text()
+            self.RemovedItems.append(text)
+            self.ItemEntry.remove(text)
+            self.ui.New_Item_List.takeItem(row)
 
     def Employee_enter(self):
 
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
-            #self.ui.Check_In_Box.setfocus()
             self.current_items(self.ui.Employee_ID_Input.text())
             self.ui.Asset_ID_Input.setEnabled(True)
+            self.ui.Asset_ID_Input.setFocus()   
             self.ui.Employee_ID_Input.setReadOnly(True)
         else:
             self.error_message("Enter a valid Employee ID")
-
+            return
+    
     def done_button_clicked(self):
         self.StateEntry.append(self.ui.Employee_ID_Input.text())
         if self.ui.Check_In_Box.isChecked():
@@ -160,18 +178,23 @@ class mainWindow(QWidget):
             self.error_message("Please select Check-In or Check-out action")
             self.StateEntry.clear()
 
-
     def cancel_button_clicked(self):
         self.ui.Employee_ID_Input.setReadOnly(False)
         self.ui.Employee_ID_Input.clear()
         self.ui.Asset_ID_Input.clear()
         self.ui.Asset_ID_Input.setEnabled(False)
+        length = len(self.ItemEntry)
+        while length > 0:
+            self.ui.New_Item_List.takeItem(length)
+            length -= 1
+        length = len(self.StateEntry)
+        while length > 0:
+            self.ui.Existing_Item_list.takeItem(length)
+            length -= 1
         self.ItemEntry.clear()
         self.StateEntry.clear()
-        self.ui.New_Item_List.clear()
-        self.ui.Existing_Item_list.clear()
-
-
+        self.ui.Check_In_Box.setChecked(False)
+        self.ui.Check_Out_Box.setChecked(False)
 
     def error_message(self, text):
         error_dialog = QtWidgets.QErrorMessage()
@@ -179,6 +202,10 @@ class mainWindow(QWidget):
         error_dialog.setWindowTitle("Error")
         error_dialog.exec_()
         return
+    
+    def timer_timeout(self):
+        print("timer running")
+        self.ui.Asset_ID_Input.clear()
 
     def asset_enter_action(self):
             Asset = self.ui.Asset_ID_Input.text()
@@ -189,10 +216,14 @@ class mainWindow(QWidget):
                     self.ui.New_Item_List.addItem(Asset)
                     #apend the entries into a list
                     self.ItemEntry.append(Asset)
+                    self.ui.Asset_ID_Input.clear()
                 else:
                      print('already in list')
-                     self.error_message("Asset already selected")
-                self.ui.Asset_ID_Input.clear()
+                     self.ui.Asset_ID_Input.clear()
+                     #self.error_message("Asset already selected")
+                     self.timer.start(1000)
+                     self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
+                
             else:
                 print('invalid Asset')
                 self.error_message("Enter a valid Asset ID")
@@ -328,8 +359,11 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    server = "BALKARAN09"
-    database = 'TEST'
+    # server = "BALKARAN09"
+    # database = 'TEST'
+
+    server = "Raymond-P1"
+    database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
