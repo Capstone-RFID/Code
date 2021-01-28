@@ -75,7 +75,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -90,22 +90,25 @@ class Admin_Interface(QWidget):
     # open up the admin window from the button on main window
     def openAdmin(self):
         self.show()
+        #Set default datetime values to show admin users required format for input
+        self.ui.Search_Datetime_From.setText("1/1/2021 00:00")
+        self.ui.Search_Datetime_To.setText("1/1/2021 00:00")
+
 
     #****************************************Class Methods for Tab Button(s)*********************************
     def home_syncButtonClicked(self):
         print("Home Sync Button Clicked")
 
+
     def search_searchResetFieldsButtonClicked(self):
+        # Reset Filters to default values
         self.ui.Search_Employee_ID_Entry_Field.setText("")
         self.ui.Search_Asset_Numbers_Field.setText("")
+        self.ui.Search_Datetime_From.setText("1/1/2020 00:00")
+        self.ui.Search_Datetime_To.setText("1/1/2020 00:00")
 
-        #QLineEdit default = str()
-
-       # defaultDateTime = Ui_Admin_Interface.dateTime()
-       # print(defaultDateTime)
-
-        #self.ui.Search_Datetime_From.setMinimumDateTime()
-        #self.ui.Search_Datetime_To.setEditorData("1/1/2000 00:00 ")
+        #clear search results in table
+        self.search_clearTableResults()
 
 
     #Generates list of assets in event log based on Employee ID search Filter
@@ -141,8 +144,8 @@ class Admin_Interface(QWidget):
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
 
-        dateTimeLowerBound = str(self.ui.Search_Datetime_From.text())
-        dateTimeUpperBound = str(self.ui.Search_Datetime_To.text())
+        dateTimeLowerBound = self.ui.Search_Datetime_From.text()
+        dateTimeUpperBound = self.ui.Search_Datetime_To.text()
 
         if self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound):
             DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
@@ -155,6 +158,7 @@ class Admin_Interface(QWidget):
 
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
+
 
     def edit_clearButtonClicked(self):
         print('Edit Tab Clear Button Clicked')
@@ -200,20 +204,16 @@ class Admin_Interface(QWidget):
 
         self.search_clearTableResults()
 
-        AssetNum = self.ui.Search_Asset_Numbers_Field.text()
-        EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
-
-        self.search_searchDateButtonClicked()
-
-
         if self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
             self.search_searchIDButtonClicked()
         elif self.ui.Search_Asset_Numbers_Field.text() and not self.ui.Search_Employee_ID_Entry_Field.text():
             self.search_searchAssetButtonClicked()
         elif self.ui.Search_Asset_Numbers_Field.text() and self.ui.Search_Employee_ID_Entry_Field.text():
             self.search_searchAssetandIDButtonClicked()
-        elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
-            print("No Asset or Employee ID Entered!")
+        elif (self.ui.Search_Datetime_From.text() != "1/1/2021 00:00") and (self.ui.Search_Datetime_To.text() != "1/1/2021 00:00"):
+            self.search_searchDateButtonClicked()
+        elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text() and (self.ui.Search_Datetime_From.text() == "1/1/2021 00:00") and (self.ui.Search_Datetime_To.text() == "1/1/2021 00:00"):
+            print("No Asset or Employee ID or Date Range Entered!")
 
 
     def search_checkDateTimeBounds(self,LowerBound,UpperBound):
@@ -274,7 +274,6 @@ class Admin_Interface(QWidget):
             return False
 
     def search_fetchAssetAndID(self,Asset,ID):
-
         if self.Employee_ID_Check(ID) and self.Asset_Check(Asset):
             print('Both the asset and employee ID are valid!')
             #QUESTION: Do we want to return all entries w/ the asset ID OR the Employee ID or should it be an AND statement?

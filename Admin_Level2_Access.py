@@ -184,15 +184,16 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_From.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_From.setMaxLength(32767)
         self.Search_Datetime_From.setObjectName("Search_Datetime_From")
         self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.Search_Tab)
-        self.lineEdit.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.Search_Datetime_To = QtWidgets.QLineEdit(self.Search_Tab)
+        self.Search_Datetime_To.setMinimumSize(QtCore.QSize(0, 25))
+        self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 2, 1, 1, 1)
+        self.Search_Datetime_To.setObjectName("Search_Datetime_To")
+        self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout)
         self.Search_Display_Results_Table = QtWidgets.QTableWidget(self.Search_Tab)
         self.Search_Display_Results_Table.setStyleSheet("background-color: rgb(78, 78, 78);")
