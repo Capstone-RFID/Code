@@ -15,6 +15,7 @@ from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
 
+
 #*********************NOTES ON HOW TO USE THIS CLASS*************************
 #Should go without saying that this file needs to be in the same directory as your main
 #
@@ -56,12 +57,14 @@ class Admin_Interface(QWidget):
         self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_checkFieldInputs)
         #self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
         self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
+        self.ui.Search_Reset_Fields_Button.clicked.connect(self.search_searchResetFieldsButtonClicked)
 
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
         self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
         self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
+
 
         # ****************************************Create Tab Button(s)*********************************
         self.ui.Create_Clear_Fields_Button.clicked.connect(self.create_clearButtonClicked)
@@ -91,6 +94,19 @@ class Admin_Interface(QWidget):
     #****************************************Class Methods for Tab Button(s)*********************************
     def home_syncButtonClicked(self):
         print("Home Sync Button Clicked")
+
+    def search_searchResetFieldsButtonClicked(self):
+        self.ui.Search_Employee_ID_Entry_Field.setText("")
+        self.ui.Search_Asset_Numbers_Field.setText("")
+
+        #QLineEdit default = str()
+
+       # defaultDateTime = Ui_Admin_Interface.dateTime()
+       # print(defaultDateTime)
+
+        #self.ui.Search_Datetime_From.setMinimumDateTime()
+        #self.ui.Search_Datetime_To.setEditorData("1/1/2000 00:00 ")
+
 
     #Generates list of assets in event log based on Employee ID search Filter
     def search_searchIDButtonClicked(self):

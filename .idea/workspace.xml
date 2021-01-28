@@ -258,7 +258,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>227</line>
+          <line>243</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -275,7 +275,7 @@
         <watch expression="dateTimeLowerBound" />
         <watch expression="dateTimeUpperBound" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="150">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="166">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
