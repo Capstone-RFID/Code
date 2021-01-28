@@ -18,6 +18,7 @@ Item_Log_Entry = []
 assetID = 0
 errorFlag = 0
 taglist = []
+
 def cb(tagReport):
     # print("running")
     global readFlag, assetID
@@ -26,10 +27,15 @@ def cb(tagReport):
         reactor.stop()
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
+    result = [sub['EPC-96'] for sub in tags]
     if len(tags) != 0:
         # taglist.append(tags[0]['EPC-96'])
         # if tags[0]['EPC-96'] not in taglist:
-            RFID(tags[0]['EPC-96'])
+            #RFID(tags[0]['EPC-96'])
+            RFID(result)
+    result.clear()
+
+
         # else:
         #     window.error_message("haha")
 
@@ -48,66 +54,23 @@ def cb(tagReport):
         #             return
 
 
-def RFID(tag):
+def RFID(result):
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
-        print(tag)
-        rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
-        cursor.execute(rfid_check_query, str(tag))
-        if cursor.fetchone():
-            get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
-            cursor.execute(get_asset_query, str(tag))
-            assetID = cursor.fetchone()
-            window.rfid_insert(assetID[0])
+        for tag in result:
+            rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+            cursor.execute(rfid_check_query, str(tag))
+            if cursor.fetchone():
+                get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+                cursor.execute(get_asset_query, str(tag))
+                assetID = cursor.fetchone()
+                window.rfid_insert(assetID[0])
+
 
 def shutdown(factory):
     return factory.politeShutdown()
 
-def checkOut():
-    print(State_Log_Entry)
-    print(Item_Log_Entry)
-
-    # check = any(str(tagID) in sublist for sublist in equipmentID) #check if the same equipment is already in database
-    # if check == False:
-    #     assetNum = "Radio"
-    #     global employeeID
-    #     description = "tag"
-    #     equipmentID.append([assetNum,str(tagID),employeeID,date.today().strftime("%d/%m/%Y"),datetime.now().strftime("%H:%M:%S"),eqcheck,description])
-    #     print(str(tagID[20:26]))
-    #     insert()
-        # print("Do you want to SYNC: ")
-        # sync = str(input())
-        # if sync =='T':
-        #     snapshot()
-
-
-def insert():
-
-    # define our insert and update query
-    insert_query = '''INSERT INTO Item_Log_Table (Timestamp,AssetID)
-                        VALUES (?,?);'''  # '?' is a placeholder
-
-    # loop thru each row in the matrix
-    for row in equipmentID:
-        # define the values to insert
-        values = (row[0], row[1],row[2],row[3],row[4],row[5],row[6])
-        print(values)
-        # insert the data into the database
-
-    cursor.execute(insert_query, values)
-
-    # commit the inserts
-    cnxn.commit()
-
-    # grab all the rows in our database table
-    #cursor.execute('SELECT ID FROM Employees')
-
-   # loop through the results
-   # for row in cursor:
-      #  print(row)
-
-    # close the connection and remove the cursor
-    cursor.close
-    cnxn.close
+def assets_from_RFID_Tag(tag):
+    return
 
 ##work in progress
 # def update():
@@ -172,11 +135,14 @@ class mainWindow(QWidget):
         self.ui.Employee_ID_Input.returnPressed.connect(self.Employee_enter)
         self.ui.Employee_ID_Input.setFocus()
         self.ui.Asset_ID_Input.setEnabled(False)
+        self.timer = QtCore.QTimer()
 
 
     def Employee_enter(self):
+
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             #self.ui.Check_In_Box.setfocus()
+            self.current_items(self.ui.Employee_ID_Input.text())
             self.ui.Asset_ID_Input.setEnabled(True)
             self.ui.Employee_ID_Input.setReadOnly(True)
         else:
@@ -202,6 +168,10 @@ class mainWindow(QWidget):
         self.ui.Asset_ID_Input.setEnabled(False)
         self.ItemEntry.clear()
         self.StateEntry.clear()
+        self.ui.New_Item_List.clear()
+        self.ui.Existing_Item_list.clear()
+
+
 
     def error_message(self, text):
         error_dialog = QtWidgets.QErrorMessage()
@@ -229,9 +199,12 @@ class mainWindow(QWidget):
             return
 
     def rfid_insert(self, asset):
-        self.ui.Asset_ID_Input.clear()
-        self.ui.Asset_ID_Input.insert(asset)
-        self.asset_enter_action()
+        if asset not in self.ItemEntry:
+            self.ItemEntry.append(asset)
+            self.ui.New_Item_List.addItem(asset)
+        # else:
+        #     self.ui.Asset_ID_Input.setText('DUPLICATE!!!!')
+
 
     def check_in_action(self):
         # self.ui.Employee_ID_input.clear()
@@ -252,88 +225,94 @@ class mainWindow(QWidget):
             return
 
     def sql_call(self,status):
-        global State_Log_Entry
-        global Item_Log_Entry
-        time = datetime.now()
-        datevar = date.today()
-        for employee in self.StateEntry:
-            State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), status])
-        for asset in self.ItemEntry:
-            Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
-
-        insert_item_query = '''INSERT INTO Item_Log_Table(TIMESTAMP,ASSETID)
-                                           VALUES (?,?);'''  # '?' is a placeholder
-        insert_state_query = '''INSERT INTO State_Log_Table(EMPLOYEEID,TIMESTAMP,STATUS)
-                                                       VALUES (?,?,?);'''  # '?' is a placeholder
-        for entry in State_Log_Entry:
-            # define the values to insert
-            stateValues = (entry[0], entry[1], entry[2])
-            print(stateValues)
-            # insert the data into the database
-            cursor.execute(insert_state_query, stateValues)
-        # commit the inserts
-        cnxn.commit()
-
-        # loop thru each row in the matrix
-        for entry in Item_Log_Entry:
-            # define the values to insert
-            itemValues = (entry[0], entry[1])
-            print(itemValues)
-            # insert the data into the database
-            cursor.execute(insert_item_query,itemValues)
-        cnxn.commit()
-
-
-
-        # insert_event_query = ''' INSERT INTO
-        #                          Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
-        #                          SELECT
-        #                          State_Log_Table.EMPLOYEEID, State_Log_Table.TIMESTAMP,Item_Log_Table.AssetID, State_Log_Table.STATUS
-        #                          FROM
-        #                          State_Log_Table
-        #                          FULL OUTER JOIN Item_Log_Table
-        #                          ON
-        #                          State_Log_Table.TIMESTAMP = Item_Log_Table.TIMESTAMP;
-        #                         '''
-
-        # cursor.execute(insert_event_query)
+        # global State_Log_Entry
+        # global Item_Log_Entry
+        # time = datetime.now()
+        # datevar = date.today()
+        # for employee in self.StateEntry:
+        #     State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), status])
+        # for asset in self.ItemEntry:
+        #     Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
+        #
+        # insert_item_query = '''INSERT INTO Item_Log_Table(TIMESTAMP,ASSETID)
+        #                                    VALUES (?,?);'''  # '?' is a placeholder
+        # insert_state_query = '''INSERT INTO State_Log_Table(EMPLOYEEID,TIMESTAMP,STATUS)
+        #                                                VALUES (?,?,?);'''  # '?' is a placeholder
+        # for entry in State_Log_Entry:
+        #     # define the values to insert
+        #     stateValues = (entry[0], entry[1], entry[2])
+        #     print(stateValues)
+        #     # insert the data into the database
+        #     cursor.execute(insert_state_query, stateValues)
+        # # commit the inserts
         # cnxn.commit()
-        self.StateEntry.clear()
-        self.ItemEntry.clear()
-        State_Log_Entry.clear()
-        Item_Log_Entry.clear()
+        #
+        # # loop thru each row in the matrix
+        # for entry in Item_Log_Entry:
+        #     # define the values to insert
+        #     itemValues = (entry[0], entry[1])
+        #     print(itemValues)
+        #     # insert the data into the database
+        #     cursor.execute(insert_item_query,itemValues)
+        # cnxn.commit()
+        #
+        #
+        #
+        # # insert_event_query = ''' INSERT INTO
+        # #                          Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
+        # #                          SELECT
+        # #                          State_Log_Table.EMPLOYEEID, State_Log_Table.TIMESTAMP,Item_Log_Table.AssetID, State_Log_Table.STATUS
+        # #                          FROM
+        # #                          State_Log_Table
+        # #                          FULL OUTER JOIN Item_Log_Table
+        # #                          ON
+        # #                          State_Log_Table.TIMESTAMP = Item_Log_Table.TIMESTAMP;
+        # #                         '''
+        #
+        # # cursor.execute(insert_event_query)
+        # # cnxn.commit()
+        # self.StateEntry.clear()
+        # self.ItemEntry.clear()
+        # State_Log_Entry.clear()
+        # Item_Log_Entry.clear()
+        # cursor.close
+        # cnxn.close
         return
 
-    def current_items(self):
-        '''
-        SELECT AssetID
-FROM
-(
-SELECT *
-FROM
-(
-SELECT TOP(999999999999)
-Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
-FROM
-Event_Log_Table
-WHERE 
-Event_Log_Table.EmployeeID = '00123' 
-ORDER BY Event_Log_Table.Entry DESC
-)AS subquery
-WHERE
-Entry in (Select max(Entry) FROM  (
-SELECT TOP(999999999999)
-Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
-FROM
-Event_Log_Table
-WHERE 
-Event_Log_Table.EmployeeID = '00123' 
-ORDER BY Event_Log_Table.Entry DESC
-)AS subquery group by AssetID)
-)AS final_result 
-WHERE
-Status = '2' '''
-        return
+    def current_items(self,emID):
+      current_asset_query =  '''
+                            SELECT AssetID
+                            FROM
+                            (
+                            SELECT *
+                            FROM
+                            (
+                            SELECT TOP(999999999999)
+                            Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
+                            FROM
+                            Event_Log_Table
+                            WHERE
+                            Event_Log_Table.EmployeeID = (?)
+                            ORDER BY Event_Log_Table.Entry DESC
+                            )AS subquery
+                            WHERE
+                            Entry in (Select max(Entry) FROM  (
+                            SELECT TOP(999999999999)
+                            Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
+                            FROM
+                            Event_Log_Table
+                            WHERE
+                            Event_Log_Table.EmployeeID = (?)
+                            ORDER BY Event_Log_Table.Entry DESC
+                            )AS subquery group by AssetID)
+                            )AS final_result
+                            WHERE
+                            Status = '2'; '''
+      cursor.execute(current_asset_query,str(emID),str(emID))
+      for assets in cursor.fetchall():
+        print(assets[0])
+        self.ui.Existing_Item_list.addItem(assets[0])
+      return
 
     def testfunction(self):
         print('hello')
