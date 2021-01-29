@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +17,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/readerTest.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="252">
-                  <caret line="310" column="8" selection-start-line="310" selection-start-column="10" selection-end-line="313" selection-end-column="32" />
+                <state relative-caret-position="388">
+                  <caret line="246" column="61" lean-forward="true" selection-start-line="246" selection-start-column="61" selection-end-line="246" selection-end-column="61" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -320,7 +319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611795746399</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="working on list and tables">
+      <created>1611879617986</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1611879617986</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -338,10 +344,10 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.21548998" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.21548998" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25777778" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23444444" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -363,24 +369,25 @@
     <MESSAGE value="code structure changes. &#10;Removed done button crash error.&#10;Event log table can now be populated with join statement.&#10;Few error messages added.&#10;The employee Enter button now functional." />
     <MESSAGE value="SQL querry for current items done&#10;Still needs to be optimised but does work" />
     <MESSAGE value="Current assets can be listed in the GUI.&#10;RFID functionality restored." />
-    <option name="LAST_COMMIT_MESSAGE" value="Current assets can be listed in the GUI.&#10;RFID functionality restored." />
+    <MESSAGE value="working on list and tables" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on list and tables" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/readerTest.py</url>
-          <line>239</line>
+          <line>243</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/readerTest.py</url>
-          <line>238</line>
+          <line>242</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/readerTest.py</url>
-          <line>219</line>
+          <line>223</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
@@ -477,8 +484,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/readerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="310" column="8" selection-start-line="310" selection-start-column="10" selection-end-line="313" selection-end-column="32" />
+        <state relative-caret-position="388">
+          <caret line="246" column="61" lean-forward="true" selection-start-line="246" selection-start-column="61" selection-end-line="246" selection-end-column="61" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>

@@ -151,7 +151,8 @@ class mainWindow(QWidget):
             row = self.ui.New_Item_List.currentRow()
             if row != 0:
                 text = self.ui.New_Item_List.currentItem().text()
-                self.RemovedItems.append(text)
+                if text not in self.RemovedItems:
+                    self.RemovedItems.append(text)
                 self.ItemEntry.remove(text)
                 self.ui.New_Item_List.takeItem(row)
 
@@ -180,6 +181,7 @@ class mainWindow(QWidget):
             self.error_message("Please select Check-In or Check-out action")
             self.StateEntry.clear()
 
+
     def clear_lists(self):
         length = len(self.ItemEntry)
         while length > 0:
@@ -191,6 +193,9 @@ class mainWindow(QWidget):
             length -= 1
         self.ItemEntry.clear()
         self.StateEntry.clear()
+        self.ui.Employee_ID_Input.setReadOnly(False)
+        self.ui.Employee_ID_Input.clear()
+        self.RemovedItems.clear()
         return
 
     def cancel_button_clicked(self):
@@ -236,7 +241,7 @@ class mainWindow(QWidget):
             return
 
     def rfid_insert(self, asset):
-        if asset not in self.ItemEntry:
+        if (asset not in self.ItemEntry) and (asset not in self.RemovedItems):
             self.ItemEntry.append(asset)
             self.ui.New_Item_List.addItem(asset)
         # else:
@@ -292,8 +297,6 @@ class mainWindow(QWidget):
             # insert the data into the database
             cursor.execute(insert_item_query,itemValues)
         cnxn.commit()
-
-
 
         insert_event_query = ''' INSERT INTO
                                  Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
