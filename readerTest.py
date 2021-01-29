@@ -13,8 +13,8 @@ from PyQt5.QtWidgets import *
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 import time
-State_Log_Entry = []
-Item_Log_Entry = []
+Event_Log_Entry = []
+
 assetID = 0
 errorFlag = 0
 taglist = []
@@ -123,8 +123,8 @@ class mainWindow(QWidget):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.show()
-        self.StateEntry = []
-        self.ItemEntry = []
+        self.existingList = []
+        self.eventEntry = []
         self.RemovedItems = []
 
         #connect button to functions
@@ -136,7 +136,6 @@ class mainWindow(QWidget):
         self.ui.Cancel_Button.released.connect(self.cancel_button_clicked)  # button connected
         self.ui.Asset_ID_Input.returnPressed.connect(self.asset_enter_action)
         self.ui.Employee_ID_Input.returnPressed.connect(self.Employee_enter)
-        self.ui.Check_Out_Box.setChecked(True)
         self.ui.Remove_Button.released.connect(self.remove_action)
         self.ui.New_Item_List.setAlternatingRowColors(True)
         self.ui.Existing_Item_list.setAlternatingRowColors(True)
@@ -147,13 +146,14 @@ class mainWindow(QWidget):
         self.timer.timeout.connect(self.timer_timeout)
 
     def remove_action(self):
-        if(len(self.ItemEntry)!=0):
+        if(len(self.eventEntry)!=0):
             row = self.ui.New_Item_List.currentRow()
-
             text = self.ui.New_Item_List.item(row, 0).text()
             if text not in self.RemovedItems:
                 self.RemovedItems.append(text)
-            self.ItemEntry.remove(text)
+            y = [x for x in self.eventEntry if text in x]
+            z = self.eventEntry.index(y[0])
+            del self.eventEntry[z]
             self.ui.New_Item_List.removeRow(row)
 
 
@@ -168,7 +168,6 @@ class mainWindow(QWidget):
             return
     
     def done_button_clicked(self):
-        self.StateEntry.append(self.ui.Employee_ID_Input.text())
         if self.ui.Check_In_Box.isChecked():
             print('Check IN action')
             self.check_in_action()
@@ -184,11 +183,12 @@ class mainWindow(QWidget):
     def clear_lists(self):
         self.ui.New_Item_List.setRowCount(0)
         self.ui.Existing_Item_list.setRowCount(0)
-        self.ItemEntry.clear()
-        self.StateEntry.clear()
+        self.eventEntry.clear()
         self.ui.Employee_ID_Input.setReadOnly(False)
         self.ui.Employee_ID_Input.clear()
         self.RemovedItems.clear()
+        self.ui.Check_Out_Box.setEnabled(True)
+        self.ui.Check_In_Box.setEnabled(True)
         return
 
     def cancel_button_clicked(self):
@@ -197,8 +197,6 @@ class mainWindow(QWidget):
         self.ui.Asset_ID_Input.clear()
         self.ui.Asset_ID_Input.setEnabled(False)
         self.clear_lists()
-        self.ui.Check_In_Box.setChecked(False)
-        self.ui.Check_Out_Box.setChecked(False)
 
     def error_message(self, text):
         error_dialog = QtWidgets.QErrorMessage()
@@ -226,10 +224,13 @@ class mainWindow(QWidget):
             #self.ItemEntry.append(Asset)
             print('Asset Number:' + Asset)
             if Asset_Check(Asset):
-                if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
+                self.ui.Check_Out_Box.setEnabled(False)
+                self.ui.Check_In_Box.setEnabled(False)
+                if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
                     self.insert_into_new_table(1, Asset)
                     #apend the entries into a list
-                    self.ItemEntry.append(Asset)
+                    self.eventEntry.append([self.ui.Employee_ID_Input.text(),Asset])
+                    #self.StateEntry.append(self.ui.Employee_ID_Input.text())
                     #self.ui.New_Item_List.insertRow()
                     self.ui.Asset_ID_Input.clear()
                 else:
@@ -245,8 +246,8 @@ class mainWindow(QWidget):
             return
 
     def rfid_insert(self, asset):
-        if (asset not in self.ItemEntry) and (asset not in self.RemovedItems):
-            self.ItemEntry.append(asset)
+        if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (asset not in self.RemovedItems) and self.eliminate_duplicates(asset) and (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()) :
+            self.eventEntry.append([self.ui.Employee_ID_Input.text(),asset])
             self.insert_into_new_table(1, asset)
         # else:
         #     self.ui.Asset_ID_Input.setText('DUPLICATE!!!!')
@@ -260,6 +261,12 @@ class mainWindow(QWidget):
         else:
             print('invalid employee ID. Please try again. ')
             return
+
+    def eliminate_duplicates(self, asset):
+        if asset in self.existingList and self.ui.Check_Out_Box.isChecked():
+            return False
+        else:
+            return True
 
     def check_out_action(self):
         # self.ui.Employee_ID_input.clear()
@@ -275,46 +282,21 @@ class mainWindow(QWidget):
         global Item_Log_Entry
         time = datetime.now()
         datevar = date.today()
-        for employee in self.StateEntry:
-            State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), status])
-        for asset in self.ItemEntry:
-            Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
+        for item in self.eventEntry:
+            Event_Log_Entry.append([item[0], datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"),item[1] ,status])
 
-        insert_item_query = '''INSERT INTO Item_Log_Table(TIMESTAMP,ASSETID)
-                                           VALUES (?,?);'''  # '?' is a placeholder
-        insert_state_query = '''INSERT INTO State_Log_Table(EMPLOYEEID,TIMESTAMP,STATUS)
-                                                       VALUES (?,?,?);'''  # '?' is a placeholder
-        for entry in State_Log_Entry:
+
+        insert_event_query = ''' INSERT INTO Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS) VALUES(?,?,?,?);'''
+
+        for entry in Event_Log_Entry:
             # define the values to insert
-            stateValues = (entry[0], entry[1], entry[2])
-            print(stateValues)
+            eventValues = (entry[0], entry[1], entry[2],entry[3])
+            print(eventValues)
             # insert the data into the database
-            cursor.execute(insert_state_query, stateValues)
+            cursor.execute(insert_event_query, eventValues)
         # commit the inserts
         cnxn.commit()
 
-        # loop thru each row in the matrix
-        for entry in Item_Log_Entry:
-            # define the values to insert
-            itemValues = (entry[0], entry[1])
-            print(itemValues)
-            # insert the data into the database
-            cursor.execute(insert_item_query,itemValues)
-        cnxn.commit()
-
-        insert_event_query = ''' INSERT INTO
-                                 Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
-                                 SELECT
-                                 State_Log_Table.EMPLOYEEID, State_Log_Table.TIMESTAMP,Item_Log_Table.AssetID, State_Log_Table.STATUS
-                                 FROM
-                                 State_Log_Table
-                                 FULL OUTER JOIN Item_Log_Table
-                                 ON
-                                 State_Log_Table.TIMESTAMP = Item_Log_Table.TIMESTAMP;
-                                '''
-
-        cursor.execute(insert_event_query)
-        cnxn.commit()
         # self.StateEntry.clear()
         # self.ItemEntry.clear()
         # State_Log_Entry.clear()
@@ -355,6 +337,7 @@ class mainWindow(QWidget):
       cursor.execute(current_asset_query,str(emID),str(emID))
       for assets in cursor.fetchall():
           print(assets[0])
+          self.existingList.append(assets[0])
           self.insert_into_new_table(2, assets[0])
       return
 
