@@ -20,7 +20,7 @@ errorFlag = 0
 taglist = []
 
 def cb(tagReport):
-    print("running")
+    #print("running")
     global readFlag, assetID
 
     if keyboard.is_pressed('q'):
@@ -149,12 +149,12 @@ class mainWindow(QWidget):
     def remove_action(self):
         if(len(self.ItemEntry)!=0):
             row = self.ui.New_Item_List.currentRow()
-            if row != 0:
-                text = self.ui.New_Item_List.currentItem().text()
-                if text not in self.RemovedItems:
-                    self.RemovedItems.append(text)
-                self.ItemEntry.remove(text)
-                self.ui.New_Item_List.takeItem(row)
+
+            text = self.ui.New_Item_List.item(row, 0).text()
+            if text not in self.RemovedItems:
+                self.RemovedItems.append(text)
+            self.ItemEntry.remove(text)
+            self.ui.New_Item_List.removeRow(row)
 
 
     def Employee_enter(self):
@@ -181,16 +181,9 @@ class mainWindow(QWidget):
             self.error_message("Please select Check-In or Check-out action")
             self.StateEntry.clear()
 
-
     def clear_lists(self):
-        length = len(self.ItemEntry)
-        while length > 0:
-            self.ui.New_Item_List.takeItem(length)
-            length -= 1
-        length = len(self.StateEntry)
-        while length > 0:
-            self.ui.Existing_Item_list.takeItem(length)
-            length -= 1
+        self.ui.New_Item_List.setRowCount(0)
+        self.ui.Existing_Item_list.setRowCount(0)
         self.ItemEntry.clear()
         self.StateEntry.clear()
         self.ui.Employee_ID_Input.setReadOnly(False)
@@ -218,15 +211,23 @@ class mainWindow(QWidget):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
 
+    def insert_into_new_table(self, mode, item):
+        if mode == 1:
+            lastrow_new = self.ui.New_Item_List.rowCount()
+            self.ui.New_Item_List.insertRow(lastrow_new)
+            self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
+        elif mode == 2:
+            lastrow_existing = self.ui.Existing_Item_list.rowCount()
+            self.ui.Existing_Item_list.insertRow(lastrow_existing)
+            self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
+
     def asset_enter_action(self):
             Asset = self.ui.Asset_ID_Input.text()
             #self.ItemEntry.append(Asset)
             print('Asset Number:' + Asset)
             if Asset_Check(Asset):
                 if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
-                    lastrow = self.ui.New_Item_List.rowCount()
-                    self.ui.New_Item_List.insertRow(lastrow)
-                    self.ui.New_Item_List.setItem(lastrow, 1, Asset)
+                    self.insert_into_new_table(1, Asset)
                     #apend the entries into a list
                     self.ItemEntry.append(Asset)
                     #self.ui.New_Item_List.insertRow()
@@ -246,7 +247,7 @@ class mainWindow(QWidget):
     def rfid_insert(self, asset):
         if (asset not in self.ItemEntry) and (asset not in self.RemovedItems):
             self.ItemEntry.append(asset)
-            self.ui.New_Item_List.addItem(asset)
+            self.insert_into_new_table(1, asset)
         # else:
         #     self.ui.Asset_ID_Input.setText('DUPLICATE!!!!')
 
@@ -353,8 +354,8 @@ class mainWindow(QWidget):
                             Status = '2'; '''
       cursor.execute(current_asset_query,str(emID),str(emID))
       for assets in cursor.fetchall():
-        print(assets[0])
-        self.ui.Existing_Item_list.addItem(assets[0])
+          print(assets[0])
+          self.insert_into_new_table(2, assets[0])
       return
 
     def testfunction(self):
@@ -371,12 +372,12 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    # server = "BALKARAN09"
-    # database = 'TEST'
+    server = "BALKARAN09"
+    database = 'TEST'
 
     # define the server name and the database name
-    server = "Raymond-P1"
-    database = 'RCMP_RFID'
+    # server = "Raymond-P1"
+    # database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
