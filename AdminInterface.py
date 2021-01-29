@@ -10,7 +10,7 @@ import keyboard
 import logging
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QObject, QThread, pyqtSignal
+from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
@@ -75,7 +75,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -91,8 +91,9 @@ class Admin_Interface(QWidget):
     def openAdmin(self):
         self.show()
         #Set default datetime values to show admin users required format for input
-        self.ui.Search_Datetime_From.setText("1/1/2021 00:00")
-        self.ui.Search_Datetime_To.setText("1/1/2021 00:00")
+        d = QDate(2021, 1, 1)
+        self.ui.Search_Datetime_From.setDate(d)
+        self.ui.Search_Datetime_To.setDate(d)
 
 
     #****************************************Class Methods for Tab Button(s)*********************************
@@ -104,8 +105,9 @@ class Admin_Interface(QWidget):
         # Reset Filters to default values
         self.ui.Search_Employee_ID_Entry_Field.setText("")
         self.ui.Search_Asset_Numbers_Field.setText("")
-        self.ui.Search_Datetime_From.setText("1/1/2020 00:00")
-        self.ui.Search_Datetime_To.setText("1/1/2020 00:00")
+        d = QDate(2021, 1, 1)
+        self.ui.Search_Datetime_From.setDate(d)
+        self.ui.Search_Datetime_To.setDate(d)
 
         #clear search results in table
         self.search_clearTableResults()

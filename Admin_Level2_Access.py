@@ -184,6 +184,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_From.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_From.setCalendarPopup(True)
         self.Search_Datetime_From.setObjectName("Search_Datetime_From")
         self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
         self.Search_Datetime_To = QtWidgets.QDateEdit(self.Search_Tab)
@@ -191,6 +192,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_To.setCalendarPopup(True)
         self.Search_Datetime_To.setObjectName("Search_Datetime_To")
         self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout)
@@ -595,6 +597,7 @@ class Ui_Admin_Interface(object):
         self.Search_Employee_ID_Label.setText(_translate("Admin_Interface", "Employee ID:"))
         self.Search_Asset_Num_From_Label.setText(_translate("Admin_Interface", "Asset Numbers:"))
         self.Search_Reset_Fields_Button.setText(_translate("Admin_Interface", "Reset Filters"))
+        self.Search_Display_Results_Table.setSortingEnabled(True)
         item = self.Search_Display_Results_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset#"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(1)

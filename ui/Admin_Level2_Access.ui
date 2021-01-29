@@ -424,6 +424,9 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item row="2" column="1">
@@ -439,6 +442,9 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -447,6 +453,9 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QTableWidget" name="Search_Display_Results_Table">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(78, 78, 78);</string>
+             </property>
+             <property name="sortingEnabled">
+              <bool>true</bool>
              </property>
              <column>
               <property name="text">
