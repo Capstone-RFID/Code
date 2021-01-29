@@ -20,7 +20,7 @@ errorFlag = 0
 taglist = []
 
 def cb(tagReport):
-    # print("running")
+    print("running")
     global readFlag, assetID
 
     if keyboard.is_pressed('q'):
@@ -63,7 +63,6 @@ def RFID(result):
                 get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
                 cursor.execute(get_asset_query, str(tag))
                 assetID = cursor.fetchone()
-                window.ItemEntry.append(assetID[0])
                 window.rfid_insert(assetID[0])
 
 
@@ -148,15 +147,16 @@ class mainWindow(QWidget):
         self.timer.timeout.connect(self.timer_timeout)
 
     def remove_action(self):
-        row = self.ui.New_Item_List.currentRow()
-        if row != 0:
-            text = self.ui.New_Item_List.currentItem().text()
-            self.RemovedItems.append(text)
-            self.ItemEntry.remove(text)
-            self.ui.New_Item_List.takeItem(row)
+        if(len(self.ItemEntry)!=0):
+            row = self.ui.New_Item_List.currentRow()
+            if row != 0:
+                text = self.ui.New_Item_List.currentItem().text()
+                self.RemovedItems.append(text)
+                self.ItemEntry.remove(text)
+                self.ui.New_Item_List.takeItem(row)
+
 
     def Employee_enter(self):
-
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             self.current_items(self.ui.Employee_ID_Input.text())
             self.ui.Asset_ID_Input.setEnabled(True)
@@ -171,18 +171,16 @@ class mainWindow(QWidget):
         if self.ui.Check_In_Box.isChecked():
             print('Check IN action')
             self.check_in_action()
+            self.clear_lists()
         elif self.ui.Check_Out_Box.isChecked():
             print('Check OUT action')
             self.check_out_action()
+            self.clear_lists()
         else:
             self.error_message("Please select Check-In or Check-out action")
             self.StateEntry.clear()
 
-    def cancel_button_clicked(self):
-        self.ui.Employee_ID_Input.setReadOnly(False)
-        self.ui.Employee_ID_Input.clear()
-        self.ui.Asset_ID_Input.clear()
-        self.ui.Asset_ID_Input.setEnabled(False)
+    def clear_lists(self):
         length = len(self.ItemEntry)
         while length > 0:
             self.ui.New_Item_List.takeItem(length)
@@ -193,6 +191,14 @@ class mainWindow(QWidget):
             length -= 1
         self.ItemEntry.clear()
         self.StateEntry.clear()
+        return
+
+    def cancel_button_clicked(self):
+        self.ui.Employee_ID_Input.setReadOnly(False)
+        self.ui.Employee_ID_Input.clear()
+        self.ui.Asset_ID_Input.clear()
+        self.ui.Asset_ID_Input.setEnabled(False)
+        self.clear_lists()
         self.ui.Check_In_Box.setChecked(False)
         self.ui.Check_Out_Box.setChecked(False)
 
@@ -256,52 +262,52 @@ class mainWindow(QWidget):
             return
 
     def sql_call(self,status):
-        # global State_Log_Entry
-        # global Item_Log_Entry
-        # time = datetime.now()
-        # datevar = date.today()
-        # for employee in self.StateEntry:
-        #     State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), status])
-        # for asset in self.ItemEntry:
-        #     Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
-        #
-        # insert_item_query = '''INSERT INTO Item_Log_Table(TIMESTAMP,ASSETID)
-        #                                    VALUES (?,?);'''  # '?' is a placeholder
-        # insert_state_query = '''INSERT INTO State_Log_Table(EMPLOYEEID,TIMESTAMP,STATUS)
-        #                                                VALUES (?,?,?);'''  # '?' is a placeholder
-        # for entry in State_Log_Entry:
-        #     # define the values to insert
-        #     stateValues = (entry[0], entry[1], entry[2])
-        #     print(stateValues)
-        #     # insert the data into the database
-        #     cursor.execute(insert_state_query, stateValues)
-        # # commit the inserts
-        # cnxn.commit()
-        #
-        # # loop thru each row in the matrix
-        # for entry in Item_Log_Entry:
-        #     # define the values to insert
-        #     itemValues = (entry[0], entry[1])
-        #     print(itemValues)
-        #     # insert the data into the database
-        #     cursor.execute(insert_item_query,itemValues)
-        # cnxn.commit()
-        #
-        #
-        #
-        # # insert_event_query = ''' INSERT INTO
-        # #                          Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
-        # #                          SELECT
-        # #                          State_Log_Table.EMPLOYEEID, State_Log_Table.TIMESTAMP,Item_Log_Table.AssetID, State_Log_Table.STATUS
-        # #                          FROM
-        # #                          State_Log_Table
-        # #                          FULL OUTER JOIN Item_Log_Table
-        # #                          ON
-        # #                          State_Log_Table.TIMESTAMP = Item_Log_Table.TIMESTAMP;
-        # #                         '''
-        #
-        # # cursor.execute(insert_event_query)
-        # # cnxn.commit()
+        global State_Log_Entry
+        global Item_Log_Entry
+        time = datetime.now()
+        datevar = date.today()
+        for employee in self.StateEntry:
+            State_Log_Entry.append([employee, datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), status])
+        for asset in self.ItemEntry:
+            Item_Log_Entry.append([datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), asset])
+
+        insert_item_query = '''INSERT INTO Item_Log_Table(TIMESTAMP,ASSETID)
+                                           VALUES (?,?);'''  # '?' is a placeholder
+        insert_state_query = '''INSERT INTO State_Log_Table(EMPLOYEEID,TIMESTAMP,STATUS)
+                                                       VALUES (?,?,?);'''  # '?' is a placeholder
+        for entry in State_Log_Entry:
+            # define the values to insert
+            stateValues = (entry[0], entry[1], entry[2])
+            print(stateValues)
+            # insert the data into the database
+            cursor.execute(insert_state_query, stateValues)
+        # commit the inserts
+        cnxn.commit()
+
+        # loop thru each row in the matrix
+        for entry in Item_Log_Entry:
+            # define the values to insert
+            itemValues = (entry[0], entry[1])
+            print(itemValues)
+            # insert the data into the database
+            cursor.execute(insert_item_query,itemValues)
+        cnxn.commit()
+
+
+
+        insert_event_query = ''' INSERT INTO
+                                 Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS)
+                                 SELECT
+                                 State_Log_Table.EMPLOYEEID, State_Log_Table.TIMESTAMP,Item_Log_Table.AssetID, State_Log_Table.STATUS
+                                 FROM
+                                 State_Log_Table
+                                 FULL OUTER JOIN Item_Log_Table
+                                 ON
+                                 State_Log_Table.TIMESTAMP = Item_Log_Table.TIMESTAMP;
+                                '''
+
+        cursor.execute(insert_event_query)
+        cnxn.commit()
         # self.StateEntry.clear()
         # self.ItemEntry.clear()
         # State_Log_Entry.clear()
@@ -359,11 +365,12 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    # server = "BALKARAN09"
-    # database = 'TEST'
+    server = "BALKARAN09"
+    database = 'TEST'
 
-    server = "Raymond-P1"
-    database = 'RCMP_RFID'
+    # define the server name and the database name
+    # server = "Raymond-P1"
+    # database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
