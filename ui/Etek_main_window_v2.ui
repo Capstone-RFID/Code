@@ -24,15 +24,18 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QListWidget" name="New_Item_List">
-      <property name="focusPolicy">
-       <enum>Qt::ClickFocus</enum>
+     <widget class="QTableWidget" name="New_Item_List">
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
       </property>
-      <item>
+      <column>
        <property name="text">
         <string>Asset</string>
        </property>
-      </item>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
@@ -48,15 +51,15 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
-     <widget class="QListWidget" name="Existing_Item_list">
-      <property name="focusPolicy">
-       <enum>Qt::ClickFocus</enum>
+     <widget class="QTableWidget" name="Existing_Item_list">
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
       </property>
-      <item>
+      <column>
        <property name="text">
         <string>Asset</string>
        </property>
-      </item>
+      </column>
      </widget>
     </item>
    </layout>
@@ -189,12 +192,12 @@
     <rect>
      <x>680</x>
      <y>450</y>
-     <width>47</width>
-     <height>13</height>
+     <width>71</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>New Items</string>
+    <string>New Items:</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox">
@@ -260,8 +263,6 @@
   <tabstop>Asset_ID_Input</tabstop>
   <tabstop>Done_Button</tabstop>
   <tabstop>Remove_Button</tabstop>
-  <tabstop>New_Item_List</tabstop>
-  <tabstop>Existing_Item_list</tabstop>
   <tabstop>Employee_ID_Enter</tabstop>
   <tabstop>Asset_ID_Enter</tabstop>
   <tabstop>Cancel_Button</tabstop>

@@ -224,9 +224,12 @@ class mainWindow(QWidget):
             print('Asset Number:' + Asset)
             if Asset_Check(Asset):
                 if Asset not in self.ItemEntry: #any(Asset in sublist for sublist in self.ItemEntry) == False:
-                    self.ui.New_Item_List.addItem(Asset)
+                    lastrow = self.ui.New_Item_List.rowCount()
+                    self.ui.New_Item_List.insertRow(lastrow)
+                    self.ui.New_Item_List.setItem(lastrow, 1, Asset)
                     #apend the entries into a list
                     self.ItemEntry.append(Asset)
+                    #self.ui.New_Item_List.insertRow()
                     self.ui.Asset_ID_Input.clear()
                 else:
                      print('already in list')
@@ -368,12 +371,12 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    server = "BALKARAN09"
-    database = 'TEST'
+    # server = "BALKARAN09"
+    # database = 'TEST'
 
     # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
+    server = "Raymond-P1"
+    database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
