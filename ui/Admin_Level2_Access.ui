@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>667</width>
-    <height>610</height>
+    <width>669</width>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -357,6 +357,32 @@ QPushButton#Search_Reset_Fields_Button:pressed {
                </property>
               </widget>
              </item>
+             <item row="5" column="1">
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="5" column="0">
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="6" column="1">
               <widget class="QLineEdit" name="Search_Asset_Numbers_Field">
                <property name="minimumSize">
@@ -372,32 +398,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
-              <spacer name="horizontalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="5" column="1">
-              <spacer name="horizontalSpacer_9">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item row="5" column="2">
               <spacer name="horizontalSpacer_11">
                <property name="orientation">
@@ -412,7 +412,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               </spacer>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="Search_Datetime_From">
+              <widget class="QDateEdit" name="Search_Datetime_From">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -424,13 +424,10 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
-               <property name="maxLength">
-                <number>32767</number>
-               </property>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QLineEdit" name="Search_Datetime_To">
+              <widget class="QDateEdit" name="Search_Datetime_To">
                <property name="minimumSize">
                 <size>
                  <width>0</width>

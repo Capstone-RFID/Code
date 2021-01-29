@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(667, 610)
+        Admin_Interface.resize(669, 617)
         Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -166,6 +166,10 @@ class Ui_Admin_Interface(object):
 "}")
         self.Search_Reset_Fields_Button.setObjectName("Search_Reset_Fields_Button")
         self.gridLayout.addWidget(self.Search_Reset_Fields_Button, 7, 2, 1, 1)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem8, 5, 1, 1, 1)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem9, 5, 0, 1, 1)
         self.Search_Asset_Numbers_Field = QtWidgets.QLineEdit(self.Search_Tab)
         self.Search_Asset_Numbers_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Asset_Numbers_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -173,21 +177,16 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Asset_Numbers_Field.setObjectName("Search_Asset_Numbers_Field")
         self.gridLayout.addWidget(self.Search_Asset_Numbers_Field, 6, 1, 1, 1)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem8, 5, 0, 1, 1)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem9, 5, 1, 1, 1)
         spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem10, 5, 2, 1, 1)
-        self.Search_Datetime_From = QtWidgets.QLineEdit(self.Search_Tab)
+        self.Search_Datetime_From = QtWidgets.QDateEdit(self.Search_Tab)
         self.Search_Datetime_From.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Datetime_From.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.Search_Datetime_From.setMaxLength(32767)
         self.Search_Datetime_From.setObjectName("Search_Datetime_From")
         self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
-        self.Search_Datetime_To = QtWidgets.QLineEdit(self.Search_Tab)
+        self.Search_Datetime_To = QtWidgets.QDateEdit(self.Search_Tab)
         self.Search_Datetime_To.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
