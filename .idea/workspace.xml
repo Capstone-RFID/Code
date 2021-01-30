@@ -4,7 +4,9 @@
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestPrint.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Search Results January 30, 2021 00 00 00.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Search Results January 30, 2021 09 39 47.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/Admin_Level2_Access.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Admin_Level2_Access.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +271,7 @@
         <watch expression="today" />
         <watch expression="filename" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="215">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="212">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>

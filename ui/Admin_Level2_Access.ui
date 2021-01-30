@@ -24,7 +24,7 @@
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -191,7 +191,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -325,7 +325,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -506,7 +506,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -673,7 +673,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QLineEdit" name="Edit_Name_Field">
+                <widget class="QLineEdit" name="Edit_Description_Field">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -725,13 +725,13 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 </widget>
                </item>
                <item row="3" column="0">
-                <widget class="QLabel" name="Edit_Name_Label">
+                <widget class="QLabel" name="Edit_Description_Label">
                  <property name="styleSheet">
                   <string notr="true">color: rgb(255, 255, 255);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                  <property name="text">
-                  <string>Name:</string>
+                  <string>Description:</string>
                  </property>
                 </widget>
                </item>
@@ -808,7 +808,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Edit_Clear_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -838,7 +838,7 @@ QPushButton#Edit_Clear_Button:pressed {
               <widget class="QPushButton" name="Edit_Search_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -941,7 +941,7 @@ QPushButton#Edit_Search_Button:pressed {
             <widget class="QPushButton" name="Edit_Delete_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -984,7 +984,7 @@ QPushButton#Edit_Delete_Entry_Button:pressed {
             <widget class="QPushButton" name="Edit_Commit_Edits_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1053,7 +1053,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1083,7 +1083,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1155,13 +1155,13 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="Create_Name_Label">
+            <widget class="QLabel" name="Create_Description_Label">
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
-              <string>Name:</string>
+              <string>Description:</string>
              </property>
             </widget>
            </item>

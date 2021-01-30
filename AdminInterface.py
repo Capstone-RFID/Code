@@ -34,7 +34,7 @@ from Admin_Level2_Access import Ui_Admin_Interface
 #
 #     self.admin.openAdmin()
 #
-# As of writing (Jan 21, 2021), the rest of this class should be fairly self contained and not need anything else in main file
+# As of writing (Jan 30, 2021), the rest of this class should be fairly self contained and not need anything else in main file
 
 #*********************END NOTES ON HOW TO USE THIS CLASS*************************
 
@@ -124,6 +124,7 @@ class Admin_Interface(QWidget):
             self.search_PopulateTable(EmployeeAssetList)
     # Generates list of EmployeeID in event log based on Assets in search Filter
 
+    #Checks to see if entered asset# exists in asset table, populates table w/ query results if it is
     def search_searchAssetButtonClicked(self):
         print('Search Tab Search Asset Button Clicked')
         AssetNum = self.ui.Search_Asset_Numbers_Field.text()
@@ -162,19 +163,15 @@ class Admin_Interface(QWidget):
         print('Search Tab Print Button Clicked')
 
 
-        #app = QtWidgets.QApplication([])
-        w = self.ui.Search_Display_Results_Table
-        # for i in range(w.rowCount()):
-        #     for j in range(w.columnCount()):
-        #         it = QtWidgets.QTableWidgetItem("{}-{}".format(i, j))
-        #         w.setItem(i, j, it)
+        #calling the qt object constantly was long and unwieldy, just call it w and move on
+        #w = self.ui.Search_Display_Results_Table
 
         #Append date & time into filename (admin may do multiple searches + prints over several minutes)
         today = str(datetime.now().strftime("%B %d, %Y %H %M %S"))
         filename = "Search Results " + today + ".pdf"
-        model = w.model()
+        model = self.ui.Search_Display_Results_Table.model()
 
-        #Below just prints a generic crappy table - modify to make formatting better
+        #Below just prints a generic crappy table - modify to make formatting better if we have time later
         printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.PrinterResolution)
         printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
         printer.setPaperSize(QtPrintSupport.QPrinter.A4)
