@@ -168,10 +168,13 @@ class Admin_Interface(QWidget):
         #     for j in range(w.columnCount()):
         #         it = QtWidgets.QTableWidgetItem("{}-{}".format(i, j))
         #         w.setItem(i, j, it)
-        filename = "TestPrint.pdf"
+
+        #Append date & time into filename (admin may do multiple searches + prints over several minutes)
+        today = str(datetime.now().strftime("%B %d, %Y %H %M %S"))
+        filename = "Search Results " + today + ".pdf"
         model = w.model()
 
-        #Below just prints a generic crappy table - modify to make it better
+        #Below just prints a generic crappy table - modify to make formatting better
         printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.PrinterResolution)
         printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
         printer.setPaperSize(QtPrintSupport.QPrinter.A4)
