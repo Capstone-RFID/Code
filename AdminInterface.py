@@ -9,7 +9,7 @@ import subprocess
 import keyboard
 import logging
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets,  QtPrintSupport
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
@@ -75,7 +75,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'CKERR-THINKPAD'
+        server = 'BIGACER'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -160,6 +160,52 @@ class Admin_Interface(QWidget):
 
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
+
+
+        #app = QtWidgets.QApplication([])
+        w = self.ui.Search_Display_Results_Table
+        # for i in range(w.rowCount()):
+        #     for j in range(w.columnCount()):
+        #         it = QtWidgets.QTableWidgetItem("{}-{}".format(i, j))
+        #         w.setItem(i, j, it)
+        filename = "TestPrint.pdf"
+        model = w.model()
+
+        #Below just prints a generic crappy table - modify to make it better
+        printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.PrinterResolution)
+        printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
+        printer.setPaperSize(QtPrintSupport.QPrinter.A4)
+        printer.setOrientation(QtPrintSupport.QPrinter.Landscape)
+        printer.setOutputFileName(filename)
+
+        doc = QtGui.QTextDocument()
+
+        html = """<html>
+        <head>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        </style>
+        </head>"""
+        html += "<table><thead>"
+        html += "<tr>"
+        for c in range(model.columnCount()):
+            html += "<th>{}</th>".format(model.headerData(c, QtCore.Qt.Horizontal))
+
+        html += "</tr></thead>"
+        html += "<tbody>"
+        for r in range(model.rowCount()):
+            html += "<tr>"
+            for c in range(model.columnCount()):
+                html += "<td>{}</td>".format(model.index(r, c).data() or "")
+            html += "</tr>"
+        html += "</tbody></table>"
+        doc.setHtml(html)
+        doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
+        doc.print_(printer)
+
 
 
     def edit_clearButtonClicked(self):

@@ -264,11 +264,7 @@
       </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="dateTimeLowerBound" />
-        <watch expression="dateTimeUpperBound" />
-      </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="166">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/AdminInterface.py" line="212">
         <watch expression="test" />
       </inline-watch>
     </watches-manager>
