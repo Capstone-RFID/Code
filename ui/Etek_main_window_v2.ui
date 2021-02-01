@@ -115,6 +115,9 @@
      <height>41</height>
     </rect>
    </property>
+   <property name="maxLength">
+    <number>9</number>
+   </property>
   </widget>
   <widget class="QCommandLinkButton" name="Employee_ID_Enter">
    <property name="geometry">
@@ -172,6 +175,9 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="maxLength">
+    <number>7</number>
    </property>
   </widget>
   <widget class="QLabel" name="Existing_Item_Label">
@@ -253,6 +259,22 @@
    </property>
    <property name="text">
     <string>-</string>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="Mark_Button">
+   <property name="geometry">
+    <rect>
+     <x>1060</x>
+     <y>620</y>
+     <width>25</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+   <property name="text">
+    <string>!</string>
    </property>
   </widget>
  </widget>
