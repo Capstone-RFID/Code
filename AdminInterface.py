@@ -212,6 +212,14 @@ class Admin_Interface(QWidget):
         print('Edit Tab Clear Button Clicked')
     def edit_searchButtonClicked(self):
         print('Edit Tab Search Button Clicked')
+
+        if self.Asset_Check(self.ui.Edit_Asset_Num_Field.text()):
+            print('Edit search found the asset!')
+            EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
+
+            self.edit_PopulateTable(EntryList)
+        else:
+            print('Edit search did not find the asset!')
     def edit_deleteButtonClicked(self):
         print('Edit Tab Delete Button Clicked')
     def edit_commitButtonClicked(self):
@@ -286,6 +294,21 @@ class Admin_Interface(QWidget):
 
             return False
 
+  
+
+    def edit_PopulateTable(self, EntryList):
+        #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+        print(EntryList)
+
+        for i in range(len(EntryList)):
+            # Create a row
+            lastrow = self.ui.Edit_Display_Results_Table.rowCount()
+            self.ui.Edit_Display_Results_Table.insertRow(lastrow)
+
+            # Show items on row in interface
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
 
     def search_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
@@ -309,6 +332,15 @@ class Admin_Interface(QWidget):
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(AssetNum))
             return True
+        else:
+            return False
+
+    def edit_Asset_Info_Fetch(self, AssetNum):
+        check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetNum))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(AssetNum))
+            return self.cursor.fetchall()
         else:
             return False
 
