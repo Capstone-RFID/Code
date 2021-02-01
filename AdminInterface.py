@@ -294,7 +294,7 @@ class Admin_Interface(QWidget):
 
             return False
 
-  
+
 
     def edit_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
