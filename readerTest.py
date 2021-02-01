@@ -108,6 +108,7 @@ class mainWindow(QWidget):
         self.existingList = []
         self.eventEntry = []
         self.RemovedItems = []
+        self.markedList = []
 
         #connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
@@ -122,6 +123,8 @@ class mainWindow(QWidget):
         self.ui.New_Item_List.setAlternatingRowColors(True)
         self.ui.Existing_Item_list.setAlternatingRowColors(True)
         self.ui.Employee_ID_Input.setFocus()
+        self.ui.Mark_Button.released.connect(self.mark_assets)
+        self.ui.Mark_Button.setEnabled(False)
         self.ui.Asset_ID_Input.setEnabled(False)
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(True)
@@ -148,7 +151,7 @@ class mainWindow(QWidget):
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             self.current_items(self.ui.Employee_ID_Input.text())
             self.ui.Asset_ID_Input.setEnabled(True)
-            self.ui.Asset_ID_Input.setFocus()   
+            self.ui.Asset_ID_Input.setFocus()
             self.ui.Employee_ID_Input.setReadOnly(True)
         else:
             self.error_message("Enter a valid Employee ID")
@@ -164,9 +167,18 @@ class mainWindow(QWidget):
             print('Check OUT action')
             self.check_out_action()
             self.clear_lists()
-        else:
-            self.error_message("Please select Check-In or Check-out action")
-            self.StateEntry.clear()
+
+    def mark_assets(self):
+        row = self.ui.New_Item_List.currentRow()
+        text = self.ui.New_Item_List.item(row, 0).text()
+        if text not in self.markedList:
+            self.markedList.append(text)
+        y = [x for x in self.eventEntry if text in x]
+        z = self.eventEntry.index(y[0])
+        del self.eventEntry[z]
+        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(125,125,125))
+        self.ui.New_Item_List.clearSelection()
+
 
     def clear_lists(self):
         self.ui.New_Item_List.setRowCount(0)
@@ -177,6 +189,15 @@ class mainWindow(QWidget):
         self.RemovedItems.clear()
         self.ui.Check_Out_Box.setEnabled(True)
         self.ui.Check_In_Box.setEnabled(True)
+        self.ui.Check_In_Box.setAutoExclusive(False)
+        self.ui.Check_Out_Box.setAutoExclusive(False)
+        self.ui.Check_Out_Box.setChecked(False)
+        self.ui.Check_In_Box.setChecked(False)
+        self.ui.Check_In_Box.setAutoExclusive(True)
+        self.ui.Check_Out_Box.setAutoExclusive(True)
+        self.ui.Mark_Button.setEnabled(False)
+        self.markedList.clear()
+        self.existingList.clear()
         return
 
     def cancel_button_clicked(self):
@@ -202,6 +223,8 @@ class mainWindow(QWidget):
             lastrow_new = self.ui.New_Item_List.rowCount()
             self.ui.New_Item_List.insertRow(lastrow_new)
             self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
+            if self.ui.Check_In_Box.isChecked():
+                self.ui.Mark_Button.setEnabled(True)
         elif mode == 2:
             lastrow_existing = self.ui.Existing_Item_list.rowCount()
             self.ui.Existing_Item_list.insertRow(lastrow_existing)
@@ -211,24 +234,28 @@ class mainWindow(QWidget):
             Asset = self.ui.Asset_ID_Input.text()
             #self.ItemEntry.append(Asset)
             print('Asset Number:' + Asset)
-            if Asset_Check(Asset):
-                self.ui.Check_Out_Box.setEnabled(False)
-                self.ui.Check_In_Box.setEnabled(False)
-                if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
-                    self.insert_into_new_table(1, Asset)
-                    #apend the entries into a list
-                    self.eventEntry.append([self.ui.Employee_ID_Input.text(),Asset])
-                    #self.StateEntry.append(self.ui.Employee_ID_Input.text())
-                    #self.ui.New_Item_List.insertRow()
-                    self.ui.Asset_ID_Input.clear()
+            if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
+                if Asset_Check(Asset):
+                    self.ui.Check_Out_Box.setEnabled(False)
+                    self.ui.Check_In_Box.setEnabled(False)
+                    if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
+                        self.insert_into_new_table(1, Asset)
+                        #apend the entries into a list
+                        self.eventEntry.append([self.ui.Employee_ID_Input.text(),Asset])
+                        #self.StateEntry.append(self.ui.Employee_ID_Input.text())
+                        #self.ui.New_Item_List.insertRow()
+                        self.ui.Asset_ID_Input.clear()
+
+                    else:
+                         self.ui.Asset_ID_Input.clear()
+                         self.timer.start(1000)
+                         self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
+
                 else:
-                     self.ui.Asset_ID_Input.clear()
-                     self.timer.start(1000)
-                     self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
-                
+                    self.error_message("Enter a valid Asset ID")
+                    self.ui.Asset_ID_Input.clear()
             else:
-                self.error_message("Enter a valid Asset ID")
-                self.ui.Asset_ID_Input.clear()
+                self.error_message("Please select Check-In or Check-out action")
             return
 
     def rfid_insert(self, asset):
@@ -240,13 +267,11 @@ class mainWindow(QWidget):
 
 
     def check_in_action(self):
-        # self.ui.Employee_ID_input.clear()
-        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
-            print('Valid Employee ID. ')
-            self.sql_call("1")
-        else:
-            print('invalid employee ID. Please try again. ')
-            return
+        time = datetime.now()
+        datevar = date.today()
+        self.sql_call("1", time, datevar)
+        self.sql_call("5", time, datevar)
+
 
     def eliminate_duplicates(self, asset):
         if asset in self.existingList and self.ui.Check_Out_Box.isChecked():
@@ -255,25 +280,21 @@ class mainWindow(QWidget):
             return True
 
     def check_out_action(self):
-        # self.ui.Employee_ID_input.clear()
-        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
-            print('Valid Employee ID. ')
-            self.sql_call("2")
-        else:
-            print('invalid employee ID. Please try again. ')
-            return
-
-    def sql_call(self,status):
-        global State_Log_Entry
-        global Item_Log_Entry
         time = datetime.now()
         datevar = date.today()
-        for item in self.eventEntry:
-            Event_Log_Entry.append([item[0], datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"),item[1] ,status])
+        self.sql_call("2", time, datevar)
 
 
+    def sql_call(self,status, time, datevar):
+
+        if status == '5':
+            for item in self.markedList:
+                Event_Log_Entry.append([self.ui.Employee_ID_Input.text(), datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), item, status])
+        else:
+            for item in self.eventEntry:
+                Event_Log_Entry.append(
+                    [item[0], datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), item[1], status])
         insert_event_query = ''' INSERT INTO Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS) VALUES(?,?,?,?);'''
-
         for entry in Event_Log_Entry:
             # define the values to insert
             eventValues = (entry[0], entry[1], entry[2],entry[3])
@@ -282,6 +303,7 @@ class mainWindow(QWidget):
             cursor.execute(insert_event_query, eventValues)
         # commit the inserts
         cnxn.commit()
+        Event_Log_Entry.clear()
 
         # self.StateEntry.clear()
         # self.ItemEntry.clear()
@@ -341,12 +363,12 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    # server = "BALKARAN09"
-    # database = 'TEST'
+    server = "BALKARAN09"
+    database = 'TEST'
 
     # define the server name and the database name
-    server = "Raymond-P1"
-    database = 'RCMP_RFID'
+    # server = "Raymond-P1"
+    # database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
