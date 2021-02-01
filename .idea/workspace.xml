@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Etek_main_window_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Etek_main_window_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,53 +14,18 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.62439024">
+    <splitter split-orientation="horizontal" split-proportion="0.52921426">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/readerTest.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="525">
-                  <caret line="266" column="24" lean-forward="true" selection-start-line="266" selection-start-column="11" selection-end-line="266" selection-end-column="24" />
+                <state relative-caret-position="357">
+                  <caret line="129" column="69" selection-start-line="129" selection-start-column="69" selection-end-line="129" selection-end-column="69" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
+                    <element signature="e#13244#14299#0" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/sllurp/llrp.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="12410">
-                  <caret line="743" selection-start-line="743" selection-end-line="743" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/twisted/protocols/basic.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="9673">
-                  <caret line="582" selection-start-line="582" selection-end-line="582" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/twisted/internet/tcp.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3859">
-                  <caret line="242" selection-start-line="242" selection-end-line="242" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/twisted/internet/selectreactor.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2346">
-                  <caret line="149" selection-start-line="149" selection-end-line="149" />
                 </state>
               </provider>
             </entry>
@@ -67,20 +34,20 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2040">
+                <state relative-caret-position="607">
                   <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="475">
-                  <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+                <state relative-caret-position="1445">
+                  <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
                 </state>
               </provider>
             </entry>
@@ -88,7 +55,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="952">
+                <state relative-caret-position="607">
                   <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
                 </state>
               </provider>
@@ -335,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611882925549</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="SQL only 1 even table now.&#10;GUI bug fixes.&#10;RFID insert error without employee ID input entered fixed">
+      <created>1611961032680</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611961032680</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -380,7 +354,8 @@
     <MESSAGE value="Current assets can be listed in the GUI.&#10;RFID functionality restored." />
     <MESSAGE value="working on list and tables" />
     <MESSAGE value="lists replace with tables" />
-    <option name="LAST_COMMIT_MESSAGE" value="lists replace with tables" />
+    <MESSAGE value="SQL only 1 even table now.&#10;GUI bug fixes.&#10;RFID insert error without employee ID input entered fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="SQL only 1 even table now.&#10;GUI bug fixes.&#10;RFID insert error without employee ID input entered fixed" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -431,13 +406,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/twisted/protocols/basic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9673">
-          <caret line="582" selection-start-line="582" selection-end-line="582" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/twisted/internet/tcp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3859">
@@ -452,33 +420,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/twisted/protocols/basic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
-          <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
+        <state relative-caret-position="607">
+          <caret line="582" selection-start-line="582" selection-end-line="582" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
+        <state relative-caret-position="607">
           <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
+        <state relative-caret-position="1445">
+          <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="607">
+          <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/readerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="266" column="24" lean-forward="true" selection-start-line="266" selection-start-column="11" selection-end-line="266" selection-end-column="24" />
+        <state relative-caret-position="357">
+          <caret line="129" column="69" selection-start-line="129" selection-start-column="69" selection-end-line="129" selection-end-column="69" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#13244#14299#0" />
           </folding>
         </state>
       </provider>

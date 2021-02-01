@@ -35,25 +35,6 @@ def cb(tagReport):
             RFID(result)
     result.clear()
 
-
-        # else:
-        #     window.error_message("haha")
-
-        # if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
-        #     print(tags[0]['EPC-96'])
-        #     rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
-        #     cursor.execute(rfid_check_query, str(tags[0]['EPC-96']))
-        #     if cursor.fetchone():
-        #         get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
-        #         cursor.execute(get_asset_query, str(tags[0]['EPC-96']))
-        #         assetID = cursor.fetchone()
-        #         if assetID[0] not in window.ItemEntry:
-        #             print(assetID)
-        #             window.rfid_insert(assetID[0])
-        #         else:
-        #             return
-
-
 def RFID(result):
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         for tag in result:
@@ -64,6 +45,7 @@ def RFID(result):
                 cursor.execute(get_asset_query, str(tag))
                 assetID = cursor.fetchone()
                 window.rfid_insert(assetID[0])
+
 
 
 def shutdown(factory):
@@ -100,7 +82,7 @@ def stop():
     reactor.stop()
 
 def Employee_ID_Check(input):
-    check_query = '''SELECT TOP 1 * FROM Employee_Table WHERE EmployeeID = (?);''' # '?' is a placeholder
+    check_query = '''SELECT TOP 1 * FROM Employee_Table WHERE EmployeeID = (?);'''# '?' is a placeholder
     cursor.execute(check_query, str(input))
     if cursor.fetchone():
         return True
@@ -145,6 +127,11 @@ class mainWindow(QWidget):
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self.timer_timeout)
 
+        #validator to only enter integer values into the entry fields
+        self.onlyInt = QtGui.QIntValidator()
+        self.ui.Asset_ID_Input.setValidator(self.onlyInt)
+        self.ui.Employee_ID_Input.setValidator(self.onlyInt)
+
     def remove_action(self):
         if(len(self.eventEntry)!=0):
             row = self.ui.New_Item_List.currentRow()
@@ -165,6 +152,7 @@ class mainWindow(QWidget):
             self.ui.Employee_ID_Input.setReadOnly(True)
         else:
             self.error_message("Enter a valid Employee ID")
+            self.ui.Employee_ID_Input.clear()
             return
     
     def done_button_clicked(self):
@@ -234,15 +222,13 @@ class mainWindow(QWidget):
                     #self.ui.New_Item_List.insertRow()
                     self.ui.Asset_ID_Input.clear()
                 else:
-                     print('already in list')
                      self.ui.Asset_ID_Input.clear()
-                     #self.error_message("Asset already selected")
                      self.timer.start(1000)
                      self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
                 
             else:
-                print('invalid Asset')
                 self.error_message("Enter a valid Asset ID")
+                self.ui.Asset_ID_Input.clear()
             return
 
     def rfid_insert(self, asset):
