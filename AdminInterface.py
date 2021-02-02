@@ -75,7 +75,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -234,7 +234,7 @@ class Admin_Interface(QWidget):
     # ****************************************Class Methods for Running Queries*******************************
     #Searches for employee_ID in database, returns true if it exists else returns false
     def Employee_ID_Check(self, input):
-        check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
+        check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
             print('This ID exists!')
@@ -327,7 +327,7 @@ class Admin_Interface(QWidget):
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
     def Asset_Check(self, AssetNum):
-        check_query = '''SELECT * FROM [Asset Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(AssetNum))
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(AssetNum))
