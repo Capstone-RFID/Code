@@ -234,7 +234,10 @@ class Admin_Interface(QWidget):
             Edit_Asset_Fetched = self.ui.Edit_Display_Results_Table.item(i, 0).text()
             Edit_Employee_Fetched = self.ui.Edit_Display_Results_Table.item(i, 1).text()
             Edit_Datetime_Fetched = self.ui.Edit_Display_Results_Table.item(i, 2).text()
+            Edit_Status_Fetched = self.ui.Edit_Display_Results_Table.item(i, 4).text()
             print(Edit_Asset_Fetched, Edit_Employee_Fetched,  Edit_Datetime_Fetched)
+            insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+            self.cursor.execute(insert_event_query, str(Edit_Employee_Fetched), str(Edit_Asset_Fetched),str(Edit_Status_Fetched))
 
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
@@ -320,6 +323,7 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
             self.ui.Edit_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
             self.ui.Edit_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 4, QTableWidgetItem(str(EntryList[i][4])))
 
     def search_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
