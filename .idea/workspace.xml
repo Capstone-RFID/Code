@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Etek_main_window_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Etek_main_window_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,18 +12,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.52921426">
+    <splitter split-orientation="horizontal" split-proportion="0.8629953">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/readerTest.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
-                  <caret line="129" column="69" selection-start-line="129" selection-start-column="69" selection-end-line="129" selection-end-column="69" />
+                <state relative-caret-position="6120">
+                  <caret line="360" column="29" selection-start-line="360" selection-start-column="29" selection-end-line="360" selection-end-column="29" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
-                    <element signature="e#13244#14299#0" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="29869">
+                  <caret line="1757" selection-start-line="1757" selection-end-line="1757" />
                 </state>
               </provider>
             </entry>
@@ -37,7 +43,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="607">
+                <state relative-caret-position="164">
                   <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
                 </state>
               </provider>
@@ -46,7 +52,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1445">
+                <state relative-caret-position="1479">
                   <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
                 </state>
               </provider>
@@ -55,7 +61,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="607">
+                <state relative-caret-position="952">
                   <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
                 </state>
               </provider>
@@ -90,6 +96,7 @@
       <find>Employee_ID_Check</find>
       <find>ItemEntry</find>
       <find>item</find>
+      <find>insert_into</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -309,7 +316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611961032680</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="GUI bug fixes.&#10;added damaged button functionality.&#10;limited entry inputs">
+      <created>1612204273294</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1612204273294</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -355,7 +369,8 @@
     <MESSAGE value="working on list and tables" />
     <MESSAGE value="lists replace with tables" />
     <MESSAGE value="SQL only 1 even table now.&#10;GUI bug fixes.&#10;RFID insert error without employee ID input entered fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="SQL only 1 even table now.&#10;GUI bug fixes.&#10;RFID insert error without employee ID input entered fixed" />
+    <MESSAGE value="GUI bug fixes.&#10;added damaged button functionality.&#10;limited entry inputs" />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI bug fixes.&#10;added damaged button functionality.&#10;limited entry inputs" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -368,6 +383,9 @@
         <watch expression="ItemEntry" />
         <watch expression="self.ItemEntry" />
         <watch expression="Asset" />
+        <watch expression="self.markedList" />
+        <watch expression="self.eventEntry" />
+        <watch expression="Event_Log_Entry" />
       </configuration>
     </watches-manager>
   </component>
@@ -427,34 +445,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
+        <state relative-caret-position="29869">
+          <caret line="1757" selection-start-line="1757" selection-end-line="1757" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Etek_main_window_All_In_One.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
+        <state relative-caret-position="164">
           <caret line="120" column="24" selection-start-line="120" selection-start-column="24" selection-end-line="120" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Etek_main_window_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1479">
+          <caret line="87" column="23" selection-start-line="87" selection-start-column="23" selection-end-line="87" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Admin_Level2_Access.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="56" column="50" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/readerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="129" column="69" selection-start-line="129" selection-start-column="69" selection-end-line="129" selection-end-column="69" />
+        <state relative-caret-position="6120">
+          <caret line="360" column="29" selection-start-line="360" selection-start-column="29" selection-end-line="360" selection-end-column="29" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#13244#14299#0" />
           </folding>
         </state>
       </provider>

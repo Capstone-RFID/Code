@@ -99,6 +99,8 @@ def Asset_Check(input):
 
 
 
+
+
 class mainWindow(QWidget):
     def __init__(self):
         super(mainWindow, self).__init__()
@@ -218,7 +220,7 @@ class mainWindow(QWidget):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
 
-    def insert_into_new_table(self, mode, item):
+    def insert_into_table(self, mode, item):
         if mode == 1:
             lastrow_new = self.ui.New_Item_List.rowCount()
             self.ui.New_Item_List.insertRow(lastrow_new)
@@ -231,15 +233,25 @@ class mainWindow(QWidget):
             self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
 
     def asset_enter_action(self):
-            Asset = self.ui.Asset_ID_Input.text()
-            #self.ItemEntry.append(Asset)
-            print('Asset Number:' + Asset)
-            if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
-                if Asset_Check(Asset):
-                    self.ui.Check_Out_Box.setEnabled(False)
-                    self.ui.Check_In_Box.setEnabled(False)
+        status_check_query = '''SELECT TOP(1)
+                                   Event_Log_Table.Status
+                                   FROM
+                                   Event_Log_Table
+                                   WHERE
+                                   Event_Log_Table.AssetID = (?)
+                                   ORDER BY Event_Log_Table.Entry DESC'''
+        Asset = self.ui.Asset_ID_Input.text()
+        #self.ItemEntry.append(Asset)
+        print('Asset Number:' + Asset)
+        if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
+            if Asset_Check(Asset):
+                self.ui.Check_Out_Box.setEnabled(False)
+                self.ui.Check_In_Box.setEnabled(False)
+                cursor.execute(status_check_query,Asset)
+                state = cursor.fetchall()
+                if state[0][0] == '2' or state[0][0] == '1':
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
-                        self.insert_into_new_table(1, Asset)
+                        self.insert_into_table(1, Asset)
                         #apend the entries into a list
                         self.eventEntry.append([self.ui.Employee_ID_Input.text(),Asset])
                         #self.StateEntry.append(self.ui.Employee_ID_Input.text())
@@ -250,18 +262,21 @@ class mainWindow(QWidget):
                          self.ui.Asset_ID_Input.clear()
                          self.timer.start(1000)
                          self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
-
                 else:
-                    self.error_message("Enter a valid Asset ID")
+                    self.error_message("asset is not status 1 or 2")
                     self.ui.Asset_ID_Input.clear()
+
             else:
-                self.error_message("Please select Check-In or Check-out action")
-            return
+                self.error_message("Enter a valid Asset ID")
+                self.ui.Asset_ID_Input.clear()
+        else:
+            self.error_message("Please select Check-In or Check-out action")
+        return
 
     def rfid_insert(self, asset):
         if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (asset not in self.RemovedItems) and self.eliminate_duplicates(asset) and (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()) :
             self.eventEntry.append([self.ui.Employee_ID_Input.text(),asset])
-            self.insert_into_new_table(1, asset)
+            self.insert_into_table(1, asset)
         # else:
         #     self.ui.Asset_ID_Input.setText('DUPLICATE!!!!')
 
@@ -313,6 +328,7 @@ class mainWindow(QWidget):
         # cnxn.close
         return
 
+
     def current_items(self,emID):
       current_asset_query =  '''
                             SELECT AssetID
@@ -342,11 +358,25 @@ class mainWindow(QWidget):
                             )AS final_result
                             WHERE
                             Status = '2'; '''
+      asset_check_query = '''SELECT TOP(1)
+                             Event_Log_Table.EmployeeID
+                             FROM
+                             Event_Log_Table
+                             WHERE
+                             Event_Log_Table.AssetID = (?)
+                             ORDER BY Event_Log_Table.Entry DESC'''
+
       cursor.execute(current_asset_query,str(emID),str(emID))
+
       for assets in cursor.fetchall():
           print(assets[0])
           self.existingList.append(assets[0])
-          self.insert_into_new_table(2, assets[0])
+          cursor.execute(asset_check_query, assets[0])
+          employee = cursor.fetchall()
+          print(employee[0][0])
+          print(self.ui.Employee_ID_Input.text())
+          if employee[0][0] == self.ui.Employee_ID_Input.text():
+              self.insert_into_table(2, assets[0])
       return
 
     def testfunction(self):
