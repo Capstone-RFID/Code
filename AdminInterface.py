@@ -49,6 +49,10 @@ class Admin_Interface(QWidget):
         self.StateEntry = []
         self.ItemEntry = []
 
+        #For storing the data on the search results table in the edit tab
+        self.edit_AssetsInGUITable = []
+        self.edit_EmployeesInGUITable = []
+
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
@@ -75,7 +79,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'CKERR-THINKPAD'
+        server = 'BIGACER'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -221,6 +225,16 @@ class Admin_Interface(QWidget):
             EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
 
             self.edit_PopulateTable(EntryList)
+
+            #Store the search results for later comparison if edits are made on interface
+            for i in range(self.ui.Edit_Display_Results_Table.rowCount()):
+                self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
+                self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
+
+            print(self.edit_AssetsInGUITable)
+            print(self.edit_EmployeesInGUITable)
+
+
         else:
             print('Edit search did not find the asset!')
     def edit_deleteButtonClicked(self):
@@ -233,12 +247,21 @@ class Admin_Interface(QWidget):
             # Show items on row in interface
             Edit_Asset_Fetched = self.ui.Edit_Display_Results_Table.item(i, 0).text()
             Edit_Employee_Fetched = self.ui.Edit_Display_Results_Table.item(i, 1).text()
-            Edit_Datetime_Fetched = self.ui.Edit_Display_Results_Table.item(i, 2).text()
+            #Edit_Datetime_Fetched = self.ui.Edit_Display_Results_Table.item(i, 2).text()
             Edit_Status_Fetched = self.ui.Edit_Display_Results_Table.item(i, 4).text()
-            print(Edit_Asset_Fetched, Edit_Employee_Fetched,  Edit_Datetime_Fetched)
-            insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
-            self.cursor.execute(insert_event_query, str(Edit_Employee_Fetched), str(Edit_Asset_Fetched),str(Edit_Status_Fetched))
 
+
+            #NOTE:WRITING THE ASSET TO ANOTHER VARIABLE DOESN'T TRIGGER THE CONDITIONAL STATEMENT CORRECTLY, hence why the statement below is so long
+            #If either the employeeID or the AssetID has been changed, then make a new event in the event log table
+
+            if not (self.ui.Edit_Display_Results_Table.item(i, 0).text() == self.edit_AssetsInGUITable[i]) or not (self.ui.Edit_Display_Results_Table.item(i, 1).text() == self.edit_EmployeesInGUITable[i]):
+                print(Edit_Asset_Fetched, Edit_Employee_Fetched)
+                insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+                #Next two lines commit the edits present in the table
+                self.cursor.execute(insert_event_query, str(Edit_Employee_Fetched), str(Edit_Asset_Fetched),str(Edit_Status_Fetched))
+                self.cnxn.commit()
+            else:
+                print("Row "+ str(i + 1) + " has not been edited")
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
     def create_confirmEntryButtonClicked(self):
