@@ -90,6 +90,9 @@ class Admin_Interface(QWidget):
     # open up the admin window from the button on main window
     def openAdmin(self):
         self.show()
+        #set defualt tab on window opening to home tab
+        self.ui.Admin_Select.setCurrentIndex(0)
+
         #Set default datetime values to show admin users required format for input
         d = QDate(2021, 1, 1)
         self.ui.Search_Datetime_From.setDate(d)
@@ -224,6 +227,14 @@ class Admin_Interface(QWidget):
         print('Edit Tab Delete Button Clicked')
     def edit_commitButtonClicked(self):
         print('Edit Tab Commit Button Clicked')
+        Edit_Table_Length = self.ui.Edit_Display_Results_Table.rowCount()
+        for i in range(Edit_Table_Length):
+
+            # Show items on row in interface
+            Edit_Asset_Fetched = self.ui.Edit_Display_Results_Table.item(i, 0).text()
+            Edit_Employee_Fetched = self.ui.Edit_Display_Results_Table.item(i, 1).text()
+            Edit_Datetime_Fetched = self.ui.Edit_Display_Results_Table.item(i, 2).text()
+            print(Edit_Asset_Fetched, Edit_Employee_Fetched,  Edit_Datetime_Fetched)
 
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
