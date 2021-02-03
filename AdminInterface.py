@@ -52,6 +52,7 @@ class Admin_Interface(QWidget):
         #For storing the data on the search results table in the edit tab
         self.edit_AssetsInGUITable = []
         self.edit_EmployeesInGUITable = []
+        self.edit_StatusInGUITable = []
 
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
@@ -79,7 +80,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -230,6 +231,7 @@ class Admin_Interface(QWidget):
             for i in range(self.ui.Edit_Display_Results_Table.rowCount()):
                 self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
                 self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
+                self.edit_StatusInGUITable.append(str(EntryList[i][4]))
 
             print(self.edit_AssetsInGUITable)
             print(self.edit_EmployeesInGUITable)
@@ -254,7 +256,10 @@ class Admin_Interface(QWidget):
             #NOTE:WRITING THE ASSET TO ANOTHER VARIABLE DOESN'T TRIGGER THE CONDITIONAL STATEMENT CORRECTLY, hence why the statement below is so long
             #If either the employeeID or the AssetID has been changed, then make a new event in the event log table
 
-            if not (self.ui.Edit_Display_Results_Table.item(i, 0).text() == self.edit_AssetsInGUITable[i]) or not (self.ui.Edit_Display_Results_Table.item(i, 1).text() == self.edit_EmployeesInGUITable[i]):
+            print(self.ui.Edit_Display_Results_Table.item(i, 0).text())
+            print(self.edit_AssetsInGUITable[i])
+
+            if (self.ui.Edit_Display_Results_Table.item(i, 0).text() != self.edit_AssetsInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 1).text() != self.edit_EmployeesInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 4).text() != self.edit_StatusInGUITable[i]):
                 print(Edit_Asset_Fetched, Edit_Employee_Fetched)
                 insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
                 #Next two lines commit the edits present in the table
