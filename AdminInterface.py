@@ -54,6 +54,8 @@ class Admin_Interface(QWidget):
         self.edit_EmployeesInGUITable = []
         self.edit_StatusInGUITable = []
 
+        self.edit_AssetSearchedInDatabase = None
+
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
@@ -80,7 +82,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'CKERR-THINKPAD'
+        server = 'BIGACER'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -220,18 +222,16 @@ class Admin_Interface(QWidget):
         print('Edit Tab Clear Button Clicked')
     def edit_searchButtonClicked(self):
         print('Edit Tab Search Button Clicked')
-
+        self.edit_clearTableResults()
         if self.Asset_Check(self.ui.Edit_Asset_Num_Field.text()):
             print('Edit search found the asset!')
             EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
-
+            self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Num_Field.text()
             self.edit_PopulateTable(EntryList)
 
-            #Store the search results for later comparison if edits are made on interface
-            for i in range(self.ui.Edit_Display_Results_Table.rowCount()):
-                self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
-                self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
-                self.edit_StatusInGUITable.append(str(EntryList[i][4]))
+
+
+
 
             print(self.edit_AssetsInGUITable)
             print(self.edit_EmployeesInGUITable)
@@ -243,6 +243,29 @@ class Admin_Interface(QWidget):
         print('Edit Tab Delete Button Clicked')
     def edit_commitButtonClicked(self):
         print('Edit Tab Commit Button Clicked')
+
+        EntryList = self.edit_Asset_Info_Fetch(self.edit_AssetSearchedInDatabase)
+
+        # Store the search results for later comparison if edits are made on interface
+        for i in range(self.ui.Edit_Display_Results_Table.rowCount()):
+            if EntryList[i][3] == None:
+                EntryList[i][3] = ''
+                self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
+            else:
+                self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
+
+            if EntryList[i][2] == None:
+                EntryList[i][2] = ''
+                self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
+            else:
+                self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
+
+            if EntryList[i][4] == None:
+                EntryList[i][4] = 'Unknown'
+                self.edit_StatusInGUITable.append(str(EntryList[i][4]))
+            else:
+                self.edit_StatusInGUITable.append(str(EntryList[i][4]))
+
         Edit_Table_Length = self.ui.Edit_Display_Results_Table.rowCount()
         for i in range(Edit_Table_Length):
 
@@ -259,7 +282,7 @@ class Admin_Interface(QWidget):
             print(self.ui.Edit_Display_Results_Table.item(i, 0).text())
             print(self.edit_AssetsInGUITable[i])
 
-            if (self.ui.Edit_Display_Results_Table.item(i, 0).text() != self.edit_AssetsInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 1).text() != self.edit_EmployeesInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 4).text() != self.edit_StatusInGUITable[i]):
+            if (self.ui.Edit_Display_Results_Table.item(i, 0).text() != self.edit_AssetsInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 1).text() != (self.edit_EmployeesInGUITable[i])) or (self.ui.Edit_Display_Results_Table.item(i, 4).text() != self.edit_StatusInGUITable[i]):
                 print(Edit_Asset_Fetched, Edit_Employee_Fetched)
                 insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
                 #Next two lines commit the edits present in the table
@@ -296,6 +319,9 @@ class Admin_Interface(QWidget):
             return False
     def search_clearTableResults(self):
         self.ui.Search_Display_Results_Table.setRowCount(0)
+
+    def edit_clearTableResults(self):
+        self.ui.Edit_Display_Results_Table.setRowCount(0)
 
 
     def search_checkFieldInputs(self):
