@@ -82,7 +82,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -292,8 +292,22 @@ class Admin_Interface(QWidget):
                 print("Row "+ str(i + 1) + " has not been edited")
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
+        # Reset Asset and RFID Filters to empty values
+        self.ui.Create_Asset_Num_Field.setText("")
+        self.ui.Create_RFID_Tag_Field_3.setText("")
+
     def create_confirmEntryButtonClicked(self):
-        print('Create Tab Confirm Entry Button Clicked')
+        if (self.ui.Create_RFID_Tag_Field_3.text() != None) and (self.ui.Create_Asset_Num_Field.text() != None):
+            print('Create Tab Confirm Entry Button Clicked')
+            insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
+            # Next two lines commit the edits present in the table
+            self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()), str(self.ui.Create_Asset_Num_Field.text()))
+            self.cnxn.commit()
+            #clear fields after commit
+            self.ui.Create_Asset_Num_Field.setText("")
+            self.ui.Create_RFID_Tag_Field_3.setText("")
+        else:
+            print("Both Asset and RFID numbers were not entered")
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************

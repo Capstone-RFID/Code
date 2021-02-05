@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>669</width>
-    <height>617</height>
+    <width>531</width>
+    <height>499</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -321,42 +321,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="2">
-              <widget class="QPushButton" name="Search_Reset_Fields_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>186</width>
-                 <height>51</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>186</width>
-                 <height>51</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton#Search_Reset_Fields_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Search_Reset_Fields_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-               </property>
-               <property name="text">
-                <string>Reset Filters</string>
-               </property>
-              </widget>
-             </item>
              <item row="5" column="1">
               <spacer name="horizontalSpacer_9">
                <property name="orientation">
@@ -444,6 +408,42 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="2">
+              <widget class="QPushButton" name="Search_Reset_Fields_Button">
+               <property name="minimumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>186</width>
+                 <height>51</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton#Search_Reset_Fields_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_Reset_Fields_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+               </property>
+               <property name="text">
+                <string>Reset Filters</string>
                </property>
               </widget>
              </item>
@@ -1119,70 +1119,7 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
          </item>
          <item row="1" column="0">
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="Create_Asset_Num_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="Create_Asset_Num_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asset #:</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="Create_Name_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="Create_Description_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Description:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="Create_RFID_Tag_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>RFID Tag #:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
             <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
              <property name="minimumSize">
               <size>
@@ -1200,19 +1137,19 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="Create_Part_Number_Label">
+           <item row="0" column="0">
+            <widget class="QLabel" name="Create_Asset_Num_Label">
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
-              <string>Part Number:</string>
+              <string>Asset #:</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="Create_Part_Number_Field">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="Create_Asset_Num_Field">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1224,8 +1161,16 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="Create_RFID_Tag_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
              <property name="text">
-              <string/>
+              <string>RFID Tag #:</string>
              </property>
             </widget>
            </item>

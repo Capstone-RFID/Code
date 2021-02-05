@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(669, 617)
+        Admin_Interface.resize(531, 499)
         Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -94,7 +94,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Search_SearchAsset_Query_Button.sizePolicy().hasHeightForWidth())
         self.Search_SearchAsset_Query_Button.setSizePolicy(sizePolicy)
-        self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setStyleSheet("QPushButton#Search_SearchAsset_Query_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
@@ -146,26 +146,6 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Asset_Num_From_Label.setObjectName("Search_Asset_Num_From_Label")
         self.gridLayout.addWidget(self.Search_Asset_Num_From_Label, 6, 0, 1, 1)
-        self.Search_Reset_Fields_Button = QtWidgets.QPushButton(self.Search_Tab)
-        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(246, 51))
-        self.Search_Reset_Fields_Button.setMaximumSize(QtCore.QSize(186, 51))
-        self.Search_Reset_Fields_Button.setStyleSheet("QPushButton#Search_Reset_Fields_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
-"color: rgb(255, 255, 255);\n"
-"border-style: outset;\n"
-"border-width: 2px;\n"
-"border-radius: 10px;\n"
-"border-color: beige;\n"
-"font: 14pt \"MS Shell Dlg 2\";\n"
-"min-width: 10em;\n"
-"padding: 6px;\n"
-"}\n"
-"QPushButton#Search_Reset_Fields_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
-"    border-style: inset;\n"
-"}")
-        self.Search_Reset_Fields_Button.setObjectName("Search_Reset_Fields_Button")
-        self.gridLayout.addWidget(self.Search_Reset_Fields_Button, 7, 2, 1, 1)
         spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem8, 5, 1, 1, 1)
         spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -195,6 +175,26 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_To.setCalendarPopup(True)
         self.Search_Datetime_To.setObjectName("Search_Datetime_To")
         self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
+        self.Search_Reset_Fields_Button = QtWidgets.QPushButton(self.Search_Tab)
+        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Search_Reset_Fields_Button.setMaximumSize(QtCore.QSize(186, 51))
+        self.Search_Reset_Fields_Button.setStyleSheet("QPushButton#Search_Reset_Fields_Button {\n"
+"background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"border-width: 2px;\n"
+"border-radius: 10px;\n"
+"border-color: beige;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Search_Reset_Fields_Button:pressed {\n"
+"    background-color: rgb(80, 80, 80);\n"
+"    border-style: inset;\n"
+"}")
+        self.Search_Reset_Fields_Button.setObjectName("Search_Reset_Fields_Button")
+        self.gridLayout.addWidget(self.Search_Reset_Fields_Button, 7, 2, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout)
         self.Search_Display_Results_Table = QtWidgets.QTableWidget(self.Search_Tab)
         self.Search_Display_Results_Table.setStyleSheet("background-color: rgb(78, 78, 78);")
@@ -221,7 +221,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Search_Print_PDF_Button.sizePolicy().hasHeightForWidth())
         self.Search_Print_PDF_Button.setSizePolicy(sizePolicy)
-        self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_Print_PDF_Button.setStyleSheet("QPushButton#Search_Print_PDF_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -340,7 +340,7 @@ class Ui_Admin_Interface(object):
         self.gridLayout_2.addItem(spacerItem20, 2, 1, 1, 1)
         self.gridLayout_3.addLayout(self.gridLayout_2, 0, 0, 3, 1)
         self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -359,7 +359,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Clear_Button.setObjectName("Edit_Clear_Button")
         self.gridLayout_3.addWidget(self.Edit_Clear_Button, 2, 2, 1, 1)
         self.Edit_Search_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Search_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Search_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Search_Button.setStyleSheet("QPushButton#Edit_Search_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -403,7 +403,7 @@ class Ui_Admin_Interface(object):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.Edit_Delete_Entry_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Delete_Entry_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Delete_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Delete_Entry_Button.setStyleSheet("QPushButton#Edit_Delete_Entry_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -424,7 +424,7 @@ class Ui_Admin_Interface(object):
         spacerItem23 = QtWidgets.QSpacerItem(328, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem23)
         self.Edit_Commit_Edits_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Commit_Edits_Button.setStyleSheet("QPushButton#Edit_Commit_Edits_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -461,7 +461,7 @@ class Ui_Admin_Interface(object):
         spacerItem24 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem24)
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -480,7 +480,7 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button.setObjectName("Create_Clear_Fields_Button")
         self.verticalLayout_8.addWidget(self.Create_Clear_Fields_Button)
         self.Create_Confirm_Entry_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Confirm_Entry_Button.setStyleSheet("QPushButton#Create_Confirm_Entry_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -501,35 +501,6 @@ class Ui_Admin_Interface(object):
         self.gridLayout_6.addLayout(self.verticalLayout_8, 1, 1, 1, 1)
         self.gridLayout_5 = QtWidgets.QGridLayout()
         self.gridLayout_5.setObjectName("gridLayout_5")
-        self.Create_Asset_Num_Field = QtWidgets.QLineEdit(self.Create_Tab)
-        self.Create_Asset_Num_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Create_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Num_Field.setObjectName("Create_Asset_Num_Field")
-        self.gridLayout_5.addWidget(self.Create_Asset_Num_Field, 0, 1, 1, 1)
-        self.Create_Asset_Num_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Num_Label.setObjectName("Create_Asset_Num_Label")
-        self.gridLayout_5.addWidget(self.Create_Asset_Num_Label, 0, 0, 1, 1)
-        self.Create_Name_Field = QtWidgets.QLineEdit(self.Create_Tab)
-        self.Create_Name_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Create_Name_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Name_Field.setObjectName("Create_Name_Field")
-        self.gridLayout_5.addWidget(self.Create_Name_Field, 1, 1, 1, 1)
-        self.Create_Description_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Description_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Description_Label.setObjectName("Create_Description_Label")
-        self.gridLayout_5.addWidget(self.Create_Description_Label, 1, 0, 1, 1)
-        self.Create_RFID_Tag_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_RFID_Tag_Label.setObjectName("Create_RFID_Tag_Label")
-        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Label, 2, 0, 1, 1)
         self.Create_RFID_Tag_Field_3 = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_RFID_Tag_Field_3.setMinimumSize(QtCore.QSize(0, 25))
         self.Create_RFID_Tag_Field_3.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -537,20 +508,24 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_RFID_Tag_Field_3.setText("")
         self.Create_RFID_Tag_Field_3.setObjectName("Create_RFID_Tag_Field_3")
-        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Field_3, 2, 1, 1, 1)
-        self.Create_Part_Number_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Part_Number_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Field_3, 1, 1, 1, 1)
+        self.Create_Asset_Num_Label = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Part_Number_Label.setObjectName("Create_Part_Number_Label")
-        self.gridLayout_5.addWidget(self.Create_Part_Number_Label, 3, 0, 1, 1)
-        self.Create_Part_Number_Field = QtWidgets.QLineEdit(self.Create_Tab)
-        self.Create_Part_Number_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Create_Part_Number_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.Create_Asset_Num_Label.setObjectName("Create_Asset_Num_Label")
+        self.gridLayout_5.addWidget(self.Create_Asset_Num_Label, 0, 0, 1, 1)
+        self.Create_Asset_Num_Field = QtWidgets.QLineEdit(self.Create_Tab)
+        self.Create_Asset_Num_Field.setMinimumSize(QtCore.QSize(0, 25))
+        self.Create_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Part_Number_Field.setText("")
-        self.Create_Part_Number_Field.setObjectName("Create_Part_Number_Field")
-        self.gridLayout_5.addWidget(self.Create_Part_Number_Field, 3, 1, 1, 1)
+        self.Create_Asset_Num_Field.setObjectName("Create_Asset_Num_Field")
+        self.gridLayout_5.addWidget(self.Create_Asset_Num_Field, 0, 1, 1, 1)
+        self.Create_RFID_Tag_Label = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Create_RFID_Tag_Label.setObjectName("Create_RFID_Tag_Label")
+        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Label, 1, 0, 1, 1)
         self.gridLayout_6.addLayout(self.gridLayout_5, 1, 0, 1, 1)
         self.verticalLayout_11.addLayout(self.gridLayout_6)
         self.Admin_Select.addTab(self.Create_Tab, "")
@@ -582,7 +557,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(2)
+        self.Admin_Select.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):
@@ -635,9 +610,7 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button.setText(_translate("Admin_Interface", "Clear Fields"))
         self.Create_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Confirm Entry"))
         self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset #:"))
-        self.Create_Description_Label.setText(_translate("Admin_Interface", "Description:"))
         self.Create_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
-        self.Create_Part_Number_Label.setText(_translate("Admin_Interface", "Part Number:"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Create_Tab), _translate("Admin_Interface", "Create"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset #"))
