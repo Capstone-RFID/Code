@@ -10,6 +10,7 @@ import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+import pandas as pd
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 import time
@@ -413,3 +414,21 @@ if __name__ == "__main__":
     #sys.exit(app.exec_())
     Thread(target=reactor.run, args=(False,)).start()
     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
+
+
+    def importResults():
+       # r'C:\Users\Ron\Desktop\Test\People.csv'
+        data = pd.read_csv(insert path of excel file here) #path of the file
+        df = pd.DataFrame(data, columns=['Name', 'Country', 'Age'])
+        print(df)
+        # Insert DataFrame to Table
+        for row in df.itertuples():
+            cursor.execute('''
+                        INSERT INTO TestDB.dbo.people_info (Name, Country, Age)
+                        VALUES (?,?,?)
+                        ''',
+                           row.Name,
+                           row.Country,
+                           row.Age
+                           )
+        cnxn.commit()
