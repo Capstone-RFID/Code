@@ -82,7 +82,7 @@ class Admin_Interface(QWidget):
 
         #
         # define the server name and the database name
-        server = 'CKERR-THINKPAD'
+        server = 'BIGACER'
         database = 'BALKARAN09'
 
         # define a connection string
@@ -296,22 +296,90 @@ class Admin_Interface(QWidget):
         self.ui.Create_Asset_Num_Field.setText("")
         self.ui.Create_RFID_Tag_Field_3.setText("")
 
+
+    #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
     def create_confirmEntryButtonClicked(self):
-        if (self.ui.Create_RFID_Tag_Field_3.text() != None) and (self.ui.Create_Asset_Num_Field.text() != None):
+        if (self.ui.Create_Asset_Num_Field.text() != None):
             print('Create Tab Confirm Entry Button Clicked')
-            insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
-            # Next two lines commit the edits present in the table
-            self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()), str(self.ui.Create_Asset_Num_Field.text()))
-            self.cnxn.commit()
-            #clear fields after commit
-            self.ui.Create_Asset_Num_Field.setText("")
-            self.ui.Create_RFID_Tag_Field_3.setText("")
+
+            if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(self.ui.Create_Asset_Num_Field.text())):
+                print('This asset ID already exists! ')
+
+                # If the RFID number does not exist yet (and field is not blank) , then write it to the RFID table with existing asset
+                if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
+                    print('Linking existing asset to new RFID tag ')
+
+                    insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
+                    # Next two lines commit the edits present in the table
+                    self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()),
+                                        str(self.ui.Create_Asset_Num_Field.text()))
+                    self.cnxn.commit()
+
+                    # Create an event in the Event Log Table to show linking
+                    # Append status # 420 (An RFID tag was linked to an existing asset in the system)
+                    insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+                    # Next two lines commit the edits present in the table
+                    self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()), str(420))
+                    self.cnxn.commit()
+
+                    # clear fields after commit
+                    self.ui.Create_Asset_Num_Field.setText("")
+                    self.ui.Create_RFID_Tag_Field_3.setText("")
+
+
+                #Edit this so it prints info somewhere so user can edit association
+                elif(self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != None)):
+
+                    print('This tag already associated with another asset!')
+            else:
+                # If the RFID number does not exist yet (and field is not blank) and the asset does not already exist, then write it to the RFID table
+                if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != None))):
+                    insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
+                    # Next two lines commit the edits present in the table
+                    self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()),
+                                        str(self.ui.Create_Asset_Num_Field.text()))
+                    self.cnxn.commit()
+
+
+
+
+
+                #Create an event in the Event Log Table
+                #Append status # 3 (A new asset was added to the system)
+                insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+                # Next two lines commit the edits present in the table
+                self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()),str(3))
+                self.cnxn.commit()
+
+                # clear fields after commit
+                self.ui.Create_Asset_Num_Field.setText("")
+                self.ui.Create_RFID_Tag_Field_3.setText("")
+
+
         else:
-            print("Both Asset and RFID numbers were not entered")
+            print("Enter an asset number!")
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************
-    #Searches for employee_ID in database, returns true if it exists else returns false
+    #Searches for Asset ID in RFID Table, returns true if it exists else returns false
+    def AssetRFID_Check(self, AssetNum):
+        check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetNum))
+        if self.cursor.fetchone():
+            #self.cursor.execute(check_query, str(AssetNum))
+            return True
+        else:
+            return False
+
+    def RFID_Check(self, RFIDTag):
+        check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE (TagID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(RFIDTag))
+        if self.cursor.fetchone():
+            # self.cursor.execute(check_query, str(RFIDTag))
+            return True
+        else:
+            return False
+
     def Employee_ID_Check(self, input):
         check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
@@ -409,6 +477,8 @@ class Admin_Interface(QWidget):
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
+
+
     def Asset_Check(self, AssetNum):
         check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(AssetNum))
