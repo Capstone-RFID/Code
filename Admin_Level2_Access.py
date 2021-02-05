@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(531, 499)
+        Admin_Interface.resize(529, 492)
         Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -554,10 +554,51 @@ class Ui_Admin_Interface(object):
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout_12.addWidget(self.pushButton)
         self.Admin_Select.addTab(self.Resolve_Tab, "")
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("tab")
+        self.Import_ImportAssets_Button = QtWidgets.QPushButton(self.tab)
+        self.Import_ImportAssets_Button.setGeometry(QtCore.QRect(270, 230, 186, 51))
+        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Import_ImportAssets_Button.setStyleSheet("QPushButton#Import_ImportAssets_Button {\n"
+"background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"border-width: 2px;\n"
+"border-radius: 10px;\n"
+"border-color: beige;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Import_ImportAssets_Button:pressed {\n"
+"    background-color: rgb(80, 80, 80);\n"
+"    border-style: inset;\n"
+"}")
+        self.Import_ImportAssets_Button.setObjectName("Import_ImportAssets_Button")
+        self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.tab)
+        self.Import_ImportEmployees_Button.setGeometry(QtCore.QRect(270, 300, 186, 51))
+        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
+"background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"border-width: 2px;\n"
+"border-radius: 10px;\n"
+"border-color: beige;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Import_ImportEmployees_Button:pressed {\n"
+"    background-color: rgb(80, 80, 80);\n"
+"    border-style: inset;\n"
+"}")
+        self.Import_ImportEmployees_Button.setObjectName("Import_ImportEmployees_Button")
+        self.Admin_Select.addTab(self.tab, "")
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(3)
+        self.Admin_Select.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):
@@ -626,6 +667,9 @@ class Ui_Admin_Interface(object):
         item.setText(_translate("Admin_Interface", "Conflict Msg"))
         self.pushButton.setText(_translate("Admin_Interface", "Conflict Details"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Resolve_Tab), _translate("Admin_Interface", "Resolve"))
+        self.Import_ImportAssets_Button.setText(_translate("Admin_Interface", "Import Assets"))
+        self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "PushButton"))
+        self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.tab), _translate("Admin_Interface", "Import"))
 
 
 if __name__ == "__main__":
