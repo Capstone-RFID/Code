@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AdminInterface_Functionality.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,10 +268,8 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="(self.Asset_Check(self.ui.Create_Asset_Num_Field.text()))" />
-        <watch expression="self.ui.Create_Asset_Num_Field.text()" />
-        <watch expression="self.ui.Create_RFID_Tag_Field_3.text()" />
-        <watch expression="self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text())" />
+        <watch expression="df" />
+        <watch expression="employeeFile" />
       </configuration>
     </watches-manager>
   </component>

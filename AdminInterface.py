@@ -8,6 +8,14 @@ from threading import Thread
 import subprocess
 import keyboard
 import logging
+#for reading excel files
+import pandas as pd
+from pathlib import Path
+#import xlrd
+#from openpyxl import load_workbook
+
+from pandas import ExcelWriter
+from pandas import ExcelFile
 
 from PyQt5 import QtCore, QtGui, QtWidgets,  QtPrintSupport
 from PyQt5.QtCore import *
@@ -80,6 +88,9 @@ class Admin_Interface(QWidget):
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
+        # ****************************************Import Tab Button(s)*********************************
+        self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
+        self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
         #
         # define the server name and the database name
         server = 'BIGACER'
@@ -97,7 +108,7 @@ class Admin_Interface(QWidget):
     # open up the admin window from the button on main window
     def openAdmin(self):
         self.show()
-        #set defualt tab on window opening to home tab
+        #set default tab on window opening to home tab
         self.ui.Admin_Select.setCurrentIndex(0)
 
         #Set default datetime values to show admin users required format for input
@@ -358,6 +369,34 @@ class Admin_Interface(QWidget):
 
         else:
             print("Enter an asset number!")
+    def Import_ImportAssets_ButtonClicked(self):
+        print('Import Tab ImportAssets Button Clicked')
+        # NOTE: for testing, change the path to the development folder (I think this changes between me (Jon) and Chris)
+        #Just copy-paste that bad boy in here
+        filePath = str(r'C:\Projects\Capstone_RFID\Code')
+
+        data_Folder = Path(filePath)
+
+        assetFile = data_Folder / "assetList.xlsx"
+
+
+        dataAsset = pd.read_excel(assetFile)
+        df = pd.DataFrame(dataAsset, columns=['AssetID'])
+        self.import_importAssetsOrEmployeesToSQL(df)
+
+
+
+
+    def Import_ImportEmployees_ButtonClicked(self):
+        print('Import Tab ImportEmployees Button Clicked')
+
+        filePath = str(r'C:\Projects\Capstone_RFID\Code')
+
+        data_Folder = Path(filePath)
+        employeeFile = data_Folder / "employeeList.xlsx"
+        dataEmployee = pd.read_excel(employeeFile)
+        df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
+        self.import_importAssetsOrEmployeesToSQL(df)
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************
@@ -520,3 +559,5 @@ class Admin_Interface(QWidget):
                 print('This employee has not used the specified asset')
                 return False
 
+    def import_importAssetsOrEmployeesToSQL(self,df):
+        print(df)
