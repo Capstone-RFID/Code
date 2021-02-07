@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(529, 492)
+        Admin_Interface.resize(597, 548)
         Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -94,7 +94,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Search_SearchAsset_Query_Button.sizePolicy().hasHeightForWidth())
         self.Search_SearchAsset_Query_Button.setSizePolicy(sizePolicy)
-        self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Search_SearchAsset_Query_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setStyleSheet("QPushButton#Search_SearchAsset_Query_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
@@ -176,7 +176,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_To.setObjectName("Search_Datetime_To")
         self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
         self.Search_Reset_Fields_Button = QtWidgets.QPushButton(self.Search_Tab)
-        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Search_Reset_Fields_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_Reset_Fields_Button.setStyleSheet("QPushButton#Search_Reset_Fields_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
@@ -221,7 +221,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Search_Print_PDF_Button.sizePolicy().hasHeightForWidth())
         self.Search_Print_PDF_Button.setSizePolicy(sizePolicy)
-        self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Search_Print_PDF_Button.setStyleSheet("QPushButton#Search_Print_PDF_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -340,7 +340,7 @@ class Ui_Admin_Interface(object):
         self.gridLayout_2.addItem(spacerItem20, 2, 1, 1, 1)
         self.gridLayout_3.addLayout(self.gridLayout_2, 0, 0, 3, 1)
         self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -359,7 +359,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Clear_Button.setObjectName("Edit_Clear_Button")
         self.gridLayout_3.addWidget(self.Edit_Clear_Button, 2, 2, 1, 1)
         self.Edit_Search_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Search_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Edit_Search_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Edit_Search_Button.setStyleSheet("QPushButton#Edit_Search_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -403,7 +403,7 @@ class Ui_Admin_Interface(object):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.Edit_Delete_Entry_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Delete_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Edit_Delete_Entry_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Edit_Delete_Entry_Button.setStyleSheet("QPushButton#Edit_Delete_Entry_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -424,7 +424,7 @@ class Ui_Admin_Interface(object):
         spacerItem23 = QtWidgets.QSpacerItem(328, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem23)
         self.Edit_Commit_Edits_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Edit_Commit_Edits_Button.setStyleSheet("QPushButton#Edit_Commit_Edits_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -461,7 +461,7 @@ class Ui_Admin_Interface(object):
         spacerItem24 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem24)
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -480,7 +480,7 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button.setObjectName("Create_Clear_Fields_Button")
         self.verticalLayout_8.addWidget(self.Create_Clear_Fields_Button)
         self.Create_Confirm_Entry_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Create_Confirm_Entry_Button.setStyleSheet("QPushButton#Create_Confirm_Entry_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -557,8 +557,8 @@ class Ui_Admin_Interface(object):
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.Import_ImportAssets_Button = QtWidgets.QPushButton(self.tab)
-        self.Import_ImportAssets_Button.setGeometry(QtCore.QRect(270, 230, 186, 51))
-        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Import_ImportAssets_Button.setGeometry(QtCore.QRect(270, 230, 246, 51))
+        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Import_ImportAssets_Button.setStyleSheet("QPushButton#Import_ImportAssets_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -576,8 +576,8 @@ class Ui_Admin_Interface(object):
 "}")
         self.Import_ImportAssets_Button.setObjectName("Import_ImportAssets_Button")
         self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.tab)
-        self.Import_ImportEmployees_Button.setGeometry(QtCore.QRect(270, 300, 186, 51))
-        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Import_ImportEmployees_Button.setGeometry(QtCore.QRect(270, 300, 246, 51))
+        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(246, 51))
         self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
@@ -668,7 +668,7 @@ class Ui_Admin_Interface(object):
         self.pushButton.setText(_translate("Admin_Interface", "Conflict Details"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Resolve_Tab), _translate("Admin_Interface", "Resolve"))
         self.Import_ImportAssets_Button.setText(_translate("Admin_Interface", "Import Assets"))
-        self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "PushButton"))
+        self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "Import Employees"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.tab), _translate("Admin_Interface", "Import"))
 
 

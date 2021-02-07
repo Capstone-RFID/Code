@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>529</width>
-    <height>492</height>
+    <width>597</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -191,7 +191,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -415,7 +415,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -506,7 +506,7 @@ QPushButton#Search_Reset_Fields_Button:pressed {
              </property>
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -814,7 +814,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Edit_Clear_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -844,7 +844,7 @@ QPushButton#Edit_Clear_Button:pressed {
               <widget class="QPushButton" name="Edit_Search_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -947,7 +947,7 @@ QPushButton#Edit_Search_Button:pressed {
             <widget class="QPushButton" name="Edit_Delete_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -990,7 +990,7 @@ QPushButton#Edit_Delete_Entry_Button:pressed {
             <widget class="QPushButton" name="Edit_Commit_Edits_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1059,7 +1059,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1089,7 +1089,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1237,13 +1237,13 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
         <rect>
          <x>270</x>
          <y>230</y>
-         <width>186</width>
+         <width>246</width>
          <height>51</height>
         </rect>
        </property>
        <property name="minimumSize">
         <size>
-         <width>186</width>
+         <width>246</width>
          <height>51</height>
         </size>
        </property>
@@ -1273,13 +1273,13 @@ QPushButton#Import_ImportAssets_Button:pressed {
         <rect>
          <x>270</x>
          <y>300</y>
-         <width>186</width>
+         <width>246</width>
          <height>51</height>
         </rect>
        </property>
        <property name="minimumSize">
         <size>
-         <width>186</width>
+         <width>246</width>
          <height>51</height>
         </size>
        </property>
@@ -1301,7 +1301,7 @@ QPushButton#Import_ImportEmployees_Button:pressed {
 }</string>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Import Employees</string>
        </property>
       </widget>
      </widget>
