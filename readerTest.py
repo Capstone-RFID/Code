@@ -10,9 +10,10 @@ import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-# import pandas as pd
+import pandas as pd
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
+from AdminInterface import Admin_Interface
 import time
 Event_Log_Entry = []
 
@@ -39,10 +40,10 @@ def cb(tagReport):
 def RFID(result):
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         for tag in result:
-            rfid_check_query = '''SELECT TOP 1 * FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+            rfid_check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
             cursor.execute(rfid_check_query, str(tag))
             if cursor.fetchone():
-                get_asset_query = '''SELECT AssetID FROM RFID_Table WHERE TagID = (?);'''  # '?' is a placeholder
+                get_asset_query = '''SELECT AssetID FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
                 cursor.execute(get_asset_query, str(tag))
                 assetID = cursor.fetchone()
                 window.rfid_insert(assetID[0])
@@ -83,7 +84,7 @@ def stop():
     reactor.stop()
 
 def Employee_ID_Check(input):
-    check_query = '''SELECT TOP 1 * FROM Employee_Table WHERE EmployeeID = (?);'''# '?' is a placeholder
+    check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''# '?' is a placeholder
     cursor.execute(check_query, str(input))
     if cursor.fetchone():
         return True
@@ -91,7 +92,7 @@ def Employee_ID_Check(input):
         return False
 
 def Asset_Check(input):
-    check_query = '''SELECT TOP 1 * FROM Asset_Table WHERE AssetID = (?);'''  # '?' is a placeholder
+    check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE AssetID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
     if cursor.fetchone():
         return True
@@ -105,6 +106,8 @@ class mainWindow(QWidget):
         super(mainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.admin = Admin_Interface()
+
         self.show()
         self.existingList = []
         self.eventEntry = []
@@ -130,11 +133,17 @@ class mainWindow(QWidget):
         self.timer = QtCore.QTimer()
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self.timer_timeout)
+        self.ui.Admin_Button.setEnabled(False)
+
 
         #validator to only enter integer values into the entry fields
         self.onlyInt = QtGui.QIntValidator()
         self.ui.Asset_ID_Input.setValidator(self.onlyInt)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
+
+    def adminButtonClicked(self):
+        print('clicked admin')
+        self.admin.openAdmin()
 
     def remove_action(self):
         if(len(self.eventEntry)!=0):
@@ -154,6 +163,9 @@ class mainWindow(QWidget):
             self.ui.Asset_ID_Input.setEnabled(True)
             self.ui.Asset_ID_Input.setFocus()
             self.ui.Employee_ID_Input.setReadOnly(True)
+            #only do this when admit
+            self.ui.Admin_Button.setEnabled(True);
+            self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
         else:
             self.error_message("Enter a valid Employee ID")
             self.ui.Employee_ID_Input.clear()
@@ -197,6 +209,7 @@ class mainWindow(QWidget):
         self.ui.Check_In_Box.setAutoExclusive(True)
         self.ui.Check_Out_Box.setAutoExclusive(True)
         self.ui.Mark_Button.setEnabled(False)
+        self.ui.Admin_Button.setEnabled(False)
         self.markedList.clear()
         self.existingList.clear()
         return
@@ -333,12 +346,12 @@ class mainWindow(QWidget):
 
     def asset_enter_action(self):
         status_check_query = '''SELECT TOP(1)
-                                   Event_Log_Table.Status
+                                   [Event Log Table].Status
                                    FROM
-                                   Event_Log_Table
+                                   [Event Log Table]
                                    WHERE
-                                   Event_Log_Table.AssetID = (?)
-                                   ORDER BY Event_Log_Table.Entry DESC'''
+                                   [Event Log Table].AssetID = (?)
+                                   ORDER BY [Event Log Table].Entry DESC'''
         Asset = self.ui.Asset_ID_Input.text()
         #self.ItemEntry.append(Asset)
         print('Asset Number:' + Asset)
@@ -351,7 +364,7 @@ class mainWindow(QWidget):
                 flag = False
                 if len(state) == 0:
                     flag = True   
-                elif state[0][0] == 2 or state[0][0] == 1:
+                elif state[0][0] == '2' or state[0][0] == '1':
                     flag = True
                 if flag == True:
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
@@ -408,12 +421,12 @@ class mainWindow(QWidget):
 
         if status == '5':
             for item in self.markedList:
-                Event_Log_Entry.append([self.ui.Employee_ID_Input.text(), datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), item, status])
+                Event_Log_Entry.append([ datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"),self.ui.Employee_ID_Input.text(), item, status])
         else:
             for item in self.eventEntry:
                 Event_Log_Entry.append(
-                    [item[0], datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"), item[1], status])
-        insert_event_query = ''' INSERT INTO Event_Log_Table (EMPLOYEEID,TIMESTAMP, ASSETID, STATUS) VALUES(?,?,?,?);'''
+                    [datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"),item[0], item[1], status])
+        insert_event_query = ''' INSERT INTO [Event Log Table] (TIMESTAMP,EMPLOYEEID,ASSETID, STATUS) VALUES(?,?,?,?);'''
         for entry in Event_Log_Entry:
             # define the values to insert
             eventValues = (entry[0], entry[1], entry[2],entry[3])
@@ -441,22 +454,22 @@ class mainWindow(QWidget):
                             FROM
                             (
                             SELECT TOP(999999999999)
-                            Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
+                            [Event Log Table].Entry,[Event Log Table].AssetID,[Event Log Table].Status
                             FROM
-                            Event_Log_Table
+                            [Event Log Table]
                             WHERE
-                            Event_Log_Table.EmployeeID = (?)
-                            ORDER BY Event_Log_Table.Entry DESC
+                            [Event Log Table].EmployeeID = (?)
+                            ORDER BY [Event Log Table].Entry DESC
                             )AS subquery
                             WHERE
                             Entry in (Select max(Entry) FROM  (
                             SELECT TOP(999999999999)
-                            Event_Log_Table.Entry,Event_Log_Table.AssetID,Event_Log_Table.Status
+                            [Event Log Table].Entry,[Event Log Table].AssetID,[Event Log Table].Status
                             FROM
-                            Event_Log_Table
+                            [Event Log Table]
                             WHERE
-                            Event_Log_Table.EmployeeID = (?)
-                            ORDER BY Event_Log_Table.Entry DESC
+                            [Event Log Table].EmployeeID = (?)
+                            ORDER BY [Event Log Table].Entry DESC
                             )AS subquery group by AssetID)
                             )AS final_result
                             WHERE
@@ -482,12 +495,12 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    # server = "BALKARAN09"
-    # database = 'TEST'
+    server = "BALKARAN09"
+    database = 'TEST'
 
     # define the server name and the database name
-    server = "Raymond-P1"
-    database = 'RCMP_RFID'
+    # server = "Raymond-P1"
+    # database = 'RCMP_RFID'
 
     # define the server name and the database name
     # server = "Raymond-P1"
