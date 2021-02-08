@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="GUI bug fixes.&#10;added damaged button functionality.&#10;limited entry inputs">
+    <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AssetList.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/AssetList.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/employeeList.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/employeeList.xlsx" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -168,19 +171,54 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\Capstone_RFID\Code" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.readerTest">
+  <component name="RunManager" selected="Python.adminTest">
+    <configuration name="AdminInterface" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RFID_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/AdminInterface.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Admin_Level2_Access" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RFID_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Admin_Level2_Access.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="RFIDTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="RFID_test" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -194,6 +232,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RFIDTest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="adminTest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="RFID_test" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/adminTest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -225,12 +284,18 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.AdminInterface" />
+      <item itemvalue="Python.Admin_Level2_Access" />
       <item itemvalue="Python.RFIDTest" />
+      <item itemvalue="Python.adminTest" />
       <item itemvalue="Python.readerTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.adminTest" />
+        <item itemvalue="Python.AdminInterface" />
         <item itemvalue="Python.readerTest" />
+        <item itemvalue="Python.Admin_Level2_Access" />
         <item itemvalue="Python.RFIDTest" />
       </list>
     </recent_temporary>
@@ -359,34 +424,50 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Able to stote manual entried effectively" />
-    <MESSAGE value="Started RFID itegration (work in progress)" />
-    <MESSAGE value="Problem with RFID duplicate asset error" />
-    <MESSAGE value="New GUI integrated" />
-    <MESSAGE value="code structure changes. &#10;Removed done button crash error.&#10;Event log table can now be populated with join statement.&#10;Few error messages added.&#10;The employee Enter button now functional." />
-    <MESSAGE value="SQL querry for current items done&#10;Still needs to be optimised but does work" />
-    <MESSAGE value="Current assets can be listed in the GUI.&#10;RFID functionality restored." />
-    <MESSAGE value="working on list and tables" />
-    <MESSAGE value="lists replace with tables" />
-    <MESSAGE value="SQL only 1 even table now.&#10;GUI bug fixes.&#10;RFID insert error without employee ID input entered fixed" />
-    <MESSAGE value="GUI bug fixes.&#10;added damaged button functionality.&#10;limited entry inputs" />
-    <option name="LAST_COMMIT_MESSAGE" value="GUI bug fixes.&#10;added damaged button functionality.&#10;limited entry inputs" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>611</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>612</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>615</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="State_Log_Entry" />
-        <watch expression="Item_Log_Entry" />
-        <watch expression="cursor" />
-        <watch expression="newlist" />
-        <watch expression="cursor.fetchall()" />
-        <watch expression="ItemEntry" />
-        <watch expression="self.ItemEntry" />
-        <watch expression="Asset" />
-        <watch expression="self.markedList" />
-        <watch expression="self.eventEntry" />
-        <watch expression="Event_Log_Entry" />
+        <watch expression="importType" />
+        <watch expression="row" />
+        <watch expression="df.at[row, 'EmployeeID']" />
       </configuration>
     </watches-manager>
   </component>

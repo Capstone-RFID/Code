@@ -284,3 +284,13 @@ class Ui_MainWindow(object):
         self.Cancel_Button.setText(_translate("MainWindow", "Cancel"))
         self.Finish_Button.setText(_translate("MainWindow", "Check-In"))
         self.Check_Out_Button.setText(_translate("MainWindow", "Check-Out"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QWidget()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
