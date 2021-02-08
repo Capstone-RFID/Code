@@ -63,6 +63,11 @@ class Admin_Interface(QWidget):
         self.edit_StatusInGUITable = []
 
         #For importing excel lists into SQL queries and inserts
+        # define the server name and the database name
+        server = 'BIGACER'
+        database = 'BALKARAN09'
+
+        self.filePath = str(r'C:\Projects\Capstone_RFID\Code') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
@@ -98,9 +103,7 @@ class Admin_Interface(QWidget):
         self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
         self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
         #
-        # define the server name and the database name
-        server = 'BIGACER'
-        database = 'BALKARAN09'
+
 
         # define a connection string
         self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
@@ -379,9 +382,9 @@ class Admin_Interface(QWidget):
         print('Import Tab ImportAssets Button Clicked')
         # NOTE: for testing, change the path to the development folder (I think this changes between me (Jon) and Chris)
         #Just copy-paste that bad boy in here
-        filePath = str(r'C:\Projects\Capstone_RFID\Code')
 
-        data_Folder = Path(filePath)
+
+        data_Folder = Path(self.filePath)
 
         assetFile = data_Folder / "assetList.xlsx"
 
@@ -588,14 +591,49 @@ class Admin_Interface(QWidget):
         #if we're importing employees, populate lists for SQL queries and importing into SQL
         if importType == "Employees":
             for row in range(len(df.index)):
-                self.import_EmployeeIDList.append(str(df.at[row, 'EmployeeID']))
-                self.import_EmployeeNameList.append(str(df.at[row, 'Name']))
+                #if the employee ID already exists, it won't be imported to the lists
+                if not self.Employee_ID_Check(str(df.at[row, 'EmployeeID'])):
+                    self.import_EmployeeIDList.append(str(df.at[row, 'EmployeeID']))
+                    self.import_EmployeeNameList.append(str(df.at[row, 'Name']))
+
+                    #Commit employee ID to Event log as a new addition (code 104) "10-4 good buddy"
+                    self.import_commitEmployeesToSQL(str(df.at[row, 'EmployeeID']),str(df.at[row, 'Name']))
+                    # NOTE: We should have a GUI notification that shows the import was sucessful
+
+                #NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
+                else:
+                    print("The employee ID: "+ str(df.at[row, 'EmployeeID']) +" already exists in the database")
+
+        # if we're importing assets, populate lists for SQL queries and importing into SQL
         if importType == "Assets":
             for row in range(len(df.index)):
-                self.import_AssetList.append(df.at[row, 'AssetID'])
 
-        # print(self.import_EmployeeIDList)
-        # print(self.import_EmployeeNameList)
-        # print(self.import_AssetList)
+                # if the asset ID already exists, it won't be imported to the lists or commited to SQL
+                if not self.Asset_Check(str(df.at[row, 'AssetID'])):
+                    self.import_AssetList.append(df.at[row, 'AssetID'])
 
-        
+                    #Commit employee ID to Event log as a new addition (code 42) "The answer to everything"
+                    self.import_commitAssetsToSQL(str(df.at[row, 'AssetID']))
+                # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
+                else:
+                    print("The Asset Number: "+ str(df.at[row, 'AssetID']) +" already exists in the database")
+
+
+        print(self.import_EmployeeIDList)
+        print(self.import_EmployeeNameList)
+        print(self.import_AssetList)
+
+
+    #New employee imported appends with status # 104
+    def import_commitEmployeesToSQL(self, EmployeeID, EmployeeName):
+        insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, Status) VALUES(?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(EmployeeID), '104')
+        self.cnxn.commit()
+
+    # New asset imported appends with status #42
+    def import_commitAssetsToSQL(self, AssetID):
+        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(AssetID), '42')
+        self.cnxn.commit()
