@@ -23,6 +23,8 @@ from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
 
+import openpyxl
+
 
 #*********************NOTES ON HOW TO USE THIS CLASS*************************
 #Should go without saying that this file needs to be in the same directory as your main
@@ -64,10 +66,10 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        server = 'BIGACER'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
 
-        self.filePath = str(r'C:\Projects\Capstone_RFID\Code') #change this to wherever your excel import docs are stashed
+        self.filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
@@ -386,10 +388,10 @@ class Admin_Interface(QWidget):
 
         data_Folder = Path(self.filePath)
 
-        assetFile = data_Folder / "assetList.xlsx"
+        assetFile = data_Folder / "AssetList.xlsx"
 
 
-        dataAsset = pd.read_excel(assetFile,dtype = str)
+        dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
         df = pd.DataFrame(dataAsset, columns=['AssetID'])
         self.import_checkAssetsOrEmployeesToSQL(df)
 
@@ -399,11 +401,11 @@ class Admin_Interface(QWidget):
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
 
-        filePath = str(r'C:\Projects\Capstone_RFID\Code')
+        filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode')
 
         data_Folder = Path(filePath)
         employeeFile = data_Folder / "employeeList.xlsx"
-        dataEmployee = pd.read_excel(employeeFile,dtype = str)
+        dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
         self.import_checkAssetsOrEmployeesToSQL(df)
 
