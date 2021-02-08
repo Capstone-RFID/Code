@@ -62,6 +62,12 @@ class Admin_Interface(QWidget):
         self.edit_EmployeesInGUITable = []
         self.edit_StatusInGUITable = []
 
+        #For importing excel lists into SQL queries and inserts
+        self.import_EmployeeIDList = []
+        self.import_EmployeeNameList = []
+        self.import_AssetList = []
+
+        #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
 
         # ****************************************Home Tab Button(s)*********************************
@@ -382,7 +388,7 @@ class Admin_Interface(QWidget):
 
         dataAsset = pd.read_excel(assetFile)
         df = pd.DataFrame(dataAsset, columns=['AssetID'])
-        self.import_importAssetsOrEmployeesToSQL(df)
+        self.import_checkAssetsOrEmployeesToSQL(df)
 
 
 
@@ -396,7 +402,7 @@ class Admin_Interface(QWidget):
         employeeFile = data_Folder / "employeeList.xlsx"
         dataEmployee = pd.read_excel(employeeFile)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
-        self.import_importAssetsOrEmployeesToSQL(df)
+        self.import_checkAssetsOrEmployeesToSQL(df)
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************
@@ -559,5 +565,37 @@ class Admin_Interface(QWidget):
                 print('This employee has not used the specified asset')
                 return False
 
-    def import_importAssetsOrEmployeesToSQL(self,df):
-        print(df)
+    #Check what dataset we're dealing with and whether it already exists or not
+    #
+    def import_checkAssetsOrEmployeesToSQL(self,df):
+        importType = None
+
+        #Clear these lists for initial and subsequent runs
+        self.import_EmployeeIDList.clear()
+        self.import_EmployeeNameList.clear()
+        self.import_AssetList.clear()
+
+        #Look at first column in Excel table to determine what data we're working with here
+        for col in df.columns:
+            if col == "Name":
+                importType = "Employees"
+                break
+            elif col == "AssetID":
+                importType = "Assets"
+                break
+
+
+        #if we're importing employees, populate lists for SQL queries and importing into SQL
+        if importType == "Employees":
+            for row in range(len(df.index)):
+                self.import_EmployeeIDList.append(str(df.at[row, 'EmployeeID']))
+                self.import_EmployeeNameList.append(str(df.at[row, 'Name']))
+        if importType == "Assets":
+            for row in range(len(df.index)):
+                self.import_AssetList.append(df.at[row, 'AssetID'])
+
+        # print(self.import_EmployeeIDList)
+        # print(self.import_EmployeeNameList)
+        # print(self.import_AssetList)
+
+        
