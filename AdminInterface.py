@@ -389,7 +389,7 @@ class Admin_Interface(QWidget):
         assetFile = data_Folder / "assetList.xlsx"
 
 
-        dataAsset = pd.read_excel(assetFile)
+        dataAsset = pd.read_excel(assetFile,dtype = str)
         df = pd.DataFrame(dataAsset, columns=['AssetID'])
         self.import_checkAssetsOrEmployeesToSQL(df)
 
@@ -403,7 +403,7 @@ class Admin_Interface(QWidget):
 
         data_Folder = Path(filePath)
         employeeFile = data_Folder / "employeeList.xlsx"
-        dataEmployee = pd.read_excel(employeeFile)
+        dataEmployee = pd.read_excel(employeeFile,dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
         self.import_checkAssetsOrEmployeesToSQL(df)
 
