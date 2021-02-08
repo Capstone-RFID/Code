@@ -10,7 +10,7 @@ import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-import pandas as pd
+# import pandas as pd
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 import time
@@ -179,7 +179,7 @@ class mainWindow(QWidget):
         y = [x for x in self.eventEntry if text in x]
         z = self.eventEntry.index(y[0])
         del self.eventEntry[z]
-        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(125,125,125))
+        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255,0,0))
         self.ui.New_Item_List.clearSelection()
 
 
@@ -249,8 +249,13 @@ class mainWindow(QWidget):
                 self.ui.Check_Out_Box.setEnabled(False)
                 self.ui.Check_In_Box.setEnabled(False)
                 cursor.execute(status_check_query,Asset)
-                state = cursor.fetchall()
-                if state[0][0] == '2' or state[0][0] == '1':
+                state = cursor.fetchall()  
+                flag = False
+                if len(state) == 0:
+                    flag = True   
+                elif state[0][0] == 2 or state[0][0] == 1:
+                    flag = True
+                if flag == True:
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
                         self.insert_into_table(1, Asset)
                         #apend the entries into a list
@@ -260,13 +265,13 @@ class mainWindow(QWidget):
                         self.ui.Asset_ID_Input.clear()
 
                     else:
-                         self.ui.Asset_ID_Input.clear()
-                         self.timer.start(1000)
-                         self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
+                        self.ui.Asset_ID_Input.clear()
+                        self.timer.start(1000)
+                        self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
                 else:
                     self.error_message("asset is not status 1 or 2")
                     self.ui.Asset_ID_Input.clear()
-
+                flag = False
             else:
                 self.error_message("Enter a valid Asset ID")
                 self.ui.Asset_ID_Input.clear()
@@ -394,12 +399,12 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    server = "BALKARAN09"
-    database = 'TEST'
+    # server = "BALKARAN09"
+    # database = 'TEST'
 
     # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
+    server = "Raymond-P1"
+    database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
@@ -416,19 +421,19 @@ if __name__ == "__main__":
     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
 
 
-    def importResults():
-       # r'C:\Users\Ron\Desktop\Test\People.csv'
-        data = pd.read_csv(insert path of excel file here) #path of the file
-        df = pd.DataFrame(data, columns=['Name', 'Country', 'Age'])
-        print(df)
-        # Insert DataFrame to Table
-        for row in df.itertuples():
-            cursor.execute('''
-                        INSERT INTO TestDB.dbo.people_info (Name, Country, Age)
-                        VALUES (?,?,?)
-                        ''',
-                           row.Name,
-                           row.Country,
-                           row.Age
-                           )
-        cnxn.commit()
+    # def importResults():
+    #    # r'C:\Users\Ron\Desktop\Test\People.csv'
+    #     data = pd.read_csv(insert path of excel file here) #path of the file
+    #     df = pd.DataFrame(data, columns=['Name', 'Country', 'Age'])
+    #     print(df)
+    #     # Insert DataFrame to Table
+    #     for row in df.itertuples():
+    #         cursor.execute('''
+    #                     INSERT INTO TestDB.dbo.people_info (Name, Country, Age)
+    #                     VALUES (?,?,?)
+    #                     ''',
+    #                        row.Name,
+    #                        row.Country,
+    #                        row.Age
+    #                        )
+    #     cnxn.commit()

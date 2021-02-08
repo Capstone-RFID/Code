@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/Balkaran/Pictures/rcmp.jpg</normaloff>C:/Users/Balkaran/Pictures/rcmp.jpg</iconset>
+    <normaloff>../../../../../../Balkaran/Pictures/rcmp.jpg</normaloff>../../../../../../Balkaran/Pictures/rcmp.jpg</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -42,7 +42,7 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>178</x>
@@ -144,7 +144,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -253,6 +253,19 @@
    </property>
    <property name="text">
     <string>Done</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Admin_Button">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Admin Access</string>
    </property>
   </widget>
  </widget>
