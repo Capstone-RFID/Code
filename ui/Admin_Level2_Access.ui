@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>682</height>
+    <width>760</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>2</number>
      </property>
      <property name="iconSize">
       <size>
@@ -191,7 +191,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>186</width>
                  <height>51</height>
                 </size>
                </property>
@@ -415,7 +415,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>186</width>
                  <height>51</height>
                 </size>
                </property>
@@ -506,7 +506,7 @@ QPushButton#Search_Reset_Fields_Button:pressed {
              </property>
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
@@ -740,7 +740,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 </widget>
                </item>
                <item row="2" column="2">
-                <widget class="QComboBox" name="Edit_Assign_To_Dropdown">
+                <widget class="QLineEdit" name="Edit_AssignTo_Field">
                  <property name="styleSheet">
                   <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
@@ -754,7 +754,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Edit_Clear_Button">
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>186</width>
                  <height>51</height>
                 </size>
                </property>
@@ -784,7 +784,7 @@ QPushButton#Edit_Clear_Button:pressed {
               <widget class="QPushButton" name="Edit_Search_Button">
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>186</width>
                  <height>51</height>
                 </size>
                </property>
@@ -833,7 +833,7 @@ QPushButton#Edit_Search_Button:pressed {
             <widget class="QPushButton" name="Edit_Delete_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
@@ -876,7 +876,7 @@ QPushButton#Edit_Delete_Entry_Button:pressed {
             <widget class="QPushButton" name="Edit_Commit_Edits_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
@@ -1009,7 +1009,7 @@ QPushButton#Import_ImportEmployees_Button:pressed {
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
@@ -1039,7 +1039,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
