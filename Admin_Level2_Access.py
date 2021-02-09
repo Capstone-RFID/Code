@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(760, 675)
+        Admin_Interface.resize(762, 682)
         Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -305,7 +305,11 @@ class Ui_Admin_Interface(object):
         self.Edit_Update_Status_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Edit_Update_Status_Dropdown.setEditable(True)
         self.Edit_Update_Status_Dropdown.setObjectName("Edit_Update_Status_Dropdown")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
         self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 4, 2, 1, 1)
         self.Edit_Assign_To_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Assign_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -562,6 +566,9 @@ class Ui_Admin_Interface(object):
         self.Edit_Prompt2_Label.setText(_translate("Admin_Interface", "Edit fields then click commit to change in local database"))
         self.Edit_Update_Status_Label.setText(_translate("Admin_Interface", "Update Status:"))
         self.Edit_Asset_Label.setText(_translate("Admin_Interface", "Asset #:"))
+        self.Edit_Update_Status_Dropdown.setItemText(0, _translate("Admin_Interface", "2"))
+        self.Edit_Update_Status_Dropdown.setItemText(1, _translate("Admin_Interface", "1"))
+        self.Edit_Update_Status_Dropdown.setItemText(2, _translate("Admin_Interface", "42"))
         self.Edit_Assign_To_Label.setText(_translate("Admin_Interface", "Assign To:"))
         self.Edit_Search_Button.setText(_translate("Admin_Interface", "Search"))
         self.Edit_Clear_Button.setText(_translate("Admin_Interface", "Clear"))

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>675</height>
+    <width>762</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -713,6 +713,24 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>2</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>42</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
                <item row="2" column="0">

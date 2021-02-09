@@ -92,7 +92,7 @@ class Admin_Interface(QWidget):
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
         self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
-        self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
+        #self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
 
 
@@ -246,74 +246,39 @@ class Admin_Interface(QWidget):
         print('Edit Tab Clear Button Clicked')
     def edit_searchButtonClicked(self):
         print('Edit Tab Search Button Clicked')
-        self.edit_clearTableResults()
-        if self.Asset_Check(self.ui.Edit_Asset_Num_Field.text()):
+        #self.edit_clearTableResults()
+        if self.Asset_Check(self.ui.Edit_Asset_Field.text()):
             print('Edit search found the asset!')
-            EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
-            self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Num_Field.text()
-            self.edit_PopulateTable(EntryList)
+            #EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
+            #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
+            #self.edit_PopulateTable(EntryList)
+            AssetState = self.Asset_List_Fetch(self.ui.Edit_Asset_Field.text())
 
+            Current_Status = AssetState[0][4]
+            self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
+            #self.ui.Edit_Update_Status_Dropdown.setItemText(self.Admin_Interface.keys().index(str(AssetState[0][4])))
+            self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetState[0][4])
 
-
-
-
-            print(self.edit_AssetsInGUITable)
-            print(self.edit_EmployeesInGUITable)
 
 
         else:
             print('Edit search did not find the asset!')
-    def edit_deleteButtonClicked(self):
-        print('Edit Tab Delete Button Clicked')
+
+    #def edit_deleteButtonClicked(self):
+        #print('Edit Tab Delete Button Clicked')
     def edit_commitButtonClicked(self):
         print('Edit Tab Commit Button Clicked')
+        #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
 
-        EntryList = self.edit_Asset_Info_Fetch(self.edit_AssetSearchedInDatabase)
+        if (self.ui.Edit_Display_Results_Table.item(i, 0).text() != self.edit_AssetsInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 1).text() != (self.edit_EmployeesInGUITable[i])) or (self.ui.Edit_Display_Results_Table.item(i, 4).text() != self.edit_StatusInGUITable[i]):
+            print(Edit_Asset_Fetched, Edit_Employee_Fetched)
+            insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+            #Next two lines commit the edits present in the table
+            self.cursor.execute(insert_event_query, str(Edit_Employee_Fetched), str(Edit_Asset_Fetched),str(Edit_Status_Fetched))
+            self.cnxn.commit()
+        else:
+            print("Row "+ str(i + 1) + " has not been edited")
 
-        # Store the search results for later comparison if edits are made on interface
-        for i in range(self.ui.Edit_Display_Results_Table.rowCount()):
-            if EntryList[i][3] == None:
-                EntryList[i][3] = ''
-                self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
-            else:
-                self.edit_AssetsInGUITable.append(str(EntryList[i][3]))
-
-            if EntryList[i][2] == None:
-                EntryList[i][2] = ''
-                self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
-            else:
-                self.edit_EmployeesInGUITable.append(str(EntryList[i][2]))
-
-            if EntryList[i][4] == None:
-                EntryList[i][4] = 'Unknown'
-                self.edit_StatusInGUITable.append(str(EntryList[i][4]))
-            else:
-                self.edit_StatusInGUITable.append(str(EntryList[i][4]))
-
-        Edit_Table_Length = self.ui.Edit_Display_Results_Table.rowCount()
-        for i in range(Edit_Table_Length):
-
-            # Show items on row in interface
-            Edit_Asset_Fetched = self.ui.Edit_Display_Results_Table.item(i, 0).text()
-            Edit_Employee_Fetched = self.ui.Edit_Display_Results_Table.item(i, 1).text()
-            #Edit_Datetime_Fetched = self.ui.Edit_Display_Results_Table.item(i, 2).text()
-            Edit_Status_Fetched = self.ui.Edit_Display_Results_Table.item(i, 4).text()
-
-
-            #NOTE:WRITING THE ASSET TO ANOTHER VARIABLE DOESN'T TRIGGER THE CONDITIONAL STATEMENT CORRECTLY, hence why the statement below is so long
-            #If either the employeeID or the AssetID has been changed, then make a new event in the event log table
-
-            print(self.ui.Edit_Display_Results_Table.item(i, 0).text())
-            print(self.edit_AssetsInGUITable[i])
-
-            if (self.ui.Edit_Display_Results_Table.item(i, 0).text() != self.edit_AssetsInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 1).text() != (self.edit_EmployeesInGUITable[i])) or (self.ui.Edit_Display_Results_Table.item(i, 4).text() != self.edit_StatusInGUITable[i]):
-                print(Edit_Asset_Fetched, Edit_Employee_Fetched)
-                insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
-                #Next two lines commit the edits present in the table
-                self.cursor.execute(insert_event_query, str(Edit_Employee_Fetched), str(Edit_Asset_Fetched),str(Edit_Status_Fetched))
-                self.cnxn.commit()
-            else:
-                print("Row "+ str(i + 1) + " has not been edited")
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
         # Reset Asset and RFID Filters to empty values
@@ -539,6 +504,15 @@ class Admin_Interface(QWidget):
             return True
         else:
             return False
+
+    # def Asset_Return(self, AssetNum):
+    #     check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+    #     self.cursor.execute(check_query, str(AssetNum))
+    #     if self.cursor.fetchone():
+    #         self.cursor.execute(check_query, str(AssetNum))
+    #         return self.cursor.fetchall()
+    #     else:
+    #         return False
 
     def edit_Asset_Info_Fetch(self, AssetNum):
         check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
