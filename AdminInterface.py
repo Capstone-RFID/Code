@@ -66,12 +66,12 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        # server = 'CKERR-THINKPAD'
-        # database = 'BALKARAN09'
-        server = "BALKARAN09"
-        database = 'TEST'
+        server = 'CKERR-THINKPAD'
+        database = 'BALKARAN09'
+        #server = "BALKARAN09"
+        #database = 'TEST'
 
-        self.filePath = str(r'D:\Python_projects\RFID_test') #change this to wherever your excel import docs are stashed
+        self.filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
