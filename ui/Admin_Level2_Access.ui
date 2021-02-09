@@ -605,7 +605,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
            </item>
            <item row="0" column="0">
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0" rowspan="3">
+             <item row="0" column="0" rowspan="2">
               <layout class="QGridLayout" name="gridLayout_2">
                <item row="1" column="0">
                 <spacer name="horizontalSpacer_4">
@@ -633,21 +633,19 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </spacer>
                </item>
-               <item row="5" column="0">
-                <spacer name="horizontalSpacer_16">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+               <item row="4" column="0">
+                <widget class="QLabel" name="Edit_Update_Status_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
+                 <property name="text">
+                  <string>Update Status:</string>
                  </property>
-                </spacer>
+                </widget>
                </item>
-               <item row="5" column="2">
-                <spacer name="horizontalSpacer_17">
+               <item row="3" column="0">
+                <spacer name="horizontalSpacer_14">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -672,8 +670,8 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </spacer>
                </item>
-               <item row="3" column="0">
-                <spacer name="horizontalSpacer_14">
+               <item row="5" column="0">
+                <spacer name="horizontalSpacer_16">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -684,17 +682,6 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="Edit_Update_Status_Label">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>Update Status:</string>
-                 </property>
-                </widget>
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="Edit_Asset_Label">
@@ -707,15 +694,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="2">
-                <widget class="QComboBox" name="Edit_Update_Status_Dropdown">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="2">
                 <widget class="QLineEdit" name="Edit_Asset_Field">
                  <property name="styleSheet">
@@ -725,6 +703,15 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                  <property name="text">
                   <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QComboBox" name="Edit_Update_Status_Dropdown">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </widget>
                </item>
@@ -748,48 +735,16 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </widget>
                </item>
-              </layout>
-             </item>
-             <item row="2" column="2">
-              <widget class="QPushButton" name="Edit_Clear_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>186</width>
-                 <height>51</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton#Edit_Clear_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Edit_Clear_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-               </property>
-               <property name="text">
-                <string>Clear</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="Edit_Search_Button">
-               <property name="minimumSize">
-                <size>
-                 <width>186</width>
-                 <height>51</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton#Edit_Search_Button {
+               <item row="5" column="2">
+                <widget class="QPushButton" name="Edit_Search_Button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>186</width>
+                   <height>51</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton#Edit_Search_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -804,41 +759,22 @@ QPushButton#Edit_Search_Button:pressed {
     background-color: rgb(80, 80, 80);
     border-style: inset;
 }</string>
-               </property>
-               <property name="text">
-                <string>Search</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QPushButton" name="Edit_Delete_Entry_Button">
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Edit_Delete_Entry_Button {
+                 </property>
+                 <property name="text">
+                  <string>Search</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="2">
+                <widget class="QPushButton" name="Edit_Clear_Button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>186</width>
+                   <height>51</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton#Edit_Clear_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -849,39 +785,26 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
 }
-QPushButton#Edit_Delete_Entry_Button:pressed {
+QPushButton#Edit_Clear_Button:pressed {
     background-color: rgb(80, 80, 80);
     border-style: inset;
 }</string>
-             </property>
-             <property name="text">
-              <string>Delete Entry</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_21">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>328</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="Edit_Commit_Edits_Button">
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Edit_Commit_Edits_Button {
+                 </property>
+                 <property name="text">
+                  <string>Clear</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="2">
+                <widget class="QPushButton" name="Edit_Commit_Edits_Button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>186</width>
+                   <height>51</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton#Edit_Commit_Edits_Button {
 background-color: rgb(0, 0, 127);
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -896,11 +819,15 @@ QPushButton#Edit_Commit_Edits_Button:pressed {
     background-color: rgb(80, 80, 80);
     border-style: inset;
 }</string>
-             </property>
-             <property name="text">
-              <string>Commit Edits</string>
-             </property>
-            </widget>
+                 </property>
+                 <property name="text">
+                  <string>Commit Edits</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>

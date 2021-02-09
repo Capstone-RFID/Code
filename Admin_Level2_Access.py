@@ -278,30 +278,22 @@ class Ui_Admin_Interface(object):
         self.gridLayout_2.addItem(spacerItem14, 1, 0, 1, 1)
         spacerItem15 = QtWidgets.QSpacerItem(40, 25, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem15, 1, 2, 1, 1)
-        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem16, 5, 0, 1, 1)
-        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem17, 5, 2, 1, 1)
-        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem18, 3, 2, 1, 1)
-        spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem19, 3, 0, 1, 1)
         self.Edit_Update_Status_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Update_Status_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Update_Status_Label.setObjectName("Edit_Update_Status_Label")
         self.gridLayout_2.addWidget(self.Edit_Update_Status_Label, 4, 0, 1, 1)
+        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem16, 3, 0, 1, 1)
+        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem17, 3, 2, 1, 1)
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem18, 5, 0, 1, 1)
         self.Edit_Asset_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Asset_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Asset_Label.setObjectName("Edit_Asset_Label")
         self.gridLayout_2.addWidget(self.Edit_Asset_Label, 0, 0, 1, 1)
-        self.Edit_Update_Status_Dropdown = QtWidgets.QComboBox(self.Edit_Tab)
-        self.Edit_Update_Status_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Edit_Update_Status_Dropdown.setObjectName("Edit_Update_Status_Dropdown")
-        self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 4, 2, 1, 1)
         self.Edit_Asset_Field = QtWidgets.QLineEdit(self.Edit_Tab)
         self.Edit_Asset_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
@@ -309,6 +301,12 @@ class Ui_Admin_Interface(object):
         self.Edit_Asset_Field.setText("")
         self.Edit_Asset_Field.setObjectName("Edit_Asset_Field")
         self.gridLayout_2.addWidget(self.Edit_Asset_Field, 0, 2, 1, 1)
+        self.Edit_Update_Status_Dropdown = QtWidgets.QComboBox(self.Edit_Tab)
+        self.Edit_Update_Status_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Edit_Update_Status_Dropdown.setObjectName("Edit_Update_Status_Dropdown")
+        self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 4, 2, 1, 1)
         self.Edit_Assign_To_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Assign_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
@@ -320,26 +318,6 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_AssignTo_Field.setObjectName("Edit_AssignTo_Field")
         self.gridLayout_2.addWidget(self.Edit_AssignTo_Field, 2, 2, 1, 1)
-        self.gridLayout_3.addLayout(self.gridLayout_2, 0, 0, 3, 1)
-        self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(186, 51))
-        self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
-"color: rgb(255, 255, 255);\n"
-"border-style: outset;\n"
-"border-width: 2px;\n"
-"border-radius: 10px;\n"
-"border-color: beige;\n"
-"font: 14pt \"MS Shell Dlg 2\";\n"
-"min-width: 10em;\n"
-"padding: 6px;\n"
-"}\n"
-"QPushButton#Edit_Clear_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
-"    border-style: inset;\n"
-"}")
-        self.Edit_Clear_Button.setObjectName("Edit_Clear_Button")
-        self.gridLayout_3.addWidget(self.Edit_Clear_Button, 2, 2, 1, 1)
         self.Edit_Search_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Search_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Search_Button.setStyleSheet("QPushButton#Edit_Search_Button {\n"
@@ -358,16 +336,10 @@ class Ui_Admin_Interface(object):
 "    border-style: inset;\n"
 "}")
         self.Edit_Search_Button.setObjectName("Edit_Search_Button")
-        self.gridLayout_3.addWidget(self.Edit_Search_Button, 0, 2, 1, 1)
-        spacerItem20 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_3.addItem(spacerItem20, 1, 2, 1, 1)
-        self.gridLayout_4.addLayout(self.gridLayout_3, 0, 0, 1, 1)
-        self.verticalLayout_5.addLayout(self.gridLayout_4)
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.Edit_Delete_Entry_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Delete_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
-        self.Edit_Delete_Entry_Button.setStyleSheet("QPushButton#Edit_Delete_Entry_Button {\n"
+        self.gridLayout_2.addWidget(self.Edit_Search_Button, 5, 2, 1, 1)
+        self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
+        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(186, 51))
+        self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
@@ -378,14 +350,12 @@ class Ui_Admin_Interface(object):
 "min-width: 10em;\n"
 "padding: 6px;\n"
 "}\n"
-"QPushButton#Edit_Delete_Entry_Button:pressed {\n"
+"QPushButton#Edit_Clear_Button:pressed {\n"
 "    background-color: rgb(80, 80, 80);\n"
 "    border-style: inset;\n"
 "}")
-        self.Edit_Delete_Entry_Button.setObjectName("Edit_Delete_Entry_Button")
-        self.horizontalLayout_4.addWidget(self.Edit_Delete_Entry_Button)
-        spacerItem21 = QtWidgets.QSpacerItem(328, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem21)
+        self.Edit_Clear_Button.setObjectName("Edit_Clear_Button")
+        self.gridLayout_2.addWidget(self.Edit_Clear_Button, 6, 2, 1, 1)
         self.Edit_Commit_Edits_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Commit_Edits_Button.setStyleSheet("QPushButton#Edit_Commit_Edits_Button {\n"
@@ -404,8 +374,10 @@ class Ui_Admin_Interface(object):
 "    border-style: inset;\n"
 "}")
         self.Edit_Commit_Edits_Button.setObjectName("Edit_Commit_Edits_Button")
-        self.horizontalLayout_4.addWidget(self.Edit_Commit_Edits_Button)
-        self.verticalLayout_5.addLayout(self.horizontalLayout_4)
+        self.gridLayout_2.addWidget(self.Edit_Commit_Edits_Button, 7, 2, 1, 1)
+        self.gridLayout_3.addLayout(self.gridLayout_2, 0, 0, 2, 1)
+        self.gridLayout_4.addLayout(self.gridLayout_3, 0, 0, 1, 1)
+        self.verticalLayout_5.addLayout(self.gridLayout_4)
         self.verticalLayout_9.addLayout(self.verticalLayout_5)
         self.Admin_Select.addTab(self.Edit_Tab, "")
         self.Create_Tab = QtWidgets.QWidget()
@@ -439,8 +411,8 @@ class Ui_Admin_Interface(object):
 "}")
         self.Import_ImportAssets_Button.setObjectName("Import_ImportAssets_Button")
         self.verticalLayout_8.addWidget(self.Import_ImportAssets_Button)
-        spacerItem22 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_8.addItem(spacerItem22)
+        spacerItem19 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_8.addItem(spacerItem19)
         self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
 "background-color: rgb(0, 0, 127);\n"
@@ -459,8 +431,8 @@ class Ui_Admin_Interface(object):
 "}")
         self.Import_ImportEmployees_Button.setObjectName("Import_ImportEmployees_Button")
         self.verticalLayout_8.addWidget(self.Import_ImportEmployees_Button)
-        spacerItem23 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem23)
+        spacerItem20 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem20)
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
@@ -591,9 +563,8 @@ class Ui_Admin_Interface(object):
         self.Edit_Update_Status_Label.setText(_translate("Admin_Interface", "Update Status:"))
         self.Edit_Asset_Label.setText(_translate("Admin_Interface", "Asset #:"))
         self.Edit_Assign_To_Label.setText(_translate("Admin_Interface", "Assign To:"))
-        self.Edit_Clear_Button.setText(_translate("Admin_Interface", "Clear"))
         self.Edit_Search_Button.setText(_translate("Admin_Interface", "Search"))
-        self.Edit_Delete_Entry_Button.setText(_translate("Admin_Interface", "Delete Entry"))
+        self.Edit_Clear_Button.setText(_translate("Admin_Interface", "Clear"))
         self.Edit_Commit_Edits_Button.setText(_translate("Admin_Interface", "Commit Edits"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Edit_Tab), _translate("Admin_Interface", "Edit"))
         self.Create_Prompt_Label.setText(_translate("Admin_Interface", "Enter asset info, then confirm new entry in local database"))
