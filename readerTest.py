@@ -499,12 +499,12 @@ if __name__ == "__main__":
     #database = 'TEST'
 
     # define the server name and the database name
-    server = "CKERR-THINKPAD"
-    database = 'BALKARAN09'
+    # server = "CKERR-THINKPAD"
+    # database = 'BALKARAN09'
 
     # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
+    server = "Raymond-P1"
+    database = 'RCMP_RFID'
 
     # define the server name and the database name
     # server = "Raymond-P1"
@@ -521,7 +521,7 @@ if __name__ == "__main__":
     #it works now
     # if readFlag == True:
     #sys.exit(app.exec_())
-    Thread(target=reactor.run, args=(False,)).start()
+    # Thread(target=reactor.run, args=(False,)).start()
     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
 
 
