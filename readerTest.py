@@ -135,7 +135,6 @@ class mainWindow(QWidget):
         self.timer.timeout.connect(self.timer_timeout)
         self.ui.Admin_Button.setEnabled(False)
 
-
         #validator to only enter integer values into the entry fields
         self.onlyInt = QtGui.QIntValidator()
         self.ui.Asset_ID_Input.setValidator(self.onlyInt)
@@ -163,6 +162,7 @@ class mainWindow(QWidget):
             self.ui.Asset_ID_Input.setEnabled(True)
             self.ui.Asset_ID_Input.setFocus()
             self.ui.Employee_ID_Input.setReadOnly(True)
+            self.ui.Employee_ID_Enter.setEnabled(False)
             #only do this when admit
             self.ui.Admin_Button.setEnabled(True);
             self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
@@ -364,7 +364,7 @@ class mainWindow(QWidget):
                 flag = False
                 if len(state) == 0:
                     flag = True   
-                elif state[0][0] == '2' or state[0][0] == '1':
+                elif state[0][0] == "2" or state[0][0] == "1":
                     flag = True
                 if flag == True:
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
