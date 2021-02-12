@@ -66,14 +66,16 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
+        server = "BigAcer"
+        database = 'BALKARAN09'
         # server = 'CKERR-THINKPAD'
         # database = 'BALKARAN09'
         #server = "BALKARAN09"
         #database = 'TEST'
-        server = "Raymond-P1"
-        database = 'RCMP_RFID'
+        # server = "Raymond-P1"
+        # database = 'RCMP_RFID'
 
-        self.filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode') #change this to wherever your excel import docs are stashed
+        self.filePath = str(r'C:\Projects\Capstone_RFID\Code') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
@@ -141,9 +143,11 @@ class Admin_Interface(QWidget):
         # Reset Filters to default values
         self.ui.Search_Employee_ID_Entry_Field.setText("")
         self.ui.Search_Asset_Numbers_Field.setText("")
-        d = QDate(2021, 1, 1)
+        UpperResetDate = QDate.currentDate()
+
+        d = QDate('2021', 1, 1)
         self.ui.Search_Datetime_From.setDate(d)
-        self.ui.Search_Datetime_To.setDate(d)
+        self.ui.Search_Datetime_To.setDate(UpperResetDate)
 
         #clear search results in table
         self.search_clearTableResults()
@@ -453,6 +457,8 @@ class Admin_Interface(QWidget):
             return False
 
     def search_fetchDateTime(self,LowerBound,UpperBound):
+
+        UpperBound = UpperBound + ' 11:59PM'
         check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
         if self.cursor.fetchone():
