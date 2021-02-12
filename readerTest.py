@@ -1,8 +1,11 @@
 from sllurp import llrp
 from twisted.internet import reactor
 import pyodbc
-from datetime import datetime
-from datetime import date
+
+from pytz import timezone
+import pytz
+import datetime
+
 from threading import Thread
 import subprocess
 import keyboard
@@ -399,10 +402,10 @@ class mainWindow(QWidget):
 
 
     def check_in_action(self):
-        time = datetime.now()
-        datevar = date.today()
-        self.sql_call("1", time, datevar)
-        self.sql_call("5", time, datevar)
+        timestamp = datetime.datetime.now(tz = pytz.utc)
+        timestamp= timestamp.astimezone(timezone('US/Pacific'))
+        self.sql_call("1", timestamp)
+        self.sql_call("5", timestamp)
 
 
     def eliminate_duplicates(self, asset):
@@ -412,20 +415,20 @@ class mainWindow(QWidget):
             return True
 
     def check_out_action(self):
-        time = datetime.now()
-        datevar = date.today()
-        self.sql_call("2", time, datevar)
+        timestamp = datetime.datetime.now(tz = pytz.utc)
+        timestamp= timestamp.astimezone(timezone('US/Pacific'))
+        self.sql_call("2", timestamp)
 
 
-    def sql_call(self,status, time, datevar):
+    def sql_call(self,status, timestamp):
 
         if status == '5':
             for item in self.markedList:
-                Event_Log_Entry.append([ datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"),self.ui.Employee_ID_Input.text(), item, status])
+                Event_Log_Entry.append([timestamp.strftime('%Y-%m-%d %H:%M:%S'),self.ui.Employee_ID_Input.text(), item, status])
         else:
             for item in self.eventEntry:
                 Event_Log_Entry.append(
-                    [datevar.strftime("%d/%m/%Y") + "," + time.strftime("%H:%M:%S"),item[0], item[1], status])
+                    [timestamp.strftime('%Y-%m-%d %H:%M:%S'),item[0], item[1], status])
         insert_event_query = ''' INSERT INTO [Event Log Table] (TIMESTAMP,EMPLOYEEID,ASSETID, STATUS) VALUES(?,?,?,?);'''
         for entry in Event_Log_Entry:
             # define the values to insert
@@ -495,16 +498,16 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    #server = "BALKARAN09"
-    #database = 'TEST'
+    server = "BALKARAN09"
+    database = 'TEST'
 
     # define the server name and the database name
     # server = "CKERR-THINKPAD"
     # database = 'BALKARAN09'
 
     # define the server name and the database name
-    server = "Raymond-P1"
-    database = 'RCMP_RFID'
+    # server = "Raymond-P1"
+    # database = 'RCMP_RFID'
 
     # define the server name and the database name
     # server = "Raymond-P1"

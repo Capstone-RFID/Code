@@ -68,10 +68,10 @@ class Admin_Interface(QWidget):
         # define the server name and the database name
         # server = 'CKERR-THINKPAD'
         # database = 'BALKARAN09'
-        #server = "BALKARAN09"
-        #database = 'TEST'
-        server = "Raymond-P1"
-        database = 'RCMP_RFID'
+        server = "BALKARAN09"
+        database = 'TEST'
+        # server = "Raymond-P1"
+        # database = 'RCMP_RFID'
 
         self.filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
