@@ -162,7 +162,7 @@ class mainWindow(QWidget):
             self.ui.Asset_ID_Input.setEnabled(True)
             self.ui.Asset_ID_Input.setFocus()
             self.ui.Employee_ID_Input.setReadOnly(True)
-            self.ui.Employee_ID_Enter.setEnabled(False)
+            #self.ui.Employee_ID_Enter.setEnabled(False)
             #only do this when admit
             self.ui.Admin_Button.setEnabled(True);
             self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
