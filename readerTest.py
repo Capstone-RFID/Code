@@ -460,8 +460,8 @@ if __name__ == "__main__":
         # database = 'BALKARAN09'
 
         # define the server name and the database name
-        # server = "Raymond-P1"
-        # database = 'RCMP_RFID'
+        server = "Raymond-P1"
+        database = 'RCMP_RFID'
 
         # define a connection string
         cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
