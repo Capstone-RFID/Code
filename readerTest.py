@@ -239,10 +239,14 @@ class mainWindow(QWidget):
         return
 
     def error_message(self, text):
-        error_dialog = QtWidgets.QErrorMessage()
-        error_dialog.showMessage(text)
-        error_dialog.setWindowTitle("Error")
-        error_dialog.exec_()
+        message = QtWidgets.QMessageBox()
+        message.setText(text)
+        message.setWindowTitle("Warning")
+        message.exec_()
+        # error_dialog = QtWidgets.QErrorMessage()
+        # error_dialog.showMessage(text)
+        # error_dialog.setWindowTitle("Error")
+        # error_dialog.exec_()
         return
     
     def timer_timeout(self):
@@ -422,16 +426,16 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    server = "BALKARAN09"
-    database = 'TEST'
+    # server = "BALKARAN09"
+    # database = 'TEST'
 
     # define the server name and the database name
     # server = "CKERR-THINKPAD"
     # database = 'BALKARAN09'
 
     # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
+    server = "Raymond-P1"
+    database = 'RCMP_RFID'
 
 
     # define a connection string
