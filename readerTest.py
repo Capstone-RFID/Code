@@ -33,6 +33,7 @@ def cb(tagReport):
         mode = 'q'
     tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
     result = [sub['EPC-96'] for sub in tags]
+    print(result)
     if len(tags) != 0:
         # taglist.append(tags[0]['EPC-96'])
         # if tags[0]['EPC-96'] not in taglist:
@@ -235,17 +236,17 @@ class mainWindow(QWidget):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
 
-    def insert_into_new_table(self, mode, item):
-        if mode == 1:
-            lastrow_new = self.ui.New_Item_List.rowCount()
-            self.ui.New_Item_List.insertRow(lastrow_new)
-            self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
-            if self.ui.Check_In_Box.isChecked():
-                self.ui.Mark_Button.setEnabled(True)
-        elif mode == 2:
-            lastrow_existing = self.ui.Existing_Item_list.rowCount()
-            self.ui.Existing_Item_list.insertRow(lastrow_existing)
-            self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
+    # def insert_into_new_table(self, mode, item):
+    #     if mode == 1:
+    #         lastrow_new = self.ui.New_Item_List.rowCount()
+    #         self.ui.New_Item_List.insertRow(lastrow_new)
+    #         self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
+    #         if self.ui.Check_In_Box.isChecked():
+    #             self.ui.Mark_Button.setEnabled(True)
+    #     elif mode == 2:
+    #         lastrow_existing = self.ui.Existing_Item_list.rowCount()
+    #         self.ui.Existing_Item_list.insertRow(lastrow_existing)
+    #         self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
 
     def asset_enter_action(self):
             Asset = self.ui.Asset_ID_Input.text()
@@ -256,7 +257,7 @@ class mainWindow(QWidget):
                     self.ui.Check_Out_Box.setEnabled(False)
                     self.ui.Check_In_Box.setEnabled(False)
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
-                        self.insert_into_new_table(1, Asset)
+                        self.insert_into_table(1, Asset)
                         #apend the entries into a list
                         self.eventEntry.append([self.ui.Employee_ID_Input.text(),Asset])
                         #self.StateEntry.append(self.ui.Employee_ID_Input.text())
@@ -396,7 +397,7 @@ class mainWindow(QWidget):
     def rfid_insert(self, asset):
         if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (asset not in self.RemovedItems) and self.eliminate_duplicates(asset) and (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()) :
             self.eventEntry.append([self.ui.Employee_ID_Input.text(),asset])
-            self.insert_into_new_table(1, asset)
+            self.insert_into_table(1, asset)
         # else:
         #     self.ui.Asset_ID_Input.setText('DUPLICATE!!!!')
 
@@ -481,7 +482,7 @@ class mainWindow(QWidget):
       for assets in cursor.fetchall():
           print(assets[0])
           self.existingList.append(assets[0])
-          self.insert_into_new_table(2, assets[0])
+          self.insert_into_table(2, assets[0])
       return
 
     def testfunction(self):
@@ -509,9 +510,6 @@ if __name__ == "__main__":
     # server = "Raymond-P1"
     # database = 'RCMP_RFID'
 
-    # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
 
     # define a connection string
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
@@ -524,7 +522,7 @@ if __name__ == "__main__":
     #it works now
     # if readFlag == True:
     #sys.exit(app.exec_())
-    # Thread(target=reactor.run, args=(False,)).start()
+    Thread(target=reactor.run, args=(False,)).start()
     Thread(target=sys.exit(app.exec_()), args=(False,)).start()
 
 
