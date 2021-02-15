@@ -500,16 +500,16 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    server = "BALKARAN09"
-    database = 'TEST'
+    # server = "BALKARAN09"
+    # database = 'TEST'
 
     # define the server name and the database name
     # server = "CKERR-THINKPAD"
     # database = 'BALKARAN09'
 
     # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
+    server = "Raymond-P1"
+    database = 'RCMP_RFID'
 
 
     # define a connection string
