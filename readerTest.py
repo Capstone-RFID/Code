@@ -337,15 +337,14 @@ class mainWindow(QWidget):
 
     def confirmation_msg(self):
         msg = QtWidgets.QMessageBox()
-        #msg.setIcon(QMessageBox.Information)
+        msg.setIcon(QMessageBox.Information)
         msg.setText("This is a message box")
         msg.setInformativeText("This is additional information")
         msg.setWindowTitle("Asset(s) Confirmations")
-        msg.setDetailedText("The details are as follows:")
         return
 
     def sql_call(self,status, timestamp):
-
+        self.confirmation_msg()
         if status == '5':
             for item in self.markedList:
                 Event_Log_Entry.append([timestamp.strftime('%Y-%m-%d %H:%M:%S'),self.ui.Employee_ID_Input.text(), item, status])
@@ -362,7 +361,7 @@ class mainWindow(QWidget):
             cursor.execute(insert_event_query, eventValues)
         # commit the inserts
         cnxn.commit()
-        self.confirmation_msg(self)
+
         Event_Log_Entry.clear()
 
         # self.StateEntry.clear()
