@@ -24,7 +24,7 @@
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -373,6 +373,9 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
                <property name="displayFormat">
                 <string>MMM d yyyy</string>
                </property>
@@ -393,6 +396,9 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="readOnly">
+                <bool>false</bool>
                </property>
                <property name="displayFormat">
                 <string>MMM d yyyy</string>
@@ -1020,7 +1026,7 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
          </item>
          <item row="1" column="0">
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="1" column="1">
+           <item row="2" column="1">
             <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
              <property name="minimumSize">
               <size>
@@ -1049,6 +1055,17 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="Create_RFID_Tag_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>RFID Tag #:</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="1">
             <widget class="QLineEdit" name="Create_Asset_Num_Field">
              <property name="minimumSize">
@@ -1064,14 +1081,29 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="Create_Asset_Description_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="Create_RFID_Tag_Label">
+            <widget class="QLabel" name="Create_Asset_Description_Label">
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
-              <string>RFID Tag #:</string>
+              <string>Asset Description:</string>
              </property>
             </widget>
            </item>
