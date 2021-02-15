@@ -103,6 +103,14 @@ def Asset_Check(input):
     else:
         return False
 
+def Permission_Check(employee):
+    check_query = '''SELECT EMPLOYEEID FROM [Employee Access Table] WHERE (PERMISSION = '2' OR PERMISSION = '3') AND EMPLOYEEID = (?);'''  # '?' is a placeholder
+    cursor.execute(check_query, str(employee))
+    if cursor.fetchone():
+        return True
+    else:
+        return False
+
 
 
 class mainWindow(QWidget):
@@ -161,15 +169,17 @@ class mainWindow(QWidget):
 
 
     def Employee_enter(self):
+        if Permission_Check(self.ui.Employee_ID_Input.text()):
+            self.ui.Admin_Button.setEnabled(True)
+            self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             self.current_items(self.ui.Employee_ID_Input.text())
             self.ui.Asset_ID_Input.setEnabled(True)
             self.ui.Asset_ID_Input.setFocus()
             self.ui.Employee_ID_Input.setReadOnly(True)
             #self.ui.Employee_ID_Enter.setEnabled(False)
-            #only do this when admit
-            self.ui.Admin_Button.setEnabled(True);
-            self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
+            #only do this when admin
+
         else:
             self.error_message("Enter a valid Employee ID")
             self.ui.Employee_ID_Input.clear()
@@ -223,7 +233,9 @@ class mainWindow(QWidget):
         self.ui.Employee_ID_Input.clear()
         self.ui.Asset_ID_Input.clear()
         self.ui.Asset_ID_Input.setEnabled(False)
+        self.ui.Admin_Button.setEnabled(False)
         self.clear_lists()
+        return
 
     def error_message(self, text):
         error_dialog = QtWidgets.QErrorMessage()
@@ -236,17 +248,6 @@ class mainWindow(QWidget):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
 
-    # def insert_into_new_table(self, mode, item):
-    #     if mode == 1:
-    #         lastrow_new = self.ui.New_Item_List.rowCount()
-    #         self.ui.New_Item_List.insertRow(lastrow_new)
-    #         self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
-    #         if self.ui.Check_In_Box.isChecked():
-    #             self.ui.Mark_Button.setEnabled(True)
-    #     elif mode == 2:
-    #         lastrow_existing = self.ui.Existing_Item_list.rowCount()
-    #         self.ui.Existing_Item_list.insertRow(lastrow_existing)
-    #         self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
 
     def asset_enter_action(self):
             Asset = self.ui.Asset_ID_Input.text()
