@@ -18,6 +18,9 @@ import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
 import time
+
+from password_prompt import Ui_Dialog
+
 Event_Log_Entry = []
 
 assetID = 0
@@ -111,6 +114,19 @@ def Permission_Check(employee):
     else:
         return False
 
+class passwordWindow(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(passwordWindow, self).__init__(parent)
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
+        self.ui.buttonBox.accepted.connect(self.handleLogin)
+             
+    def handleLogin(self):
+        if self.ui.lineEdit.text() == 'foo':
+            self.accept()
+        else:
+            QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
+            self.rejected()
 
 class mainWindow(QWidget):
     def __init__(self):
@@ -119,7 +135,7 @@ class mainWindow(QWidget):
         self.ui.setupUi(self)
         self.admin = Admin_Interface()
 
-        self.show()
+        # self.show()
         self.existingList = []
         self.eventEntry = []
         self.RemovedItems = []
@@ -347,11 +363,8 @@ class mainWindow(QWidget):
             preString = "You Have Checked-In"
         elif self.ui.Check_Out_Box.isChecked():
             preString = "You Have Checked-Out"
-            # initialize an empty string
+        # initialize an empty string seperator
         str1 = "\n"
-
-        # return string
-
         message.setText(preString+" "+str(len(entries))+" Items: \n"+str1.join(entries))
         message.setWindowTitle("Confirmation")
         message.exec_()
@@ -428,38 +441,37 @@ class mainWindow(QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    window = mainWindow()
+    login = passwordWindow()
     #RFID init
+    if login.exec_() == QtWidgets.QDialog.Accepted:
+        window = mainWindow()
+        window.show()
+        logging.getLogger().setLevel(logging.INFO)
+        factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
+        factory.addTagReportCallback(cb)
+        reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
-    logging.getLogger().setLevel(logging.INFO)
-    factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
-    factory.addTagReportCallback(cb)
-    reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
+        # define the server name and the database name
+        server = "BALKARAN09"
+        database = 'TEST'
 
-    # define the server name and the database name
-    server = "BALKARAN09"
-    database = 'TEST'
+        # define the server name and the database name
+        # server = "CKERR-THINKPAD"
+        # database = 'BALKARAN09'
 
-    # define the server name and the database name
-    # server = "CKERR-THINKPAD"
-    # database = 'BALKARAN09'
+        # define the server name and the database name
+        # server = "Raymond-P1"
+        # database = 'RCMP_RFID'
 
-    # define the server name and the database name
-    # server = "Raymond-P1"
-    # database = 'RCMP_RFID'
+        # define a connection string
+        cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
+                                SERVER=' + server + ';\
+                                  DATABASE=' + database + ';\
+                                Trusted_Connection=yes;')
 
+        # create the connection cursor
+        cursor = cnxn.cursor()
+        Thread(target=reactor.run, args=(False,)).start()
+        Thread(target=sys.exit(app.exec_()), args=(False,)).start()
 
-    # define a connection string
-    cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
-                            SERVER=' + server + ';\
-                              DATABASE=' + database + ';\
-                            Trusted_Connection=yes;')
-
-    # create the connection cursor
-    cursor = cnxn.cursor()
-    #it works now
-    # if readFlag == True:
-    #sys.exit(app.exec_())
-    Thread(target=reactor.run, args=(False,)).start()
-    Thread(target=sys.exit(app.exec_()), args=(False,)).start()
 
