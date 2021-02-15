@@ -790,13 +790,35 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        </item>
       </layout>
      </item>
+     <item row="0" column="1">
+      <widget class="QToolButton" name="Admin_Button">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>AA</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="2" colspan="5">
       <widget class="QFrame" name="Employee_Section">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>100</height>
+        </size>
+       </property>
        <property name="styleSheet">
-        <string notr="true">QFrame{
-	background-color:#282c30;
-	border-radius: 5px;
-}</string>
+        <string notr="true"/>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
@@ -810,15 +832,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
                </color>
               </brush>
              </colorrole>
@@ -837,24 +850,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Window">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
                </color>
               </brush>
              </colorrole>
@@ -878,15 +873,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                </color>
               </brush>
              </colorrole>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
-               </color>
-              </brush>
-             </colorrole>
              <colorrole role="Text">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
@@ -902,24 +888,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Window">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
                </color>
               </brush>
              </colorrole>
@@ -943,15 +911,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                </color>
               </brush>
              </colorrole>
-             <colorrole role="Button">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
-               </color>
-              </brush>
-             </colorrole>
              <colorrole role="Text">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
@@ -967,24 +926,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
-               </color>
-              </brush>
-             </colorrole>
-             <colorrole role="Window">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>40</red>
-                <green>44</green>
-                <blue>48</blue>
                </color>
               </brush>
              </colorrole>
@@ -1255,25 +1196,6 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          </widget>
         </item>
        </layout>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QToolButton" name="Admin_Button">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>AA</string>
-       </property>
       </widget>
      </item>
     </layout>
