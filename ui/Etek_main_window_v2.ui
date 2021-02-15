@@ -1062,7 +1062,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <enum>Qt::ClickFocus</enum>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(40, 44, 48)</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Enter</string>
@@ -1305,7 +1305,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <enum>Qt::ClickFocus</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:rgb(40, 44, 48)</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Asset #</string>
