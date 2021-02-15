@@ -157,6 +157,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_From.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_From.setReadOnly(False)
         self.Search_Datetime_From.setCalendarPopup(True)
         self.Search_Datetime_From.setObjectName("Search_Datetime_From")
         self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
@@ -165,6 +166,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
+        self.Search_Datetime_To.setReadOnly(False)
         self.Search_Datetime_To.setCalendarPopup(True)
         self.Search_Datetime_To.setObjectName("Search_Datetime_To")
         self.gridLayout.addWidget(self.Search_Datetime_To, 2, 1, 1, 1)
@@ -485,12 +487,17 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_RFID_Tag_Field_3.setText("")
         self.Create_RFID_Tag_Field_3.setObjectName("Create_RFID_Tag_Field_3")
-        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Field_3, 1, 1, 1, 1)
+        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Field_3, 2, 1, 1, 1)
         self.Create_Asset_Num_Label = QtWidgets.QLabel(self.Create_Tab)
         self.Create_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_Asset_Num_Label.setObjectName("Create_Asset_Num_Label")
         self.gridLayout_5.addWidget(self.Create_Asset_Num_Label, 0, 0, 1, 1)
+        self.Create_RFID_Tag_Label = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Create_RFID_Tag_Label.setObjectName("Create_RFID_Tag_Label")
+        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Label, 2, 0, 1, 1)
         self.Create_Asset_Num_Field = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_Asset_Num_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Create_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -498,11 +505,18 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_Asset_Num_Field.setObjectName("Create_Asset_Num_Field")
         self.gridLayout_5.addWidget(self.Create_Asset_Num_Field, 0, 1, 1, 1)
-        self.Create_RFID_Tag_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.Create_Asset_Description_Field = QtWidgets.QLineEdit(self.Create_Tab)
+        self.Create_Asset_Description_Field.setMinimumSize(QtCore.QSize(0, 25))
+        self.Create_Asset_Description_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_RFID_Tag_Label.setObjectName("Create_RFID_Tag_Label")
-        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Label, 1, 0, 1, 1)
+        self.Create_Asset_Description_Field.setObjectName("Create_Asset_Description_Field")
+        self.gridLayout_5.addWidget(self.Create_Asset_Description_Field, 1, 1, 1, 1)
+        self.Create_Asset_Description_Label = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_Asset_Description_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Create_Asset_Description_Label.setObjectName("Create_Asset_Description_Label")
+        self.gridLayout_5.addWidget(self.Create_Asset_Description_Label, 1, 0, 1, 1)
         self.gridLayout_6.addLayout(self.gridLayout_5, 1, 0, 1, 1)
         self.verticalLayout_11.addLayout(self.gridLayout_6)
         self.Admin_Select.addTab(self.Create_Tab, "")
@@ -534,7 +548,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(1)
+        self.Admin_Select.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):
@@ -583,6 +597,7 @@ class Ui_Admin_Interface(object):
         self.Create_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Confirm Entry"))
         self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset #:"))
         self.Create_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
+        self.Create_Asset_Description_Label.setText(_translate("Admin_Interface", "Asset Description:"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Create_Tab), _translate("Admin_Interface", "Create"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset #"))
