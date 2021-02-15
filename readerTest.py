@@ -125,6 +125,7 @@ class mainWindow(QWidget):
         self.RemovedItems = []
         self.markedList = []
 
+
         #connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
         self.ui.Employee_ID_Enter.released.connect(self.Employee_enter)
@@ -339,16 +340,25 @@ class mainWindow(QWidget):
         timestamp= timestamp.astimezone(timezone('US/Pacific'))
         self.sql_call("2", timestamp)
 
-    def confirmation_msg(self):
-        msg = QtWidgets.QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("This is a message box")
-        msg.setInformativeText("This is additional information")
-        msg.setWindowTitle("Asset(s) Confirmations")
+    def confirmation_msg(self,entries):
+        preString = ''
+        message = QtWidgets.QMessageBox()
+        if self.ui.Check_In_Box.isChecked():
+            preString = "You Have Checked-In"
+        elif self.ui.Check_Out_Box.isChecked():
+            preString = "You Have Checked-Out"
+            # initialize an empty string
+        str1 = "\n"
+
+        # return string
+
+        message.setText(preString+" "+str(len(entries))+" Items: \n"+str1.join(entries))
+        message.setWindowTitle("Confirmation")
+        message.exec_()
         return
 
     def sql_call(self,status, timestamp):
-        self.confirmation_msg()
+        confirmation_list = []
         if status == '5':
             for item in self.markedList:
                 Event_Log_Entry.append([timestamp.strftime('%Y-%m-%d %H:%M:%S'),self.ui.Employee_ID_Input.text(), item, status])
@@ -360,12 +370,13 @@ class mainWindow(QWidget):
         for entry in Event_Log_Entry:
             # define the values to insert
             eventValues = (entry[0], entry[1], entry[2],entry[3])
-            print(eventValues)
+            confirmation_list.append(entry[2])
             # insert the data into the database
             cursor.execute(insert_event_query, eventValues)
         # commit the inserts
         cnxn.commit()
-
+        print(confirmation_list)
+        self.confirmation_msg(confirmation_list)
         Event_Log_Entry.clear()
 
         # self.StateEntry.clear()
@@ -426,16 +437,16 @@ if __name__ == "__main__":
     reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
     # define the server name and the database name
-    # server = "BALKARAN09"
-    # database = 'TEST'
+    server = "BALKARAN09"
+    database = 'TEST'
 
     # define the server name and the database name
     # server = "CKERR-THINKPAD"
     # database = 'BALKARAN09'
 
     # define the server name and the database name
-    server = "Raymond-P1"
-    database = 'RCMP_RFID'
+    # server = "Raymond-P1"
+    # database = 'RCMP_RFID'
 
 
     # define a connection string
