@@ -18,9 +18,6 @@ import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
 import time
-
-from password_prompt import Ui_Dialog
-
 Event_Log_Entry = []
 
 assetID = 0
@@ -152,7 +149,7 @@ class mainWindow(QWidget):
         self.ui.setupUi(self)
         self.admin = Admin_Interface()
 
-        # self.show()
+        self.show()
         self.existingList = []
         self.eventEntry = []
         self.RemovedItems = []
@@ -200,9 +197,6 @@ class mainWindow(QWidget):
             self.ui.New_Item_List.removeRow(row)
 
     def Employee_enter(self):
-        if Permission_Check(self.ui.Employee_ID_Input.text()):
-            self.ui.Admin_Button.setEnabled(True)
-            self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
         if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
             self.current_items(self.ui.Employee_ID_Input.text())
             self.ui.Asset_ID_Input.setEnabled(True)
@@ -249,6 +243,64 @@ class mainWindow(QWidget):
         self.ui.Name_Label.clear()
         return
 
+    def cancel_button_clicked(self):
+        self.ui.Employee_ID_Input.setReadOnly(False)
+        self.ui.Employee_ID_Input.clear()
+        self.ui.Asset_ID_Input.clear()
+        self.ui.Asset_ID_Input.setEnabled(False)
+        self.clear_lists()
+
+    def error_message(self, text):
+        error_dialog = QtWidgets.QErrorMessage()
+        error_dialog.showMessage(text)
+        error_dialog.setWindowTitle("Error")
+        error_dialog.exec_()
+        return
+    
+    def timer_timeout(self):
+        print("timer running")
+        self.ui.Asset_ID_Input.clear()
+
+    # def insert_into_new_table(self, mode, item):
+    #     if mode == 1:
+    #         lastrow_new = self.ui.New_Item_List.rowCount()
+    #         self.ui.New_Item_List.insertRow(lastrow_new)
+    #         self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
+    #         if self.ui.Check_In_Box.isChecked():
+    #             self.ui.Mark_Button.setEnabled(True)
+    #     elif mode == 2:
+    #         lastrow_existing = self.ui.Existing_Item_list.rowCount()
+    #         self.ui.Existing_Item_list.insertRow(lastrow_existing)
+    #         self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
+
+    def asset_enter_action(self):
+            Asset = self.ui.Asset_ID_Input.text()
+            #self.ItemEntry.append(Asset)
+            print('Asset Number:' + Asset)
+            if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
+                if Asset_Check(Asset):
+                    self.ui.Check_Out_Box.setEnabled(False)
+                    self.ui.Check_In_Box.setEnabled(False)
+                    if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(Asset): #any(Asset in sublist for sublist in self.ItemEntry) == False:
+                        self.insert_into_table(1, Asset)
+                        #apend the entries into a list
+                        self.eventEntry.append([self.ui.Employee_ID_Input.text(),Asset])
+                        #self.StateEntry.append(self.ui.Employee_ID_Input.text())
+                        #self.ui.New_Item_List.insertRow()
+                        self.ui.Asset_ID_Input.clear()
+
+                    else:
+                         self.ui.Asset_ID_Input.clear()
+                         self.timer.start(1000)
+                         self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
+
+                else:
+                    self.error_message("Enter a valid Asset ID")
+                    self.ui.Asset_ID_Input.clear()
+            else:
+                self.error_message("Please select Check-In or Check-out action")
+            return
+    
     def done_button_clicked(self):
         if self.ui.Check_In_Box.isChecked():
             print('Check IN action')
@@ -264,33 +316,39 @@ class mainWindow(QWidget):
         self.ui.Employee_ID_Input.clear()
         self.ui.Asset_ID_Input.clear()
         self.ui.Asset_ID_Input.setEnabled(False)
-        self.ui.Admin_Button.setEnabled(False)
         self.clear_lists()
-        return
 
     def error_message(self, text):
-        message = QtWidgets.QMessageBox()
-        message.setText(text)
-        message.setWindowTitle("Warning")
-        message.exec_()
-        # error_dialog = QtWidgets.QErrorMessage()
-        # error_dialog.showMessage(text)
-        # error_dialog.setWindowTitle("Error")
-        # error_dialog.exec_()
+        error_dialog = QtWidgets.QErrorMessage()
+        error_dialog.showMessage(text)
+        error_dialog.setWindowTitle("Error")
+        error_dialog.exec_()
         return
 
     def timer_timeout(self):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
 
+    def insert_into_table(self, mode, item):
+        if mode == 1:
+            lastrow_new = self.ui.New_Item_List.rowCount()
+            self.ui.New_Item_List.insertRow(lastrow_new)
+            self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
+            if self.ui.Check_In_Box.isChecked():
+                self.ui.Mark_Button.setEnabled(True)
+        elif mode == 2:
+            lastrow_existing = self.ui.Existing_Item_list.rowCount()
+            self.ui.Existing_Item_list.insertRow(lastrow_existing)
+            self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
+
     def asset_enter_action(self):
         status_check_query = '''SELECT TOP(1)
-                                       [Event Log Table].Status
-                                       FROM
-                                       [Event Log Table]
-                                       WHERE
-                                       [Event Log Table].AssetID = (?)
-                                       ORDER BY [Event Log Table].Entry DESC'''
+                                   [Event Log Table].Status
+                                   FROM
+                                   [Event Log Table]
+                                   WHERE
+                                   [Event Log Table].AssetID = (?)
+                                   ORDER BY [Event Log Table].Entry DESC'''
         Asset = self.ui.Asset_ID_Input.text()
         # self.ItemEntry.append(Asset)
         print('Asset Number:' + Asset)
@@ -302,7 +360,7 @@ class mainWindow(QWidget):
                 state = cursor.fetchall()
                 flag = False
                 if len(state) == 0:
-                    flag = True
+                    flag = True   
                 elif state[0][0] == "2" or state[0][0] == "1":
                     flag = True
                 if flag == True:
@@ -407,8 +465,6 @@ class mainWindow(QWidget):
             cursor.execute(insert_event_query, eventValues)
         # commit the inserts
         cnxn.commit()
-        print(confirmation_list)
-        self.confirmation_msg(confirmation_list)
         Event_Log_Entry.clear()
 
         # cursor.close
@@ -476,8 +532,8 @@ if __name__ == "__main__":
         # database = 'BALKARAN09'
 
         # define the server name and the database name
-        # server = "Raymond-P1"
-        # database = 'RCMP_RFID'
+        server = "Raymond-P1"
+        database = 'RCMP_RFID'
 
         # define a connection string
         cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \

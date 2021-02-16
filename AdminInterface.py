@@ -9,6 +9,7 @@ import subprocess
 import keyboard
 import logging
 #for reading excel files
+import numpy as np
 import pandas as pd
 from pathlib import Path
 #import xlrd
@@ -66,10 +67,10 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        # server = 'CKERR-THINKPAD'
-        # database = 'BALKARAN09'
-        server = "BALKARAN09"
-        database = 'TEST'
+        server = 'CKERR-THINKPAD'
+        database = 'BALKARAN09'
+        #server = "BALKARAN09"
+        #database = 'TEST'
         # server = "Raymond-P1"
         # database = 'RCMP_RFID'
 
@@ -285,12 +286,13 @@ class Admin_Interface(QWidget):
         print('Create Tab Clear Button Clicked')
         # Reset Asset and RFID Filters to empty values
         self.ui.Create_Asset_Num_Field.setText("")
+        self.ui.Create_Asset_Description_Field.setText("")
         self.ui.Create_RFID_Tag_Field_3.setText("")
 
 
     #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
     def create_confirmEntryButtonClicked(self):
-        if (self.ui.Create_Asset_Num_Field.text() != None):
+        if (self.ui.Create_Asset_Num_Field.text() != '') and (self.ui.Create_Asset_Description_Field.text() != ''):
             print('Create Tab Confirm Entry Button Clicked')
 
             if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(self.ui.Create_Asset_Num_Field.text())):
@@ -304,7 +306,7 @@ class Admin_Interface(QWidget):
                     # Next two lines commit the edits present in the table
                     self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()),
                                         str(self.ui.Create_Asset_Num_Field.text()))
-                    self.cnxn.commit()
+                    #self.cnxn.commit()
 
                     # Create an event in the Event Log Table to show linking
                     # Append status # 420 (An RFID tag was linked to an existing asset in the system)
@@ -313,42 +315,42 @@ class Admin_Interface(QWidget):
                     self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()), str(420))
                     self.cnxn.commit()
 
-                    # clear fields after commit
-                    self.ui.Create_Asset_Num_Field.setText("")
-                    self.ui.Create_RFID_Tag_Field_3.setText("")
 
 
                 #Edit this so it prints info somewhere so user can edit association
-                elif(self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != None)):
+                elif(self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != '')):
 
                     print('This tag already associated with another asset!')
             else:
                 # If the RFID number does not exist yet (and field is not blank) and the asset does not already exist, then write it to the RFID table
-                if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != None))):
+                if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
                     insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
                     # Next two lines commit the edits present in the table
                     self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()),
                                         str(self.ui.Create_Asset_Num_Field.text()))
-                    self.cnxn.commit()
-
-
-
-
-
+                #self.cnxn.commit()
                 #Create an event in the Event Log Table
                 #Append status # 3 (A new asset was added to the system)
                 insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
                 # Next two lines commit the edits present in the table
                 self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()),str(3))
+
+
+                #insert new Asset into Asset Table
+                insert_event_query = ''' INSERT INTO [Asset Table] (AssetID, Type) VALUES(?,?);'''
+                # Next two lines commit the edits present in the table
+                self.cursor.execute(insert_event_query, str(self.ui.Create_Asset_Num_Field.text()), str(self.ui.Create_Asset_Description_Field.text()))
+
                 self.cnxn.commit()
 
-                # clear fields after commit
-                self.ui.Create_Asset_Num_Field.setText("")
-                self.ui.Create_RFID_Tag_Field_3.setText("")
-
-
         else:
-            print("Enter an asset number!")
+            print("Enter both an asset number and description!")
+
+        # clear fields after commit
+        self.ui.Create_Asset_Num_Field.setText("")
+        self.ui.Create_Asset_Description_Field.setText("")
+        self.ui.Create_RFID_Tag_Field_3.setText("")
+
     def Import_ImportAssets_ButtonClicked(self):
         print('Import Tab ImportAssets Button Clicked')
         # NOTE: for testing, change the path to the development folder (I think this changes between me (Jon) and Chris)
@@ -361,8 +363,16 @@ class Admin_Interface(QWidget):
 
 
         dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
-        df = pd.DataFrame(dataAsset, columns=['AssetID'])
-        self.import_checkAssetsOrEmployeesToSQL(df)
+
+        df = pd.DataFrame(dataAsset, columns=['AssetID', 'Type'])
+
+        if dataAsset.columns[0] == 'AssetID' and dataAsset.columns[1] == 'Type':
+            if not all (np.where(pd.isnull(df))):
+                self.import_checkAssetsOrEmployeesToSQL(df)
+            else:
+                print('Please reformat excel into 2 columns "AssetID" and "Type" with no empty cells')
+        else:
+            print('Please reformat excel into 2 columns "AssetID" and "Type"')
 
 
 
@@ -376,7 +386,15 @@ class Admin_Interface(QWidget):
         employeeFile = data_Folder / "employeeList.xlsx"
         dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
-        self.import_checkAssetsOrEmployeesToSQL(df)
+
+        if dataEmployee.columns[0] == 'Name' and dataEmployee.columns[1] == 'EmployeeID':
+            if not all (np.where(pd.isnull(df))):
+                self.import_checkAssetsOrEmployeesToSQL(df)
+            else:
+                print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
+        else:
+            print('Please reformat excel into 2 columns "Name" and "EmployeeID"')
+
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************
@@ -400,7 +418,7 @@ class Admin_Interface(QWidget):
             return False
 
     def Employee_ID_Check(self, input):
-        check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
+        check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(input))
         if self.cursor.fetchone():
             print('This ID exists!')
@@ -499,7 +517,7 @@ class Admin_Interface(QWidget):
 
 
     def Asset_Check(self, AssetNum):
-        check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(AssetNum))
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(AssetNum))
@@ -591,9 +609,10 @@ class Admin_Interface(QWidget):
                 # if the asset ID already exists, it won't be imported to the lists or commited to SQL
                 if not self.Asset_Check(str(df.at[row, 'AssetID'])):
                     self.import_AssetList.append(df.at[row, 'AssetID'])
+                    self.import_AssetList.append(str(df.at[row, 'Type']))
 
                     #Commit employee ID to Event log as a new addition (code 42) "The answer to everything"
-                    self.import_commitAssetsToSQL(str(df.at[row, 'AssetID']))
+                    self.import_commitAssetsToSQL(str(df.at[row, 'AssetID']),str(df.at[row, 'Type']))
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     print("The Asset Number: "+ str(df.at[row, 'AssetID']) +" already exists in the database")
@@ -606,14 +625,19 @@ class Admin_Interface(QWidget):
 
     #New employee imported appends with status # 104
     def import_commitEmployeesToSQL(self, EmployeeID, EmployeeName):
-        insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, Status) VALUES(?,?);'''
+        insert_event_query = ''' INSERT INTO [Employee Table] (EmployeeID, Name) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
-        self.cursor.execute(insert_event_query, str(EmployeeID), '104')
+        self.cursor.execute(insert_event_query, str(EmployeeID), str(EmployeeName))
         self.cnxn.commit()
 
     # New asset imported appends with status #42
-    def import_commitAssetsToSQL(self, AssetID):
+    def import_commitAssetsToSQL(self, AssetID, Description):
         insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
         self.cursor.execute(insert_event_query, str(AssetID), '42')
+
+        insert_event_query = ''' INSERT INTO [Asset Table] (AssetID, Type) VALUES(?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(AssetID), str(Description))
+
         self.cnxn.commit()
