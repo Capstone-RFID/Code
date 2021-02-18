@@ -67,14 +67,16 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
+        server = "BIGACER"
+        database = 'BALKARAN09'
         # server = 'CKERR-THINKPAD'
         # database = 'BALKARAN09'
-        server = "BALKARAN09"
-        database = 'TEST'
+        # server = "BALKARAN09"
+        # database = 'TEST'
         # server = "Raymond-P1"
         # database = 'RCMP_RFID'
 
-        self.filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode') #change this to wherever your excel import docs are stashed
+        self.filePath = str(r'C:\Projects\Capstone_RFID\Code') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
@@ -380,7 +382,7 @@ class Admin_Interface(QWidget):
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
 
-        filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode')
+        filePath = str(r'C:\Projects\Capstone_RFID\Code')
 
         data_Folder = Path(filePath)
         employeeFile = data_Folder / "employeeList.xlsx"

@@ -454,9 +454,12 @@ if __name__ == "__main__":
         factory.addTagReportCallback(cb)
         reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
+        server = "BIGACER"
+        database = 'BALKARAN09'
+
         # define the server name and the database name
-        server = "BALKARAN09"
-        database = 'TEST'
+        # server = "BALKARAN09"
+        # database = 'TEST'
 
         # define the server name and the database name
         # server = "CKERR-THINKPAD"

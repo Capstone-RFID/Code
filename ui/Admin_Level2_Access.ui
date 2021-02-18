@@ -191,7 +191,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -412,7 +412,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -518,7 +518,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -769,7 +769,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <widget class="QPushButton" name="Edit_Search_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>246</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -799,7 +799,7 @@ QPushButton#Edit_Search_Button:pressed {
                 <widget class="QPushButton" name="Edit_Clear_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>246</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -829,7 +829,7 @@ QPushButton#Edit_Clear_Button:pressed {
                 <widget class="QPushButton" name="Edit_Commit_Edits_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>246</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -872,159 +872,7 @@ QPushButton#Edit_Commit_Edits_Button:pressed {
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
         <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="Create_Prompt_Label">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Enter asset info, then confirm new entry in local database</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <item>
-            <widget class="QPushButton" name="Import_ImportAssets_Button">
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Import_ImportAssets_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Import_ImportAssets_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Import Assets from Excel file</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="Import_ImportEmployees_Button">
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Import_ImportEmployees_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Import_ImportEmployees_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Import Employees from Excel file</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>88</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="Create_Clear_Fields_Button">
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Create_Clear_Fields_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Create_Clear_Fields_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Clear Fields</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="Create_Confirm_Entry_Button">
-             <property name="minimumSize">
-              <size>
-               <width>186</width>
-               <height>51</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton#Create_Confirm_Entry_Button {
-background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Create_Confirm_Entry_Button:pressed {
-    background-color: rgb(80, 80, 80);
-    border-style: inset;
-}</string>
-             </property>
-             <property name="text">
-              <string>Confirm Entry</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="2" column="1">
             <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
@@ -1108,6 +956,169 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
             </widget>
            </item>
           </layout>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QLabel" name="Create_Prompt_Label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Enter Tag # to associate with new or existing asset.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QPushButton" name="Import_ImportAssets_Button">
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Import_ImportAssets_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Import_ImportAssets_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Import Assets from Excel file</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Import_ImportEmployees_Button">
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Import_ImportEmployees_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Import_ImportEmployees_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Import Employees from Excel file</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>88</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Create_Clear_Fields_Button">
+             <property name="minimumSize">
+              <size>
+               <width>246</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Create_Clear_Fields_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Create_Clear_Fields_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Clear Fields</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Create_Confirm_Entry_Button">
+             <property name="minimumSize">
+              <size>
+               <width>246</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Create_Confirm_Entry_Button {
+background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Create_Confirm_Entry_Button:pressed {
+    background-color: rgb(80, 80, 80);
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Confirm New Asset/Tag Association</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Enter asset # and description, then hit confirm to create a new asset.</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
