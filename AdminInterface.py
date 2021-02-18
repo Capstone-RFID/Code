@@ -67,15 +67,16 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        server = "BIGACER"
+        #server = "BIGACER"
+        #database = 'BALKARAN09'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
-        # server = 'CKERR-THINKPAD'
-        # database = 'BALKARAN09'
         # server = "BALKARAN09"
         # database = 'TEST'
         # server = "Raymond-P1"
         # database = 'RCMP_RFID'
 
+        #Test Comment
         # fileLocation = r'C:\Projects\Capstone_RFID\Code'
         #
         # self.filePath = str(fileLocation) #change this to wherever your excel import docs are stashed
