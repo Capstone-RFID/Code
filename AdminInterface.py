@@ -76,7 +76,11 @@ class Admin_Interface(QWidget):
         # server = "Raymond-P1"
         # database = 'RCMP_RFID'
 
-        self.filePath = str(r'C:\Projects\Capstone_RFID\Code') #change this to wherever your excel import docs are stashed
+        # fileLocation = r'C:\Projects\Capstone_RFID\Code'
+        #
+        # self.filePath = str(fileLocation) #change this to wherever your excel import docs are stashed
+
+
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
@@ -359,7 +363,7 @@ class Admin_Interface(QWidget):
         #Just copy-paste that bad boy in here
 
 
-        data_Folder = Path(self.filePath)
+        data_Folder = Path.cwd()
 
         assetFile = data_Folder / "AssetList.xlsx"
 
@@ -382,9 +386,8 @@ class Admin_Interface(QWidget):
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
 
-        filePath = str(r'C:\Projects\Capstone_RFID\Code')
 
-        data_Folder = Path(filePath)
+        data_Folder = Path.cwd()
         employeeFile = data_Folder / "employeeList.xlsx"
         dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
