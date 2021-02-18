@@ -67,16 +67,19 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        server = "BIGACER"
+        #server = "BIGACER"
+        #database = 'BALKARAN09'
+        server = 'CKERR-THINKPAD'
         database = 'BALKARAN09'
-        # server = 'CKERR-THINKPAD'
-        # database = 'BALKARAN09'
         # server = "BALKARAN09"
         # database = 'TEST'
         # server = "Raymond-P1"
         # database = 'RCMP_RFID'
 
-        self.filePath = str(r'C:\Projects\Capstone_RFID\Code') #change this to wherever your excel import docs are stashed
+        #FileLocation = r'C:\Projects\Capstone_RFID\Code' #change this to wherever your excel import docs are stashed
+        FileLocation = r'C:\Users\cbker\Documents\GitHub\E-TekCode'
+
+        self.filePath = str(FileLocation)
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
@@ -382,9 +385,9 @@ class Admin_Interface(QWidget):
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
 
-        filePath = str(r'C:\Projects\Capstone_RFID\Code')
+        #filePath = str(Filepath)
 
-        data_Folder = Path(filePath)
+        data_Folder = Path(self.filePath)
         employeeFile = data_Folder / "employeeList.xlsx"
         dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
