@@ -153,7 +153,7 @@ class Admin_Interface(QWidget):
         self.ui.Search_Datetime_From.setDate(d)
         self.ui.Search_Datetime_To.setDate(d)
         self.ui.Search_Month_By_Month_Search_Dropdown.setCurrentIndex(0)
-        
+
         #clear search results in table
         self.search_clearTableResults()
 
@@ -271,10 +271,9 @@ class Admin_Interface(QWidget):
             #self.ui.Edit_Update_Status_Dropdown.setItemText(self.Admin_Interface.keys().index(str(AssetState[0][4])))
             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetState[0][4])
 
-
-
         else:
             print('Edit search did not find the asset!')
+        #print('memes')
 
     #def edit_deleteButtonClicked(self):
         #print('Edit Tab Delete Button Clicked')
