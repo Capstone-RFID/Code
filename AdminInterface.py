@@ -256,6 +256,9 @@ class Admin_Interface(QWidget):
 
     def edit_clearButtonClicked(self):
         print('Edit Tab Clear Button Clicked')
+
+    # Searches Asset Table to see if asset even exists, then searches
+    # for most recent event regarding that asset and who it's assigned to/what is it's status
     def edit_searchButtonClicked(self):
         print('Edit Tab Search Button Clicked')
         #self.edit_clearTableResults()
@@ -265,18 +268,20 @@ class Admin_Interface(QWidget):
             #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
             #self.edit_PopulateTable(EntryList)
             AssetState = self.Asset_List_Fetch(self.ui.Edit_Asset_Field.text())
-
-            Current_Status = AssetState[0][4]
+            # This updates the edit tab GUI fields w/ relevant info from the Event Log
+            #Current_Status = AssetState[0][4]
             self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
-            #self.ui.Edit_Update_Status_Dropdown.setItemText(self.Admin_Interface.keys().index(str(AssetState[0][4])))
+
             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetState[0][4])
 
         else:
             print('Edit search did not find the asset!')
-        #print('memes')
+
 
     #def edit_deleteButtonClicked(self):
         #print('Edit Tab Delete Button Clicked')
+
+
     def edit_commitButtonClicked(self):
         print('Edit Tab Commit Button Clicked')
         #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
