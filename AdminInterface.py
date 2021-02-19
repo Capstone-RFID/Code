@@ -67,10 +67,10 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        #server = "BIGACER"
-        #database = 'BALKARAN09'
-        server = 'CKERR-THINKPAD'
+        server = "BIGACER"
         database = 'BALKARAN09'
+        # server = 'CKERR-THINKPAD'
+        # database = 'BALKARAN09'
         # server = "BALKARAN09"
         # database = 'TEST'
         # server = "Raymond-P1"
