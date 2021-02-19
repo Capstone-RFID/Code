@@ -152,9 +152,11 @@ class Admin_Interface(QWidget):
         d = QDate(2021, 1, 1)
         self.ui.Search_Datetime_From.setDate(d)
         self.ui.Search_Datetime_To.setDate(d)
-
+        self.ui.Search_Month_By_Month_Search_Dropdown.setCurrentIndex(0)
+        
         #clear search results in table
         self.search_clearTableResults()
+
 
 
     #Generates list of assets in event log based on Employee ID search Filter
@@ -459,10 +461,60 @@ class Admin_Interface(QWidget):
             self.search_searchAssetButtonClicked()
         elif self.ui.Search_Asset_Numbers_Field.text() and self.ui.Search_Employee_ID_Entry_Field.text():
             self.search_searchAssetandIDButtonClicked()
-        elif (self.ui.Search_Datetime_From.text() != "1/1/2021 00:00") and (self.ui.Search_Datetime_To.text() != "1/1/2021 00:00"):
+        elif (self.ui.Search_Datetime_From.text() != "Jan 1 2021") and (self.ui.Search_Datetime_To.text() != "Jan 1 2021"):
             self.search_searchDateButtonClicked()
+        elif ((self.ui.Search_Month_By_Month_Search_Dropdown.currentText() !=  "")):
+            self.search_Find_Months()
         elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text() and (self.ui.Search_Datetime_From.text() == "1/1/2021 00:00") and (self.ui.Search_Datetime_To.text() == "1/1/2021 00:00"):
             print("No Asset or Employee ID or Date Range Entered!")
+
+    def search_Find_Months(self):
+
+        MonthList = self.search_FindMonthsSQLQuery()
+        if MonthList:
+            self.search_PopulateTable(MonthList)
+
+    def search_FindMonthsSQLQuery(self):
+        Month = self.ui.Search_Month_By_Month_Search_Dropdown.currentText()
+
+        if Month == 'Jan':
+            MonthSearch = '01'
+        elif Month == 'Feb':
+            MonthSearch = '02'
+        elif Month == 'Mar':
+            MonthSearch = '03'
+        elif Month == 'Apr':
+            MonthSearch = '04'
+        elif Month == 'May':
+            MonthSearch = '05'
+        elif Month == 'Jun':
+            MonthSearch = '06'
+        elif Month == 'Jul':
+            MonthSearch = '07'
+        elif Month == 'Aug':
+            MonthSearch = '08'
+        elif Month == 'Sep':
+            MonthSearch = '09'
+        elif Month == 'Oct':
+            MonthSearch = '10'
+        elif Month == 'Nov':
+            MonthSearch = '11'
+        elif Month == 'Dec':
+            MonthSearch = '12'
+
+
+
+
+        check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(MonthSearch))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(MonthSearch))
+            print("Found items for the specified month!")
+            return self.cursor.fetchall()
+        else:
+            print("No items found for the specified month")
+            return False
+
 
 
     def search_checkDateTimeBounds(self,LowerBound,UpperBound):

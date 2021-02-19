@@ -29,12 +29,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/RFID_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RFID_test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin_Level2_Access.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin_Level2_Access.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/Admin_Level2_Access.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Admin_Level2_Access.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,24 +310,6 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state width="1259" height="89" key="GridCell.Tab.0.bottom" timestamp="1613692648330">
-      <screen x="0" y="40" width="1280" height="680" />
-    </state>
-    <state width="1259" height="89" key="GridCell.Tab.0.bottom/0.40.1280.680/1920.0.2560.1040@0.40.1280.680" timestamp="1613692648330" />
-    <state width="1259" height="89" key="GridCell.Tab.0.center" timestamp="1613692648330">
-      <screen x="0" y="40" width="1280" height="680" />
-    </state>
-    <state width="1259" height="89" key="GridCell.Tab.0.center/0.40.1280.680/1920.0.2560.1040@0.40.1280.680" timestamp="1613692648330" />
-    <state width="1259" height="89" key="GridCell.Tab.0.left" timestamp="1613692648329">
-      <screen x="0" y="40" width="1280" height="680" />
-    </state>
-    <state width="1259" height="89" key="GridCell.Tab.0.left/0.40.1280.680/1920.0.2560.1040@0.40.1280.680" timestamp="1613692648329" />
-    <state width="1259" height="89" key="GridCell.Tab.0.right" timestamp="1613692648330">
-      <screen x="0" y="40" width="1280" height="680" />
-    </state>
-    <state width="1259" height="89" key="GridCell.Tab.0.right/0.40.1280.680/1920.0.2560.1040@0.40.1280.680" timestamp="1613692648330" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -339,6 +317,16 @@
           <url>file://$PROJECT_DIR$/readerTest.py</url>
           <line>394</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>511</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>514</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -351,9 +339,8 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="importType" />
-        <watch expression="row" />
-        <watch expression="df.at[row, 'EmployeeID']" />
+        <watch expression="self.ui.Search_Month_By_Month_Search_Dropdown.currentText()" />
+        <watch expression=" Month" />
       </configuration>
     </watches-manager>
   </component>
