@@ -125,6 +125,8 @@ def getEmployeeName(employeeID):
     name = cursor.fetchone()
     return name[0]
 
+
+
 class passwordWindow(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(passwordWindow, self).__init__(parent)
@@ -178,6 +180,30 @@ class mainWindow(QWidget):
         self.onlyInt = QtGui.QIntValidator()
         self.ui.Asset_ID_Input.setValidator(self.onlyInt)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
+
+    def alreadyCheckedOut(self,assetID):
+        status_check_query = '''SELECT TOP(1)
+                                     [Event Log Table].EMPLOYEEID,[Event Log Table].Status
+                                       FROM
+                                       [Event Log Table]
+                                       WHERE
+                                       [Event Log Table].AssetID = (?)
+                                       ORDER BY [Event Log Table].Entry DESC'''
+        cursor.execute(status_check_query, assetID)
+        state = cursor.fetchone()
+        flag = "broken"
+        if state == None:
+            flag = "gtg"
+        elif state[1] == "1":
+            flag = "gtg"
+        elif state[1] == "2":
+            qm = QtWidgets.QMessageBox()
+            response =  qm.question(self,'', "Asset is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?", qm.Yes | qm.No)
+            if response == qm.Yes:
+                flag = "gtg"
+            else:
+                flag ="discard"
+        return flag
 
     def adminButtonClicked(self):
         print('clicked admin')
@@ -284,28 +310,15 @@ class mainWindow(QWidget):
             self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
 
     def asset_enter_action(self):
-        status_check_query = '''SELECT TOP(1)
-                                   [Event Log Table].Status
-                                   FROM
-                                   [Event Log Table]
-                                   WHERE
-                                   [Event Log Table].AssetID = (?)
-                                   ORDER BY [Event Log Table].Entry DESC'''
         Asset = self.ui.Asset_ID_Input.text()
         # self.ItemEntry.append(Asset)
-        print('Asset Number:' + Asset)
+        # print('Asset Number:' + Asset)
         if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
             if Asset_Check(Asset):
                 self.ui.Check_Out_Box.setEnabled(False)
                 self.ui.Check_In_Box.setEnabled(False)
-                cursor.execute(status_check_query, Asset)
-                state = cursor.fetchall()
-                flag = False
-                if len(state) == 0:
-                    flag = True
-                elif state[0][0] == "2" or state[0][0] == "1":
-                    flag = True
-                if flag == True:
+                flag = self.alreadyCheckedOut(Asset)
+                if flag == "gtg":
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(
                             Asset):  # any(Asset in sublist for sublist in self.ItemEntry) == False:
                         self.insert_into_table(1, Asset)
@@ -314,15 +327,18 @@ class mainWindow(QWidget):
                         # self.StateEntry.append(self.ui.Employee_ID_Input.text())
                         # self.ui.New_Item_List.insertRow()
                         self.ui.Asset_ID_Input.clear()
-
                     else:
                         self.ui.Asset_ID_Input.clear()
                         self.timer.start(1000)
                         self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
+                ##decided to not check out an already checked out item
+                elif flag == "discard":
+                    self.ui.Asset_ID_Input.clear()
+                ##broken or something
                 else:
                     self.error_message("asset is not status 1 or 2")
                     self.ui.Asset_ID_Input.clear()
-                flag = False
+                flag = "broken"
             else:
                 self.error_message("Enter a valid Asset ID")
                 self.ui.Asset_ID_Input.clear()
@@ -455,16 +471,16 @@ if __name__ == "__main__":
         reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
         # define the server name and the database name
-        # server = "BALKARAN09"
-        # database = 'TEST'
+        server = "BALKARAN09"
+        database = 'TEST'
 
         # define the server name and the database name
         # server = "CKERR-THINKPAD"
         # database = 'BALKARAN09'
 
         # define the server name and the database name
-        server = "Raymond-P1"
-        database = 'RCMP_RFID'
+        # server = "Raymond-P1"
+        # database = 'RCMP_RFID'
 
         # define a connection string
         cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
