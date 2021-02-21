@@ -67,10 +67,10 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        server = "BIGACER"
-        database = 'BALKARAN09'
-        # server = 'CKERR-THINKPAD'
+        # server = "BIGACER"
         # database = 'BALKARAN09'
+        server = 'CKERR-THINKPAD'
+        database = 'BALKARAN09'
         # server = "BALKARAN09"
         # database = 'TEST'
         # server = "Raymond-P1"
@@ -272,7 +272,24 @@ class Admin_Interface(QWidget):
             #Current_Status = AssetState[0][4]
             self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
 
-            self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetState[0][4])
+            AssetStatus = AssetState[0][4]
+            if AssetStatus == '1':
+                AssetStatus_Dropdown = 'Checked In'
+            elif AssetStatus == '2':
+                AssetStatus_Dropdown = 'Checked Out'
+            if AssetStatus == '3':
+                AssetStatus_Dropdown = 'In Repair'
+            elif AssetStatus == '4':
+                 AssetStatus_Dropdown = 'Retired'
+            if AssetStatus == '5':
+                AssetStatus_Dropdown = 'Broken'
+            elif AssetStatus == '6':
+                 AssetStatus_Dropdown = 'New Item'
+            elif AssetStatus == '7':
+                AssetStatus_Dropdown = 'New Employee'
+
+
+            self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
 
         else:
             print('Edit search did not find the asset!')
