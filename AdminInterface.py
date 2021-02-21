@@ -256,6 +256,9 @@ class Admin_Interface(QWidget):
 
     def edit_clearButtonClicked(self):
         print('Edit Tab Clear Button Clicked')
+        self.ui.Edit_AssignTo_Field.setText('')
+        self.ui.Edit_Asset_Field.setText('')
+        self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
 
     # Searches Asset Table to see if asset even exists, then searches
     # for most recent event regarding that asset and who it's assigned to/what is it's status
@@ -267,7 +270,7 @@ class Admin_Interface(QWidget):
             #EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
             #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
             #self.edit_PopulateTable(EntryList)
-            AssetState = self.Asset_List_Fetch(self.ui.Edit_Asset_Field.text())
+            AssetState = self.edit_Asset_List_Fetch(self.ui.Edit_Asset_Field.text())
             # This updates the edit tab GUI fields w/ relevant info from the Event Log
             #Current_Status = AssetState[0][4]
             self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
@@ -287,10 +290,7 @@ class Admin_Interface(QWidget):
                  AssetStatus_Dropdown = 'New Item'
             elif AssetStatus == '7':
                 AssetStatus_Dropdown = 'New Employee'
-
-
             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
-
         else:
             print('Edit search did not find the asset!')
 
@@ -302,15 +302,37 @@ class Admin_Interface(QWidget):
     def edit_commitButtonClicked(self):
         print('Edit Tab Commit Button Clicked')
         #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
+        if self.ui.Edit_Update_Status_Dropdown.currentText() != '':
+            if self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked In':
+                AssetStatus_Dropdown = '1'
+            elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked Out':
+                AssetStatus_Dropdown = '2'
+            elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'In Repair':
+                AssetStatus_Dropdown = '3'
+            elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'Retired':
+                AssetStatus_Dropdown = '4'
+            elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken':
+                AssetStatus_Dropdown = '5'
+            elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Item':
+                AssetStatus_Dropdown = '6'
+            elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee':
+                AssetStatus_Dropdown = '7'
+            Edit_Employee = self.ui.Edit_AssignTo_Field.text()
+            Edit_Asset = self.ui.Edit_Asset_Field.text()
 
-        if (self.ui.Edit_Display_Results_Table.item(i, 0).text() != self.edit_AssetsInGUITable[i]) or (self.ui.Edit_Display_Results_Table.item(i, 1).text() != (self.edit_EmployeesInGUITable[i])) or (self.ui.Edit_Display_Results_Table.item(i, 4).text() != self.edit_StatusInGUITable[i]):
-            print(Edit_Asset_Fetched, Edit_Employee_Fetched)
             insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
             #Next two lines commit the edits present in the table
-            self.cursor.execute(insert_event_query, str(Edit_Employee_Fetched), str(Edit_Asset_Fetched),str(Edit_Status_Fetched))
+            self.cursor.execute(insert_event_query, str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
             self.cnxn.commit()
+
+            #clear fields after commit
+            self.ui.Edit_AssignTo_Field.setText('')
+            self.ui.Edit_Asset_Field.setText('')
+            self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+
         else:
-            print("Row "+ str(i + 1) + " has not been edited")
+            print("Please fill status field before committing")
+
 
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
@@ -624,6 +646,15 @@ class Admin_Interface(QWidget):
 
     def Asset_List_Fetch(self, AssetNum):
         check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetNum))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(AssetNum))
+            return self.cursor.fetchall()
+        else:
+            return False
+
+    def edit_Asset_List_Fetch(self, AssetNum):
+        check_query = '''SELECT top 1 * FROM [Event Log Table] WHERE (AssetID =  (?)) ORDER BY Timestamp DESC;'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(AssetNum))
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(AssetNum))
