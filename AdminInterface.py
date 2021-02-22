@@ -67,10 +67,10 @@ class Admin_Interface(QWidget):
 
         #For importing excel lists into SQL queries and inserts
         # define the server name and the database name
-        # server = "BIGACER"
-        # database = 'BALKARAN09'
-        server = 'CKERR-THINKPAD'
+        server = "BIGACER"
         database = 'BALKARAN09'
+        # server = 'CKERR-THINKPAD'
+        # database = 'BALKARAN09'
         # server = "BALKARAN09"
         # database = 'TEST'
         # server = "Raymond-P1"
@@ -256,6 +256,7 @@ class Admin_Interface(QWidget):
 
     def edit_clearButtonClicked(self):
         print('Edit Tab Clear Button Clicked')
+        self.ui.Edit_UI_Message_Prompt.setText('')
         self.ui.Edit_AssignTo_Field.setText('')
         self.ui.Edit_Asset_Field.setText('')
         self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
@@ -264,9 +265,13 @@ class Admin_Interface(QWidget):
     # for most recent event regarding that asset and who it's assigned to/what is it's status
     def edit_searchButtonClicked(self):
         print('Edit Tab Search Button Clicked')
+
+        self.ui.Edit_UI_Message_Prompt.setText('Searching...')
+
         #self.edit_clearTableResults()
         if self.Asset_Check(self.ui.Edit_Asset_Field.text()):
             print('Edit search found the asset!')
+            self.ui.Edit_UI_Message_Prompt.setText('Asset Found')
             #EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
             #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
             #self.edit_PopulateTable(EntryList)
@@ -293,6 +298,7 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
         else:
             print('Edit search did not find the asset!')
+            self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
 
 
     #def edit_deleteButtonClicked(self):
@@ -301,6 +307,7 @@ class Admin_Interface(QWidget):
 
     def edit_commitButtonClicked(self):
         print('Edit Tab Commit Button Clicked')
+        self.ui.Edit_UI_Message_Prompt.setText('Commiting...')
         #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
         if self.ui.Edit_Update_Status_Dropdown.currentText() != '':
             if self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked In':
@@ -324,7 +331,7 @@ class Admin_Interface(QWidget):
             #Next two lines commit the edits present in the table
             self.cursor.execute(insert_event_query, str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
             self.cnxn.commit()
-
+            self.ui.Edit_UI_Message_Prompt.setText('Changes Committed')
             #clear fields after commit
             self.ui.Edit_AssignTo_Field.setText('')
             self.ui.Edit_Asset_Field.setText('')
@@ -332,10 +339,12 @@ class Admin_Interface(QWidget):
 
         else:
             print("Please fill status field before committing")
+            self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
 
 
     def create_clearButtonClicked(self):
         print('Create Tab Clear Button Clicked')
+
         # Reset Asset and RFID Filters to empty values
         self.ui.Create_Asset_Num_Field.setText("")
         self.ui.Create_Asset_Description_Field.setText("")
