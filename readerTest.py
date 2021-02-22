@@ -249,8 +249,9 @@ class mainWindow(QWidget):
             if text not in self.RemovedItems:
                 self.RemovedItems.append(text)
             y = [x for x in self.eventEntry if text in x]
-            z = self.eventEntry.index(y[0])
-            del self.eventEntry[z]
+            if len(y)!=0:
+                z = self.eventEntry.index(y[0])
+                del self.eventEntry[z]
             self.ui.New_Item_List.removeRow(row)
         else:
             return
