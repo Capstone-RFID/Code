@@ -272,15 +272,18 @@ class mainWindow(QWidget):
             return
 
     def mark_assets(self):
-        row = self.ui.New_Item_List.currentRow()
-        text = self.ui.New_Item_List.item(row, 0).text()
-        if text not in self.markedList:
-            self.markedList.append(text)
-        y = [x for x in self.eventEntry if text in x]
-        z = self.eventEntry.index(y[0])
-        del self.eventEntry[z]
-        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(125, 125, 125))
-        self.ui.New_Item_List.clearSelection()
+        if len(self.ui.New_Item_List.selectedItems()) != 0:
+            row = self.ui.New_Item_List.currentRow()
+            text = self.ui.New_Item_List.item(row, 0).text()
+            if text not in self.markedList:
+                self.markedList.append(text)
+            y = [x for x in self.eventEntry if text in x]
+            z = self.eventEntry.index(y[0])
+            del self.eventEntry[z]
+            self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(125, 125, 125))
+            self.ui.New_Item_List.clearSelection()
+        else:
+            return
 
     def clear_lists(self):
         self.ui.New_Item_List.setRowCount(0)
