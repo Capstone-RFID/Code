@@ -296,32 +296,30 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_5.addLayout(self.horizontalLayout_5)
         self.gridLayout_4 = QtWidgets.QGridLayout()
         self.gridLayout_4.setObjectName("gridLayout_4")
-        spacerItem13 = QtWidgets.QSpacerItem(298, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem13, 0, 1, 1, 1)
         self.gridLayout_3 = QtWidgets.QGridLayout()
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.gridLayout_2 = QtWidgets.QGridLayout()
         self.gridLayout_2.setObjectName("gridLayout_2")
+        spacerItem13 = QtWidgets.QSpacerItem(40, 25, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem13, 1, 0, 1, 1)
         spacerItem14 = QtWidgets.QSpacerItem(40, 25, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem14, 1, 0, 1, 1)
-        spacerItem15 = QtWidgets.QSpacerItem(40, 25, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem15, 1, 2, 1, 1)
+        self.gridLayout_2.addItem(spacerItem14, 1, 2, 1, 1)
         self.Edit_Update_Status_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Update_Status_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Update_Status_Label.setObjectName("Edit_Update_Status_Label")
         self.gridLayout_2.addWidget(self.Edit_Update_Status_Label, 4, 0, 1, 1)
-        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem16, 3, 0, 1, 1)
-        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem17, 3, 2, 1, 1)
-        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem18, 5, 0, 1, 1)
         self.Edit_Asset_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Asset_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Asset_Label.setObjectName("Edit_Asset_Label")
         self.gridLayout_2.addWidget(self.Edit_Asset_Label, 0, 0, 1, 1)
+        spacerItem15 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem15, 3, 2, 1, 1)
+        spacerItem16 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem16, 3, 0, 1, 1)
+        spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem17, 5, 0, 1, 1)
         self.Edit_Asset_Field = QtWidgets.QLineEdit(self.Edit_Tab)
         self.Edit_Asset_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
@@ -345,17 +343,17 @@ class Ui_Admin_Interface(object):
         self.Edit_Update_Status_Dropdown.addItem("")
         self.Edit_Update_Status_Dropdown.addItem("")
         self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 4, 2, 1, 1)
-        self.Edit_Assign_To_Label = QtWidgets.QLabel(self.Edit_Tab)
-        self.Edit_Assign_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Edit_Assign_To_Label.setObjectName("Edit_Assign_To_Label")
-        self.gridLayout_2.addWidget(self.Edit_Assign_To_Label, 2, 0, 1, 1)
         self.Edit_AssignTo_Field = QtWidgets.QLineEdit(self.Edit_Tab)
         self.Edit_AssignTo_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(78, 78, 78);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_AssignTo_Field.setObjectName("Edit_AssignTo_Field")
         self.gridLayout_2.addWidget(self.Edit_AssignTo_Field, 2, 2, 1, 1)
+        self.Edit_Assign_To_Label = QtWidgets.QLabel(self.Edit_Tab)
+        self.Edit_Assign_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Edit_Assign_To_Label.setObjectName("Edit_Assign_To_Label")
+        self.gridLayout_2.addWidget(self.Edit_Assign_To_Label, 2, 0, 1, 1)
         self.Edit_Search_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Search_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Search_Button.setStyleSheet("QPushButton#Edit_Search_Button {\n"
@@ -413,6 +411,14 @@ class Ui_Admin_Interface(object):
 "}")
         self.Edit_Commit_Edits_Button.setObjectName("Edit_Commit_Edits_Button")
         self.gridLayout_2.addWidget(self.Edit_Commit_Edits_Button, 7, 2, 1, 1)
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem18, 4, 5, 1, 1)
+        self.label_3 = QtWidgets.QLabel(self.Edit_Tab)
+        self.label_3.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 14pt \"MS Shell Dlg 2\";")
+        self.label_3.setText("")
+        self.label_3.setObjectName("label_3")
+        self.gridLayout_2.addWidget(self.label_3, 6, 5, 1, 1)
         self.gridLayout_3.addLayout(self.gridLayout_2, 0, 0, 2, 1)
         self.gridLayout_4.addLayout(self.gridLayout_3, 0, 0, 1, 1)
         self.verticalLayout_5.addLayout(self.gridLayout_4)
@@ -580,7 +586,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(1)
+        self.Admin_Select.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):

@@ -24,7 +24,7 @@
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <property name="iconSize">
       <size>
@@ -693,19 +693,6 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="0" column="1">
-            <spacer name="horizontalSpacer_20">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>298</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="0" column="0">
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0" rowspan="2">
@@ -747,8 +734,19 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <spacer name="horizontalSpacer_14">
+               <item row="0" column="0">
+                <widget class="QLabel" name="Edit_Asset_Label">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Asset #:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <spacer name="horizontalSpacer_15">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -760,8 +758,8 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </spacer>
                </item>
-               <item row="3" column="2">
-                <spacer name="horizontalSpacer_15">
+               <item row="3" column="0">
+                <spacer name="horizontalSpacer_14">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
@@ -785,17 +783,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="Edit_Asset_Label">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>Asset #:</string>
-                 </property>
-                </widget>
                </item>
                <item row="0" column="2">
                 <widget class="QLineEdit" name="Edit_Asset_Field">
@@ -861,6 +848,15 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </item>
                 </widget>
                </item>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="Edit_AssignTo_Field">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                </widget>
+               </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="Edit_Assign_To_Label">
                  <property name="styleSheet">
@@ -869,15 +865,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                  <property name="text">
                   <string>Assign To:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <widget class="QLineEdit" name="Edit_AssignTo_Field">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </widget>
                </item>
@@ -968,6 +955,30 @@ QPushButton#Edit_Commit_Edits_Button:pressed {
                  </property>
                  <property name="text">
                   <string>Commit Edits</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="5">
+                <spacer name="horizontalSpacer_18">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="6" column="5">
+                <widget class="QLabel" name="label_3">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string/>
                  </property>
                 </widget>
                </item>
