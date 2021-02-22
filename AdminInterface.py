@@ -168,6 +168,7 @@ class Admin_Interface(QWidget):
         if self.Employee_ID_Check(EmployeeNum):
             EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
             self.search_PopulateTable(EmployeeAssetList)
+            #self.ui.Search_UI_Message_Prompt.setText('Found Employee ID')
     # Generates list of EmployeeID in event log based on Assets in search Filter
 
     #Checks to see if entered asset# exists in asset table, populates table w/ query results if it is
@@ -207,7 +208,7 @@ class Admin_Interface(QWidget):
 
     def search_printPDFButtonClicked(self):
         print('Search Tab Print Button Clicked')
-
+        self.ui.Search_UI_Message_Prompt.setText('Printing to PDF...')
 
         #calling the qt object constantly was long and unwieldy, just call it w and move on
         #w = self.ui.Search_Display_Results_Table
@@ -251,6 +252,8 @@ class Admin_Interface(QWidget):
         doc.setHtml(html)
         doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
         doc.print_(printer)
+
+        self.ui.Search_UI_Message_Prompt.setText('Successful PDF Print!')
 
 
 
@@ -519,6 +522,7 @@ class Admin_Interface(QWidget):
             self.search_Find_Months()
         elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text() and (self.ui.Search_Datetime_From.text() == "1/1/2021 00:00") and (self.ui.Search_Datetime_To.text() == "1/1/2021 00:00"):
             print("No Asset or Employee ID or Date Range Entered!")
+            self.ui.Search_UI_Message_Prompt.setText('Specify Search Filters!')
 
     def search_Find_Months(self):
 
@@ -565,6 +569,7 @@ class Admin_Interface(QWidget):
             return self.cursor.fetchall()
         else:
             print("No items found for the specified month")
+            self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
             return False
 
 
@@ -683,6 +688,7 @@ class Admin_Interface(QWidget):
                 return self.cursor.fetchall()
             else:
                 print('This employee has not used the specified asset')
+                self.ui.Search_UI_Message_Prompt.setText('This asset not used by employee')
                 return False
 
     #Check what dataset we're dealing with and whether it already exists or not
