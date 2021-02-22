@@ -24,7 +24,7 @@
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -460,7 +460,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="Search_Month_by_Month_Label">
                <property name="styleSheet">
                 <string notr="true">color: rgb(255, 255, 255);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
@@ -548,6 +548,17 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  <string>Dec</string>
                 </property>
                </item>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QLabel" name="Search_UI_Message_Prompt">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
               </widget>
              </item>
             </layout>
@@ -1090,6 +1101,23 @@ QPushButton#Import_ImportEmployees_Button:pressed {
             </spacer>
            </item>
            <item>
+            <widget class="QLabel" name="Create_UI_Message_Prompt">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>51</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
@@ -1153,6 +1181,32 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
          </item>
          <item row="1" column="0">
           <layout class="QGridLayout" name="gridLayout_5">
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="Create_Asset_Description_Field">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(78, 78, 78);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="Create_Asset_Description_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Asset Description:</string>
+             </property>
+            </widget>
+           </item>
            <item row="2" column="1">
             <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
              <property name="minimumSize">
@@ -1205,32 +1259,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(78, 78, 78);
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="Create_Asset_Description_Field">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="Create_Asset_Description_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asset Description:</string>
              </property>
             </widget>
            </item>

@@ -197,11 +197,11 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Asset_Numbers_Field.setObjectName("Search_Asset_Numbers_Field")
         self.gridLayout.addWidget(self.Search_Asset_Numbers_Field, 7, 1, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.Search_Tab)
-        self.label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.Search_Month_by_Month_Label = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_Month_by_Month_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 3, 0, 1, 1)
+        self.Search_Month_by_Month_Label.setObjectName("Search_Month_by_Month_Label")
+        self.gridLayout.addWidget(self.Search_Month_by_Month_Label, 3, 0, 1, 1)
         self.Search_Month_By_Month_Search_Dropdown = QtWidgets.QComboBox(self.Search_Tab)
         self.Search_Month_By_Month_Search_Dropdown.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Month_By_Month_Search_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -223,6 +223,12 @@ class Ui_Admin_Interface(object):
         self.Search_Month_By_Month_Search_Dropdown.addItem("")
         self.Search_Month_By_Month_Search_Dropdown.addItem("")
         self.gridLayout.addWidget(self.Search_Month_By_Month_Search_Dropdown, 3, 1, 1, 1)
+        self.Search_UI_Message_Prompt = QtWidgets.QLabel(self.Search_Tab)
+        self.Search_UI_Message_Prompt.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 14pt \"MS Shell Dlg 2\";")
+        self.Search_UI_Message_Prompt.setText("")
+        self.Search_UI_Message_Prompt.setObjectName("Search_UI_Message_Prompt")
+        self.gridLayout.addWidget(self.Search_UI_Message_Prompt, 9, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout)
         self.Search_Display_Results_Table = QtWidgets.QTableWidget(self.Search_Tab)
         self.Search_Display_Results_Table.setStyleSheet("background-color: rgb(78, 78, 78);")
@@ -477,6 +483,13 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_8.addWidget(self.Import_ImportEmployees_Button)
         spacerItem20 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem20)
+        self.Create_UI_Message_Prompt = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_UI_Message_Prompt.setMinimumSize(QtCore.QSize(0, 51))
+        self.Create_UI_Message_Prompt.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 14pt \"MS Shell Dlg 2\";")
+        self.Create_UI_Message_Prompt.setText("")
+        self.Create_UI_Message_Prompt.setObjectName("Create_UI_Message_Prompt")
+        self.verticalLayout_8.addWidget(self.Create_UI_Message_Prompt)
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
@@ -518,6 +531,18 @@ class Ui_Admin_Interface(object):
         self.gridLayout_6.addLayout(self.verticalLayout_8, 1, 1, 1, 1)
         self.gridLayout_5 = QtWidgets.QGridLayout()
         self.gridLayout_5.setObjectName("gridLayout_5")
+        self.Create_Asset_Description_Field = QtWidgets.QLineEdit(self.Create_Tab)
+        self.Create_Asset_Description_Field.setMinimumSize(QtCore.QSize(0, 25))
+        self.Create_Asset_Description_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: rgb(78, 78, 78);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Create_Asset_Description_Field.setObjectName("Create_Asset_Description_Field")
+        self.gridLayout_5.addWidget(self.Create_Asset_Description_Field, 1, 1, 1, 1)
+        self.Create_Asset_Description_Label = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_Asset_Description_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Create_Asset_Description_Label.setObjectName("Create_Asset_Description_Label")
+        self.gridLayout_5.addWidget(self.Create_Asset_Description_Label, 1, 0, 1, 1)
         self.Create_RFID_Tag_Field_3 = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_RFID_Tag_Field_3.setMinimumSize(QtCore.QSize(0, 25))
         self.Create_RFID_Tag_Field_3.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -543,18 +568,6 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_Asset_Num_Field.setObjectName("Create_Asset_Num_Field")
         self.gridLayout_5.addWidget(self.Create_Asset_Num_Field, 0, 1, 1, 1)
-        self.Create_Asset_Description_Field = QtWidgets.QLineEdit(self.Create_Tab)
-        self.Create_Asset_Description_Field.setMinimumSize(QtCore.QSize(0, 25))
-        self.Create_Asset_Description_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Description_Field.setObjectName("Create_Asset_Description_Field")
-        self.gridLayout_5.addWidget(self.Create_Asset_Description_Field, 1, 1, 1, 1)
-        self.Create_Asset_Description_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Asset_Description_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Description_Label.setObjectName("Create_Asset_Description_Label")
-        self.gridLayout_5.addWidget(self.Create_Asset_Description_Label, 1, 0, 1, 1)
         self.gridLayout_6.addLayout(self.gridLayout_5, 1, 0, 1, 1)
         self.verticalLayout_11.addLayout(self.gridLayout_6)
         self.Admin_Select.addTab(self.Create_Tab, "")
@@ -586,7 +599,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(2)
+        self.Admin_Select.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):
@@ -605,7 +618,7 @@ class Ui_Admin_Interface(object):
         self.Search_SearchAsset_Query_Button.setText(_translate("Admin_Interface", "Search"))
         self.Search_Datetime_From_Label.setText(_translate("Admin_Interface", "Date/Time From:"))
         self.Search_Filters_Title.setText(_translate("Admin_Interface", "Search Filters"))
-        self.label_2.setText(_translate("Admin_Interface", "Month by Month:"))
+        self.Search_Month_by_Month_Label.setText(_translate("Admin_Interface", "Month by Month:"))
         self.Search_Month_By_Month_Search_Dropdown.setItemText(1, _translate("Admin_Interface", "Jan"))
         self.Search_Month_By_Month_Search_Dropdown.setItemText(2, _translate("Admin_Interface", "Feb"))
         self.Search_Month_By_Month_Search_Dropdown.setItemText(3, _translate("Admin_Interface", "Mar"))
@@ -650,9 +663,9 @@ class Ui_Admin_Interface(object):
         self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "Import Employees from Excel file"))
         self.Create_Clear_Fields_Button.setText(_translate("Admin_Interface", "Clear Fields"))
         self.Create_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Confirm Entry"))
+        self.Create_Asset_Description_Label.setText(_translate("Admin_Interface", "Asset Description:"))
         self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset #:"))
         self.Create_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
-        self.Create_Asset_Description_Label.setText(_translate("Admin_Interface", "Asset Description:"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Create_Tab), _translate("Admin_Interface", "Create"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset #"))
