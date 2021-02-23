@@ -17,6 +17,7 @@ import pandas as pd
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
+from Error_Window import Ui_Error_Window
 import time
 
 from password_prompt import Ui_Dialog
@@ -131,6 +132,7 @@ def getEmployeeName(employeeID):
     return name[0]
 
 
+
 class alreadyChecked(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(alreadyChecked, self).__init__(parent)
@@ -148,6 +150,16 @@ class alreadyChecked(QtWidgets.QDialog):
     def returnFalse(self):
         self.reject()
 
+
+class Error_Window(QWidget):
+    def __init__(self):
+        super(Error_Window, self).__init__()
+        self.reactor = reactor
+        self.ui = Ui_Error_Window()
+        self.ui.setupUi(self)
+
+    def openError(self):
+        self.show()
 
 
 class passwordWindow(QtWidgets.QDialog):
@@ -171,6 +183,7 @@ class mainWindow(QWidget):
         super(mainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.error = Error_Window()
         self.admin = Admin_Interface()
         self.check = alreadyChecked()
         self.show()
@@ -328,10 +341,11 @@ class mainWindow(QWidget):
         self.clear_lists()
 
     def error_message(self, text):
-        error_dialog = QtWidgets.QErrorMessage()
-        error_dialog.showMessage(text)
-        error_dialog.setWindowTitle("Error")
-        error_dialog.exec_()
+        # error_dialog = QtWidgets.QErrorMessage()
+        # error_dialog.showMessage(text)
+        # error_dialog.setWindowTitle("Error")
+        # error_dialog.exec_()
+        self.error.openError()
         return
 
     def timer_timeout(self):
@@ -522,8 +536,8 @@ if __name__ == "__main__":
         # database = 'BALKARAN09'
 
         # define the server name and the database name
-        # server = "Raymond-P1"
-        # database = 'RCMP_RFID'
+        server = "Raymond-P1"
+        database = 'RCMP_RFID'
 
         # define a connection string
         cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
