@@ -313,11 +313,12 @@ class mainWindow(QWidget):
         if self.ui.Check_In_Box.isChecked():
             print('Check IN action')
             self.check_in_action()
-            self.clear_lists()
         elif self.ui.Check_Out_Box.isChecked():
             print('Check OUT action')
             self.check_out_action()
-            self.clear_lists()
+        else:
+            self.confirmation_msg([])
+        self.clear_lists()
 
     def cancel_button_clicked(self):
         self.ui.Employee_ID_Input.setReadOnly(False)
