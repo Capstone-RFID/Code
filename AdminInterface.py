@@ -533,29 +533,14 @@ class Admin_Interface(QWidget):
 
             self.ui.Search_UI_Message_Prompt.setText('Enter month OR date range')
 
-
+        #This also checks for whether we're searching employeeID's or Asset ID's in the SQL query
         elif(SearchMonthFlag):
 
             self.search_Find_Months()
 
-        # NOTE: Write 3 more functions for combining search fields with the date range
+        # This also checks for whether we're searching employeeID's or Asset ID's in the SQL query
         elif(YesDateRangeFlag):
-
-            #Just searching for a specific date range
-            if not EmployeeIdField and not AssetField:
-                self.search_searchDateButtonClicked()
-
-            #Searching for date range and Employee ID
-            elif EmployeeIdField and not AssetField:
-                self.search_searchDateButtonClicked()
-
-            #Searching for date range and Asset ID
-            elif AssetField and not EmployeeIdField:
-                self.search_searchDateButtonClicked()
-
-            # Searching for date range and Asset ID and Employee ID
-            elif AssetField and  EmployeeIdField:
-                self.search_searchDateButtonClicked()
+            self.search_searchDateButtonClicked()
 
         #If no date or month specified then we're just searching for combinations of assets and employees
         else:
@@ -691,15 +676,56 @@ class Admin_Interface(QWidget):
             return False
 
     def search_fetchDateTime(self,LowerBound,UpperBound):
-        check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
-        self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
-        if self.cursor.fetchone():
+        Asset = self.ui.Search_Asset_Numbers_Field.text()
+        EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
+
+        #Just doing a date range search
+        if(not Asset and not EmployeeID):
+
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
             self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
 
-            return self.cursor.fetchall()
-        else:
+                return self.cursor.fetchall()
+            else:
+                return False
 
-            return False
+        #Searching for assets within a date range
+        elif(Asset and not EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND AssetID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(Asset))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(Asset))
+
+                return self.cursor.fetchall()
+            else:
+                return False
+
+        # Searching for Employee ID's within a date range
+        elif (not Asset and EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND EmployeeID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID))
+
+                return self.cursor.fetchall()
+            else:
+                return False
+
+        # Searching for assets and employeeID within a date range
+        elif (Asset and EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND EmployeeID = (?) AND AssetID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID),str(Asset))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID),str(Asset))
+
+                return self.cursor.fetchall()
+            else:
+                return False
+
+
+
 
 
 
@@ -727,10 +753,27 @@ class Admin_Interface(QWidget):
             lastrow = self.ui.Search_Display_Results_Table.rowCount()
             self.ui.Search_Display_Results_Table.insertRow(lastrow)
 
+            AssetStatus = EntryList[i][4]
+            if AssetStatus == '1':
+                AssetStatus_Words = 'Checked In'
+            elif AssetStatus == '2':
+                AssetStatus_Words = 'Checked Out'
+            if AssetStatus == '3':
+                AssetStatus_Words = 'In Repair'
+            elif AssetStatus == '4':
+                AssetStatus_Words = 'Retired'
+            if AssetStatus == '5':
+                AssetStatus_Words = 'Broken'
+            elif AssetStatus == '6':
+                AssetStatus_Words = 'New Item'
+            elif AssetStatus == '7':
+                AssetStatus_Words = 'New Employee'
+
             # Show items on row in interface
             self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
             self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
             self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
+            self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(AssetStatus_Words)))
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
