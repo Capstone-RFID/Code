@@ -109,14 +109,15 @@ class Admin_Interface(QWidget):
         # ****************************************Create Tab Button(s)*********************************
         self.ui.Create_Clear_Fields_Button.clicked.connect(self.create_clearButtonClicked)
         self.ui.Create_Confirm_Entry_Button.clicked.connect(self.create_confirmEntryButtonClicked)
+        self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
+        self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
+        #
 
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
         # ****************************************Import Tab Button(s)*********************************
-        self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
-        self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
-        #
+
 
 
         # define a connection string
