@@ -22,7 +22,6 @@ import time
 from password_prompt import Ui_Dialog
 from alreadyCheckedOut import checkMsg
 
-
 Event_Log_Entry = []
 reading = "off"
 assetID = 0
@@ -61,11 +60,8 @@ def RFID(result):
                 reading = "on"
 
 
-
 def shutdown(factory):
     return factory.politeShutdown()
-
-
 
 
 ##work in progress
@@ -131,7 +127,7 @@ def getEmployeeName(employeeID):
     return name[0]
 
 
-class alreadyChecked(QtWidgets.QDialog):
+class alreadyChecked(QDialog):
     def __init__(self, parent=None):
         super(alreadyChecked, self).__init__(parent)
         self.setWindowModality(True)
@@ -141,13 +137,15 @@ class alreadyChecked(QtWidgets.QDialog):
         self.ui.select_reject.accepted.connect(self.returnTrue)
         self.ui.select_reject.rejected.connect(self.returnFalse)
         self.ui.ConfirmMessage.setText("")
+
     def returnTrue(self):
         self.accept()
+
     def open(self):
         self.show()
+
     def returnFalse(self):
         self.reject()
-
 
 
 class passwordWindow(QtWidgets.QDialog):
@@ -167,8 +165,8 @@ class passwordWindow(QtWidgets.QDialog):
 
 
 class mainWindow(QWidget):
-    def __init__(self):
-        super(mainWindow, self).__init__()
+    def __init__(self, parent=None):
+        super(mainWindow, self).__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.admin = Admin_Interface()
@@ -178,6 +176,7 @@ class mainWindow(QWidget):
         self.eventEntry = []
         self.RemovedItems = []
         self.markedList = []
+        self.alreadyCh = []
 
         # connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
@@ -228,13 +227,14 @@ class mainWindow(QWidget):
             #     flag = "gtg"
             # else:
             #     flag = "discard"
-
-            qm = QtWidgets.QMessageBox()
-            response =  qm.question(self,'', "Asset is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?", qm.Yes | qm.No)
-            if response == qm.Yes:
-                flag = "gtg"
-            else:
-                flag ="discard"
+            self.alreadyCh.append(assetID)
+            flag = "duplicate"
+            # qm = QtWidgets.QMessageBox()
+            # response =  qm.question(self,'', "Asset is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?", qm.Yes | qm.No)
+            # if response == qm.Yes:
+            #     flag = "gtg"
+            # else:
+            #     flag ="discard"
         return flag
 
     def adminButtonClicked(self):
@@ -243,13 +243,13 @@ class mainWindow(QWidget):
 
     def remove_action(self):
         if len(self.ui.New_Item_List.selectedItems()) != 0:
-        # if len(self.eventEntry) != 0: ###this is incorrect
+            # if len(self.eventEntry) != 0: ###this is incorrect
             row = self.ui.New_Item_List.currentRow()
             text = self.ui.New_Item_List.item(row, 0).text()
             if text not in self.RemovedItems:
                 self.RemovedItems.append(text)
             y = [x for x in self.eventEntry if text in x]
-            if len(y)!=0:
+            if len(y) != 0:
                 z = self.eventEntry.index(y[0])
                 del self.eventEntry[z]
             self.ui.New_Item_List.removeRow(row)
@@ -306,6 +306,7 @@ class mainWindow(QWidget):
         self.markedList.clear()
         self.existingList.clear()
         self.ui.Name_Label.clear()
+        self.alreadyCh.clear()
         self.ui.Remove_Button.setEnabled(False)
         return
 
@@ -360,7 +361,7 @@ class mainWindow(QWidget):
                 self.ui.Check_Out_Box.setEnabled(False)
                 self.ui.Check_In_Box.setEnabled(False)
                 flag = self.alreadyCheckedOut(Asset)
-                if flag == "gtg":
+                if flag == "gtg" or flag == "duplicate":
                     if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(
                             Asset):  # any(Asset in sublist for sublist in self.ItemEntry) == False:
                         self.insert_into_table(1, Asset)
@@ -369,15 +370,15 @@ class mainWindow(QWidget):
                         # self.StateEntry.append(self.ui.Employee_ID_Input.text())
                         # self.ui.New_Item_List.insertRow()
                         self.ui.Asset_ID_Input.clear()
-                    else:
-                        self.ui.Asset_ID_Input.clear()
-                        self.timer.start(1000)
-                        self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
+                    # else:
+                    #     self.ui.Asset_ID_Input.clear()
+                    #     self.timer.start(1000)
+                    #     self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
                 ##decided to not check out an already checked out item
                 elif flag == "discard":
                     self.ui.Asset_ID_Input.clear()
                 ##broken or something
-                else:
+                elif flag == "broken":
                     self.error_message("asset is not status 1 or 2")
                     self.ui.Asset_ID_Input.clear()
                 flag = "broken"
@@ -393,7 +394,7 @@ class mainWindow(QWidget):
                 asset not in self.RemovedItems) and self.eliminate_duplicates(asset) and (
                 self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
             flag = self.alreadyCheckedOut(asset)
-            if flag == "gtg":
+            if flag == "gtg" or flag == "duplicate":
                 self.eventEntry.append([self.ui.Employee_ID_Input.text(), asset])
                 self.insert_into_table(1, asset)
         # else:
@@ -413,7 +414,13 @@ class mainWindow(QWidget):
     def check_out_action(self):
         timestamp = datetime.datetime.now(tz=pytz.utc)
         timestamp = timestamp.astimezone(timezone('US/Pacific'))
+        for item in self.alreadyCh:
+            qm = QtWidgets.QMessageBox()
+            response = qm.question(self,'', "The Asset " + item +" is currently assigned to an Employee " + "\n\nDo you still wish to proceed?", qm.Yes | qm.No)
+            if response == qm.No:
+                self.eventEntry.remove([self.ui.Employee_ID_Input.text(), item])
         self.sql_call("2", timestamp)
+
 
     def confirmation_msg(self, entries):
         preString = ''
@@ -438,6 +445,7 @@ class mainWindow(QWidget):
 
     def sql_call(self, status, timestamp):
         confirmation_list = []
+
         if len(self.markedList) != 0:
             for item in self.markedList:
                 Event_Log_Entry.append(
@@ -453,6 +461,7 @@ class mainWindow(QWidget):
             # insert the data into the database
             cursor.execute(insert_event_query, eventValues)
         # commit the inserts
+
         cnxn.commit()
         self.confirmation_msg(confirmation_list)
         Event_Log_Entry.clear()
@@ -537,4 +546,5 @@ if __name__ == "__main__":
         r = Thread(target=reactor.run, args=(False,))
         r.daemon = True
         r.start()
-        Thread(target=sys.exit(app.exec_()), args=(False,)).start()
+
+        sys.exit(app.exec())

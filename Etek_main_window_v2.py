@@ -611,7 +611,6 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.Remove_Button, self.Employee_ID_Enter)
         MainWindow.setTabOrder(self.Employee_ID_Enter, self.Asset_ID_Enter)
         MainWindow.setTabOrder(self.Asset_ID_Enter, self.Cancel_Button)
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Form"))
@@ -634,3 +633,12 @@ class Ui_MainWindow(object):
         self.Remove_Button.setText(_translate("MainWindow", "-"))
         self.Mark_Button.setText(_translate("MainWindow", "!"))
         self.Admin_Button.setText(_translate("MainWindow", "Administrator Access"))
+
+if __name__ == "__main__":
+        import sys
+        app = QtWidgets.QApplication(sys.argv)
+        MainWindow = QtWidgets.QWidget()
+        ui = Ui_MainWindow()
+        ui.setupUi(MainWindow)
+        MainWindow.show()
+        sys.exit(app.exec_())
