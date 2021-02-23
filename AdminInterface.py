@@ -169,6 +169,8 @@ class Admin_Interface(QWidget):
         if self.Employee_ID_Check(EmployeeNum):
             EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
             self.search_PopulateTable(EmployeeAssetList)
+        else:
+            self.ui.Search_UI_Message_Prompt.setText('No matching employee ID found')
             #self.ui.Search_UI_Message_Prompt.setText('Found Employee ID')
     # Generates list of EmployeeID in event log based on Assets in search Filter
 
@@ -181,6 +183,8 @@ class Admin_Interface(QWidget):
         if self.Asset_Check(AssetNum):
             AssetList = self.Asset_List_Fetch(AssetNum)
             self.search_PopulateTable(AssetList)
+        else:
+            self.ui.Search_UI_Message_Prompt.setText('Asset not found')
 
     def search_searchAssetandIDButtonClicked(self):
         print('Search Tab Search Asset and ID Button Clicked')
@@ -190,7 +194,10 @@ class Admin_Interface(QWidget):
         if self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum):
            EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum, EmployeeNum)
            if EmployeeAndAssetList:
-            self.search_PopulateTable(EmployeeAndAssetList)
+               self.search_PopulateTable(EmployeeAndAssetList)
+           else:
+               self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
+
 
     def search_searchDateButtonClicked(self):
         print('Search Tab Search Date Button Clicked')
@@ -202,6 +209,8 @@ class Admin_Interface(QWidget):
             DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
             if DateList:
                 self.search_PopulateTable(DateList)
+        else:
+            self.ui.Search_UI_Message_Prompt.setText('No events found between these dates')
 
         #self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound)
         #print(self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound))
@@ -511,29 +520,87 @@ class Admin_Interface(QWidget):
 
         self.search_clearTableResults()
 
-        if self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text():
-            self.search_searchIDButtonClicked()
-        elif self.ui.Search_Asset_Numbers_Field.text() and not self.ui.Search_Employee_ID_Entry_Field.text():
-            self.search_searchAssetButtonClicked()
-        elif self.ui.Search_Asset_Numbers_Field.text() and self.ui.Search_Employee_ID_Entry_Field.text():
-            self.search_searchAssetandIDButtonClicked()
-        elif (self.ui.Search_Datetime_From.text() != "Jan 1 2021") and (self.ui.Search_Datetime_To.text() != "Jan 1 2021"):
-            self.search_searchDateButtonClicked()
-        elif ((self.ui.Search_Month_By_Month_Search_Dropdown.currentText() !=  "")):
+        #For ease of development, we're writing all the fields and boolean checks into local method variables
+        #Hopefully this is less of a headache to look at
+        YesDateRangeFlag = (self.ui.Search_Datetime_From.text() != "Jan 1 2021") or (self.ui.Search_Datetime_To.text() != "Jan 1 2021")
+        NoDateRangeFlag = (self.ui.Search_Datetime_From.text() == "Jan 1 2021") and (self.ui.Search_Datetime_To.text() == "Jan 1 2021")
+        SearchMonthFlag = (self.ui.Search_Month_By_Month_Search_Dropdown.currentText() !=  "")
+        EmployeeIdField = self.ui.Search_Employee_ID_Entry_Field.text()
+        AssetField = self.ui.Search_Asset_Numbers_Field.text()
+
+        #Prevents redundancy in search
+        if(YesDateRangeFlag and SearchMonthFlag):
+
+            self.ui.Search_UI_Message_Prompt.setText('Enter month OR date range')
+
+
+        elif(SearchMonthFlag):
+
             self.search_Find_Months()
-        elif not self.ui.Search_Employee_ID_Entry_Field.text() and not self.ui.Search_Asset_Numbers_Field.text() and (self.ui.Search_Datetime_From.text() == "1/1/2021 00:00") and (self.ui.Search_Datetime_To.text() == "1/1/2021 00:00"):
-            print("No Asset or Employee ID or Date Range Entered!")
-            self.ui.Search_UI_Message_Prompt.setText('Specify Search Filters!')
+
+        # NOTE: Write 3 more functions for combining search fields with the date range
+        elif(YesDateRangeFlag):
+
+            #Just searching for a specific date range
+            if not EmployeeIdField and not AssetField:
+                self.search_searchDateButtonClicked()
+
+            #Searching for date range and Employee ID
+            elif EmployeeIdField and not AssetField:
+                self.search_searchDateButtonClicked()
+
+            #Searching for date range and Asset ID
+            elif AssetField and not EmployeeIdField:
+                self.search_searchDateButtonClicked()
+
+            # Searching for date range and Asset ID and Employee ID
+            elif AssetField and  EmployeeIdField:
+                self.search_searchDateButtonClicked()
+
+        #If no date or month specified then we're just searching for combinations of assets and employees
+        else:
+            if EmployeeIdField and not AssetField:
+                self.search_searchIDButtonClicked()
+            elif AssetField and not EmployeeIdField:
+                self.search_searchAssetButtonClicked()
+            elif AssetField and EmployeeIdField:
+                self.search_searchAssetandIDButtonClicked()
+
+
+        # if EmployeeIdField and not AssetField and not SearchMonthFlag and NoDateRangeFlag:
+        #     self.search_searchIDButtonClicked()
+        #
+        # elif AssetField and not EmployeeIdField:
+        #     self.search_searchAssetButtonClicked()
+        #
+        # elif AssetField and EmployeeIdField:
+        #     self.search_searchAssetandIDButtonClicked()
+        #
+        # elif (SearchMonthFlag):
+        #     self.search_Find_Months()
+        #
+        # elif YesDateRangeFlag:
+        #     self.search_searchDateButtonClicked()
+        #
+        # elif not EmployeeIdField and not AssetField and NoDateRangeFlag:
+        #     print("No Asset or Employee ID or Date Range Entered!")
+        #     self.ui.Search_UI_Message_Prompt.setText('Specify Search Filters!')
+
 
     def search_Find_Months(self):
 
         MonthList = self.search_FindMonthsSQLQuery()
         if MonthList:
             self.search_PopulateTable(MonthList)
+        else:
+            self.ui.Search_UI_Message_Prompt.setText('No events found for that month')
 
     def search_FindMonthsSQLQuery(self):
         Month = self.ui.Search_Month_By_Month_Search_Dropdown.currentText()
+        Asset = self.ui.Search_Asset_Numbers_Field.text()
+        EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
 
+        #Translation Table
         if Month == 'Jan':
             MonthSearch = '01'
         elif Month == 'Feb':
@@ -560,20 +627,57 @@ class Admin_Interface(QWidget):
             MonthSearch = '12'
 
 
-
-
-        check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?));'''  # '?' is a placeholder
-        self.cursor.execute(check_query, str(MonthSearch))
-        if self.cursor.fetchone():
+        #Searching for month only
+        if(Month and not Asset and not EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?));'''  # '?' is a placeholder
             self.cursor.execute(check_query, str(MonthSearch))
-            print("Found items for the specified month!")
-            return self.cursor.fetchall()
-        else:
-            print("No items found for the specified month")
-            self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
-            return False
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(MonthSearch))
+                print("Found items for the specified month!")
+                return self.cursor.fetchall()
+            else:
+                print("No items found for the specified month")
+                self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                return False
 
+        #Searching for month and Asset
+        elif(Month and Asset and not EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND AssetID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(MonthSearch),str(Asset))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(MonthSearch),str(Asset))
+                print("Found items for the specified month!")
+                return self.cursor.fetchall()
+            else:
+                print("No items found for the specified month")
+                self.ui.Search_UI_Message_Prompt.setText('No specified assets found for this month')
+                return False
 
+        # Searching for month and EmployeeID
+        elif (Month and not Asset and EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND EmployeeID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID))
+                print("Found items for the specified month!")
+                return self.cursor.fetchall()
+            else:
+                print("No items found for the specified month")
+                self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                return False
+
+        # Searching for month and EmployeeID and Asset
+        elif (Month and Asset and EmployeeID):
+            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND EmployeeID = (?) AND AssetID = (?));'''  # '?' is a placeholder
+            self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID),str(Asset))
+            if self.cursor.fetchone():
+                self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID),str(Asset))
+                print("Found items for the specified month!")
+                return self.cursor.fetchall()
+            else:
+                print("No items found for the specified month")
+                self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                return False
 
     def search_checkDateTimeBounds(self,LowerBound,UpperBound):
         check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
