@@ -362,15 +362,18 @@ class Admin_Interface(QWidget):
         self.ui.Create_Asset_Num_Field.setText("")
         self.ui.Create_Asset_Description_Field.setText("")
         self.ui.Create_RFID_Tag_Field_3.setText("")
+        self.ui.Create_UI_Message_Prompt.setText('')
 
 
     #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
     def create_confirmEntryButtonClicked(self):
+        self.ui.Create_UI_Message_Prompt.setText('')
         if (self.ui.Create_Asset_Num_Field.text() != '') and (self.ui.Create_Asset_Description_Field.text() != ''):
             print('Create Tab Confirm Entry Button Clicked')
 
             if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(self.ui.Create_Asset_Num_Field.text())):
                 print('This asset ID already exists! ')
+                self.ui.Create_UI_Message_Prompt.setText('ID already exists')
 
                 # If the RFID number does not exist yet (and field is not blank) , then write it to the RFID table with existing asset
                 if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
@@ -388,13 +391,14 @@ class Admin_Interface(QWidget):
                     # Next two lines commit the edits present in the table
                     self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()), str(420))
                     self.cnxn.commit()
-
+                    self.ui.Create_UI_Message_Prompt.setText('New tag applied to asset')
 
 
                 #Edit this so it prints info somewhere so user can edit association
                 elif(self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != '')):
 
                     print('This tag already associated with another asset!')
+                    self.ui.Create_UI_Message_Prompt.setText('Tag associated w/ another asset')
             else:
                 # If the RFID number does not exist yet (and field is not blank) and the asset does not already exist, then write it to the RFID table
                 if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
@@ -419,14 +423,17 @@ class Admin_Interface(QWidget):
 
         else:
             print("Enter both an asset number and description!")
+            self.ui.Create_UI_Message_Prompt.setText('Enter asset # and description')
 
         # clear fields after commit
         self.ui.Create_Asset_Num_Field.setText("")
         self.ui.Create_Asset_Description_Field.setText("")
         self.ui.Create_RFID_Tag_Field_3.setText("")
 
+
     def Import_ImportAssets_ButtonClicked(self):
         print('Import Tab ImportAssets Button Clicked')
+        self.ui.Create_UI_Message_Prompt.setText('')
         # NOTE: for testing, change the path to the development folder (I think this changes between me (Jon) and Chris)
         #Just copy-paste that bad boy in here
 
@@ -445,14 +452,17 @@ class Admin_Interface(QWidget):
                 self.import_checkAssetsOrEmployeesToSQL(df)
             else:
                 print('Please reformat excel into 2 columns "AssetID" and "Type" with no empty cells')
+                self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
         else:
             print('Please reformat excel into 2 columns "AssetID" and "Type"')
+            self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
 
 
 
 
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
+        self.ui.Create_UI_Message_Prompt.setText('')
 
 
         data_Folder = Path.cwd()
@@ -465,8 +475,10 @@ class Admin_Interface(QWidget):
                 self.import_checkAssetsOrEmployeesToSQL(df)
             else:
                 print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
+                self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
         else:
             print('Please reformat excel into 2 columns "Name" and "EmployeeID"')
+            self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
 
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
@@ -517,7 +529,8 @@ class Admin_Interface(QWidget):
 
 
     def search_checkFieldInputs(self):
-
+        #Clear table and UI prompt everytime you run a search
+        self.ui.Search_UI_Message_Prompt.setText('')
         self.search_clearTableResults()
 
         #For ease of development, we're writing all the fields and boolean checks into local method variables
@@ -870,6 +883,7 @@ class Admin_Interface(QWidget):
                     #Commit employee ID to Event log as a new addition (code 104) "10-4 good buddy"
                     self.import_commitEmployeesToSQL(str(df.at[row, 'EmployeeID']),str(df.at[row, 'Name']))
                     # NOTE: We should have a GUI notification that shows the import was sucessful
+                    self.ui.Create_UI_Message_Prompt.setText('Employee(s) imported')
 
                 #NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
@@ -886,6 +900,7 @@ class Admin_Interface(QWidget):
 
                     #Commit employee ID to Event log as a new addition (code 42) "The answer to everything"
                     self.import_commitAssetsToSQL(str(df.at[row, 'AssetID']),str(df.at[row, 'Type']))
+                    self.ui.Create_UI_Message_Prompt.setText('Asset(s) imported')
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     print("The Asset Number: "+ str(df.at[row, 'AssetID']) +" already exists in the database")
