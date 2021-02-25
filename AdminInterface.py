@@ -12,6 +12,7 @@ import logging
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import re
 #import xlrd
 #from openpyxl import load_workbook
 
@@ -175,28 +176,29 @@ class Admin_Interface(QWidget):
     # Generates list of EmployeeID in event log based on Assets in search Filter
 
     #Checks to see if entered asset# exists in asset table, populates table w/ query results if it is
-    def search_searchAssetButtonClicked(self):
+    def search_searchAssetButtonClicked(self, AssetInputs):
         print('Search Tab Search Asset Button Clicked')
-        AssetNum = self.ui.Search_Asset_Numbers_Field.text()
+        #AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+        for AssetNum in AssetInputs:
+            if self.Asset_Check(AssetNum):
+                AssetList = self.Asset_List_Fetch(AssetNum)
+                self.search_PopulateTable(AssetList)
+            else:
+                self.ui.Search_UI_Message_Prompt.setText('Asset not found')
 
-        if self.Asset_Check(AssetNum):
-            AssetList = self.Asset_List_Fetch(AssetNum)
-            self.search_PopulateTable(AssetList)
-        else:
-            self.ui.Search_UI_Message_Prompt.setText('Asset not found')
-
-    def search_searchAssetandIDButtonClicked(self):
+    def search_searchAssetandIDButtonClicked(self,AssetString):
         print('Search Tab Search Asset and ID Button Clicked')
         AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
 
-        if self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum):
-           EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum, EmployeeNum)
-           if EmployeeAndAssetList:
-               self.search_PopulateTable(EmployeeAndAssetList)
-           else:
-               self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
+        for AssetNum in AssetString:
+            if self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum):
+               EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum, EmployeeNum)
+               if EmployeeAndAssetList:
+                   self.search_PopulateTable(EmployeeAndAssetList)
+               else:
+                   self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
 
 
     def search_searchDateButtonClicked(self):
@@ -541,6 +543,9 @@ class Admin_Interface(QWidget):
         EmployeeIdField = self.ui.Search_Employee_ID_Entry_Field.text()
         AssetField = self.ui.Search_Asset_Numbers_Field.text()
 
+        AssetList = self.checkMultiItemsCommas(AssetField)
+
+
         #Prevents redundancy in search
         if(YesDateRangeFlag and SearchMonthFlag):
 
@@ -560,9 +565,9 @@ class Admin_Interface(QWidget):
             if EmployeeIdField and not AssetField:
                 self.search_searchIDButtonClicked()
             elif AssetField and not EmployeeIdField:
-                self.search_searchAssetButtonClicked()
+                self.search_searchAssetButtonClicked(AssetList)
             elif AssetField and EmployeeIdField:
-                self.search_searchAssetandIDButtonClicked()
+                self.search_searchAssetandIDButtonClicked(AssetList)
 
 
         # if EmployeeIdField and not AssetField and not SearchMonthFlag and NoDateRangeFlag:
@@ -583,6 +588,12 @@ class Admin_Interface(QWidget):
         # elif not EmployeeIdField and not AssetField and NoDateRangeFlag:
         #     print("No Asset or Employee ID or Date Range Entered!")
         #     self.ui.Search_UI_Message_Prompt.setText('Specify Search Filters!')
+
+    #This method uses Regex to separate a string of #'s separated by commas into a list that we can put into
+    #our search and populate table methods.  This also ignores whitespace to allow more robust valid inputs
+    def checkMultiItemsCommas(self, StringWithCommas):
+        return(re.findall(r'[^,\s]+', StringWithCommas))
+
 
 
     def search_Find_Months(self):
