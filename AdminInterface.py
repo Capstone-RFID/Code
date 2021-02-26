@@ -23,6 +23,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
+import ConfigInfo
+
 
 import openpyxl
 
@@ -65,15 +67,6 @@ class Admin_Interface(QWidget):
         self.edit_EmployeesInGUITable = []
         self.edit_StatusInGUITable = []
 
-        #For importing excel lists into SQL queries and inserts
-        # define the server name and the database name
-        # server = 'CKERR-THINKPAD'
-        # database = 'BALKARAN09'
-        server = "BALKARAN09"
-        database = 'TEST'
-        # server = "Raymond-P1"
-        # database = 'RCMP_RFID'
-
         self.filePath = str(r'C:\Users\cbker\Documents\GitHub\E-TekCode') #change this to wherever your excel import docs are stashed
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
@@ -112,7 +105,27 @@ class Admin_Interface(QWidget):
         #
 
 
-        # define a connection string
+        # # define a connection string
+        # self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
+        #                                 SERVER=' + server + ';\
+        #                                   DATABASE=' + database + ';\
+        #                                 Trusted_Connection=yes;')
+
+        # # create the connection cursor as a private variable
+        # self.cursor = self.cnxn.cursor()
+
+    # open up the admin window from the button on main window
+    def openAdmin(self, s, d):
+        self.show()
+        #set default tab on window opening to home tab
+        self.ui.Admin_Select.setCurrentIndex(0)
+        server = s
+        database = d
+        #Set default datetime values to show admin users required format for input
+        d = QDate(2021, 1, 1)
+        self.ui.Search_Datetime_From.setDate(d)
+        self.ui.Search_Datetime_To.setDate(d)
+         # define a connection string
         self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
                                         SERVER=' + server + ';\
                                           DATABASE=' + database + ';\
@@ -120,17 +133,6 @@ class Admin_Interface(QWidget):
 
         # create the connection cursor as a private variable
         self.cursor = self.cnxn.cursor()
-
-    # open up the admin window from the button on main window
-    def openAdmin(self):
-        self.show()
-        #set default tab on window opening to home tab
-        self.ui.Admin_Select.setCurrentIndex(0)
-
-        #Set default datetime values to show admin users required format for input
-        d = QDate(2021, 1, 1)
-        self.ui.Search_Datetime_From.setDate(d)
-        self.ui.Search_Datetime_To.setDate(d)
 
 
     #****************************************Class Methods for Tab Button(s)*********************************

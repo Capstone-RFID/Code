@@ -17,16 +17,20 @@ import pandas as pd
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
+import ConfigInfo
 import time
 
 from password_prompt import Ui_Dialog
 from alreadyCheckedOut import checkMsg
+from configparser import ConfigParser
 
 Event_Log_Entry = []
 reading = "off"
 assetID = 0
 errorFlag = 0
 taglist = []
+global server 
+global database
 
 
 def cb(tagReport):
@@ -169,6 +173,7 @@ class mainWindow(QWidget):
         super(mainWindow, self).__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        global server, database
         self.admin = Admin_Interface()
         self.check = alreadyChecked()
         self.show()
@@ -239,7 +244,7 @@ class mainWindow(QWidget):
 
     def adminButtonClicked(self):
         print('clicked admin')
-        self.admin.openAdmin()
+        self.admin.openAdmin(server, database)
 
     def remove_action(self):
         if len(self.ui.New_Item_List.selectedItems()) != 0:
@@ -523,8 +528,16 @@ if __name__ == "__main__":
         reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
         # define the server name and the database name
-        server = "BALKARAN09"
-        database = 'TEST'
+        config = ConfigParser()
+        config.read('config.ini')
+        global server, database
+        server = config.get('database_info', 'server')
+        database = config.get('database_info','database')
+        print(server)
+        print(database)
+
+        # server = "BALKARAN09"
+        # database = 'TEST'
 
         # define the server name and the database name
         # server = "CKERR-THINKPAD"
