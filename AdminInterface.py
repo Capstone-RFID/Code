@@ -103,16 +103,6 @@ class Admin_Interface(QWidget):
         self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
         #
 
-
-        # # define a connection string
-        # self.cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
-        #                                 SERVER=' + server + ';\
-        #                                   DATABASE=' + database + ';\
-        #                                 Trusted_Connection=yes;')
-
-        # # create the connection cursor as a private variable
-        # self.cursor = self.cnxn.cursor()
-
     # open up the admin window from the button on main window
     def openAdmin(self, s, d):
         self.show()
