@@ -169,11 +169,11 @@ class Admin_Interface(QWidget):
                 AssetList = self.Asset_List_Fetch(AssetNum)
                 self.search_PopulateTable(AssetList)
             else:
-                self.ui.Search_UI_Message_Prompt.setText('Asset not found')
+                self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
 
     def search_searchAssetandIDButtonClicked(self,AssetString):
         print('Search Tab Search Asset and ID Button Clicked')
-        AssetNum = self.ui.Search_Asset_Numbers_Field.text()
+        #AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
 
         for AssetNum in AssetString:
@@ -183,6 +183,11 @@ class Admin_Interface(QWidget):
                    self.search_PopulateTable(EmployeeAndAssetList)
                else:
                    self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
+
+            elif(not self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum)):
+                self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+            elif(not self.Employee_ID_Check(EmployeeNum)):
+                self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
 
 
     def search_searchDateButtonClicked(self):
