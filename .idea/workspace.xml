@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Etek_main_window_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Etek_main_window_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -381,8 +383,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/readerTest.py</url>
-          <line>394</line>
-          <option name="timeStamp" value="9" />
+          <line>224</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -398,6 +400,10 @@
         <watch expression="importType" />
         <watch expression="row" />
         <watch expression="df.at[row, 'EmployeeID']" />
+        <watch expression="y" />
+        <watch expression="z" />
+        <watch expression="df.at[row, 'EmployeeID']" />
+        <watch expression="self.eventEntry" />
       </configuration>
     </watches-manager>
   </component>
