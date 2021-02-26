@@ -284,6 +284,10 @@ class Admin_Interface(QWidget):
             #Current_Status = AssetState[0][4]
             self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
 
+            #Query the name of employee using the asset from the employee table
+            EmployeeName = self.edit_FetchNameViaID(AssetState[0][2])
+            self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName[0])
+
             AssetStatus = AssetState[0][4]
             if AssetStatus == '1':
                 AssetStatus_Dropdown = 'Checked In'
@@ -304,9 +308,16 @@ class Admin_Interface(QWidget):
             print('Edit search did not find the asset!')
             self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
 
-
-    #def edit_deleteButtonClicked(self):
-        #print('Edit Tab Delete Button Clicked')
+    def edit_FetchNameViaID(self, EmployeeID):
+        #This should only ever return one result because the EmployeeID is the primary key of this table
+        check_query = '''SELECT Name FROM [Employee Table] WHERE (EmployeeID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(EmployeeID))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(EmployeeID))
+            return self.cursor.fetchone()
+        else:
+            self.ui.Edit_UI_Message_Prompt.setText('Unknown Employee ID')
+            return False
 
 
     def edit_commitButtonClicked(self):
