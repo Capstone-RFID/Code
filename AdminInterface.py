@@ -606,8 +606,12 @@ class Admin_Interface(QWidget):
 
     def search_FindMonthsSQLQuery(self):
         Month = self.ui.Search_Month_By_Month_Search_Dropdown.currentText()
-        Asset = self.ui.Search_Asset_Numbers_Field.text()
+
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
+
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
+
+        QueryList = [] #empty list for appending queries
 
         #Translation Table
         if Month == 'Jan':
@@ -636,57 +640,73 @@ class Admin_Interface(QWidget):
             MonthSearch = '12'
 
 
-        #Searching for month only
-        if(Month and not Asset and not EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(MonthSearch))
-            if self.cursor.fetchone():
+        #if AssetList is empty (not searching for assets)
+        if not AssetList:
+            # Searching for month only
+            if(Month and not EmployeeID):
+                check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?));'''  # '?' is a placeholder
                 self.cursor.execute(check_query, str(MonthSearch))
-                print("Found items for the specified month!")
-                return self.cursor.fetchall()
-            else:
-                print("No items found for the specified month")
-                self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
-                return False
+                if self.cursor.fetchone():
+                    self.cursor.execute(check_query, str(MonthSearch))
+                    print("Found items for the specified month!")
+                    return self.cursor.fetchall()
+                else:
+                    print("No items found for the specified month")
+                    self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                    return False
+            # Searching for month and EmployeeID
+            elif (Month and EmployeeID):
+                check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND EmployeeID = (?));'''  # '?' is a placeholder
+                self.cursor.execute(check_query, str(MonthSearch), str(EmployeeID))
+                if self.cursor.fetchone():
+                    self.cursor.execute(check_query, str(MonthSearch), str(EmployeeID))
+                    print("Found items for the specified month!")
+                    return self.cursor.fetchall()
+                else:
+                    print("No items found for the specified month")
+                    self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                    return False
 
-        #Searching for month and Asset
-        elif(Month and Asset and not EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND AssetID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(MonthSearch),str(Asset))
-            if self.cursor.fetchone():
+        for Asset in AssetList:
+            #Searching for month and Asset
+            if(Month and Asset and not EmployeeID):
+                check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND AssetID = (?));'''  # '?' is a placeholder
                 self.cursor.execute(check_query, str(MonthSearch),str(Asset))
-                print("Found items for the specified month!")
-                return self.cursor.fetchall()
-            else:
-                print("No items found for the specified month")
-                self.ui.Search_UI_Message_Prompt.setText('No specified assets found for this month')
-                return False
+                if self.cursor.fetchone():
+                    self.cursor.execute(check_query, str(MonthSearch),str(Asset))
+                    print("Found items for the specified month!")
 
-        # Searching for month and EmployeeID
-        elif (Month and not Asset and EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND EmployeeID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID))
-            if self.cursor.fetchone():
-                self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID))
-                print("Found items for the specified month!")
-                return self.cursor.fetchall()
-            else:
-                print("No items found for the specified month")
-                self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
-                return False
+                    for Event in self.cursor.fetchall():
+                        QueryList.append(Event)
+                   # return self.cursor.fetchall()
+                else:
+                    print("No items found for the specified month")
+                    self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                    #return False
 
-        # Searching for month and EmployeeID and Asset
-        elif (Month and Asset and EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND EmployeeID = (?) AND AssetID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID),str(Asset))
-            if self.cursor.fetchone():
+
+
+            # Searching for month and EmployeeID and Asset
+            elif (Month and Asset and EmployeeID):
+                check_query = '''SELECT * FROM [Event Log Table] WHERE (MONTH(Timestamp) =  (?) AND EmployeeID = (?) AND AssetID = (?));'''  # '?' is a placeholder
                 self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID),str(Asset))
-                print("Found items for the specified month!")
-                return self.cursor.fetchall()
-            else:
-                print("No items found for the specified month")
-                self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
-                return False
+                if self.cursor.fetchone():
+                    self.cursor.execute(check_query, str(MonthSearch),str(EmployeeID),str(Asset))
+                    print("Found items for the specified month!")
+
+                    for Event in self.cursor.fetchall():
+                        QueryList.append(Event)
+
+                else:
+                    print("No items found for the specified month")
+                    self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                    #return False
+        # If the list is empty (queries returned no results whatsoever) then return false
+        if not (QueryList):
+            return False
+        else:
+            return QueryList
+
 
     def search_checkDateTimeBounds(self,LowerBound,UpperBound):
         check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
