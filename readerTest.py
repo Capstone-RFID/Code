@@ -17,7 +17,6 @@ import pandas as pd
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
-import ConfigInfo
 import time
 
 from password_prompt import Ui_Dialog

@@ -23,7 +23,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
-import ConfigInfo
 
 
 import openpyxl
