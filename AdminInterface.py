@@ -700,53 +700,80 @@ class Admin_Interface(QWidget):
             return False
 
     def search_fetchDateTime(self,LowerBound,UpperBound):
-        Asset = self.ui.Search_Asset_Numbers_Field.text()
+        #Asset = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
+
+
+        QueryList = [] #Initialize empty list to store all query results
 
         #Just doing a date range search
-        if(not Asset and not EmployeeID):
+        if(not AssetList):
+            if(not EmployeeID):
 
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
-            if self.cursor.fetchone():
+                check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?)) AND (Timestamp <=  (?));'''  # '?' is a placeholder
                 self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
+                if self.cursor.fetchone():
+                    self.cursor.execute(check_query, str(LowerBound), str(UpperBound))
 
-                return self.cursor.fetchall()
-            else:
+                    #not searching for multiple assets, just return this list
+                    return self.cursor.fetchall()
+                    #QueryList.append(self.cursor.fetchall())
+                else:
+                    return False
+
+            # Searching for Employee ID's within a date range
+            elif(EmployeeID):
+                check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND EmployeeID = (?));'''  # '?' is a placeholder
+                self.cursor.execute(check_query, str(LowerBound), str(UpperBound), str(EmployeeID))
+                if self.cursor.fetchone():
+                    self.cursor.execute(check_query, str(LowerBound), str(UpperBound), str(EmployeeID))
+
+                    # not searching for multiple assets, just return this list
+                    return self.cursor.fetchall()
+                    # QueryList.append(self.cursor.fetchall())
+                else:
+                    return False
+        else:
+
+            for Asset in AssetList:
+                #Searching for assets within a date range
+                if(Asset and not EmployeeID):
+                    check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND AssetID = (?));'''  # '?' is a placeholder
+                    self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(Asset))
+                    if self.cursor.fetchone():
+                        self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(Asset))
+                        tmp = self.cursor.fetchall()
+                        #return self.cursor.fetchall()
+                        for Event in tmp:
+                            QueryList.append(Event)
+
+
+                    else:
+                        self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                        #return False
+
+
+
+                # Searching for assets and employeeID within a date range
+                elif (Asset and EmployeeID):
+                    check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND EmployeeID = (?) AND AssetID = (?));'''  # '?' is a placeholder
+                    self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID),str(Asset))
+                    if self.cursor.fetchone():
+                        self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID),str(Asset))
+
+                        #return self.cursor.fetchall()
+                        for Event in self.cursor.fetchall():
+                            QueryList.append(Event)
+                    else:
+                        self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                        #return False
+            #If the list is empty (queries returned no results whatsoever) then return false
+            if not(QueryList):
                 return False
-
-        #Searching for assets within a date range
-        elif(Asset and not EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND AssetID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(Asset))
-            if self.cursor.fetchone():
-                self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(Asset))
-
-                return self.cursor.fetchall()
             else:
-                return False
 
-        # Searching for Employee ID's within a date range
-        elif (not Asset and EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND EmployeeID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID))
-            if self.cursor.fetchone():
-                self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID))
-
-                return self.cursor.fetchall()
-            else:
-                return False
-
-        # Searching for assets and employeeID within a date range
-        elif (Asset and EmployeeID):
-            check_query = '''SELECT * FROM [Event Log Table] WHERE (Timestamp >=  (?) AND Timestamp <=  (?) AND EmployeeID = (?) AND AssetID = (?));'''  # '?' is a placeholder
-            self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID),str(Asset))
-            if self.cursor.fetchone():
-                self.cursor.execute(check_query, str(LowerBound), str(UpperBound),str(EmployeeID),str(Asset))
-
-                return self.cursor.fetchall()
-            else:
-                return False
+                return QueryList
 
 
 
