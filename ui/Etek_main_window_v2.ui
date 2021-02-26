@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1451</width>
-    <height>922</height>
+    <width>1200</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1140,6 +1140,53 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <height>100</height>
           </size>
          </property>
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>120</red>
+               <green>120</green>
+               <blue>120</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="title">
           <string>Action to Perform?</string>
          </property>
@@ -1149,6 +1196,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QRadioButton" name="Check_In_Box">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton{ color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0);}</string>
+            </property>
             <property name="text">
              <string>Check IN</string>
             </property>
@@ -1156,6 +1211,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           </item>
           <item>
            <widget class="QRadioButton" name="Check_Out_Box">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton{ color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0);}</string>
+            </property>
             <property name="text">
              <string>Check OUT</string>
             </property>
