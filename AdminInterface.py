@@ -145,6 +145,7 @@ class Admin_Interface(QWidget):
 
 
 
+
     #Generates list of assets in event log based on Employee ID search Filter
     def search_searchIDButtonClicked(self):
         print('Search Tab Search ID Button Clicked')
@@ -422,7 +423,7 @@ class Admin_Interface(QWidget):
                 self.cursor.execute(insert_event_query, str(self.ui.Create_Asset_Num_Field.text()), str(self.ui.Create_Asset_Description_Field.text()))
 
                 self.cnxn.commit()
-
+                self.ui.Create_UI_Message_Prompt.setText('Asset Successfully Created!')
         else:
             print("Enter both an asset number and description!")
             self.ui.Create_UI_Message_Prompt.setText('Enter asset # and description')
@@ -452,6 +453,7 @@ class Admin_Interface(QWidget):
         if dataAsset.columns[0] == 'AssetID' and dataAsset.columns[1] == 'Type':
             if not all (np.where(pd.isnull(df))):
                 self.import_checkAssetsOrEmployeesToSQL(df)
+                self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
             else:
                 print('Please reformat excel into 2 columns "AssetID" and "Type" with no empty cells')
                 self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
@@ -475,6 +477,7 @@ class Admin_Interface(QWidget):
         if dataEmployee.columns[0] == 'Name' and dataEmployee.columns[1] == 'EmployeeID':
             if not all (np.where(pd.isnull(df))):
                 self.import_checkAssetsOrEmployeesToSQL(df)
+                self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
             else:
                 print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
                 self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
@@ -568,6 +571,7 @@ class Admin_Interface(QWidget):
         # This also checks for whether we're searching employeeID's or Asset ID's in the SQL query
         elif(YesDateRangeFlag):
             self.search_searchDateButtonClicked()
+
 
         #If no date or month specified then we're just searching for combinations of assets and employees
         else:
