@@ -543,8 +543,15 @@ class Admin_Interface(QWidget):
         EmployeeIdField = self.ui.Search_Employee_ID_Entry_Field.text()
         AssetField = self.ui.Search_Asset_Numbers_Field.text()
 
+        #Seperate the field entry into a list
         AssetList = self.checkMultiItemsCommas(AssetField)
-        self.checkInputAssetFormat(AssetList)
+        #Check if the list of asset #'s entered is the same as the one that went thru regex
+        #If it is the same, then nothing happens, else the user is notified of bad input and search looks
+        #for valid inputs only
+        if AssetList != self.checkInputAssetFormat(AssetList):
+            #If it's not valid, then notify user and go ahead with search for the valid asset #'s
+            self.ui.Search_UI_Message_Prompt.setText('At least one invalid asset#')
+            AssetList = self.checkInputAssetFormat(AssetList)
 
 
         #Prevents redundancy in search
@@ -595,6 +602,8 @@ class Admin_Interface(QWidget):
     def checkMultiItemsCommas(self, StringWithCommas):
         return(re.findall(r'[^,\s]+', StringWithCommas))
 
+    #Checks the assets specified to see if it's a valid format
+    #No UI messages done here because we want to use this function for every part of admin
     def checkInputAssetFormat(self,RawAssetList):
 
         #Initialize empty list to append valid entries into
@@ -607,8 +616,25 @@ class Admin_Interface(QWidget):
             print('Nothing in the list')
         else:
             for index in RawAssetList:
-                #Regex for getting numbers that start w/ 4 and have 7 characters after
-                print(re.findall(r"\b4\w{7}$",index))
+                #Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
+                #If the number is the correct format, then start processing it
+                if re.findall(r"\b[E-e-4][0-9]{7}$",index):
+                    #If the string begins w/ lower case e, then replace it with an E
+                    if re.findall(r"\be",index):
+                        index = str.capitalize(index)
+                    print(index)
+                    ProcessedAssetList.append(index)
+                else:
+                    print("Wrong format in Asset field")
+
+
+        #return all assets that have the correct format
+        return ProcessedAssetList
+
+
+
+
+
                 #\print("Begins w/ 4 w/ 7 digits afterwards")
 
 
