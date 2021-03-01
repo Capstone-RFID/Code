@@ -7,8 +7,6 @@
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin_Level2_Access.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin_Level2_Access.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/Admin_Level2_Access.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Admin_Level2_Access.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,41 +383,6 @@
           <url>file://$PROJECT_DIR$/readerTest.py</url>
           <line>293</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>312</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>315</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>318</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>313</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>316</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>287</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>288</line>
-          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

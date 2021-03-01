@@ -544,6 +544,7 @@ class Admin_Interface(QWidget):
         AssetField = self.ui.Search_Asset_Numbers_Field.text()
 
         AssetList = self.checkMultiItemsCommas(AssetField)
+        self.checkInputAssetFormat(AssetList)
 
 
         #Prevents redundancy in search
@@ -594,6 +595,21 @@ class Admin_Interface(QWidget):
     def checkMultiItemsCommas(self, StringWithCommas):
         return(re.findall(r'[^,\s]+', StringWithCommas))
 
+    def checkInputAssetFormat(self,RawAssetList):
+
+        #Initialize empty list to append valid entries into
+        ProcessedAssetList = []
+
+        #If the list is empty, do nothing, else start processing for valid entries
+        #Below formats known as of March 1, 2021
+        #Two asset# formats existing:  (1) start with 4 for 7 digit asset –  (2)  starts with E and then 7 digits
+        if not RawAssetList:
+            print('Nothing in the list')
+        else:
+            for index in RawAssetList:
+                #Regex for getting numbers that start w/ 4 and have 7 characters after
+                print(re.findall(r"\b4\w{7}$",index))
+                #\print("Begins w/ 4 w/ 7 digits afterwards")
 
 
     def search_Find_Months(self):
