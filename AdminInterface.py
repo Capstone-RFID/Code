@@ -1012,18 +1012,18 @@ class Admin_Interface(QWidget):
         print(self.import_AssetList)
 
 
-    #New employee imported appends with status # 104
+    #New employee imported appends
     def import_commitEmployeesToSQL(self, EmployeeID, EmployeeName):
         insert_event_query = ''' INSERT INTO [Employee Table] (EmployeeID, Name) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
         self.cursor.execute(insert_event_query, str(EmployeeID), str(EmployeeName))
         self.cnxn.commit()
 
-    # New asset imported appends with status #42
+    # New asset imported appends with status #6
     def import_commitAssetsToSQL(self, AssetID, Description):
         insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
-        self.cursor.execute(insert_event_query, str(AssetID), '42')
+        self.cursor.execute(insert_event_query, str(AssetID), '6')
 
         insert_event_query = ''' INSERT INTO [Asset Table] (AssetID, Type) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
