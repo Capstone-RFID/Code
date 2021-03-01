@@ -545,7 +545,8 @@ class Admin_Interface(QWidget):
 
         #Seperate the field entry into a list
         AssetList = self.checkMultiItemsCommas(AssetField)
-        #Check if the list of asset #'s entered is the same as the one that went thru regex
+
+        #Check if the list of asset #'s entered is the same as the list of valid asset #'s that went thru regex
         #If it is the same, then nothing happens, else the user is notified of bad input and search looks
         #for valid inputs only
         if AssetList != self.checkInputAssetFormat(AssetList):
