@@ -265,6 +265,7 @@ class Admin_Interface(QWidget):
         self.ui.Edit_AssignTo_Field.setText('')
         self.ui.Edit_Asset_Field.setText('')
         self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+        self.ui.Edit_UI_Message_Name_From_ID.setText('')
 
     # Searches Asset Table to see if asset even exists, then searches
     # for most recent event regarding that asset and who it's assigned to/what is it's status
@@ -352,6 +353,7 @@ class Admin_Interface(QWidget):
             self.ui.Edit_AssignTo_Field.setText('')
             self.ui.Edit_Asset_Field.setText('')
             self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+            self.ui.Edit_UI_Message_Name_From_ID.setText('')
 
         else:
             print("Please fill status field before committing")
@@ -452,8 +454,25 @@ class Admin_Interface(QWidget):
 
         if dataAsset.columns[0] == 'AssetID' and dataAsset.columns[1] == 'Type':
             if not all (np.where(pd.isnull(df))):
+                count = 0
+                for index in df["AssetID"]:
+                        # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
+                        # If the number is the correct format, then start processing it
+                    if re.findall(r"\b[E-e-4][0-9]{7}$", index):
+                            # If the string begins w/ lower case e, then replace it with an E
+                        if re.findall(r"\be", index):
+                                index = str.capitalize(index)
+                        print(index)
+
+                    else:
+                        df.drop([count], inplace = True)
+                        print("Wrong format in Asset field")
+                    count = count +1
+
+                df = df.reset_index(drop=True)
                 self.import_checkAssetsOrEmployeesToSQL(df)
                 self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
+
             else:
                 print('Please reformat excel into 2 columns "AssetID" and "Type" with no empty cells')
                 self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
