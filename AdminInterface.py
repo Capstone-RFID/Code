@@ -384,10 +384,18 @@ class Admin_Interface(QWidget):
     #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
     def create_confirmEntryButtonClicked(self):
         self.ui.Create_UI_Message_Prompt.setText('')
-        if (self.ui.Create_Asset_Num_Field.text() != '') and (self.ui.Create_Asset_Description_Field.text() != ''):
+
+        #Turn text field string into a list of a single string
+        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text())
+
+        #If the format is good, then go ahead, else this is replaced with a blank list
+        AssetFiltered = self.checkInputAssetFormat(AssetFiltered)
+
+
+        if (AssetFiltered) and (self.ui.Create_Asset_Description_Field.text() != ''):
             print('Create Tab Confirm Entry Button Clicked')
 
-            if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(self.ui.Create_Asset_Num_Field.text())):
+            if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(AssetFiltered[0])):
                 print('This asset ID already exists! ')
                 self.ui.Create_UI_Message_Prompt.setText('ID already exists')
 
@@ -438,8 +446,8 @@ class Admin_Interface(QWidget):
                 self.cnxn.commit()
                 self.ui.Create_UI_Message_Prompt.setText('Asset Successfully Created!')
         else:
-            print("Enter both an asset number and description!")
-            self.ui.Create_UI_Message_Prompt.setText('Enter asset # and description')
+            print("Enter both a valid asset number and description!")
+            self.ui.Create_UI_Message_Prompt.setText('Enter valid asset # and description')
 
         # clear fields after commit
         self.ui.Create_Asset_Num_Field.setText("")
