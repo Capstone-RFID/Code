@@ -81,6 +81,8 @@ class Admin_Interface(QWidget):
         #****************************************Search Tab Button(s)*********************************
         #self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
         self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_checkFieldInputs)
+        self.ui.Search_Employee_ID_Entry_Field.returnPressed.connect(self.search_checkFieldInputs)
+        self.ui.Search_Asset_Numbers_Field.returnPressed.connect(self.search_checkFieldInputs)
         #self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
         self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
         self.ui.Search_Reset_Fields_Button.clicked.connect(self.search_searchResetFieldsButtonClicked)
@@ -88,6 +90,7 @@ class Admin_Interface(QWidget):
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
         self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
+        self.ui.Edit_Asset_Field.returnPressed.connect(self.edit_searchButtonClicked)
         #self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
 
@@ -288,7 +291,12 @@ class Admin_Interface(QWidget):
 
             #Query the name of employee using the asset from the employee table
             EmployeeName = self.edit_FetchNameViaID(AssetState[0][2])
-            self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName[0])
+            if EmployeeName != "":
+                self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName[0])
+            else:
+                self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName)
+
+
 
             AssetStatus = AssetState[0][4]
             if AssetStatus == '1':
@@ -319,7 +327,7 @@ class Admin_Interface(QWidget):
             return self.cursor.fetchone()
         else:
             self.ui.Edit_UI_Message_Prompt.setText('Unknown Employee ID')
-            return False
+            return str("")
 
 
     def edit_commitButtonClicked(self):
