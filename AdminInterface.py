@@ -157,7 +157,10 @@ class Admin_Interface(QWidget):
 
         if self.Employee_ID_Check(EmployeeNum):
             EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
-            self.search_PopulateTable(EmployeeAssetList)
+            if EmployeeAssetList != False:
+                self.search_PopulateTable(EmployeeAssetList)
+            else:
+                self.ui.Search_UI_Message_Prompt.setText('No events found for ID')
         else:
             self.ui.Search_UI_Message_Prompt.setText('No matching employee ID found')
             #self.ui.Search_UI_Message_Prompt.setText('Found Employee ID')
