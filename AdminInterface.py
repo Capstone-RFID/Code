@@ -138,6 +138,7 @@ class Admin_Interface(QWidget):
         # Reset Filters to default values
         self.ui.Search_Employee_ID_Entry_Field.setText("")
         self.ui.Search_Asset_Numbers_Field.setText("")
+        self.ui.Search_UI_Message_Prompt.setText("")
         d = QDate(2021, 1, 1)
         self.ui.Search_Datetime_From.setDate(d)
         self.ui.Search_Datetime_To.setDate(d)
@@ -386,7 +387,7 @@ class Admin_Interface(QWidget):
         self.ui.Create_UI_Message_Prompt.setText('')
 
         #Turn text field string into a list of a single string
-        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text())
+        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text(),1)
 
         #If the format is good, then go ahead, else this is replaced with a blank list
         AssetFiltered = self.checkInputAssetFormat(AssetFiltered)
@@ -458,8 +459,6 @@ class Admin_Interface(QWidget):
     def Import_ImportAssets_ButtonClicked(self):
         print('Import Tab ImportAssets Button Clicked')
         self.ui.Create_UI_Message_Prompt.setText('')
-        # NOTE: for testing, change the path to the development folder (I think this changes between me (Jon) and Chris)
-        #Just copy-paste that bad boy in here
 
 
         data_Folder = Path.cwd()
@@ -477,7 +476,7 @@ class Admin_Interface(QWidget):
                 for index in df["AssetID"]:
                         # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                         # If the number is the correct format, then start processing it
-                    if re.findall(r"\b[E-e-4][0-9]{7}$", index):
+                    if re.findall(r"\b[E-e][0-9]{7}$|[4][0-9]{6}$", index):
                             # If the string begins w/ lower case e, then replace it with an E
                         if re.findall(r"\be", index):
                                 index = str.capitalize(index)
@@ -585,14 +584,20 @@ class Admin_Interface(QWidget):
         AssetField = self.ui.Search_Asset_Numbers_Field.text()
 
         #Seperate the field entry into a list
-        AssetList = self.checkMultiItemsCommas(AssetField)
+        AssetList = self.checkMultiItemsCommas(AssetField,1)
+
+        #First captialize each entry that starts with an 'e' in AssetList before doing a comparison
+
+
+
 
         #Check if the list of asset #'s entered is the same as the list of valid asset #'s that went thru regex
         #If it is the same, then nothing happens, else the user is notified of bad input and search looks
         #for valid inputs only
         if AssetList != self.checkInputAssetFormat(AssetList):
             #If it's not valid, then notify user and go ahead with search for the valid asset #'s
-            self.ui.Search_UI_Message_Prompt.setText('At least one invalid asset#')
+
+
             AssetList = self.checkInputAssetFormat(AssetList)
 
 
@@ -642,8 +647,12 @@ class Admin_Interface(QWidget):
 
     #This method uses Regex to separate a string of #'s separated by commas into a list that we can put into
     #our search and populate table methods.  This also ignores whitespace to allow more robust valid inputs
-    def checkMultiItemsCommas(self, StringWithCommas):
+    #If you're feeding this an asset or list of assets, then give it a second argument = 1
+    def checkMultiItemsCommas(self, StringWithCommas,isAssetList):
+
         return(re.findall(r'[^,\s]+', StringWithCommas))
+
+
 
     #Checks the assets specified to see if it's a valid format
     #No UI messages done here because we want to use this function for every part of admin
@@ -661,7 +670,7 @@ class Admin_Interface(QWidget):
             for index in RawAssetList:
                 #Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                 #If the number is the correct format, then start processing it
-                if re.findall(r"\b[E-e-4][0-9]{7}$",index):
+                if re.findall(r"\b[E-e][0-9]{7}$|[4][0-9]{6}$",index):
                     #If the string begins w/ lower case e, then replace it with an E
                     if re.findall(r"\be",index):
                         index = str.capitalize(index)
@@ -669,6 +678,7 @@ class Admin_Interface(QWidget):
                     ProcessedAssetList.append(index)
                 else:
                     print("Wrong format in Asset field")
+                    self.ui.Search_UI_Message_Prompt.setText('At least one invalid asset#')
 
 
         #return all assets that have the correct format
@@ -694,7 +704,7 @@ class Admin_Interface(QWidget):
 
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
 
-        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text(),1)
 
         QueryList = [] #empty list for appending queries
 
@@ -807,7 +817,7 @@ class Admin_Interface(QWidget):
     def search_fetchDateTime(self,LowerBound,UpperBound):
         #Asset = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
-        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text(),1)
 
 
         QueryList = [] #Initialize empty list to store all query results
