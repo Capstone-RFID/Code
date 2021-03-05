@@ -200,9 +200,9 @@ class mainWindow(QWidget):
             flag = "gtg"
         elif state[1] == "1":
             flag = "gtg"
-        elif state[1] == "2":
+        elif state[1] == "2": ##if asset checked out
 
-            if state[0] != self.ui.Employee_ID_Input.text():
+            if state[0] != self.ui.Employee_ID_Input.text(): ## if asset assigned to employee is not  the current employee
                 #add name to this dialog box
 
                 response =  self.qm.question(self,'Input Required', "Asset " +assetID+" is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?", self.qm.Yes | self.qm.No)
@@ -211,7 +211,9 @@ class mainWindow(QWidget):
                 else:
                     self.RemovedItems.append(assetID)
                     flag ="discard"
-            else:
+            elif self.ui.Check_In_Box.isChecked() and state[0] == self.ui.Employee_ID_Input.text():
+                flag = "gtg"
+            elif self.ui.Check_Out_Box.isChecked() and state[0] == self.ui.Employee_ID_Input.text():
                 self.qm.warning(self, 'Notice',"You already have asset "+ assetID+" assigned to you")
                 self.RemovedItems.append(assetID)
                 flag = "discard"
