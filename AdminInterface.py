@@ -105,8 +105,8 @@ class Admin_Interface(QWidget):
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
-        # ****************************************Import Tab Button(s)*********************************
-
+        # ****************************************QMessageBox (Used across tabs)*********************************
+        self.qm = QtWidgets.QMessageBox()
 
     # open up the admin window from the button on main window
     def openAdmin(self, s, d):
@@ -161,9 +161,11 @@ class Admin_Interface(QWidget):
             if EmployeeAssetList != False:
                 self.search_PopulateTable(EmployeeAssetList)
             else:
-                self.ui.Search_UI_Message_Prompt.setText('No events found for ID')
+                self.qm.warning(self, 'No events found for Employee ID')
         else:
-            self.ui.Search_UI_Message_Prompt.setText('No matching employee ID found')
+            #self.ui.Search_UI_Message_Prompt.setText('No matching employee ID found')
+            self.qm.warning(self, 'Notice', 'No matching employee ID found')
+
             #self.ui.Search_UI_Message_Prompt.setText('Found Employee ID')
     # Generates list of EmployeeID in event log based on Assets in search Filter
 
@@ -177,7 +179,8 @@ class Admin_Interface(QWidget):
                 AssetList = self.Asset_List_Fetch(AssetNum)
                 self.search_PopulateTable(AssetList)
             else:
-                self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                self.qm.warning(self, 'Notice', 'At least one asset not found')
 
     def search_searchAssetandIDButtonClicked(self,AssetString):
         print('Search Tab Search Asset and ID Button Clicked')
@@ -190,12 +193,14 @@ class Admin_Interface(QWidget):
                if EmployeeAndAssetList:
                    self.search_PopulateTable(EmployeeAndAssetList)
                else:
-                   self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
-
+                   #self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
+                   self.qm.information(self, 'Notice', 'No ID found with that Asset')
             elif(not self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum)):
-                self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                self.qm.warning(self, 'Notice', 'At least one asset not found')
             elif(not self.Employee_ID_Check(EmployeeNum)):
-                self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
+                #self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
+                self.qm.critical(self, 'Notice', 'Unknown employee ID')
 
 
     def search_searchDateButtonClicked(self):
@@ -209,7 +214,8 @@ class Admin_Interface(QWidget):
             if DateList:
                 self.search_PopulateTable(DateList)
         else:
-            self.ui.Search_UI_Message_Prompt.setText('No events found between these dates')
+            #self.ui.Search_UI_Message_Prompt.setText('No events found between these dates')
+            self.qm.critical(self, 'Notice', 'No events found between these dates')
 
         #self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound)
         #print(self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound))
@@ -262,7 +268,8 @@ class Admin_Interface(QWidget):
         doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
         doc.print_(printer)
 
-        self.ui.Search_UI_Message_Prompt.setText('Successful PDF Print!')
+        self.ui.Search_UI_Message_Prompt.setText('')
+        self.qm.information(self, 'Notice', 'Successful PDF Print!')
 
 
 
@@ -279,12 +286,13 @@ class Admin_Interface(QWidget):
     def edit_searchButtonClicked(self):
         print('Edit Tab Search Button Clicked')
 
-        self.ui.Edit_UI_Message_Prompt.setText('Searching...')
+        #self.ui.Edit_UI_Message_Prompt.setText('Searching...')
 
         #self.edit_clearTableResults()
         if self.Asset_Check(self.ui.Edit_Asset_Field.text()):
             print('Edit search found the asset!')
-            self.ui.Edit_UI_Message_Prompt.setText('Asset Found')
+            #self.ui.Edit_UI_Message_Prompt.setText('Asset Found')
+            #self.qm.information(self, 'Notice', 'Asset Found!')
             #EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
             #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
             #self.edit_PopulateTable(EntryList)
@@ -321,6 +329,8 @@ class Admin_Interface(QWidget):
         else:
             print('Edit search did not find the asset!')
             self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
+            self.qm.information(self, 'Notice', 'Asset not found!')
+
 
     def edit_FetchNameViaID(self, EmployeeID):
         #This should only ever return one result because the EmployeeID is the primary key of this table
@@ -331,6 +341,7 @@ class Admin_Interface(QWidget):
             return self.cursor.fetchone()
         else:
             self.ui.Edit_UI_Message_Prompt.setText('Unknown Employee ID')
+            self.qm.information(self, 'Notice', 'Unknown Employee ID')
             return str("")
 
 
@@ -360,7 +371,9 @@ class Admin_Interface(QWidget):
             #Next two lines commit the edits present in the table
             self.cursor.execute(insert_event_query, str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
             self.cnxn.commit()
-            self.ui.Edit_UI_Message_Prompt.setText('Changes Committed')
+            self.ui.Edit_UI_Message_Prompt.setText('')
+            self.qm.information(self, 'Notice', 'Changes Committed')
+
             #clear fields after commit
             self.ui.Edit_AssignTo_Field.setText('')
             self.ui.Edit_Asset_Field.setText('')
@@ -370,6 +383,8 @@ class Admin_Interface(QWidget):
         else:
             print("Please fill status field before committing")
             self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
+            self.qm.critical(self, 'Critical Issue', 'Please fill status field!')
+
 
 
     def create_clearButtonClicked(self):
@@ -398,7 +413,8 @@ class Admin_Interface(QWidget):
 
             if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(AssetFiltered[0])):
                 print('This asset ID already exists! ')
-                self.ui.Create_UI_Message_Prompt.setText('ID already exists')
+                #self.ui.Create_UI_Message_Prompt.setText('ID already exists')
+                self.qm.warning(self, 'Notice', 'ID already exists')
 
                 # If the RFID number does not exist yet (and field is not blank) , then write it to the RFID table with existing asset
                 if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
@@ -416,14 +432,17 @@ class Admin_Interface(QWidget):
                     # Next two lines commit the edits present in the table
                     self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()), str(420))
                     self.cnxn.commit()
-                    self.ui.Create_UI_Message_Prompt.setText('New tag applied to asset')
+                    #self.ui.Create_UI_Message_Prompt.setText('New tag applied to asset')
+                    self.qm.information(self,'Notice', 'New tag applied to asset!')
 
 
                 #Edit this so it prints info somewhere so user can edit association
                 elif(self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != '')):
 
                     print('This tag already associated with another asset!')
-                    self.ui.Create_UI_Message_Prompt.setText('Tag associated w/ another asset')
+                    #self.ui.Create_UI_Message_Prompt.setText('Tag associated w/ another asset')
+                    self.qm.warning(self, 'Notice', 'This tag already associated with another asset!')
+
             else:
                 # If the RFID number does not exist yet (and field is not blank) and the asset does not already exist, then write it to the RFID table
                 if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
@@ -445,10 +464,12 @@ class Admin_Interface(QWidget):
                 self.cursor.execute(insert_event_query, str(self.ui.Create_Asset_Num_Field.text()), str(self.ui.Create_Asset_Description_Field.text()))
 
                 self.cnxn.commit()
-                self.ui.Create_UI_Message_Prompt.setText('Asset Successfully Created!')
+                #self.ui.Create_UI_Message_Prompt.setText('Asset Successfully Created!')
+                self.qm.information(self, 'Notice', "Asset Successfully Created!")
         else:
             print("Enter both a valid asset number and description!")
-            self.ui.Create_UI_Message_Prompt.setText('Enter valid asset # and description')
+            #self.ui.Create_UI_Message_Prompt.setText('Enter valid asset # and description')
+            self.qm.warning(self, 'Notice', 'Enter valid asset number (Exxxxxxx OR 4xxxxxx, x ~ digit) and a description!')
 
         # clear fields after commit
         self.ui.Create_Asset_Num_Field.setText("")
@@ -476,8 +497,8 @@ class Admin_Interface(QWidget):
                 for index in df["AssetID"]:
                         # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                         # If the number is the correct format, then start processing it
-                    if re.findall(r"\b[E-e][0-9]{7}$|[4][0-9]{6}$", index):
-                            # If the string begins w/ lower case e, then replace it with an E
+                    if re.findall(r"[E,e][0-9]{7}$||[4][0-9]{6}$", index):
+                        # If the string begins w/ lower case e, then replace it with an E
                         if re.findall(r"\be", index):
                                 index = str.capitalize(index)
                         print(index)
@@ -489,17 +510,17 @@ class Admin_Interface(QWidget):
 
                 df = df.reset_index(drop=True)
                 self.import_checkAssetsOrEmployeesToSQL(df)
-                self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
+               # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
+                self.qm.information(self, 'Notice', 'Import successful!')
 
             else:
-                print('Please reformat excel into 2 columns "AssetID" and "Type" with no empty cells')
-                self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
+                print('Please reformat excel into 2 columns "AssetID" and "Type" with no blank cells')
+                #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
+                self.qm.critical(self, 'Critical Issue', 'Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
         else:
             print('Please reformat excel into 2 columns "AssetID" and "Type"')
-            self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
-
-
-
+            #self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
+            self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
 
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
@@ -515,12 +536,16 @@ class Admin_Interface(QWidget):
             if not all (np.where(pd.isnull(df))):
                 self.import_checkAssetsOrEmployeesToSQL(df)
                 self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
+                self.qm.information(self, 'Notice', 'Import successful!')
+
             else:
                 print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
                 self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
+                self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
         else:
             print('Please reformat excel into 2 columns "Name" and "EmployeeID"')
-            self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
+            #self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
+            self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
 
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
@@ -604,7 +629,8 @@ class Admin_Interface(QWidget):
         #Prevents redundancy in search
         if(YesDateRangeFlag and SearchMonthFlag):
 
-            self.ui.Search_UI_Message_Prompt.setText('Enter month OR date range')
+            #self.ui.Search_UI_Message_Prompt.setText('Enter month OR date range, not both!')
+            self.qm.critical(self, 'Critical Issue', 'Enter month OR date range, not both!')
 
         #This also checks for whether we're searching employeeID's or Asset ID's in the SQL query
         elif(SearchMonthFlag):
@@ -670,7 +696,7 @@ class Admin_Interface(QWidget):
             for index in RawAssetList:
                 #Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                 #If the number is the correct format, then start processing it
-                if re.findall(r"\b[E-e][0-9]{7}$|[4][0-9]{6}$",index):
+                if re.findall(r"[E,e][0-9]{7}$||[4][0-9]{6}$",index):
                     #If the string begins w/ lower case e, then replace it with an E
                     if re.findall(r"\be",index):
                         index = str.capitalize(index)
@@ -678,8 +704,8 @@ class Admin_Interface(QWidget):
                     ProcessedAssetList.append(index)
                 else:
                     print("Wrong format in Asset field")
-                    self.ui.Search_UI_Message_Prompt.setText('At least one invalid asset#')
-
+                    #self.ui.Search_UI_Message_Prompt.setText('At least one invalid asset#')
+                    self.qm.warning(self, 'Notice', 'At least one invalid asset number was entered, please check field input')
 
         #return all assets that have the correct format
         return ProcessedAssetList
@@ -696,8 +722,9 @@ class Admin_Interface(QWidget):
         MonthList = self.search_FindMonthsSQLQuery()
         if MonthList:
             self.search_PopulateTable(MonthList)
-        else:
-            self.ui.Search_UI_Message_Prompt.setText('No events found for that month')
+        #else:
+            #self.ui.Search_UI_Message_Prompt.setText('No events found for that month')
+            #self.qm.information(self, 'Notice', 'No events found for that month')
 
     def search_FindMonthsSQLQuery(self):
         Month = self.ui.Search_Month_By_Month_Search_Dropdown.currentText()
@@ -747,7 +774,8 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                 else:
                     print("No items found for the specified month")
-                    self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                    #self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                    self.qm.information(self, 'Notice', 'No events found for this month')
                     return False
             # Searching for month and EmployeeID
             elif (Month and EmployeeID):
@@ -759,7 +787,8 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                 else:
                     print("No items found for the specified month")
-                    self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                    #self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
+                    self.qm.information(self, 'Notice', 'No events found for this month')
                     return False
 
         for Asset in AssetList:
@@ -777,6 +806,7 @@ class Admin_Interface(QWidget):
                 else:
                     print("No items found for the specified month")
                     self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                    self.qm.information(self, 'Notice', 'At least one asset not found')
                     #return False
 
 
@@ -795,6 +825,7 @@ class Admin_Interface(QWidget):
                 else:
                     print("No items found for the specified month")
                     self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                    self.qm.information(self, 'Notice', 'At least one asset not found')
                     #return False
         # If the list is empty (queries returned no results whatsoever) then return false
         if not (QueryList):
@@ -865,7 +896,8 @@ class Admin_Interface(QWidget):
 
 
                     else:
-                        self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                        #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                        self.qm.information(self, 'Notice', 'At least one asset not found')
                         #return False
 
 
@@ -882,6 +914,7 @@ class Admin_Interface(QWidget):
                             QueryList.append(Event)
                     else:
                         self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                        self.qm.information(self, 'Notice', 'At least one asset not found')
                         #return False
             #If the list is empty (queries returned no results whatsoever) then return false
             if not(QueryList):
@@ -1003,6 +1036,7 @@ class Admin_Interface(QWidget):
             else:
                 print('This employee has not used the specified asset')
                 self.ui.Search_UI_Message_Prompt.setText('This asset not used by employee')
+                self.qm.information(self, 'Notice', 'This asset: ' + Asset + 'not used by employee ID' + ID)
                 return False
 
     #Check what dataset we're dealing with and whether it already exists or not
@@ -1036,7 +1070,9 @@ class Admin_Interface(QWidget):
                     #Commit employee ID to Event log as a new addition (code 104) "10-4 good buddy"
                     self.import_commitEmployeesToSQL(str(df.at[row, 'EmployeeID']),str(df.at[row, 'Name']))
                     # NOTE: We should have a GUI notification that shows the import was sucessful
-                    self.ui.Create_UI_Message_Prompt.setText('Employee(s) imported')
+                    #self.ui.Create_UI_Message_Prompt.setText('Employee(s) imported')
+                    self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
+
 
                 #NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
@@ -1053,7 +1089,8 @@ class Admin_Interface(QWidget):
 
                     #Commit employee ID to Event log as a new addition (code 42) "The answer to everything"
                     self.import_commitAssetsToSQL(str(df.at[row, 'AssetID']),str(df.at[row, 'Type']))
-                    self.ui.Create_UI_Message_Prompt.setText('Asset(s) imported')
+                    #self.ui.Create_UI_Message_Prompt.setText('Asset(s) imported')
+                    self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     print("The Asset Number: "+ str(df.at[row, 'AssetID']) +" already exists in the database")
