@@ -184,6 +184,8 @@ QComboBox::drop-down{
 QMessageBox {
 	background-color: #0D1218;
 	Font: 14pt &quot;Arial&quot;;
+	min-width: 3500px;
+
 }
 QMessageBox QPushButton {
 	font: 14pt &quot;Arial&quot;;
@@ -1480,7 +1482,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="Help_Button">
          <property name="minimumSize">
           <size>
            <width>100</width>
