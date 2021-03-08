@@ -14,16 +14,127 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(758, 660)
-        Admin_Interface.setStyleSheet("background-color: rgb(0, 0, 52);")
+        Admin_Interface.resize(758, 641)
+        Admin_Interface.setStyleSheet("QWidget#centralWidget{\n"
+"    background-color: #5a5c5e;\n"
+"}\n"
+"QWidget#Base{\n"
+" color: #5a5c5e;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"    Font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QPushButton::pressed{\n"
+"    background-color: #577590; \n"
+"}\n"
+"QPushButton:hover:!pressed{\n"
+"    background-color: #739bbe; \n"
+"}\n"
+"QToolButton{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QToolButton::pressed{\n"
+"    background-color: #577590; \n"
+"}\n"
+"QToolButton:hover:!pressed{\n"
+"    background-color: #739bbe; \n"
+"}\n"
+"\n"
+"QLineEdit{\n"
+"    font: 14pt \"Arial\";\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"    color: white;\n"
+"    padding-left: 10;\n"
+"}\n"
+"\n"
+"QComboBox{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"    padding-left: 30px;\n"
+"}\n"
+"\n"
+"QComboBox::drop-down{\n"
+"    width: 25;\n"
+"}")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.Admin_Select = QtWidgets.QTabWidget(Admin_Interface)
-        self.Admin_Select.setStyleSheet("background-color: rgb(0, 0, 52);\n"
+        self.Admin_Select.setStyleSheet("    background-color: #5a5c5e;\n"
 "QTabBar::Home_Tab { height: 100px; width: 100px; background: \'grey\'}")
         self.Admin_Select.setIconSize(QtCore.QSize(12, 12))
         self.Admin_Select.setObjectName("Admin_Select")
         self.Home_Tab = QtWidgets.QWidget()
+        self.Home_Tab.setStyleSheet("QWidget#centralWidget{\n"
+"    background-color: #5a5c5e;\n"
+"}\n"
+"QWidget#Base{\n"
+" color: #5a5c5e;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"    Font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QPushButton::pressed{\n"
+"    background-color: #577590; \n"
+"}\n"
+"QPushButton:hover:!pressed{\n"
+"    background-color: #739bbe; \n"
+"}\n"
+"QToolButton{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QToolButton::pressed{\n"
+"    background-color: #577590; \n"
+"}\n"
+"QToolButton:hover:!pressed{\n"
+"    background-color: #739bbe; \n"
+"}\n"
+"\n"
+"QLineEdit{\n"
+"    font: 14pt \"Arial\";\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"    color: white;\n"
+"    padding-left: 10;\n"
+"}\n"
+"\n"
+"QComboBox{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"    padding-left: 30px;\n"
+"}\n"
+"\n"
+"QComboBox::drop-down{\n"
+"    width: 25;\n"
+"}")
         self.Home_Tab.setObjectName("Home_Tab")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.Home_Tab)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -46,7 +157,7 @@ class Ui_Admin_Interface(object):
         self.horizontalLayout.addItem(spacerItem1)
         self.Home_Force_Sync_Button = QtWidgets.QPushButton(self.Home_Tab)
         self.Home_Force_Sync_Button.setStyleSheet("QPushButton#Home_Force_Sync_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -57,7 +168,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Home_Force_Sync_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Home_Force_Sync_Button.setObjectName("Home_Force_Sync_Button")
@@ -67,6 +178,62 @@ class Ui_Admin_Interface(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.Admin_Select.addTab(self.Home_Tab, "")
         self.Search_Tab = QtWidgets.QWidget()
+        self.Search_Tab.setStyleSheet("QWidget#centralWidget{\n"
+"    background-color: #5a5c5e;\n"
+"}\n"
+"QWidget#Base{\n"
+" color: #5a5c5e;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"    Font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QPushButton::pressed{\n"
+"    background-color: #577590; \n"
+"}\n"
+"QPushButton:hover:!pressed{\n"
+"    background-color: #739bbe; \n"
+"}\n"
+"QToolButton{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QToolButton::pressed{\n"
+"    background-color: #577590; \n"
+"}\n"
+"QToolButton:hover:!pressed{\n"
+"    background-color: #739bbe; \n"
+"}\n"
+"\n"
+"QLineEdit{\n"
+"    font: 14pt \"Arial\";\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"    color: white;\n"
+"    padding-left: 10;\n"
+"}\n"
+"\n"
+"QComboBox{\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #282c30;\n"
+"    border-radius: 5px;\n"
+"    padding-left: 30px;\n"
+"}\n"
+"\n"
+"QComboBox::drop-down{\n"
+"    width: 25;\n"
+"}")
         self.Search_Tab.setObjectName("Search_Tab")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.Search_Tab)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -86,7 +253,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_To = QtWidgets.QDateEdit(self.Search_Tab)
         self.Search_Datetime_To.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Datetime_To.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Datetime_To.setReadOnly(False)
         self.Search_Datetime_To.setCalendarPopup(True)
@@ -97,7 +264,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_From = QtWidgets.QDateEdit(self.Search_Tab)
         self.Search_Datetime_From.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Datetime_From.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Datetime_From.setReadOnly(False)
         self.Search_Datetime_From.setCalendarPopup(True)
@@ -107,7 +274,7 @@ class Ui_Admin_Interface(object):
         self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_Reset_Fields_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_Reset_Fields_Button.setStyleSheet("QPushButton#Search_Reset_Fields_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -118,7 +285,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Search_Reset_Fields_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Search_Reset_Fields_Button.setObjectName("Search_Reset_Fields_Button")
@@ -135,7 +302,7 @@ class Ui_Admin_Interface(object):
         self.Search_Employee_ID_Entry_Field = QtWidgets.QLineEdit(self.Search_Tab)
         self.Search_Employee_ID_Entry_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Employee_ID_Entry_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Employee_ID_Entry_Field.setObjectName("Search_Employee_ID_Entry_Field")
         self.gridLayout.addWidget(self.Search_Employee_ID_Entry_Field, 5, 1, 1, 1)
@@ -164,7 +331,7 @@ class Ui_Admin_Interface(object):
         self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setStyleSheet("QPushButton#Search_SearchAsset_Query_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -175,7 +342,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Search_SearchAsset_Query_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Search_SearchAsset_Query_Button.setDefault(False)
@@ -194,7 +361,7 @@ class Ui_Admin_Interface(object):
         self.Search_Asset_Numbers_Field = QtWidgets.QLineEdit(self.Search_Tab)
         self.Search_Asset_Numbers_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Asset_Numbers_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Asset_Numbers_Field.setObjectName("Search_Asset_Numbers_Field")
         self.gridLayout.addWidget(self.Search_Asset_Numbers_Field, 7, 1, 1, 1)
@@ -206,7 +373,7 @@ class Ui_Admin_Interface(object):
         self.Search_Month_By_Month_Search_Dropdown = QtWidgets.QComboBox(self.Search_Tab)
         self.Search_Month_By_Month_Search_Dropdown.setMinimumSize(QtCore.QSize(0, 25))
         self.Search_Month_By_Month_Search_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Search_Month_By_Month_Search_Dropdown.setObjectName("Search_Month_By_Month_Search_Dropdown")
         self.Search_Month_By_Month_Search_Dropdown.addItem("")
@@ -258,7 +425,7 @@ class Ui_Admin_Interface(object):
         self.Search_Print_PDF_Button.setSizePolicy(sizePolicy)
         self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_Print_PDF_Button.setStyleSheet("QPushButton#Search_Print_PDF_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -269,7 +436,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Search_Print_PDF_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Search_Print_PDF_Button.setObjectName("Search_Print_PDF_Button")
@@ -328,15 +495,17 @@ class Ui_Admin_Interface(object):
         spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem17, 5, 0, 1, 1)
         self.Edit_Asset_Field = QtWidgets.QLineEdit(self.Edit_Tab)
+        self.Edit_Asset_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Edit_Asset_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Asset_Field.setText("")
         self.Edit_Asset_Field.setObjectName("Edit_Asset_Field")
         self.gridLayout_2.addWidget(self.Edit_Asset_Field, 0, 2, 1, 1)
         self.Edit_Update_Status_Dropdown = QtWidgets.QComboBox(self.Edit_Tab)
+        self.Edit_Update_Status_Dropdown.setMinimumSize(QtCore.QSize(0, 25))
         self.Edit_Update_Status_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Update_Status_Dropdown.setEditable(True)
         self.Edit_Update_Status_Dropdown.setObjectName("Edit_Update_Status_Dropdown")
@@ -351,8 +520,9 @@ class Ui_Admin_Interface(object):
         self.Edit_Update_Status_Dropdown.addItem("")
         self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 4, 2, 1, 1)
         self.Edit_AssignTo_Field = QtWidgets.QLineEdit(self.Edit_Tab)
+        self.Edit_AssignTo_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Edit_AssignTo_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_AssignTo_Field.setObjectName("Edit_AssignTo_Field")
         self.gridLayout_2.addWidget(self.Edit_AssignTo_Field, 2, 2, 1, 1)
@@ -364,7 +534,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Search_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Search_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Search_Button.setStyleSheet("QPushButton#Edit_Search_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -375,7 +545,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Edit_Search_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Edit_Search_Button.setDefault(False)
@@ -384,7 +554,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -395,7 +565,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Edit_Clear_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Edit_Clear_Button.setObjectName("Edit_Clear_Button")
@@ -403,7 +573,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Commit_Edits_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Commit_Edits_Button.setStyleSheet("QPushButton#Edit_Commit_Edits_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -414,7 +584,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Edit_Commit_Edits_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Edit_Commit_Edits_Button.setObjectName("Edit_Commit_Edits_Button")
@@ -453,7 +623,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.Import_ImportAssets_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Import_ImportAssets_Button.setStyleSheet("QPushButton#Import_ImportAssets_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -464,7 +634,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Import_ImportAssets_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Import_ImportAssets_Button.setObjectName("Import_ImportAssets_Button")
@@ -473,7 +643,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_8.addItem(spacerItem19)
         self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -484,7 +654,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Import_ImportEmployees_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Import_ImportEmployees_Button.setObjectName("Import_ImportEmployees_Button")
@@ -501,7 +671,7 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -512,7 +682,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Create_Clear_Fields_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Create_Clear_Fields_Button.setObjectName("Create_Clear_Fields_Button")
@@ -520,7 +690,7 @@ class Ui_Admin_Interface(object):
         self.Create_Confirm_Entry_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Confirm_Entry_Button.setStyleSheet("QPushButton#Create_Confirm_Entry_Button {\n"
-"background-color: rgb(0, 0, 127);\n"
+"background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
@@ -531,7 +701,7 @@ class Ui_Admin_Interface(object):
 "padding: 6px;\n"
 "}\n"
 "QPushButton#Create_Confirm_Entry_Button:pressed {\n"
-"    background-color: rgb(80, 80, 80);\n"
+"    background-color: #577590;\n"
 "    border-style: inset;\n"
 "}")
         self.Create_Confirm_Entry_Button.setObjectName("Create_Confirm_Entry_Button")
@@ -542,7 +712,7 @@ class Ui_Admin_Interface(object):
         self.Create_Asset_Description_Field = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_Asset_Description_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Create_Asset_Description_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_Asset_Description_Field.setObjectName("Create_Asset_Description_Field")
         self.gridLayout_5.addWidget(self.Create_Asset_Description_Field, 1, 1, 1, 1)
@@ -554,7 +724,7 @@ class Ui_Admin_Interface(object):
         self.Create_RFID_Tag_Field_3 = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_RFID_Tag_Field_3.setMinimumSize(QtCore.QSize(0, 25))
         self.Create_RFID_Tag_Field_3.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_RFID_Tag_Field_3.setText("")
         self.Create_RFID_Tag_Field_3.setObjectName("Create_RFID_Tag_Field_3")
@@ -572,7 +742,7 @@ class Ui_Admin_Interface(object):
         self.Create_Asset_Num_Field = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_Asset_Num_Field.setMinimumSize(QtCore.QSize(0, 25))
         self.Create_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(78, 78, 78);\n"
+"background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_Asset_Num_Field.setObjectName("Create_Asset_Num_Field")
         self.gridLayout_5.addWidget(self.Create_Asset_Num_Field, 0, 1, 1, 1)

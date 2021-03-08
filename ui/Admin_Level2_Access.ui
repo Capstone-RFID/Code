@@ -7,20 +7,75 @@
     <x>0</x>
     <y>0</y>
     <width>758</width>
-    <height>660</height>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(0, 0, 52);</string>
+   <string notr="true">QWidget#centralWidget{
+	background-color: #5a5c5e;
+}
+QWidget#Base{
+ color: #5a5c5e;
+}
+
+QLabel{
+	Font: 14pt &quot;Arial&quot;;
+	color: white;
+}
+
+QPushButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+QPushButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+QToolButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QToolButton::pressed{
+	background-color: #577590; 
+}
+QToolButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+
+QLineEdit{
+	font: 14pt &quot;Arial&quot;;
+	background-color: #282c30;
+	border-radius: 5px;
+	color: white;
+	padding-left: 10;
+}
+
+QComboBox{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+QComboBox::drop-down{
+	width: 25;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
     <widget class="QTabWidget" name="Admin_Select">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 0, 52);
+      <string notr="true">	background-color: #5a5c5e;
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
@@ -33,6 +88,64 @@ QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
       </size>
      </property>
      <widget class="QWidget" name="Home_Tab">
+      <property name="styleSheet">
+       <string notr="true">QWidget#centralWidget{
+	background-color: #5a5c5e;
+}
+QWidget#Base{
+ color: #5a5c5e;
+}
+
+QLabel{
+	Font: 14pt &quot;Arial&quot;;
+	color: white;
+}
+
+QPushButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+QPushButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+QToolButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QToolButton::pressed{
+	background-color: #577590; 
+}
+QToolButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+
+QLineEdit{
+	font: 14pt &quot;Arial&quot;;
+	background-color: #282c30;
+	border-radius: 5px;
+	color: white;
+	padding-left: 10;
+}
+
+QComboBox{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+QComboBox::drop-down{
+	width: 25;
+}</string>
+      </property>
       <attribute name="title">
        <string>Home</string>
       </attribute>
@@ -92,7 +205,7 @@ color: rgb(171, 171, 171);</string>
           <widget class="QPushButton" name="Home_Force_Sync_Button">
            <property name="styleSheet">
             <string notr="true">QPushButton#Home_Force_Sync_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -103,7 +216,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Home_Force_Sync_Button:pressed {
-    background-color: rgb(80, 80, 80);
+	background-color: #577590;
     border-style: inset;
 }</string>
            </property>
@@ -130,6 +243,64 @@ QPushButton#Home_Force_Sync_Button:pressed {
       </layout>
      </widget>
      <widget class="QWidget" name="Search_Tab">
+      <property name="styleSheet">
+       <string notr="true">QWidget#centralWidget{
+	background-color: #5a5c5e;
+}
+QWidget#Base{
+ color: #5a5c5e;
+}
+
+QLabel{
+	Font: 14pt &quot;Arial&quot;;
+	color: white;
+}
+
+QPushButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QPushButton::pressed{
+	background-color: #577590; 
+}
+QPushButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+QToolButton{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+}
+QToolButton::pressed{
+	background-color: #577590; 
+}
+QToolButton:hover:!pressed{
+	background-color: #739bbe; 
+}
+
+QLineEdit{
+	font: 14pt &quot;Arial&quot;;
+	background-color: #282c30;
+	border-radius: 5px;
+	color: white;
+	padding-left: 10;
+}
+
+QComboBox{
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	padding-left: 30px;
+}
+
+QComboBox::drop-down{
+	width: 25;
+}</string>
+      </property>
       <attribute name="title">
        <string>Search</string>
       </attribute>
@@ -180,7 +351,7 @@ QPushButton#Home_Force_Sync_Button:pressed {
                </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="readOnly">
@@ -217,7 +388,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="readOnly">
@@ -247,7 +418,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton#Search_Reset_Fields_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -258,7 +429,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Search_Reset_Fields_Button:pressed {
-    background-color: rgb(80, 80, 80);
+    background-color: #577590;
     border-style: inset;
 }</string>
                </property>
@@ -314,7 +485,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
               </widget>
@@ -402,7 +573,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton#Search_SearchAsset_Query_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -413,7 +584,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Search_SearchAsset_Query_Button:pressed {
-    background-color: rgb(80, 80, 80);
+background-color: #577590;
     border-style: inset;
 }</string>
                </property>
@@ -457,7 +628,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
               </widget>
@@ -483,7 +654,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <item>
@@ -629,7 +800,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton#Search_Print_PDF_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -640,7 +811,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Search_Print_PDF_Button:pressed {
-    background-color: rgb(80, 80, 80);
+background-color: #577590;
     border-style: inset;
 }</string>
              </property>
@@ -800,9 +971,15 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </item>
                <item row="0" column="2">
                 <widget class="QLineEdit" name="Edit_Asset_Field">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                  <property name="text">
@@ -812,9 +989,15 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </item>
                <item row="4" column="2">
                 <widget class="QComboBox" name="Edit_Update_Status_Dropdown">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                  <property name="editable">
@@ -864,9 +1047,15 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </item>
                <item row="2" column="2">
                 <widget class="QLineEdit" name="Edit_AssignTo_Field">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                 </widget>
@@ -892,7 +1081,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton#Edit_Search_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -903,7 +1092,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Edit_Search_Button:pressed {
-    background-color: rgb(80, 80, 80);
+background-color: #577590;
     border-style: inset;
 }</string>
                  </property>
@@ -925,7 +1114,7 @@ QPushButton#Edit_Search_Button:pressed {
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton#Edit_Clear_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -936,7 +1125,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Edit_Clear_Button:pressed {
-    background-color: rgb(80, 80, 80);
+background-color: #577590;
     border-style: inset;
 }</string>
                  </property>
@@ -955,7 +1144,7 @@ QPushButton#Edit_Clear_Button:pressed {
                  </property>
                  <property name="styleSheet">
                   <string notr="true">QPushButton#Edit_Commit_Edits_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -966,7 +1155,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Edit_Commit_Edits_Button:pressed {
-    background-color: rgb(80, 80, 80);
+    background-color: #577590;
     border-style: inset;
 }</string>
                  </property>
@@ -1044,7 +1233,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Import_ImportAssets_Button">
              <property name="styleSheet">
               <string notr="true">QPushButton#Import_ImportAssets_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -1055,7 +1244,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Import_ImportAssets_Button:pressed {
-    background-color: rgb(80, 80, 80);
+    background-color: #577590;
     border-style: inset;
 }</string>
              </property>
@@ -1084,7 +1273,7 @@ QPushButton#Import_ImportAssets_Button:pressed {
             <widget class="QPushButton" name="Import_ImportEmployees_Button">
              <property name="styleSheet">
               <string notr="true">QPushButton#Import_ImportEmployees_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -1095,7 +1284,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Import_ImportEmployees_Button:pressed {
-    background-color: rgb(80, 80, 80);
+    background-color: #577590;
     border-style: inset;
 }</string>
              </property>
@@ -1144,7 +1333,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton#Create_Clear_Fields_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -1155,7 +1344,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Create_Clear_Fields_Button:pressed {
-    background-color: rgb(80, 80, 80);
+    background-color: #577590;
     border-style: inset;
 }</string>
              </property>
@@ -1174,7 +1363,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton#Create_Confirm_Entry_Button {
-background-color: rgb(0, 0, 127);
+background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
 border-width: 2px;
@@ -1185,7 +1374,7 @@ min-width: 10em;
 padding: 6px;
 }
 QPushButton#Create_Confirm_Entry_Button:pressed {
-    background-color: rgb(80, 80, 80);
+    background-color: #577590;
     border-style: inset;
 }</string>
              </property>
@@ -1208,7 +1397,7 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
@@ -1234,7 +1423,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
@@ -1274,7 +1463,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(78, 78, 78);
+background-color: #282c30;
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
