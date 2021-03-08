@@ -386,43 +386,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>565</line>
+          <line>567</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>567</line>
+          <line>569</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>681</line>
-          <option name="timeStamp" value="44" />
+          <line>201</line>
+          <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>683</line>
-          <option name="timeStamp" value="45" />
+          <line>182</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>705</line>
-          <option name="timeStamp" value="46" />
+          <line>818</line>
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>684</line>
-          <option name="timeStamp" value="47" />
+          <line>837</line>
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>710</line>
-          <option name="timeStamp" value="48" />
+          <line>909</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>611</line>
-          <option name="timeStamp" value="50" />
+          <line>926</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
+          <line>688</line>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -437,6 +442,7 @@
       <configuration name="PythonConfigurationType">
         <watch expression="ProcessedAssetList" />
         <watch expression="str.capitalize(re.findall(r&quot;\be&quot;, StringWithCommas))" />
+        <watch expression="index" />
       </configuration>
     </watches-manager>
   </component>

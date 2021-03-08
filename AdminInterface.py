@@ -186,6 +186,8 @@ class Admin_Interface(QWidget):
         print('Search Tab Search Asset and ID Button Clicked')
         #AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
+        if(not self.Employee_ID_Check(EmployeeNum)):
+            self.qm.critical(self, 'Notice', 'Unknown employee ID')
 
         for AssetNum in AssetString:
             if self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum):
@@ -193,14 +195,14 @@ class Admin_Interface(QWidget):
                if EmployeeAndAssetList:
                    self.search_PopulateTable(EmployeeAndAssetList)
                else:
-                   #self.ui.Search_UI_Message_Prompt.setText('No ID found with that Asset')
-                   self.qm.information(self, 'Notice', 'No ID found with that Asset')
+                   print('No ID found with that Asset')
+                   #self.qm.information(self, 'Notice', 'No employee ID found with the asset number '+ AssetNum)
             elif(not self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum)):
                 #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
                 self.qm.warning(self, 'Notice', 'At least one asset not found')
             elif(not self.Employee_ID_Check(EmployeeNum)):
                 #self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
-                self.qm.critical(self, 'Notice', 'Unknown employee ID')
+                print('Unknown employee ID')
 
 
     def search_searchDateButtonClicked(self):
@@ -340,8 +342,8 @@ class Admin_Interface(QWidget):
             self.cursor.execute(check_query, str(EmployeeID))
             return self.cursor.fetchone()
         else:
-            self.ui.Edit_UI_Message_Prompt.setText('Unknown Employee ID')
-            self.qm.information(self, 'Notice', 'Unknown Employee ID')
+            #self.ui.Edit_UI_Message_Prompt.setText('Unknown Employee ID')
+            #self.qm.information(self, 'Notice', 'Unknown Employee ID')
             return str("")
 
 
@@ -497,7 +499,7 @@ class Admin_Interface(QWidget):
                 for index in df["AssetID"]:
                         # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                         # If the number is the correct format, then start processing it
-                    if re.findall(r"[E,e][0-9]{7}$||[4][0-9]{6}$", index):
+                    if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",index):
                         # If the string begins w/ lower case e, then replace it with an E
                         if re.findall(r"\be", index):
                                 index = str.capitalize(index)
@@ -611,6 +613,7 @@ class Admin_Interface(QWidget):
         #Seperate the field entry into a list
         AssetList = self.checkMultiItemsCommas(AssetField,1)
 
+
         #First captialize each entry that starts with an 'e' in AssetList before doing a comparison
 
 
@@ -621,9 +624,9 @@ class Admin_Interface(QWidget):
         #for valid inputs only
         if AssetList != self.checkInputAssetFormat(AssetList):
             #If it's not valid, then notify user and go ahead with search for the valid asset #'s
+            self.qm.warning(self, 'Notice', 'At least one invalid asset number was entered, please check field input')
 
-
-            AssetList = self.checkInputAssetFormat(AssetList)
+            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(AssetField, 1))
 
 
         #Prevents redundancy in search
@@ -676,7 +679,16 @@ class Admin_Interface(QWidget):
     #If you're feeding this an asset or list of assets, then give it a second argument = 1
     def checkMultiItemsCommas(self, StringWithCommas,isAssetList):
 
-        return(re.findall(r'[^,\s]+', StringWithCommas))
+        CapitalCheckList = []
+        RawAssetList = (re.findall(r'[^,\s]+', StringWithCommas))
+
+        for index in RawAssetList:
+            # If the string begins w/ lower case e, then replace it with an E
+            if re.findall(r"\be", index):
+                CapitalCheckList.append(str.capitalize(index))
+            else:
+                CapitalCheckList.append(str(index))
+        return CapitalCheckList
 
 
 
@@ -696,7 +708,7 @@ class Admin_Interface(QWidget):
             for index in RawAssetList:
                 #Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                 #If the number is the correct format, then start processing it
-                if re.findall(r"[E,e][0-9]{7}$||[4][0-9]{6}$",index):
+                if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",index):
                     #If the string begins w/ lower case e, then replace it with an E
                     if re.findall(r"\be",index):
                         index = str.capitalize(index)
@@ -705,7 +717,7 @@ class Admin_Interface(QWidget):
                 else:
                     print("Wrong format in Asset field")
                     #self.ui.Search_UI_Message_Prompt.setText('At least one invalid asset#')
-                    self.qm.warning(self, 'Notice', 'At least one invalid asset number was entered, please check field input')
+                    #self.qm.warning(self, 'Notice', 'At least one invalid asset number was entered, please check field input')
 
         #return all assets that have the correct format
         return ProcessedAssetList
@@ -1035,8 +1047,8 @@ class Admin_Interface(QWidget):
                 return self.cursor.fetchall()
             else:
                 print('This employee has not used the specified asset')
-                self.ui.Search_UI_Message_Prompt.setText('This asset not used by employee')
-                self.qm.information(self, 'Notice', 'This asset: ' + Asset + 'not used by employee ID' + ID)
+                #self.ui.Search_UI_Message_Prompt.setText('This asset not used by employee')
+                self.qm.information(self, 'Notice', 'This asset: ' + Asset + ' was not used by employee ID ' + ID)
                 return False
 
     #Check what dataset we're dealing with and whether it already exists or not
