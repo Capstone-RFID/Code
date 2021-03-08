@@ -70,6 +70,19 @@ class Ui_Admin_Interface(object):
 "\n"
 "QComboBox::drop-down{\n"
 "    width: 25;\n"
+"}\n"
+"\n"
+"QMessageBox {\n"
+"    background-color: #0D1218;\n"
+"    Font: 14pt \"Arial\";\n"
+"}\n"
+"QMessageBox QPushButton {\n"
+"    font: 14pt \"Arial\";\n"
+"    color: white;\n"
+"    background-color: #1e2733    ;\n"
+"    border-radius: 5px;\n"
+"    height: 40;\n"
+"    width: 100;\n"
 "}")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
@@ -777,7 +790,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(2)
+        self.Admin_Select.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):

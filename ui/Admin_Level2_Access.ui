@@ -69,6 +69,19 @@ QComboBox{
 
 QComboBox::drop-down{
 	width: 25;
+}
+
+QMessageBox {
+	background-color: #0D1218;
+	Font: 14pt &quot;Arial&quot;;
+}
+QMessageBox QPushButton {
+	font: 14pt &quot;Arial&quot;;
+	color: white;
+	background-color: #1e2733    ;
+	border-radius: 5px;
+	height: 40;
+	width: 100;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -79,7 +92,7 @@ QComboBox::drop-down{
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="iconSize">
       <size>
