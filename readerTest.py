@@ -85,8 +85,6 @@ def Employee_ID_Check(input):
 
 #Checks whether the asset exists in the database
 def Asset_Check(input):
-    if not (re.findall(r"\b[E-e][0-9]{7}$|[4][0-9]{6}$",input)):
-        return False
     check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE AssetID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
     if cursor.fetchone():
@@ -187,7 +185,9 @@ class mainWindow(QWidget):
         self.ui.Remove_Button.setEnabled(False)
         # validator to only enter integer values into the entry fields
         self.onlyInt = QtGui.QIntValidator()
-        self.ui.Asset_ID_Input.setValidator(self.onlyInt)
+        rExp = QRegExp("[E,e][0-9]{7}$||[4][0-9]{6}$")
+        valid = QtGui.QRegExpValidator(rExp,self.ui.Asset_ID_Input)
+        self.ui.Asset_ID_Input.setValidator(valid)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
 
 
@@ -348,7 +348,7 @@ class mainWindow(QWidget):
                 if flag == "gtg":
                     if not any(Asset in sublist for sublist in self.eventEntry):  # any(Asset in sublist for sublist in self.ItemEntry) == False:
                         self.insert_into_table(1, Asset)
-                        # apend the entries into a list
+                        # append the entries into a list
                         self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
                         # self.StateEntry.append(self.ui.Employee_ID_Input.text())
                         # self.ui.New_Item_List.insertRow()
@@ -361,7 +361,7 @@ class mainWindow(QWidget):
                     self.qm.critical(self, 'Critical Issue',"Asset " +Asset + " is broken. Do NOT use.")
                     self.ui.Asset_ID_Input.clear()
             else:
-                self.qm.warning(self, 'Check Asset', "Asset "  +Asset +  " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
+                self.qm.warning(self, 'Check Asset', "Asset " +Asset +  " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
                 self.ui.Asset_ID_Input.clear()
         else:
             self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
