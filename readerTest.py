@@ -18,6 +18,7 @@ import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
 import time
+import re
 
 from password_prompt import Ui_Dialog
 from alreadyCheckedOut import checkMsg
@@ -26,8 +27,9 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
 Event_Log_Entry = []
 reading = "off"
 
-
+#************Using PyQt5 signals and slots to read and process RFID data********
 @pyqtSlot(list)
+##If valid employee use SQL querries to find out the Asset iD from RFID ID and call rfid_insert function with Asset ID
 def update_RFID(result):
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         for tag in result:
@@ -48,7 +50,7 @@ class WorkerThread(QThread):
         QThread.__init__(self)
         # self.signals = Communicate()
         self.signal_update.connect(update_RFID)
-
+    ##reads RFID tags
     def cb(self, tagReport):
         global readFlag
         if reading == "on":
@@ -57,12 +59,8 @@ class WorkerThread(QThread):
             result = [sub['EPC-96'] for sub in tags]
             print(result)
             if len(tags) != 0:
-                # taglist.append(tags[0]['EPC-96'])
-                # if tags[0]['EPC-96'] not in taglist:
-                # RFID(tags[0]['EPC-96'])
-                # RFID(result)
                 self.signal_update.emit(result)
-            result.clear()  ####very important
+            result.clear()
         else:
             return
 
@@ -76,7 +74,7 @@ def snapshot():
         # probably add this
         check=True)
 
-
+##Checks whether the employee exists in the database
 def Employee_ID_Check(input):
     check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
@@ -85,7 +83,10 @@ def Employee_ID_Check(input):
     else:
         return False
 
+#Checks whether the asset exists in the database
 def Asset_Check(input):
+    if not (re.findall(r"\b[E-e][0-9]{7}$|[4][0-9]{6}$",input)):
+        return False
     check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE AssetID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
     if cursor.fetchone():
@@ -93,6 +94,7 @@ def Asset_Check(input):
     else:
         return False
 
+#Check whether the employee has the admin interface access
 def Permission_Check(employee):
     check_query = '''SELECT EMPLOYEEID FROM [Employee Access Table] WHERE (PERMISSION = '2' OR PERMISSION = '3') AND EMPLOYEEID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(employee))
@@ -101,6 +103,7 @@ def Permission_Check(employee):
     else:
         return False
 
+#Returns the name of the employee from the database based on the employee ID
 def getEmployeeName(employeeID):
     get_query = '''SELECT NAME FROM [Employee Table] WHERE EMPLOYEEID = (?);'''  # '?' is a placeholder
     cursor.execute(get_query, str(employeeID))
@@ -127,7 +130,7 @@ class alreadyChecked(QDialog):
     def returnFalse(self):
         self.reject()
 
-
+#PasswordWindow creates a password window where a generic password is entered to launch the application
 class passwordWindow(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(passwordWindow, self).__init__(parent)
@@ -136,14 +139,15 @@ class passwordWindow(QtWidgets.QDialog):
         self.ui.buttonBox.accepted.connect(self.handleLogin)
         self.ui.lineEdit.setEchoMode(QLineEdit.Password)
 
+    #setup the password and and the conditions of correct and wrong password in this method
     def handleLogin(self):
-        if self.ui.lineEdit.text() == 'foo':
+        if self.ui.lineEdit.text() == 'foo': #password
             self.accept()
         else:
             QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
             self.rejected()
 
-
+#****************************Main program window *********************#
 class mainWindow(QWidget):
     def __init__(self, parent=None):
         super(mainWindow, self).__init__(parent)
@@ -157,7 +161,9 @@ class mainWindow(QWidget):
         self.RemovedItems = []
         self.markedList = []
         self.alreadyCh = []
+        self.qm = QtWidgets.QMessageBox()
 
+        self.error_count = 0
         # connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
         self.ui.Employee_ID_Enter.released.connect(self.Employee_enter)
@@ -183,7 +189,7 @@ class mainWindow(QWidget):
         self.onlyInt = QtGui.QIntValidator()
         self.ui.Asset_ID_Input.setValidator(self.onlyInt)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
-        self.qm = QtWidgets.QMessageBox()
+
 
     def alreadyCheckedOut(self, assetID):
         status_check_query = '''SELECT TOP(1)
@@ -294,6 +300,7 @@ class mainWindow(QWidget):
         self.ui.Name_Label.clear()
         self.alreadyCh.clear()
         self.ui.Remove_Button.setEnabled(False)
+        self.error_count = 0
         return
 
     def done_button_clicked(self):
@@ -361,7 +368,7 @@ class mainWindow(QWidget):
         return
 
     def rfid_insert(self, asset):
-
+        self.error_count+=1
         if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (
                 asset not in self.RemovedItems) and (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
             flag = self.alreadyCheckedOut(asset)
@@ -371,7 +378,7 @@ class mainWindow(QWidget):
             elif flag == "broken":
                 self.qm.critical(self, 'Critical Issue',"Asset " +asset + " is broken. Do NOT use.")
                 self.ui.Asset_ID_Input.clear()
-        elif not (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
+        elif not (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked())and self.error_count == 1:
             self.qm.information(self, 'Input Required',"Please select an action to perform (Check-In or Check-Out")
 
     def check_in_action(self):
@@ -379,12 +386,10 @@ class mainWindow(QWidget):
         timestamp = timestamp.astimezone(timezone('US/Pacific'))
         self.sql_call("1", timestamp)
 
-
     def check_out_action(self):
         timestamp = datetime.datetime.now(tz=pytz.utc)
         timestamp = timestamp.astimezone(timezone('US/Pacific'))
         self.sql_call("2", timestamp)
-
 
     def confirmation_msg(self, entries):
         preString = ''
@@ -480,7 +485,6 @@ class mainWindow(QWidget):
             if state[0] == self.ui.Employee_ID_Input.text():
                 self.insert_into_table(2, assets[0])
         return
-
 
 
 if __name__ == "__main__":
