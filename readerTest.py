@@ -8,7 +8,7 @@ import datetime
 
 from threading import Thread
 import subprocess
-import keyboard
+
 import logging
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
@@ -229,10 +229,8 @@ class mainWindow(QWidget):
                 self.qm.warning(self, 'Notice',"You already have asset "+ assetID+" assigned to you")
                 self.RemovedItems.append(assetID)
                 flag = "discard"
-
         elif state[1] == "5":
             flag = "broken"
-
         return flag
 
     def adminButtonClicked(self):
