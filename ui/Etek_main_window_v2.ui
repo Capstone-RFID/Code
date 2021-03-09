@@ -141,12 +141,17 @@ QPushButton{
 	color: white;
 	background-color: #282c30;
 	border-radius: 5px;
+
 }
 QPushButton::pressed{
 	background-color: #577590; 
 }
 QPushButton:hover:!pressed{
 	background-color: #739bbe; 
+}
+QToolButton:disabled {
+	color:  #5a5c5e;
+	background-color: #5a5c5e;
 }
 QToolButton{
 	font: 14pt &quot;Arial&quot;;
@@ -287,14 +292,23 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <string>Welcome to E-TEK,</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="Name_Label">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>28</pointsize>
+           <weight>9</weight>
+           <italic>true</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">font: 75 italic 20pt &quot;Arial&quot;;</string>
+          <string notr="true">font: 75 italic 28pt &quot;Arial&quot;;</string>
          </property>
          <property name="text">
           <string/>
@@ -562,7 +576,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          </attribute>
          <column>
           <property name="text">
-           <string>Asset</string>
+           <string>Currently Assigned Assets</string>
           </property>
          </column>
         </widget>
@@ -620,7 +634,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
          </attribute>
          <column>
           <property name="text">
-           <string>Asset</string>
+           <string>New Assets</string>
           </property>
           <property name="textAlignment">
            <set>AlignCenter</set>
@@ -1228,46 +1242,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       </spacer>
      </item>
      <item row="4" column="2" colspan="5">
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="Existing_Item_Label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>45</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>300</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Currently Assigned Items:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="New_Item_Label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>45</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>300</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>New Items:</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <layout class="QHBoxLayout" name="horizontalLayout_5"/>
      </item>
      <item row="3" column="2" colspan="5">
       <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -1343,7 +1318,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <string notr="true"/>
          </property>
          <property name="text">
-          <string>Asset #</string>
+          <string>Enter</string>
          </property>
         </widget>
        </item>
@@ -1424,7 +1399,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <string notr="true"/>
          </property>
          <property name="text">
-          <string>-</string>
+          <string>Remove Item</string>
          </property>
         </widget>
        </item>
@@ -1437,7 +1412,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <string notr="true"/>
          </property>
          <property name="text">
-          <string>!</string>
+          <string>Mark Broken</string>
          </property>
         </widget>
        </item>
