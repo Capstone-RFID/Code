@@ -394,7 +394,6 @@ class mainWindow(QWidget):
     def confirmation_msg(self, entries):
         preString = ''
         brkSring = "You have broken"
-        # message = QtWidgets.QMessageBox()
         if self.ui.Check_In_Box.isChecked():
             preString = "You Have Checked-In"
         elif self.ui.Check_Out_Box.isChecked():
@@ -406,15 +405,9 @@ class mainWindow(QWidget):
             self.qm.information(self,'Confirmation',preString + " " + str(len(entries)) + " Items: \n" +
                                 str1.join(entries) + "\n" + brkSring+ " " + str(len(self.markedList)) + " Items: " +
                                 "\n" + str1.join(self.markedList))
-            # message.setText(preString + " " + str(len(entries)) + " Items: \n" + str1.join(entries) + "\n" + brkSring
-            #                 + " " + str(len(self.markedList)) + " Items: " + "\n" + str1.join(self.markedList))
         else:
             self.qm.information(self,'Confirmation',preString + " " + str(len(entries)) + " Items: \n" +
                                 str1.join(entries))
-            # message.setText(preString + " " + str(len(entries)) + " Items: \n" + str1.join(entries))
-
-        # message.setWindowTitle("Confirmation")
-        # message.exec_()
         return
 
     def sql_call(self, status, timestamp):
