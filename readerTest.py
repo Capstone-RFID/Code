@@ -18,37 +18,19 @@ import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
 import time
+import re
 
 from password_prompt import Ui_Dialog
 from alreadyCheckedOut import checkMsg
 from configparser import ConfigParser
-
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
 Event_Log_Entry = []
 reading = "off"
-assetID = 0
-errorFlag = 0
-taglist = []
-global server 
-global database
 
-
-def cb(tagReport):
-    global readFlag, assetID
-    if reading == "on":
-        tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
-        result = [sub['EPC-96'] for sub in tags]
-        print(result)
-        if len(tags) != 0:
-            # taglist.append(tags[0]['EPC-96'])
-            # if tags[0]['EPC-96'] not in taglist:
-            # RFID(tags[0]['EPC-96'])
-            RFID(result)
-        result.clear()  ####very important
-    else:
-        return
-
-
-def RFID(result):
+#************Using PyQt5 signals and slots to read and process RFID data********
+@pyqtSlot(list)
+##If valid employee use SQL querries to find out the Asset iD from RFID ID and call rfid_insert function with Asset ID
+def update_RFID(result):
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         for tag in result:
             rfid_check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
@@ -62,25 +44,26 @@ def RFID(result):
                 window.rfid_insert(assetID[0])
                 reading = "on"
 
+class WorkerThread(QThread):
+    signal_update = pyqtSignal(list)
+    def __init__(self):
+        QThread.__init__(self)
+        # self.signals = Communicate()
+        self.signal_update.connect(update_RFID)
+    ##reads RFID tags
+    def cb(self, tagReport):
+        global readFlag
+        if reading == "on":
+            tags = tagReport.msgdict['RO_ACCESS_REPORT']['TagReportData']
+            # global result
+            result = [sub['EPC-96'] for sub in tags]
+            print(result)
+            if len(tags) != 0:
+                self.signal_update.emit(result)
+            result.clear()
+        else:
+            return
 
-def shutdown(factory):
-    return factory.politeShutdown()
-
-
-##work in progress
-# def update():
-#     update_query = '''
-#                     UPDATE TestDB.dbo.Person
-#                     SET Age = 29,City = 'Montreal'
-#                     WHERE Name = 'Jon'
-#                     '''
-#     # loop thru each row in the matrix
-#     for row in equipmentID:
-#         # define the values to insert
-#         values = (row[0], row[1],row[2],row[3])
-#         print(values)
-#         # insert the data into the database
-#         cursor.execute(update_query, values)
 
 def snapshot():
     subprocess.run(
@@ -91,11 +74,7 @@ def snapshot():
         # probably add this
         check=True)
 
-
-def stop():
-    reactor.stop()
-
-
+##Checks whether the employee exists in the database
 def Employee_ID_Check(input):
     check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
@@ -104,7 +83,7 @@ def Employee_ID_Check(input):
     else:
         return False
 
-
+#Checks whether the asset exists in the database
 def Asset_Check(input):
     check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE AssetID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
@@ -113,7 +92,7 @@ def Asset_Check(input):
     else:
         return False
 
-
+#Check whether the employee has the admin interface access
 def Permission_Check(employee):
     check_query = '''SELECT EMPLOYEEID FROM [Employee Access Table] WHERE (PERMISSION = '2' OR PERMISSION = '3') AND EMPLOYEEID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(employee))
@@ -122,13 +101,12 @@ def Permission_Check(employee):
     else:
         return False
 
-
+#Returns the name of the employee from the database based on the employee ID
 def getEmployeeName(employeeID):
     get_query = '''SELECT NAME FROM [Employee Table] WHERE EMPLOYEEID = (?);'''  # '?' is a placeholder
     cursor.execute(get_query, str(employeeID))
     name = cursor.fetchone()
     return name[0]
-
 
 class alreadyChecked(QDialog):
     def __init__(self, parent=None):
@@ -150,7 +128,7 @@ class alreadyChecked(QDialog):
     def returnFalse(self):
         self.reject()
 
-
+#PasswordWindow creates a password window where a generic password is entered to launch the application
 class passwordWindow(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(passwordWindow, self).__init__(parent)
@@ -159,14 +137,15 @@ class passwordWindow(QtWidgets.QDialog):
         self.ui.buttonBox.accepted.connect(self.handleLogin)
         self.ui.lineEdit.setEchoMode(QLineEdit.Password)
 
+    #setup the password and and the conditions of correct and wrong password in this method
     def handleLogin(self):
-        if self.ui.lineEdit.text() == 'foo':
+        if self.ui.lineEdit.text() == 'foo': #password
             self.accept()
         else:
             QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
             self.rejected()
 
-
+#****************************Main program window *********************#
 class mainWindow(QWidget):
     def __init__(self, parent=None):
         super(mainWindow, self).__init__(parent)
@@ -176,12 +155,13 @@ class mainWindow(QWidget):
         self.admin = Admin_Interface()
         self.check = alreadyChecked()
         self.show()
-        self.existingList = []
         self.eventEntry = []
         self.RemovedItems = []
         self.markedList = []
         self.alreadyCh = []
+        self.qm = QtWidgets.QMessageBox()
 
+        self.error_count = 0
         # connect button to functions
         self.ui.Done_Button.released.connect(self.done_button_clicked)  # button connected
         self.ui.Employee_ID_Enter.released.connect(self.Employee_enter)
@@ -197,16 +177,25 @@ class mainWindow(QWidget):
         self.ui.Employee_ID_Input.setFocus()
         self.ui.Mark_Button.released.connect(self.mark_assets)
         self.ui.Mark_Button.setEnabled(False)
+        self.ui.Help_Button.released.connect(self.help_button)
         self.ui.Asset_ID_Input.setEnabled(False)
-        self.timer = QtCore.QTimer()
-        self.timer.setSingleShot(True)
-        self.timer.timeout.connect(self.timer_timeout)
+        # self.timer = QtCore.QTimer()
+        # self.timer.setSingleShot(True)
+        # self.timer.timeout.connect(self.timer_timeout)
         self.ui.Admin_Button.setEnabled(False)
         self.ui.Remove_Button.setEnabled(False)
         # validator to only enter integer values into the entry fields
         self.onlyInt = QtGui.QIntValidator()
-        self.ui.Asset_ID_Input.setValidator(self.onlyInt)
+        rExp = QRegExp("[E,e][0-9]{7}$||[4][0-9]{6}$")
+        valid = QtGui.QRegExpValidator(rExp,self.ui.Asset_ID_Input)
+        self.ui.Asset_ID_Input.setValidator(valid)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
+
+    #Help button text to be displayed:
+    def help_button(self):
+        self.qm.setFixedSize(3000,5000)
+        self.qm.information(self, 'Help', '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press '!' to mark item as broken\n   (3b) Press '-' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
+        
 
     def alreadyCheckedOut(self, assetID):
         status_check_query = '''SELECT TOP(1)
@@ -218,27 +207,32 @@ class mainWindow(QWidget):
                                 ORDER BY [Event Log Table].Entry DESC'''
         cursor.execute(status_check_query, assetID)
         state = cursor.fetchone()
-        flag = "broken"
+        flag = ""
         if state == None:
             flag = "gtg"
         elif state[1] == "1":
             flag = "gtg"
-        elif state[1] == "2":
-            # self.check.ui.ConfirmMessage.setText(
-            #     "Asset is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?")
-            # self.check.open()
-            # if self.check.ui.select_reject.accepted:
-            #     flag = "gtg"
-            # else:
-            #     flag = "discard"
-            self.alreadyCh.append(assetID)
-            flag = "duplicate"
-            # qm = QtWidgets.QMessageBox()
-            # response =  qm.question(self,'', "Asset is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?", qm.Yes | qm.No)
-            # if response == qm.Yes:
-            #     flag = "gtg"
-            # else:
-            #     flag ="discard"
+        elif state[1] == "2": ##if asset checked out
+
+            if state[0] != self.ui.Employee_ID_Input.text(): ## if asset assigned to employee is not  the current employee
+                #add name to this dialog box
+
+                response =  self.qm.question(self,'Input Required', "Asset " +assetID+" is currently assigned to Employee " + state[0] + "\n\nDo you still wish to proceed?", self.qm.Yes | self.qm.No)
+                if response == self.qm.Yes:
+                    flag = "gtg"
+                else:
+                    self.RemovedItems.append(assetID)
+                    flag ="discard"
+            elif self.ui.Check_In_Box.isChecked() and state[0] == self.ui.Employee_ID_Input.text():
+                flag = "gtg"
+            elif self.ui.Check_Out_Box.isChecked() and state[0] == self.ui.Employee_ID_Input.text():
+                self.qm.warning(self, 'Notice',"You already have asset "+ assetID+" assigned to you")
+                self.RemovedItems.append(assetID)
+                flag = "discard"
+
+        elif state[1] == "5":
+            flag = "broken"
+
         return flag
 
     def adminButtonClicked(self):
@@ -272,7 +266,7 @@ class mainWindow(QWidget):
             employeeName = getEmployeeName(self.ui.Employee_ID_Input.text())
             self.ui.Name_Label.setText(str(employeeName))
         else:
-            self.error_message("Enter a valid Employee ID")
+            self.qm.information(self,'Input Required', "Enter a valid Employee ID before continuing")
             self.ui.Employee_ID_Input.clear()
             return
 
@@ -308,10 +302,11 @@ class mainWindow(QWidget):
         self.ui.Mark_Button.setEnabled(False)
         self.ui.Admin_Button.setEnabled(False)
         self.markedList.clear()
-        self.existingList.clear()
+
         self.ui.Name_Label.clear()
         self.alreadyCh.clear()
         self.ui.Remove_Button.setEnabled(False)
+        self.error_count = 0
         return
 
     def done_button_clicked(self):
@@ -332,13 +327,6 @@ class mainWindow(QWidget):
         self.ui.Asset_ID_Input.setEnabled(False)
         self.clear_lists()
 
-    def error_message(self, text):
-        error_dialog = QtWidgets.QErrorMessage()
-        error_dialog.showMessage(text)
-        error_dialog.setWindowTitle("Error")
-        error_dialog.exec_()
-        return
-
     def timer_timeout(self):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
@@ -358,78 +346,60 @@ class mainWindow(QWidget):
 
     def asset_enter_action(self):
         Asset = self.ui.Asset_ID_Input.text()
-        # self.ItemEntry.append(Asset)
-        # print('Asset Number:' + Asset)
         if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
             if Asset_Check(Asset):
                 self.ui.Check_Out_Box.setEnabled(False)
                 self.ui.Check_In_Box.setEnabled(False)
                 flag = self.alreadyCheckedOut(Asset)
-                if flag == "gtg" or flag == "duplicate":
-                    if not any(Asset in sublist for sublist in self.eventEntry) and self.eliminate_duplicates(
-                            Asset):  # any(Asset in sublist for sublist in self.ItemEntry) == False:
+                if flag == "gtg":
+                    if not any(Asset in sublist for sublist in self.eventEntry):  # any(Asset in sublist for sublist in self.ItemEntry) == False:
                         self.insert_into_table(1, Asset)
-                        # apend the entries into a list
+                        # append the entries into a list
                         self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
                         # self.StateEntry.append(self.ui.Employee_ID_Input.text())
                         # self.ui.New_Item_List.insertRow()
                         self.ui.Asset_ID_Input.clear()
-                    # else:
-                    #     self.ui.Asset_ID_Input.clear()
-                    #     self.timer.start(1000)
-                    #     self.ui.Asset_ID_Input.setText("DUPLICATE!!!")
                 ##decided to not check out an already checked out item
                 elif flag == "discard":
                     self.ui.Asset_ID_Input.clear()
                 ##broken or something
                 elif flag == "broken":
-                    self.error_message("asset is not status 1 or 2")
+                    self.qm.critical(self, 'Critical Issue',"Asset " +Asset + " is broken. Do NOT use.")
                     self.ui.Asset_ID_Input.clear()
-                flag = "broken"
             else:
-                self.error_message("Enter a valid Asset ID")
+                self.qm.warning(self, 'Check Asset', "Asset " +Asset +  " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
                 self.ui.Asset_ID_Input.clear()
         else:
-            self.error_message("Please select Check-In or Check-out action")
+            self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
         return
 
     def rfid_insert(self, asset):
+        self.error_count+=1
         if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (
-                asset not in self.RemovedItems) and self.eliminate_duplicates(asset) and (
-                self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
+                asset not in self.RemovedItems) and (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
             flag = self.alreadyCheckedOut(asset)
-            if flag == "gtg" or flag == "duplicate":
+            if flag == "gtg":
                 self.eventEntry.append([self.ui.Employee_ID_Input.text(), asset])
                 self.insert_into_table(1, asset)
-        # else:
-        #     self.ui.Asset_ID_Input.setText('DUPLICATE!!!!')
+            elif flag == "broken":
+                self.qm.critical(self, 'Critical Issue',"Asset " +asset + " is broken. Do NOT use.")
+                self.ui.Asset_ID_Input.clear()
+        elif not (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked())and self.error_count == 1:
+            self.qm.information(self, 'Input Required',"Please select an action to perform (Check-In or Check-Out")
 
     def check_in_action(self):
         timestamp = datetime.datetime.now(tz=pytz.utc)
         timestamp = timestamp.astimezone(timezone('US/Pacific'))
         self.sql_call("1", timestamp)
 
-    def eliminate_duplicates(self, asset):
-        if asset in self.existingList and self.ui.Check_Out_Box.isChecked():
-            return False
-        else:
-            return True
-
     def check_out_action(self):
         timestamp = datetime.datetime.now(tz=pytz.utc)
         timestamp = timestamp.astimezone(timezone('US/Pacific'))
-        for item in self.alreadyCh:
-            qm = QtWidgets.QMessageBox()
-            response = qm.question(self,'', "The Asset " + item +" is currently assigned to an Employee " + "\n\nDo you still wish to proceed?", qm.Yes | qm.No)
-            if response == qm.No:
-                self.eventEntry.remove([self.ui.Employee_ID_Input.text(), item])
         self.sql_call("2", timestamp)
-
 
     def confirmation_msg(self, entries):
         preString = ''
         brkSring = "You have broken"
-        message = QtWidgets.QMessageBox()
         if self.ui.Check_In_Box.isChecked():
             preString = "You Have Checked-In"
         elif self.ui.Check_Out_Box.isChecked():
@@ -438,13 +408,12 @@ class mainWindow(QWidget):
         str1 = "\n"
 
         if len(self.markedList) != 0:
-            message.setText(preString + " " + str(len(entries)) + " Items: \n" + str1.join(entries) + "\n" + brkSring
-                            + " " + str(len(self.markedList)) + " Items: " + "\n" + str1.join(self.markedList))
+            self.qm.information(self,'Confirmation',preString + " " + str(len(entries)) + " Items: \n" +
+                                str1.join(entries) + "\n" + brkSring+ " " + str(len(self.markedList)) + " Items: " +
+                                "\n" + str1.join(self.markedList))
         else:
-            message.setText(preString + " " + str(len(entries)) + " Items: \n" + str1.join(entries))
-
-        message.setWindowTitle("Confirmation")
-        message.exec_()
+            self.qm.information(self,'Confirmation',preString + " " + str(len(entries)) + " Items: \n" +
+                                str1.join(entries))
         return
 
     def sql_call(self, status, timestamp):
@@ -503,15 +472,23 @@ class mainWindow(QWidget):
                             )AS final_result
                             WHERE
                             Status = '2'; '''
+        status_check_query = '''SELECT TOP(1)
+                                [Event Log Table].EMPLOYEEID
+                                FROM
+                                [Event Log Table]
+                                WHERE
+                                [Event Log Table].AssetID = (?)
+                                ORDER BY [Event Log Table].Entry DESC'''
+
         cursor.execute(current_asset_query, str(emID), str(emID))
         for assets in cursor.fetchall():
             print(assets[0])
-            self.existingList.append(assets[0])
-            self.insert_into_table(2, assets[0])
+            cursor.execute(status_check_query, assets[0])
+            state = cursor.fetchone()
+            print (state)
+            if state[0] == self.ui.Employee_ID_Input.text():
+                self.insert_into_table(2, assets[0])
         return
-
-    def testfunction(self):
-        print('hello')
 
 
 if __name__ == "__main__":
@@ -520,10 +497,11 @@ if __name__ == "__main__":
     # RFID init
     if login.exec_() == QtWidgets.QDialog.Accepted:
         window = mainWindow()
+        work = WorkerThread()
         window.show()
         logging.getLogger().setLevel(logging.INFO)
         factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
-        factory.addTagReportCallback(cb)
+        factory.addTagReportCallback(work.cb)
         reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
         # define the server name and the database name
@@ -534,17 +512,6 @@ if __name__ == "__main__":
         database = config.get('database_info','database')
         print(server)
         print(database)
-
-        # server = "BALKARAN09"
-        # database = 'TEST'
-
-        # define the server name and the database name
-        # server = "CKERR-THINKPAD"
-        # database = 'BALKARAN09'
-
-        # define the server name and the database name
-        # server = "Raymond-P1"
-        # database = 'RCMP_RFID'
 
         # define a connection string
         cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
@@ -559,4 +526,5 @@ if __name__ == "__main__":
         r.daemon = True
         r.start()
 
-        sys.exit(app.exec())
+        Thread(target=sys.exit(app.exec()), args=(False,)).start()
+        # sys.exit(app.exec())
