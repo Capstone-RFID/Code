@@ -25,6 +25,9 @@ from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
 
+#For reading passwords
+from configparser import ConfigParser
+
 
 import openpyxl
 
@@ -175,14 +178,18 @@ class Admin_Interface(QWidget):
         #AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
         for AssetNum in AssetInputs:
+            #
             if self.Asset_Check(AssetNum):
                 AssetList = self.Asset_List_Fetch(AssetNum)
                 self.search_PopulateTable(AssetList)
-            else:
-                #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+            elif not self.Asset_Check(AssetNum) and (len(AssetInputs) > 1):
+                self.qm.warning(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
                 self.qm.warning(self, 'Notice', 'At least one asset not found')
+            elif not self.Asset_Check(AssetNum):
+                self.qm.warning(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
 
     def search_searchAssetandIDButtonClicked(self,AssetString):
+        atLeastOneAssetNotFound_Flag = 0
         print('Search Tab Search Asset and ID Button Clicked')
         #AssetNum = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
@@ -190,19 +197,45 @@ class Admin_Interface(QWidget):
             self.qm.critical(self, 'Notice', 'Unknown employee ID')
 
         for AssetNum in AssetString:
+
+            #Both the asset and employee ID exist, search and populate table display
             if self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum):
                EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum, EmployeeNum)
                if EmployeeAndAssetList:
                    self.search_PopulateTable(EmployeeAndAssetList)
                else:
                    print('No ID found with that Asset')
+                   atLeastOneAssetNotFound_Flag = 1
                    #self.qm.information(self, 'Notice', 'No employee ID found with the asset number '+ AssetNum)
+
+
+
+           #If the asset doesn't exist, we're searching a list and the employee does exist, then display these prompts
+            elif not self.Asset_Check(AssetNum) and (len(AssetString) > 1) and self.Employee_ID_Check(EmployeeNum):
+                self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
+                atLeastOneAssetNotFound_Flag = 1
+
+
+            #If the asset doesn't exist, the employee does exist, then display this prompt
             elif(not self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum)):
                 #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                self.qm.warning(self, 'Notice', 'At least one asset not found')
-            elif(not self.Employee_ID_Check(EmployeeNum)):
-                #self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
+                self.qm.critical(self, 'Notice','Asset number ' + AssetNum + ' does not exist in local database')
+
+            # If the employee ID does not exist, notify the user, then display this prompt
+            elif (not self.Employee_ID_Check(EmployeeNum)):
+                # self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
                 print('Unknown employee ID')
+                self.qm.critical(self, 'Notice', 'Employee ID ' + EmployeeNum + ' does not exist in local database')
+
+            # If the employee ID does not exist, notify the user, don't search anything then display this prompt
+            elif (not self.Asset_Check(AssetNum)):
+                # self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
+                print('Unknown employee ID')
+                self.qm.critical(self, 'Notice', 'Asset ID ' + AssetNum + ' does not exist in local database')
+
+
+        if(atLeastOneAssetNotFound_Flag == 1):
+            self.qm.warning(self, 'Notice', 'At least one asset not found')\
 
 
     def search_searchDateButtonClicked(self):
@@ -878,6 +911,7 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                     #QueryList.append(self.cursor.fetchall())
                 else:
+                    self.qm.warning(self, 'Notice','No events found between the specified dates')
                     return False
 
             # Searching for Employee ID's within a date range
@@ -891,6 +925,7 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                     # QueryList.append(self.cursor.fetchall())
                 else:
+                    self.qm.critical(self, 'Critical Issue', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
                     return False
         else:
 
@@ -909,7 +944,7 @@ class Admin_Interface(QWidget):
 
                     else:
                         #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                        self.qm.information(self, 'Notice', 'At least one asset not found')
+                        self.qm.warning(self, 'Notice', 'Asset number ' + Asset + ' has no associated events found between the specified dates')
                         #return False
 
 
@@ -925,12 +960,13 @@ class Admin_Interface(QWidget):
                         for Event in self.cursor.fetchall():
                             QueryList.append(Event)
                     else:
-                        self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                        self.qm.information(self, 'Notice', 'At least one asset not found')
+                        #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+                        self.qm.information(self, 'Notice', 'Employee ID ' + EmployeeID + ' has not used asset number ' + Asset + ' between the specified dates')
                         #return False
             #If the list is empty (queries returned no results whatsoever) then return false
             if not(QueryList):
                 return False
+                self.qm.information(self, 'Notice','No events found between the specified dates')
             else:
 
                 return QueryList
@@ -997,6 +1033,7 @@ class Admin_Interface(QWidget):
             self.cursor.execute(check_query, str(AssetNum))
             return True
         else:
+
             return False
 
     # def Asset_Return(self, AssetNum):
