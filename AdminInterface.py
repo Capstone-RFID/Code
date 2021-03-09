@@ -183,10 +183,10 @@ class Admin_Interface(QWidget):
                 AssetList = self.Asset_List_Fetch(AssetNum)
                 self.search_PopulateTable(AssetList)
             elif not self.Asset_Check(AssetNum) and (len(AssetInputs) > 1):
-                self.qm.warning(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
+                self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
                 self.qm.warning(self, 'Notice', 'At least one asset not found')
             elif not self.Asset_Check(AssetNum):
-                self.qm.warning(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
+                self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
 
     def search_searchAssetandIDButtonClicked(self,AssetString):
         atLeastOneAssetNotFound_Flag = 0
@@ -243,6 +243,11 @@ class Admin_Interface(QWidget):
 
         dateTimeLowerBound = self.ui.Search_Datetime_From.text()
         dateTimeUpperBound = self.ui.Search_Datetime_To.text()
+        EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
+        if(self.ui.Search_Asset_Numbers_Field.text() != ''):
+            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text()))
+        else:
+            AssetList = []
 
         if self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound):
             DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
@@ -250,10 +255,18 @@ class Admin_Interface(QWidget):
                 self.search_PopulateTable(DateList)
         else:
             #self.ui.Search_UI_Message_Prompt.setText('No events found between these dates')
-            self.qm.critical(self, 'Notice', 'No events found between these dates')
+            self.qm.information(self, 'Notice', 'No events found between these dates')
 
-        #self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound)
-        #print(self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound))
+            if not self.Employee_ID_Check(EmployeeID) and (EmployeeID != ''):
+                self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in the local database')
+
+            if len(AssetList) != 0:
+                for Asset in AssetList:
+                    if not self.Asset_Check(Asset):
+                        self.qm.critical(self, 'Critical Issue','Asset ID ' + Asset + ' does not exist in the local database')
+
+
+
 
 
     def search_printPDFButtonClicked(self):
@@ -925,7 +938,7 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                     # QueryList.append(self.cursor.fetchall())
                 else:
-                    self.qm.critical(self, 'Critical Issue', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+                    self.qm.warning(self, 'Notice', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
                     return False
         else:
 
@@ -944,7 +957,10 @@ class Admin_Interface(QWidget):
 
                     else:
                         #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                        self.qm.warning(self, 'Notice', 'Asset number ' + Asset + ' has no associated events found between the specified dates')
+                        if self.Asset_Check(Asset):
+                            self.qm.warning(self, 'Notice', 'Asset number ' + Asset + ' has no associated events found between the specified dates')
+                        else:
+                            self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
                         #return False
 
 
@@ -966,7 +982,7 @@ class Admin_Interface(QWidget):
             #If the list is empty (queries returned no results whatsoever) then return false
             if not(QueryList):
                 return False
-                self.qm.information(self, 'Notice','No events found between the specified dates')
+                self.qm.information(self, 'Notice','No events found between the specified dates for these Asset(s) and Employee ID')
             else:
 
                 return QueryList
