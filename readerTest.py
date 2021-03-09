@@ -64,7 +64,6 @@ class WorkerThread(QThread):
         else:
             return
 
-
 def snapshot():
     subprocess.run(
         ["C:\\Program Files\\Microsoft SQL Server\\150\\COM\\snapshot.exe",
@@ -229,7 +228,9 @@ class mainWindow(QWidget):
                 self.qm.warning(self, 'Notice',"You already have asset "+ assetID+" assigned to you")
                 self.RemovedItems.append(assetID)
                 flag = "discard"
-        elif state[1] == "5":
+        elif state[1] == "5" and self.ui.Check_In_Box.isChecked():
+            flag = "brokenCheckIn"
+        elif state[1] == "5" and self.ui.Check_Out_Box.isChecked() :
             flag = "broken"
         return flag
 
@@ -245,9 +246,14 @@ class mainWindow(QWidget):
             if text not in self.RemovedItems:
                 self.RemovedItems.append(text)
             y = [x for x in self.eventEntry if text in x]
+            k = [x for x in self.markedList if text in x]
             if len(y) != 0:
                 z = self.eventEntry.index(y[0])
                 del self.eventEntry[z]
+            if len(k) != 0:
+                p = self.markedList.index(k[0])
+                del self.markedList[p]
+
             self.ui.New_Item_List.removeRow(row)
         else:
             return
@@ -277,7 +283,7 @@ class mainWindow(QWidget):
             y = [x for x in self.eventEntry if text in x]
             z = self.eventEntry.index(y[0])
             del self.eventEntry[z]
-            self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(125, 125, 125))
+            self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
             self.ui.New_Item_List.clearSelection()
         else:
             return
@@ -344,13 +350,17 @@ class mainWindow(QWidget):
 
     def asset_enter_action(self):
         Asset = self.ui.Asset_ID_Input.text()
+        if re.findall(r"\Ae",Asset):
+            Asset = str.capitalize(Asset)
+        else:
+            Asset = Asset
         if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
             if Asset_Check(Asset):
                 self.ui.Check_Out_Box.setEnabled(False)
                 self.ui.Check_In_Box.setEnabled(False)
                 flag = self.alreadyCheckedOut(Asset)
                 if flag == "gtg":
-                    if not any(Asset in sublist for sublist in self.eventEntry):  # any(Asset in sublist for sublist in self.ItemEntry) == False:
+                    if not any(Asset in sublist for sublist in self.eventEntry):
                         self.insert_into_table(1, Asset)
                         # append the entries into a list
                         self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
@@ -364,6 +374,14 @@ class mainWindow(QWidget):
                 elif flag == "broken":
                     self.qm.critical(self, 'Critical Issue',"Asset " +Asset + " is broken. Do NOT use.")
                     self.ui.Asset_ID_Input.clear()
+                elif flag == "brokenCheckIn":
+                    if not any(Asset in sublist for sublist in self.eventEntry):
+                        self.insert_into_table(1, Asset)
+                        # append the entries into a list
+                        self.markedList.append(Asset)
+                        row = self.ui.New_Item_List.rowCount() -1
+                        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
+                        self.ui.Asset_ID_Input.clear()
             else:
                 self.qm.warning(self, 'Check Asset', "Asset " +Asset +  " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
                 self.ui.Asset_ID_Input.clear()
@@ -382,6 +400,12 @@ class mainWindow(QWidget):
             elif flag == "broken":
                 self.qm.critical(self, 'Critical Issue',"Asset " +asset + " is broken. Do NOT use.")
                 self.ui.Asset_ID_Input.clear()
+            elif flag == "brokenCheckIn":
+                    self.insert_into_table(1, asset)
+                    # append the entries into a list
+                    self.markedList.append(asset)
+                    self.ui.Asset_ID_Input.clear()
+
         elif not (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked())and self.error_count == 1:
             self.qm.information(self, 'Input Required',"Please select an action to perform (Check-In or Check-Out")
 
