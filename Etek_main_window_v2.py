@@ -114,8 +114,6 @@ class Ui_MainWindow(object):
 "QMessageBox {\n"
 "    background-color: #0D1218;\n"
 "    Font: 14pt \"Arial\";\n"
-"    min-width: 500px;\n"
-"\n"
 "}\n"
 "QMessageBox QPushButton {\n"
 "    font: 14pt \"Arial\";\n"
@@ -194,7 +192,7 @@ class Ui_MainWindow(object):
 "     background: none;\n"
 " }\n"
 "\n"
-"")
+" ")
         self.gridLayout_2 = QtWidgets.QGridLayout(MainWindow)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
@@ -202,11 +200,21 @@ class Ui_MainWindow(object):
         self.WelcomeMessage = QtWidgets.QHBoxLayout()
         self.WelcomeMessage.setObjectName("WelcomeMessage")
         self.Welcome_to_ETEK_Label = QtWidgets.QLabel(MainWindow)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(28)
+        font.setBold(False)
+        font.setItalic(True)
+        font.setWeight(9)
+        self.Welcome_to_ETEK_Label.setFont(font)
+        self.Welcome_to_ETEK_Label.setStyleSheet("font: 75 italic 28pt \"Arial\";")
         self.Welcome_to_ETEK_Label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.Welcome_to_ETEK_Label.setObjectName("Welcome_to_ETEK_Label")
         self.WelcomeMessage.addWidget(self.Welcome_to_ETEK_Label)
         self.Name_Label = QtWidgets.QLabel(MainWindow)
+        self.Name_Label.setStyleSheet("font: 75 italic 20pt \"Arial\";")
         self.Name_Label.setText("")
+        self.Name_Label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
         self.Name_Label.setObjectName("Name_Label")
         self.WelcomeMessage.addWidget(self.Name_Label)
         self.gridLayout.addLayout(self.WelcomeMessage, 0, 2, 1, 5)
