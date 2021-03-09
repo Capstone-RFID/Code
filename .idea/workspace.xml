@@ -391,6 +391,7 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/readerTest.py</url>
@@ -480,6 +481,25 @@
       </breakpoints>
 =======
 >>>>>>> WIP-BR
+=======
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>383</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>249</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/readerTest.py</url>
+          <line>254</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+>>>>>>> a0d57f40cbaf323728c5c9cbdf9f4499b4a3aaa3
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -488,6 +508,7 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -498,6 +519,13 @@
     </watches-manager>
 =======
 >>>>>>> WIP-BR
+=======
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.ui.New_Item_List.rowCount()" language="Python" />
+      </configuration>
+    </watches-manager>
+>>>>>>> a0d57f40cbaf323728c5c9cbdf9f4499b4a3aaa3
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
