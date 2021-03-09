@@ -404,6 +404,8 @@ class mainWindow(QWidget):
                     self.insert_into_table(1, asset)
                     # append the entries into a list
                     self.markedList.append(asset)
+                    row = self.ui.New_Item_List.rowCount() -1
+                    self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
                     self.ui.Asset_ID_Input.clear()
 
         elif not (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked())and self.error_count == 1:
