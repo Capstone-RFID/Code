@@ -184,8 +184,6 @@ QComboBox::drop-down{
 QMessageBox {
 	background-color: #0D1218;
 	Font: 14pt &quot;Arial&quot;;
-	min-width: 3500px;
-
 }
 QMessageBox QPushButton {
 	font: 14pt &quot;Arial&quot;;
@@ -264,7 +262,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
      background: none;
  }
 
-</string>
+ </string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -273,6 +271,18 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <layout class="QHBoxLayout" name="WelcomeMessage">
        <item>
         <widget class="QLabel" name="Welcome_to_ETEK_Label">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>28</pointsize>
+           <weight>9</weight>
+           <italic>true</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 75 italic 28pt &quot;Arial&quot;;</string>
+         </property>
          <property name="text">
           <string>Welcome to E-TEK,</string>
          </property>
@@ -283,8 +293,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        </item>
        <item>
         <widget class="QLabel" name="Name_Label">
+         <property name="styleSheet">
+          <string notr="true">font: 75 italic 20pt &quot;Arial&quot;;</string>
+         </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
          </property>
         </widget>
        </item>
