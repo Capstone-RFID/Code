@@ -177,10 +177,11 @@ class mainWindow(QWidget):
         self.ui.Employee_ID_Input.setFocus()
         self.ui.Mark_Button.released.connect(self.mark_assets)
         self.ui.Mark_Button.setEnabled(False)
+        self.ui.Help_Button.released.connect(self.help_button)
         self.ui.Asset_ID_Input.setEnabled(False)
-        self.timer = QtCore.QTimer()
-        self.timer.setSingleShot(True)
-        self.timer.timeout.connect(self.timer_timeout)
+        # self.timer = QtCore.QTimer()
+        # self.timer.setSingleShot(True)
+        # self.timer.timeout.connect(self.timer_timeout)
         self.ui.Admin_Button.setEnabled(False)
         self.ui.Remove_Button.setEnabled(False)
         # validator to only enter integer values into the entry fields
@@ -190,6 +191,11 @@ class mainWindow(QWidget):
         self.ui.Asset_ID_Input.setValidator(valid)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
 
+    #Help button text to be displayed:
+    def help_button(self):
+        self.qm.setFixedSize(3000,5000)
+        self.qm.information(self, 'Help', '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press '!' to mark item as broken\n   (3b) Press '-' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
+        
 
     def alreadyCheckedOut(self, assetID):
         status_check_query = '''SELECT TOP(1)

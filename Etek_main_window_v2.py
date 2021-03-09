@@ -114,6 +114,8 @@ class Ui_MainWindow(object):
 "QMessageBox {\n"
 "    background-color: #0D1218;\n"
 "    Font: 14pt \"Arial\";\n"
+"    min-width: 500px;\n"
+"\n"
 "}\n"
 "QMessageBox QPushButton {\n"
 "    font: 14pt \"Arial\";\n"
@@ -593,10 +595,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem12)
-        self.pushButton = QtWidgets.QPushButton(MainWindow)
-        self.pushButton.setMinimumSize(QtCore.QSize(100, 50))
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_4.addWidget(self.pushButton)
+        self.Help_Button = QtWidgets.QPushButton(MainWindow)
+        self.Help_Button.setMinimumSize(QtCore.QSize(100, 50))
+        self.Help_Button.setObjectName("Help_Button")
+        self.horizontalLayout_4.addWidget(self.Help_Button)
         self.gridLayout.addLayout(self.horizontalLayout_4, 6, 1, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
@@ -632,4 +634,4 @@ class Ui_MainWindow(object):
         self.Remove_Button.setText(_translate("MainWindow", "-"))
         self.Mark_Button.setText(_translate("MainWindow", "!"))
         self.Admin_Button.setText(_translate("MainWindow", "Administrator Access"))
-        self.pushButton.setText(_translate("MainWindow", "Help"))
+        self.Help_Button.setText(_translate("MainWindow", "Help"))
