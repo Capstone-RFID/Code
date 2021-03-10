@@ -256,6 +256,7 @@ class mainWindow(QWidget):
 
             self.ui.New_Item_List.removeRow(row)
         else:
+            self.qm.information(self,'Selection Required', "Please select an asset to remove first")
             return
 
     def Employee_enter(self):
@@ -286,6 +287,7 @@ class mainWindow(QWidget):
             self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
             self.ui.New_Item_List.clearSelection()
         else:
+            self.qm.information(self,'Selection Required', "Please select an asset to mark as broken first")
             return
 
     def clear_lists(self):

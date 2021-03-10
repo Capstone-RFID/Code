@@ -71,12 +71,17 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "    background-color: #282c30;\n"
 "    border-radius: 5px;\n"
+"\n"
 "}\n"
 "QPushButton::pressed{\n"
 "    background-color: #577590; \n"
 "}\n"
 "QPushButton:hover:!pressed{\n"
 "    background-color: #739bbe; \n"
+"}\n"
+"QToolButton:disabled {\n"
+"    color:  #5a5c5e;\n"
+"    background-color: #5a5c5e;\n"
 "}\n"
 "QToolButton{\n"
 "    font: 14pt \"Arial\";\n"
@@ -208,11 +213,18 @@ class Ui_MainWindow(object):
         font.setWeight(9)
         self.Welcome_to_ETEK_Label.setFont(font)
         self.Welcome_to_ETEK_Label.setStyleSheet("font: 75 italic 28pt \"Arial\";")
-        self.Welcome_to_ETEK_Label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.Welcome_to_ETEK_Label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing)
         self.Welcome_to_ETEK_Label.setObjectName("Welcome_to_ETEK_Label")
         self.WelcomeMessage.addWidget(self.Welcome_to_ETEK_Label)
         self.Name_Label = QtWidgets.QLabel(MainWindow)
-        self.Name_Label.setStyleSheet("font: 75 italic 20pt \"Arial\";")
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(28)
+        font.setBold(False)
+        font.setItalic(True)
+        font.setWeight(9)
+        self.Name_Label.setFont(font)
+        self.Name_Label.setStyleSheet("font: 75 italic 28pt \"Arial\";")
         self.Name_Label.setText("")
         self.Name_Label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
         self.Name_Label.setObjectName("Name_Label")
@@ -525,16 +537,6 @@ class Ui_MainWindow(object):
         self.gridLayout.addItem(spacerItem6, 6, 6, 1, 1)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.Existing_Item_Label = QtWidgets.QLabel(MainWindow)
-        self.Existing_Item_Label.setMinimumSize(QtCore.QSize(0, 45))
-        self.Existing_Item_Label.setMaximumSize(QtCore.QSize(300, 50))
-        self.Existing_Item_Label.setObjectName("Existing_Item_Label")
-        self.horizontalLayout_5.addWidget(self.Existing_Item_Label)
-        self.New_Item_Label = QtWidgets.QLabel(MainWindow)
-        self.New_Item_Label.setMinimumSize(QtCore.QSize(0, 45))
-        self.New_Item_Label.setMaximumSize(QtCore.QSize(300, 50))
-        self.New_Item_Label.setObjectName("New_Item_Label")
-        self.horizontalLayout_5.addWidget(self.New_Item_Label)
         self.gridLayout.addLayout(self.horizontalLayout_5, 4, 2, 1, 5)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
@@ -625,21 +627,19 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Form"))
         self.Welcome_to_ETEK_Label.setText(_translate("MainWindow", "Welcome to E-TEK,"))
         item = self.Existing_Item_list.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Asset"))
+        item.setText(_translate("MainWindow", "Currently Assigned Assets"))
         item = self.New_Item_List.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Asset"))
+        item.setText(_translate("MainWindow", "New Assets"))
         self.Employee_ID_Label.setText(_translate("MainWindow", "Employee ID:"))
         self.Employee_ID_Enter.setText(_translate("MainWindow", "Enter"))
         self.Done_Button.setText(_translate("MainWindow", "Done"))
         self.groupBox.setTitle(_translate("MainWindow", "Action to Perform?"))
         self.Check_In_Box.setText(_translate("MainWindow", "Check IN"))
         self.Check_Out_Box.setText(_translate("MainWindow", "Check OUT"))
-        self.Existing_Item_Label.setText(_translate("MainWindow", "Currently Assigned Items:"))
-        self.New_Item_Label.setText(_translate("MainWindow", "New Items:"))
         self.Asset_ID_Label.setText(_translate("MainWindow", "Asset #:"))
-        self.Asset_ID_Enter.setText(_translate("MainWindow", "Asset #"))
+        self.Asset_ID_Enter.setText(_translate("MainWindow", "Enter"))
         self.Cancel_Button.setText(_translate("MainWindow", "Cancel"))
-        self.Remove_Button.setText(_translate("MainWindow", "-"))
-        self.Mark_Button.setText(_translate("MainWindow", "!"))
+        self.Remove_Button.setText(_translate("MainWindow", "Remove Item"))
+        self.Mark_Button.setText(_translate("MainWindow", "Mark Broken"))
         self.Admin_Button.setText(_translate("MainWindow", "Administrator Access"))
         self.Help_Button.setText(_translate("MainWindow", "Help"))
