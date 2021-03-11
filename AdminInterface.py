@@ -244,11 +244,15 @@ class Admin_Interface(QWidget):
         dateTimeLowerBound = self.ui.Search_Datetime_From.text()
         dateTimeUpperBound = self.ui.Search_Datetime_To.text()
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
+
+        #If asset field is not blank, retrieve all asset inputs
         if(self.ui.Search_Asset_Numbers_Field.text() != ''):
             AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text()))
         else:
             AssetList = []
 
+        #If the date range is valid, go search for the range,
+        #else tell user no events b/w dates and display additional prompts for invalid Employee and asset input
         if self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound):
             DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
             if DateList:
@@ -450,7 +454,7 @@ class Admin_Interface(QWidget):
         self.ui.Create_UI_Message_Prompt.setText('')
 
         #Turn text field string into a list of a single string
-        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text(),1)
+        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text())
 
         #If the format is good, then go ahead, else this is replaced with a blank list
         AssetFiltered = self.checkInputAssetFormat(AssetFiltered)
@@ -657,7 +661,7 @@ class Admin_Interface(QWidget):
         AssetField = self.ui.Search_Asset_Numbers_Field.text()
 
         #Seperate the field entry into a list
-        AssetList = self.checkMultiItemsCommas(AssetField,1)
+        AssetList = self.checkMultiItemsCommas(AssetField)
 
 
         #First captialize each entry that starts with an 'e' in AssetList before doing a comparison
@@ -672,7 +676,7 @@ class Admin_Interface(QWidget):
             #If it's not valid, then notify user and go ahead with search for the valid asset #'s
             self.qm.warning(self, 'Notice', 'At least one invalid asset number was entered, please check field input')
 
-            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(AssetField, 1))
+            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(AssetField))
 
 
         #Prevents redundancy in search
@@ -723,7 +727,7 @@ class Admin_Interface(QWidget):
     #This method uses Regex to separate a string of #'s separated by commas into a list that we can put into
     #our search and populate table methods.  This also ignores whitespace to allow more robust valid inputs
     #If you're feeding this an asset or list of assets, then give it a second argument = 1
-    def checkMultiItemsCommas(self, StringWithCommas,isAssetList):
+    def checkMultiItemsCommas(self, StringWithCommas):
 
         CapitalCheckList = []
         RawAssetList = (re.findall(r'[^,\s]+', StringWithCommas))
@@ -789,7 +793,7 @@ class Admin_Interface(QWidget):
 
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
 
-        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text(),1)
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
 
         QueryList = [] #empty list for appending queries
 
@@ -906,7 +910,7 @@ class Admin_Interface(QWidget):
     def search_fetchDateTime(self,LowerBound,UpperBound):
         #Asset = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
-        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text(),1)
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
 
 
         QueryList = [] #Initialize empty list to store all query results
@@ -938,7 +942,10 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                     # QueryList.append(self.cursor.fetchall())
                 else:
-                    self.qm.warning(self, 'Notice', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+                    if(self.Employee_ID_Check(EmployeeID)):
+                        self.qm.warning(self, 'Notice', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+                    else:
+                        self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in local database')
                     return False
         else:
 
@@ -977,7 +984,19 @@ class Admin_Interface(QWidget):
                             QueryList.append(Event)
                     else:
                         #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                        self.qm.information(self, 'Notice', 'Employee ID ' + EmployeeID + ' has not used asset number ' + Asset + ' between the specified dates')
+
+                        #if the asset exists, notify that employee ID has not used it, else say that it doesn't exist
+                        if (not self.Employee_ID_Check(EmployeeID)):
+                            self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in local database')
+                            
+                        if(self.Asset_Check(Asset)):
+                            self.qm.information(self, 'Notice', 'Employee ID ' + EmployeeID + ' has not used asset number ' + Asset + ' between the specified dates')
+                        else:
+                            self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
+
+                        if (self.Employee_ID_Check(EmployeeID) and self.Asset_Check(Asset)):
+                            self.qm.warning(self, 'Notice','Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+
                         #return False
             #If the list is empty (queries returned no results whatsoever) then return false
             if not(QueryList):
