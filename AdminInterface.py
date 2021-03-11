@@ -850,7 +850,11 @@ class Admin_Interface(QWidget):
                 else:
                     print("No items found for the specified month")
                     #self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
-                    self.qm.information(self, 'Notice', 'No events found for this month')
+                    if(self.Employee_ID_Check(EmployeeID)):
+                        self.qm.information(self, 'Notice', 'No events with this employee ID found for this month')
+                    else:
+                        self.qm.critical(self, 'Notice', 'Employee ID ' + EmployeeID + ' does not exist in the local database')
+
                     return False
 
         for Asset in AssetList:
@@ -867,8 +871,13 @@ class Admin_Interface(QWidget):
                    # return self.cursor.fetchall()
                 else:
                     print("No items found for the specified month")
-                    self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                    self.qm.information(self, 'Notice', 'At least one asset not found')
+                    #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+
+                    if(not self.Asset_Check(Asset)):
+                        self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
+
+
+
                     #return False
 
 
@@ -886,11 +895,18 @@ class Admin_Interface(QWidget):
 
                 else:
                     print("No items found for the specified month")
-                    self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                    self.qm.information(self, 'Notice', 'At least one asset not found')
+                    #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+
+                    if (not self.Asset_Check(Asset)):
+                        self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
+
+                    if ( not self.Employee_ID_Check(EmployeeID)):
+                        self.qm.critical(self, 'Notice','Employee ID ' + EmployeeID + ' does not exist in the local database')
+
                     #return False
         # If the list is empty (queries returned no results whatsoever) then return false
         if not (QueryList):
+            self.qm.information(self, 'Notice', 'No events found for this search criteria')
             return False
         else:
             return QueryList
@@ -988,7 +1004,7 @@ class Admin_Interface(QWidget):
                         #if the asset exists, notify that employee ID has not used it, else say that it doesn't exist
                         if (not self.Employee_ID_Check(EmployeeID)):
                             self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in local database')
-                            
+
                         if(self.Asset_Check(Asset)):
                             self.qm.information(self, 'Notice', 'Employee ID ' + EmployeeID + ' has not used asset number ' + Asset + ' between the specified dates')
                         else:
