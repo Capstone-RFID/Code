@@ -92,7 +92,7 @@ QMessageBox QPushButton {
 QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -188,6 +188,88 @@ color: rgb(171, 171, 171);</string>
        </item>
        <item>
         <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_19">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="Home_ChangePassword_Button">
+           <property name="minimumSize">
+            <size>
+             <width>436</width>
+             <height>58</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>436</width>
+             <height>58</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#Home_ChangePassword_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+border-width: 2px;
+border-radius: 10px;
+border-color: beige;
+font: 26pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Home_ChangePassword_Button:pressed {
+	background-color: #577590;
+    border-style: inset;
+}</string>
+           </property>
+           <property name="text">
+            <string>Change Password</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_17">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -419,7 +501,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -574,7 +656,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>246</width>
                  <height>51</height>
                 </size>
                </property>
@@ -807,7 +889,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1088,7 +1170,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <widget class="QPushButton" name="Edit_Search_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>246</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1121,7 +1203,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Clear_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>246</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1151,7 +1233,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Commit_Edits_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>246</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1262,7 +1344,7 @@ QPushButton#Import_ImportAssets_Button:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Import Assets from Excel file</string>
+              <string>Import Assets from AssetList.xlsx</string>
              </property>
             </widget>
            </item>
@@ -1302,7 +1384,7 @@ QPushButton#Import_ImportEmployees_Button:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Import Employees from Excel file</string>
+              <string>Import Employees from EmployeeList.xlsx</string>
              </property>
             </widget>
            </item>
@@ -1340,7 +1422,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>
@@ -1370,7 +1452,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>246</width>
                <height>51</height>
               </size>
              </property>

@@ -77,6 +77,23 @@ class Admin_Interface(QWidget):
 
         #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
+        # ****************************************Asset Validators*********************************
+        #Validator for each QLineEdit in
+        # validator to only enter valid asset ID's into asset ID entry fields
+        self.onlyInt = QtGui.QIntValidator()
+
+        rExpSearch = QRegExp("(([E,e][0-9]{7}|[4][0-9]{6})(,{1}))*") #"(,?[E,e][0-9]{7}|[4][0-9]{6})* + (,)*"
+                                                                    #"(([E,e][0-9]{7}|[4][0-9]{6})(,))*"
+        SearchTabValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
+        self.ui.Search_Asset_Numbers_Field.setValidator(SearchTabValid)
+
+        rExpEditAndCreate = QRegExp("([E,e][0-9]{7}|[4][0-9]{6})")
+        EditTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Edit_Asset_Field)
+        self.ui.Edit_Asset_Field.setValidator(EditTabValid)
+
+        CreateTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Create_Asset_Num_Field)
+        self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
+        # ****************************************End of Asset Validators*********************************
 
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
@@ -183,10 +200,10 @@ class Admin_Interface(QWidget):
                 AssetList = self.Asset_List_Fetch(AssetNum)
                 self.search_PopulateTable(AssetList)
             elif not self.Asset_Check(AssetNum) and (len(AssetInputs) > 1):
-                self.qm.warning(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
+                self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
                 self.qm.warning(self, 'Notice', 'At least one asset not found')
             elif not self.Asset_Check(AssetNum):
-                self.qm.warning(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
+                self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
 
     def search_searchAssetandIDButtonClicked(self,AssetString):
         atLeastOneAssetNotFound_Flag = 0
@@ -243,17 +260,34 @@ class Admin_Interface(QWidget):
 
         dateTimeLowerBound = self.ui.Search_Datetime_From.text()
         dateTimeUpperBound = self.ui.Search_Datetime_To.text()
+        EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
 
+        #If asset field is not blank, retrieve all asset inputs
+        if(self.ui.Search_Asset_Numbers_Field.text() != ''):
+            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text()))
+        else:
+            AssetList = []
+
+        #If the date range is valid, go search for the range,
+        #else tell user no events b/w dates and display additional prompts for invalid Employee and asset input
         if self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound):
             DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
             if DateList:
                 self.search_PopulateTable(DateList)
         else:
             #self.ui.Search_UI_Message_Prompt.setText('No events found between these dates')
-            self.qm.critical(self, 'Notice', 'No events found between these dates')
+            self.qm.information(self, 'Notice', 'No events found between these dates')
 
-        #self.search_checkDateTimeBounds(dateTimeLowerBound, dateTimeUpperBound)
-        #print(self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound))
+            if not self.Employee_ID_Check(EmployeeID) and (EmployeeID != ''):
+                self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in the local database')
+
+            if len(AssetList) != 0:
+                for Asset in AssetList:
+                    if not self.Asset_Check(Asset):
+                        self.qm.critical(self, 'Critical Issue','Asset ID ' + Asset + ' does not exist in the local database')
+
+
+
 
 
     def search_printPDFButtonClicked(self):
@@ -363,8 +397,8 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
         else:
             print('Edit search did not find the asset!')
-            self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
-            self.qm.information(self, 'Notice', 'Asset not found!')
+            #self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
+            self.qm.Critical(self, 'Invalid Entry', 'Asset does not exist in local database!')
 
 
     def edit_FetchNameViaID(self, EmployeeID):
@@ -417,7 +451,7 @@ class Admin_Interface(QWidget):
 
         else:
             print("Please fill status field before committing")
-            self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
+            #self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
             self.qm.critical(self, 'Critical Issue', 'Please fill status field!')
 
 
@@ -437,7 +471,7 @@ class Admin_Interface(QWidget):
         self.ui.Create_UI_Message_Prompt.setText('')
 
         #Turn text field string into a list of a single string
-        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text(),1)
+        AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text())
 
         #If the format is good, then go ahead, else this is replaced with a blank list
         AssetFiltered = self.checkInputAssetFormat(AssetFiltered)
@@ -563,7 +597,7 @@ class Admin_Interface(QWidget):
 
 
         data_Folder = Path.cwd()
-        employeeFile = data_Folder / "employeeList.xlsx"
+        employeeFile = data_Folder / "EmployeeList.xlsx"
         dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
 
@@ -644,7 +678,7 @@ class Admin_Interface(QWidget):
         AssetField = self.ui.Search_Asset_Numbers_Field.text()
 
         #Seperate the field entry into a list
-        AssetList = self.checkMultiItemsCommas(AssetField,1)
+        AssetList = self.checkMultiItemsCommas(AssetField)
 
 
         #First captialize each entry that starts with an 'e' in AssetList before doing a comparison
@@ -659,7 +693,7 @@ class Admin_Interface(QWidget):
             #If it's not valid, then notify user and go ahead with search for the valid asset #'s
             self.qm.warning(self, 'Notice', 'At least one invalid asset number was entered, please check field input')
 
-            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(AssetField, 1))
+            AssetList = self.checkInputAssetFormat(self.checkMultiItemsCommas(AssetField))
 
 
         #Prevents redundancy in search
@@ -710,14 +744,16 @@ class Admin_Interface(QWidget):
     #This method uses Regex to separate a string of #'s separated by commas into a list that we can put into
     #our search and populate table methods.  This also ignores whitespace to allow more robust valid inputs
     #If you're feeding this an asset or list of assets, then give it a second argument = 1
-    def checkMultiItemsCommas(self, StringWithCommas,isAssetList):
+    def checkMultiItemsCommas(self, StringWithCommas):
 
         CapitalCheckList = []
         RawAssetList = (re.findall(r'[^,\s]+', StringWithCommas))
 
         for index in RawAssetList:
             # If the string begins w/ lower case e, then replace it with an E
-            if re.findall(r"\be", index):
+            if index == '':
+                print("Entered a double comma")
+            elif re.findall(r"\be", index):
                 CapitalCheckList.append(str.capitalize(index))
             else:
                 CapitalCheckList.append(str(index))
@@ -776,7 +812,7 @@ class Admin_Interface(QWidget):
 
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
 
-        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text(),1)
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
 
         QueryList = [] #empty list for appending queries
 
@@ -833,7 +869,11 @@ class Admin_Interface(QWidget):
                 else:
                     print("No items found for the specified month")
                     #self.ui.Search_UI_Message_Prompt.setText('No items found for this month')
-                    self.qm.information(self, 'Notice', 'No events found for this month')
+                    if(self.Employee_ID_Check(EmployeeID)):
+                        self.qm.information(self, 'Notice', 'No events with this employee ID found for this month')
+                    else:
+                        self.qm.critical(self, 'Notice', 'Employee ID ' + EmployeeID + ' does not exist in the local database')
+
                     return False
 
         for Asset in AssetList:
@@ -850,8 +890,13 @@ class Admin_Interface(QWidget):
                    # return self.cursor.fetchall()
                 else:
                     print("No items found for the specified month")
-                    self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                    self.qm.information(self, 'Notice', 'At least one asset not found')
+                    #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+
+                    if(not self.Asset_Check(Asset)):
+                        self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
+
+
+
                     #return False
 
 
@@ -869,11 +914,18 @@ class Admin_Interface(QWidget):
 
                 else:
                     print("No items found for the specified month")
-                    self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                    self.qm.information(self, 'Notice', 'At least one asset not found')
+                    #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
+
+                    if (not self.Asset_Check(Asset)):
+                        self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
+
+                    if ( not self.Employee_ID_Check(EmployeeID)):
+                        self.qm.critical(self, 'Notice','Employee ID ' + EmployeeID + ' does not exist in the local database')
+
                     #return False
         # If the list is empty (queries returned no results whatsoever) then return false
         if not (QueryList):
+            self.qm.information(self, 'Notice', 'No events found for this search criteria')
             return False
         else:
             return QueryList
@@ -893,7 +945,7 @@ class Admin_Interface(QWidget):
     def search_fetchDateTime(self,LowerBound,UpperBound):
         #Asset = self.ui.Search_Asset_Numbers_Field.text()
         EmployeeID = self.ui.Search_Employee_ID_Entry_Field.text()
-        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text(),1)
+        AssetList = self.checkMultiItemsCommas(self.ui.Search_Asset_Numbers_Field.text())
 
 
         QueryList = [] #Initialize empty list to store all query results
@@ -925,7 +977,10 @@ class Admin_Interface(QWidget):
                     return self.cursor.fetchall()
                     # QueryList.append(self.cursor.fetchall())
                 else:
-                    self.qm.critical(self, 'Critical Issue', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+                    if(self.Employee_ID_Check(EmployeeID)):
+                        self.qm.warning(self, 'Notice', 'Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+                    else:
+                        self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in local database')
                     return False
         else:
 
@@ -944,7 +999,10 @@ class Admin_Interface(QWidget):
 
                     else:
                         #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                        self.qm.warning(self, 'Notice', 'Asset number ' + Asset + ' has no associated events found between the specified dates')
+                        if self.Asset_Check(Asset):
+                            self.qm.warning(self, 'Notice', 'Asset number ' + Asset + ' has no associated events found between the specified dates')
+                        else:
+                            self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
                         #return False
 
 
@@ -961,12 +1019,24 @@ class Admin_Interface(QWidget):
                             QueryList.append(Event)
                     else:
                         #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
-                        self.qm.information(self, 'Notice', 'Employee ID ' + EmployeeID + ' has not used asset number ' + Asset + ' between the specified dates')
+
+                        #if the asset exists, notify that employee ID has not used it, else say that it doesn't exist
+                        if (not self.Employee_ID_Check(EmployeeID)):
+                            self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in local database')
+
+                        if(self.Asset_Check(Asset)):
+                            self.qm.information(self, 'Notice', 'Employee ID ' + EmployeeID + ' has not used asset number ' + Asset + ' between the specified dates')
+                        else:
+                            self.qm.critical(self, 'Critical Issue','Asset number ' + Asset + ' does not exist in the local database')
+
+                        if (self.Employee_ID_Check(EmployeeID) and self.Asset_Check(Asset)):
+                            self.qm.warning(self, 'Notice','Employee ID ' + EmployeeID + ' has no associated events found between the specified dates')
+
                         #return False
             #If the list is empty (queries returned no results whatsoever) then return false
             if not(QueryList):
                 return False
-                self.qm.information(self, 'Notice','No events found between the specified dates')
+                self.qm.information(self, 'Notice','No events found between the specified dates for these Asset(s) and Employee ID')
             else:
 
                 return QueryList
@@ -978,6 +1048,7 @@ class Admin_Interface(QWidget):
 
     def edit_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+
         print(EntryList)
 
         for i in range(len(EntryList)):
@@ -992,35 +1063,40 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Display_Results_Table.setItem(lastrow, 4, QTableWidgetItem(str(EntryList[i][4])))
 
     def search_PopulateTable(self, EntryList):
-        #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
-        print(EntryList)
+        try:
+            #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+            print(EntryList)
 
-        for i in range(len(EntryList)):
-            # Create a row
-            lastrow = self.ui.Search_Display_Results_Table.rowCount()
-            self.ui.Search_Display_Results_Table.insertRow(lastrow)
 
-            AssetStatus = EntryList[i][4]
-            if AssetStatus == '1':
-                AssetStatus_Words = 'Checked In'
-            elif AssetStatus == '2':
-                AssetStatus_Words = 'Checked Out'
-            if AssetStatus == '3':
-                AssetStatus_Words = 'In Repair'
-            elif AssetStatus == '4':
-                AssetStatus_Words = 'Retired'
-            if AssetStatus == '5':
-                AssetStatus_Words = 'Broken'
-            elif AssetStatus == '6':
-                AssetStatus_Words = 'New Item'
-            elif AssetStatus == '7':
-                AssetStatus_Words = 'New Employee'
 
-            # Show items on row in interface
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(AssetStatus_Words)))
+            for i in range(len(EntryList)):
+                # Create a row
+                lastrow = self.ui.Search_Display_Results_Table.rowCount()
+                self.ui.Search_Display_Results_Table.insertRow(lastrow)
+
+                AssetStatus = EntryList[i][4]
+                if AssetStatus == '1':
+                    AssetStatus_Words = 'Checked In'
+                elif AssetStatus == '2':
+                    AssetStatus_Words = 'Checked Out'
+                if AssetStatus == '3':
+                    AssetStatus_Words = 'In Repair'
+                elif AssetStatus == '4':
+                    AssetStatus_Words = 'Retired'
+                if AssetStatus == '5':
+                    AssetStatus_Words = 'Broken'
+                elif AssetStatus == '6':
+                    AssetStatus_Words = 'New Item'
+                elif AssetStatus == '7':
+                    AssetStatus_Words = 'New Employee'
+
+                # Show items on row in interface
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(AssetStatus_Words)))
+        except:
+            self.qm.critical(self, 'Notice', 'An exception was thrown')
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
