@@ -874,11 +874,11 @@ class Ui_Admin_Interface(object):
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Resolve_Tab), _translate("Admin_Interface", "Resolve"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Admin_Interface = QtWidgets.QWidget()
-    ui = Ui_Admin_Interface()
-    ui.setupUi(Admin_Interface)
-    Admin_Interface.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     Admin_Interface = QtWidgets.QWidget()
+#     ui = Ui_Admin_Interface()
+#     ui.setupUi(Admin_Interface)
+#     Admin_Interface.show()
+#     sys.exit(app.exec_())

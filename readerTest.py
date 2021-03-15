@@ -21,7 +21,6 @@ import time
 import re
 
 from password_prompt import Ui_Dialog
-from alreadyCheckedOut import checkMsg
 from configparser import ConfigParser
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
 Event_Log_Entry = []
@@ -107,26 +106,6 @@ def getEmployeeName(employeeID):
     name = cursor.fetchone()
     return name[0]
 
-class alreadyChecked(QDialog):
-    def __init__(self, parent=None):
-        super(alreadyChecked, self).__init__(parent)
-        self.setWindowModality(True)
-        self.setModal(False)
-        self.ui = checkMsg()
-        self.ui.setupUi(self)
-        self.ui.select_reject.accepted.connect(self.returnTrue)
-        self.ui.select_reject.rejected.connect(self.returnFalse)
-        self.ui.ConfirmMessage.setText("")
-
-    def returnTrue(self):
-        self.accept()
-
-    def open(self):
-        self.show()
-
-    def returnFalse(self):
-        self.reject()
-
 #PasswordWindow creates a password window where a generic password is entered to launch the application
 class passwordWindow(QtWidgets.QDialog):
     def __init__(self, parent=None):
@@ -152,7 +131,6 @@ class mainWindow(QWidget):
         self.ui.setupUi(self)
         global server, database
         self.admin = Admin_Interface()
-        self.check = alreadyChecked()
         self.show()
         self.eventEntry = []
         self.RemovedItems = []
@@ -260,6 +238,7 @@ class mainWindow(QWidget):
             return
 
     def Employee_enter(self):
+
         if Permission_Check(self.ui.Employee_ID_Input.text()):
             self.ui.Admin_Button.setEnabled(True)
             self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
@@ -338,6 +317,7 @@ class mainWindow(QWidget):
         self.ui.Asset_ID_Input.clear()
 
     def insert_into_table(self, mode, item):
+
         self.ui.Remove_Button.setEnabled(True)
         if mode == 1:
             lastrow_new = self.ui.New_Item_List.rowCount()
@@ -518,39 +498,41 @@ class mainWindow(QWidget):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    login = passwordWindow()
-    # RFID init
-    if login.exec_() == QtWidgets.QDialog.Accepted:
-        window = mainWindow()
-        work = WorkerThread()
-        window.show()
-        logging.getLogger().setLevel(logging.INFO)
-        factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
-        factory.addTagReportCallback(work.cb)
-        reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
-        # define the server name and the database name
-        config = ConfigParser()
-        config.read('config.ini')
-        global server, database
-        server = config.get('database_info', 'server')
-        database = config.get('database_info','database')
-        print(server)
-        print(database)
+        app = QtWidgets.QApplication(sys.argv)
+        login = passwordWindow()
+        # RFID init
+        if login.exec_() == QtWidgets.QDialog.Accepted:
+            window = mainWindow()
+            work = WorkerThread()
+            window.show()
+            logging.getLogger().setLevel(logging.INFO)
+            factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
+            factory.addTagReportCallback(work.cb)
+            reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
-        # define a connection string
-        cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
-                                SERVER=' + server + ';\
-                                  DATABASE=' + database + ';\
-                                Trusted_Connection=yes;')
+            # define the server name and the database name
+            config = ConfigParser()
+            config.read('config.ini')
+            global server, database
+            server = config.get('database_info', 'server')
+            database = config.get('database_info','database')
+            print(server)
+            print(database)
 
-        # create the connection cursor
-        cursor = cnxn.cursor()
-        reading = "on"
-        r = Thread(target=reactor.run, args=(False,))
-        r.daemon = True
-        r.start()
+            # define a connection string
+            cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
+                                    SERVER=' + server + ';\
+                                      DATABASE=' + database + ';\
+                                    Trusted_Connection=yes;')
 
-        Thread(target=sys.exit(app.exec()), args=(False,)).start()
-        # sys.exit(app.exec())
+            # create the connection cursor
+            cursor = cnxn.cursor()
+            reading = "on"
+            r = Thread(target=reactor.run, args=(False,))
+            r.daemon = True
+            r.start()
+
+            Thread(target=sys.exit(app.exec()), args=(False,)).start()
+            # sys.exit(app.exec())
+
