@@ -78,7 +78,17 @@ class Admin_Interface(QWidget):
         #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
 
-        # ****************************************Home Tab Button(s)*********************************
+        #Validator for each QLineEdit in
+        # validator to only enter valid asset ID's into asset ID entry fields
+        self.onlyInt = QtGui.QIntValidator()
+
+        rExpSearch = QRegExp("(([E,e][0-9]{7}|[4][0-9]{6})(,{1}))*") #"(,?[E,e][0-9]{7}|[4][0-9]{6})* + (,)*"
+                                                                    #"(([E,e][0-9]{7}|[4][0-9]{6})(,))*"
+        valid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
+        self.ui.Search_Asset_Numbers_Field.setValidator(valid)
+        #self.ui.Employee_ID_Input.setValidator(self.onlyInt)
+
+    # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
@@ -734,7 +744,9 @@ class Admin_Interface(QWidget):
 
         for index in RawAssetList:
             # If the string begins w/ lower case e, then replace it with an E
-            if re.findall(r"\be", index):
+            if index == '':
+                print("Entered a double comma")
+            elif re.findall(r"\be", index):
                 CapitalCheckList.append(str.capitalize(index))
             else:
                 CapitalCheckList.append(str(index))
