@@ -77,16 +77,23 @@ class Admin_Interface(QWidget):
 
         #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
-
+        # ****************************************Asset Validators*********************************
         #Validator for each QLineEdit in
         # validator to only enter valid asset ID's into asset ID entry fields
         self.onlyInt = QtGui.QIntValidator()
 
         rExpSearch = QRegExp("(([E,e][0-9]{7}|[4][0-9]{6})(,{1}))*") #"(,?[E,e][0-9]{7}|[4][0-9]{6})* + (,)*"
                                                                     #"(([E,e][0-9]{7}|[4][0-9]{6})(,))*"
-        valid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
-        self.ui.Search_Asset_Numbers_Field.setValidator(valid)
-        #self.ui.Employee_ID_Input.setValidator(self.onlyInt)
+        SearchTabValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
+        self.ui.Search_Asset_Numbers_Field.setValidator(SearchTabValid)
+
+        rExpEditAndCreate = QRegExp("([E,e][0-9]{7}|[4][0-9]{6})")
+        EditTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Edit_Asset_Field)
+        self.ui.Edit_Asset_Field.setValidator(EditTabValid)
+
+        CreateTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Create_Asset_Num_Field)
+        self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
+        # ****************************************End of Asset Validators*********************************
 
     # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
