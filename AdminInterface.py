@@ -95,7 +95,7 @@ class Admin_Interface(QWidget):
         self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
         # ****************************************End of Asset Validators*********************************
 
-    # ****************************************Home Tab Button(s)*********************************
+        # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
