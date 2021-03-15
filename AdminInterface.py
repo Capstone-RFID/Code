@@ -1048,6 +1048,7 @@ class Admin_Interface(QWidget):
 
     def edit_PopulateTable(self, EntryList):
         #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+
         print(EntryList)
 
         for i in range(len(EntryList)):
@@ -1062,35 +1063,40 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Display_Results_Table.setItem(lastrow, 4, QTableWidgetItem(str(EntryList[i][4])))
 
     def search_PopulateTable(self, EntryList):
-        #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
-        print(EntryList)
+        try:
+            #EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
+            print(EntryList)
 
-        for i in range(len(EntryList)):
-            # Create a row
-            lastrow = self.ui.Search_Display_Results_Table.rowCount()
-            self.ui.Search_Display_Results_Table.insertRow(lastrow)
 
-            AssetStatus = EntryList[i][4]
-            if AssetStatus == '1':
-                AssetStatus_Words = 'Checked In'
-            elif AssetStatus == '2':
-                AssetStatus_Words = 'Checked Out'
-            if AssetStatus == '3':
-                AssetStatus_Words = 'In Repair'
-            elif AssetStatus == '4':
-                AssetStatus_Words = 'Retired'
-            if AssetStatus == '5':
-                AssetStatus_Words = 'Broken'
-            elif AssetStatus == '6':
-                AssetStatus_Words = 'New Item'
-            elif AssetStatus == '7':
-                AssetStatus_Words = 'New Employee'
 
-            # Show items on row in interface
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
-            self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(AssetStatus_Words)))
+            for i in range(len(EntryList)):
+                # Create a row
+                lastrow = self.ui.Search_Display_Results_Table.rowCount()
+                self.ui.Search_Display_Results_Table.insertRow(lastrow)
+
+                AssetStatus = EntryList[i][4]
+                if AssetStatus == '1':
+                    AssetStatus_Words = 'Checked In'
+                elif AssetStatus == '2':
+                    AssetStatus_Words = 'Checked Out'
+                if AssetStatus == '3':
+                    AssetStatus_Words = 'In Repair'
+                elif AssetStatus == '4':
+                    AssetStatus_Words = 'Retired'
+                if AssetStatus == '5':
+                    AssetStatus_Words = 'Broken'
+                elif AssetStatus == '6':
+                    AssetStatus_Words = 'New Item'
+                elif AssetStatus == '7':
+                    AssetStatus_Words = 'New Employee'
+
+                # Show items on row in interface
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(AssetStatus_Words)))
+        except:
+            self.qm.critical(self, 'Notice', 'An exception was thrown')
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
