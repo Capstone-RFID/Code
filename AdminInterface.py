@@ -397,8 +397,8 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
         else:
             print('Edit search did not find the asset!')
-            self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
-            self.qm.information(self, 'Notice', 'Asset not found!')
+            #self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
+            self.qm.Critical(self, 'Invalid Entry', 'Asset does not exist in local database!')
 
 
     def edit_FetchNameViaID(self, EmployeeID):
@@ -451,7 +451,7 @@ class Admin_Interface(QWidget):
 
         else:
             print("Please fill status field before committing")
-            self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
+            #self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
             self.qm.critical(self, 'Critical Issue', 'Please fill status field!')
 
 
@@ -597,7 +597,7 @@ class Admin_Interface(QWidget):
 
 
         data_Folder = Path.cwd()
-        employeeFile = data_Folder / "employeeList.xlsx"
+        employeeFile = data_Folder / "EmployeeList.xlsx"
         dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
         df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
 
