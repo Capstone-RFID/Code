@@ -556,8 +556,23 @@ class Admin_Interface(QWidget):
                 if filename in files:
                     #print(os.path.join(root, filename))
                     return (os.path.join(root, filename))
+
+        response = self.qm.question(self, 'Input Required', "Could not find " + filename +" on letter drives D: thru Z:" + "\n\nDo you want to search the C: drive for "+ filename + "?" + "\nWARNING: Searching C: drive may take some time", self.qm.Yes | self.qm.No)
+        if response == self.qm.Yes:
+            for root, dir, files in os.walk(Path("C:\\")):
+                if filename in files:
+                    # print(os.path.join(root, filename))
+                    return (os.path.join(root, filename))
                 else:
                     fileNotFoundFlag = 1
+        elif response == self.qm.No:
+            self.qm.warning(self, 'File not found',"Could not find " + filename + " on USB drive, please check that file exists on USB drive")
+            return False
+
+        if fileNotFoundFlag == 1:
+            self.qm.warning(self, 'File not found', "Could not find " + filename + " on USB or C: drive, please check that file exists")
+            return False
+
 
 
 
@@ -579,41 +594,41 @@ class Admin_Interface(QWidget):
         #assetFile = result#data_Folder / "AssetList.xlsx"
 
         #if(test != '')
+        if(assetFile != False):
+            dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
 
-        dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
+            df = pd.DataFrame(dataAsset, columns=['AssetID', 'Type'])
 
-        df = pd.DataFrame(dataAsset, columns=['AssetID', 'Type'])
+            if dataAsset.columns[0] == 'AssetID' and dataAsset.columns[1] == 'Type':
+                if not all (np.where(pd.isnull(df))):
+                    count = 0
+                    for index in df["AssetID"]:
+                            # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
+                            # If the number is the correct format, then start processing it
+                        if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",index):
+                            # If the string begins w/ lower case e, then replace it with an E
+                            if re.findall(r"\be", index):
+                                    index = str.capitalize(index)
+                            print(index)
 
-        if dataAsset.columns[0] == 'AssetID' and dataAsset.columns[1] == 'Type':
-            if not all (np.where(pd.isnull(df))):
-                count = 0
-                for index in df["AssetID"]:
-                        # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
-                        # If the number is the correct format, then start processing it
-                    if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",index):
-                        # If the string begins w/ lower case e, then replace it with an E
-                        if re.findall(r"\be", index):
-                                index = str.capitalize(index)
-                        print(index)
+                        else:
+                            df.drop([count], inplace = True)
+                            print("Wrong format in Asset field")
+                        count = count +1
 
-                    else:
-                        df.drop([count], inplace = True)
-                        print("Wrong format in Asset field")
-                    count = count +1
+                    df = df.reset_index(drop=True)
+                    self.import_checkAssetsOrEmployeesToSQL(df)
+                   # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
+                    self.qm.information(self, 'Notice', 'Import successful!')
 
-                df = df.reset_index(drop=True)
-                self.import_checkAssetsOrEmployeesToSQL(df)
-               # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
-                self.qm.information(self, 'Notice', 'Import successful!')
-
+                else:
+                    print('Please reformat excel into 2 columns "AssetID" and "Type" with no blank cells')
+                    #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
+                    self.qm.critical(self, 'Critical Issue', 'Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
             else:
-                print('Please reformat excel into 2 columns "AssetID" and "Type" with no blank cells')
-                #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
-                self.qm.critical(self, 'Critical Issue', 'Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
-        else:
-            print('Please reformat excel into 2 columns "AssetID" and "Type"')
-            #self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
-            self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
+                print('Please reformat excel into 2 columns "AssetID" and "Type"')
+                #self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
+                self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
 
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
