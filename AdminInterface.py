@@ -12,6 +12,8 @@ import logging
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import os
+#Regular expressions
 import re
 #import xlrd
 #from openpyxl import load_workbook
@@ -545,16 +547,38 @@ class Admin_Interface(QWidget):
         self.ui.Create_Asset_Description_Field.setText("")
         self.ui.Create_RFID_Tag_Field_3.setText("")
 
+    def find_files(self,filename):
+        fileNotFoundFlag = 0 #Used to ask user if they want to search the C:\ drive
+        path_list = [Path("D:\\"),Path("E:\\"),Path("F:\\"),Path("G:\\"),Path("H:\\"),Path("I:\\"),Path("J:\\"),Path("K:\\"),Path("L:\\"),Path("M:\\"),Path("N:\\"),Path("O:\\"),Path("P\\"),Path("Q:\\"),Path("R:\\"),Path("S:\\"),Path("T:\\"),Path("U:\\"),Path("V:\\"),Path("W:\\"),Path("X:\\"),Path("Y:\\"),Path("Z:\\")]
+        # Walking top-down from the root
+        for search_path in path_list:
+            for root, dir, files in os.walk(search_path):
+                if filename in files:
+                    #print(os.path.join(root, filename))
+                    return (os.path.join(root, filename))
+                else:
+                    fileNotFoundFlag = 1
+
+
+
+
+
 
     def Import_ImportAssets_ButtonClicked(self):
         print('Import Tab ImportAssets Button Clicked')
         self.ui.Create_UI_Message_Prompt.setText('')
 
+        name = "AssetList.xlsx"
 
-        data_Folder = Path.cwd()
 
-        assetFile = data_Folder / "AssetList.xlsx"
 
+        path = Path("C:\\")
+        assetFile = self.find_files(name)
+        print(assetFile)
+
+        #assetFile = result#data_Folder / "AssetList.xlsx"
+
+        #if(test != '')
 
         dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
 
