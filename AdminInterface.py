@@ -582,18 +582,9 @@ class Admin_Interface(QWidget):
     def Import_ImportAssets_ButtonClicked(self):
         print('Import Tab ImportAssets Button Clicked')
         self.ui.Create_UI_Message_Prompt.setText('')
-
         name = "AssetList.xlsx"
-
-
-
-        path = Path("C:\\")
         assetFile = self.find_files(name)
-        print(assetFile)
 
-        #assetFile = result#data_Folder / "AssetList.xlsx"
-
-        #if(test != '')
         if(assetFile != False):
             dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
 
@@ -633,27 +624,31 @@ class Admin_Interface(QWidget):
     def Import_ImportEmployees_ButtonClicked(self):
         print('Import Tab ImportEmployees Button Clicked')
         self.ui.Create_UI_Message_Prompt.setText('')
+        name = "EmployeeList.xlsx"
+        employeeFile = self.find_files(name)
+
+        if (employeeFile != False):
 
 
-        data_Folder = Path.cwd()
-        employeeFile = data_Folder / "EmployeeList.xlsx"
-        dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
-        df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
+            dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
+            df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
 
-        if dataEmployee.columns[0] == 'Name' and dataEmployee.columns[1] == 'EmployeeID':
-            if not all (np.where(pd.isnull(df))):
-                self.import_checkAssetsOrEmployeesToSQL(df)
-                self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
-                self.qm.information(self, 'Notice', 'Import successful!')
+            if dataEmployee.columns[0] == 'Name' and dataEmployee.columns[1] == 'EmployeeID':
+                if not all (np.where(pd.isnull(df))):
+                    self.import_checkAssetsOrEmployeesToSQL(df)
+                    #self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
+                    self.qm.information(self, 'Notice', 'Import successful!')
 
+                else:
+                    print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
+                    #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
+                    self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
             else:
-                print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
-                self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
+                print('Please reformat excel into 2 columns "Name" and "EmployeeID"')
+                #self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
                 self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
-        else:
-            print('Please reformat excel into 2 columns "Name" and "EmployeeID"')
-            #self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
-            self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
+
+
 
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
