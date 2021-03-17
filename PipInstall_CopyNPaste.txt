@@ -1,0 +1,7 @@
+pip install sllurp
+pip install pyodbc
+pip install pytz
+pip install keyboard
+pip install PyQt5
+pip install pandas
+pip install openpyxl
