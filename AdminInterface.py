@@ -1227,10 +1227,10 @@ class Admin_Interface(QWidget):
                 # Show items on row in interface
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(AssetStatus_Words)))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(EntryList[i][1])))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(AssetStatus_Words)))
         except:
-            self.qm.critical(self, 'Notice', 'An exception was thrown')
+            self.qm.critical(self, 'Notice', 'An exception was thrown while populating the search tab table')
 
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
