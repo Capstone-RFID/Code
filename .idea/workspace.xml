@@ -6,21 +6,27 @@
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/RFID_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RFID_test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin_Level2_Access.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin_Level2_Access.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RFIDTest.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/alreadyCheckedOut.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/Analysis-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/Analysis-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/EXE-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/EXE-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/PKG-00.pkg" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/PKG-00.pkg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/PKG-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/PKG-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/PYZ-00.pyz" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/PYZ-00.pyz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/PYZ-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/PYZ-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/Tree-00.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/Tree-00.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/Tree-01.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/Tree-01.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/Tree-02.toc" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/Tree-02.toc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/base_library.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/readerTest.exe.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/readerTest.exe.manifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/warn-readerTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/warn-readerTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/readerTest/xref-readerTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/readerTest/xref-readerTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/readerTest.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/password_prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/password_prompt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/easy-install.pth" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/easy-install.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/setuptools-40.8.0-py3.8.egg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.8-script.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.8.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.8.exe.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-script.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/password_prompt.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/password_prompt.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/PyInstaller/compat.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/PyInstaller/compat.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

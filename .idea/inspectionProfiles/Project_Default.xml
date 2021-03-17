@@ -21,6 +21,7 @@
       <option name="ignoredPackages">
         <list>
           <option value="PyQt5" />
+          <option value="PyQt5-stubs==5.15.2.0" />
         </list>
       </option>
     </inspection_tool>

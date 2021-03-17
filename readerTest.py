@@ -1,4 +1,4 @@
-from sllurp import llrp
+import sllurp.llrp
 from twisted.internet import reactor
 import pyodbc
 
@@ -10,14 +10,14 @@ from threading import Thread
 import subprocess
 
 import logging
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-import pandas as pd
+
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface
-import time
+
 import re
 
 from password_prompt import Ui_Dialog
@@ -112,7 +112,8 @@ class passwordWindow(QtWidgets.QDialog):
         super(passwordWindow, self).__init__(parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        self.ui.buttonBox.accepted.connect(self.handleLogin)
+
+        self.ui.ok.released.connect(self.handleLogin)
         self.ui.lineEdit.setEchoMode(QLineEdit.Password)
 
     #setup the password and and the conditions of correct and wrong password in this method
@@ -496,9 +497,7 @@ class mainWindow(QWidget):
                 self.insert_into_table(2, assets[0])
         return
 
-
 if __name__ == "__main__":
-
         app = QtWidgets.QApplication(sys.argv)
         login = passwordWindow()
         # RFID init
@@ -507,9 +506,9 @@ if __name__ == "__main__":
             work = WorkerThread()
             window.show()
             logging.getLogger().setLevel(logging.INFO)
-            factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
+            factory = sllurp.llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
             factory.addTagReportCallback(work.cb)
-            reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
+            reactor.connectTCP('169.254.10.1', sllurp.llrp.LLRP_PORT, factory)
 
             # define the server name and the database name
             config = ConfigParser()
