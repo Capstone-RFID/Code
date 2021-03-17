@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(760, 648)
+        Admin_Interface.resize(1105, 641)
         Admin_Interface.setStyleSheet("QWidget#Admin_Interface{\n"
 "    background-color: #5a5c5e;\n"
 "}\n"
@@ -93,7 +93,8 @@ class Ui_Admin_Interface(object):
 "\n"
 "\n"
 "QTabWidget::tab-bar {\n"
-"        alignment: center;\n"
+"        alignment: left;\n"
+"\n"
 "}\n"
 "\n"
 "QTabBar::tab { \n"
@@ -104,6 +105,23 @@ class Ui_Admin_Interface(object):
 "    alternate-background-color: rgb(159, 162, 166);\n"
 "    Font: 14pt;\n"
 "    color: white;\n"
+"    padding: 5;\n"
+"    padding-left: 5px;\n"
+"    border: 1px solid #6c6c6c;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected, QTabBar::tab:hover {\n"
+"\n"
+"    background-color: #577590;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected {\n"
+"    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"                                stop: 0 #fafafa, stop: 0.4  #6c6c6c,\n"
+"                                stop: 0.5 #6c6c6c, stop: 1.0 #6c6c6c);\n"
+"    border-color: #6c6c6c;\n"
+"    border-bottom-color: #3f464d; /* same as pane color */\n"
+"    color: black;\n"
 "}\n"
 "\n"
 "")
@@ -510,6 +528,7 @@ class Ui_Admin_Interface(object):
         self.Search_Display_Results_Table.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.Search_Display_Results_Table.setHorizontalHeaderItem(3, item)
+        self.Search_Display_Results_Table.horizontalHeader().setCascadingSectionResizes(True)
         self.Search_Display_Results_Table.horizontalHeader().setDefaultSectionSize(100)
         self.Search_Display_Results_Table.horizontalHeader().setMinimumSectionSize(100)
         self.verticalLayout_2.addWidget(self.Search_Display_Results_Table)
