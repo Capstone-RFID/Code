@@ -89,12 +89,12 @@ class Admin_Interface(QWidget):
         # validator to only enter valid asset ID's into asset ID entry fields
         self.onlyInt = QtGui.QIntValidator()
 
-        rExpSearch = QRegExp("(([E,e][0-9]{7}|[4][0-9]{6})(,{1}))*") #"(,?[E,e][0-9]{7}|[4][0-9]{6})* + (,)*"
+        rExpSearch = QRegExp("(([Ee][0-9]{7}|[4][0-9]{6})(,{1}))*") #"(,?[E,e][0-9]{7}|[4][0-9]{6})* + (,)*"
                                                                     #"(([E,e][0-9]{7}|[4][0-9]{6})(,))*"
         SearchTabValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
         self.ui.Search_Asset_Numbers_Field.setValidator(SearchTabValid)
 
-        rExpEditAndCreate = QRegExp("([E,e][0-9]{7}|[4][0-9]{6})")
+        rExpEditAndCreate = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
         EditTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Edit_Asset_Field)
         self.ui.Edit_Asset_Field.setValidator(EditTabValid)
 
