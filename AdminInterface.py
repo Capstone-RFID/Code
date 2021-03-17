@@ -480,7 +480,7 @@ class Admin_Interface(QWidget):
     def edit_commitButtonClicked(self):
         try:
             print('Edit Tab Commit Button Clicked')
-            self.ui.Edit_UI_Message_Prompt.setText('Commiting...')
+
             #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
             if self.ui.Edit_Update_Status_Dropdown.currentText() != '':
                 if self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked In':
@@ -505,7 +505,8 @@ class Admin_Interface(QWidget):
                 self.cursor.execute(insert_event_query, str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
                 self.cnxn.commit()
                 self.ui.Edit_UI_Message_Prompt.setText('')
-                self.qm.information(self, 'Notice', 'Changes Committed')
+                EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
                 logging.info('Asset Edits Committed to Database')
 
                 #clear fields after commit
@@ -520,6 +521,7 @@ class Admin_Interface(QWidget):
                 self.qm.critical(self, 'Critical Issue', 'Please fill status field!')
         except:
             logging.error('Error In function - edit_commitButtonClicked')
+            print('Threw an exception in edit_commitButtonClicked function')
 
 
 

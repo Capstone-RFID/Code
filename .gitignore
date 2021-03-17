@@ -7,3 +7,7 @@ __pycache__/Etek_main_window_v2.cpython-37.pyc
 *.pyc
 *.pyc
 .idea/workspace.xml
+ETEK.log
+.idea/workspace.xml
+__pycache__/AdminInterface.cpython-38.pyc
+*.pyc
