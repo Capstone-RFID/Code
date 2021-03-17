@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
-    <height>641</height>
+    <width>1117</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#centralWidget{
+   <string notr="true">QWidget#Admin_Interface{
 	background-color: #5a5c5e;
 }
-QWidget#Base{
+QWidget#Admin_Select{
  color: #5a5c5e;
 }
 
@@ -88,16 +88,52 @@ QMessageBox QPushButton {
    <item>
     <widget class="QTabWidget" name="Admin_Select">
      <property name="styleSheet">
-      <string notr="true">	background-color: #5a5c5e;
-QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
+      <string notr="true">QWidget {	
+	background-color: #5a5c5e;
+}
+
+
+QTabWidget::tab-bar {
+   	 alignment: left;
+
+}
+
+QTabBar::tab { 
+	height: 50px; 
+	width: 100px; 
+	background: 'grey';
+	background-color: #3f464d;
+	alternate-background-color: rgb(159, 162, 166);
+	Font: 14pt;
+	color: white;
+	padding: 5;
+	padding-left: 5px;
+	border: 1px solid #6c6c6c;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+
+	background-color: #577590;
+}
+
+QTabBar::tab:selected {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #fafafa, stop: 0.4  #6c6c6c,
+                                stop: 0.5 #6c6c6c, stop: 1.0 #6c6c6c);
+    border-color: #6c6c6c;
+    border-bottom-color: #3f464d; /* same as pane color */
+	color: black;
+}
+
+</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="iconSize">
       <size>
-       <width>12</width>
-       <height>12</height>
+       <width>100</width>
+       <height>50</height>
       </size>
      </property>
      <widget class="QWidget" name="Home_Tab">
@@ -221,7 +257,7 @@ color: rgb(171, 171, 171);</string>
           <widget class="QPushButton" name="Home_ChangePassword_Button">
            <property name="minimumSize">
             <size>
-             <width>436</width>
+             <width>312</width>
              <height>58</height>
             </size>
            </property>
@@ -233,15 +269,12 @@ color: rgb(171, 171, 171);</string>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton#Home_ChangePassword_Button {
-background-color: #282c30;
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 26pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
+	padding: 6px;
+	font: 26pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	min-width: 10em;
 }
 QPushButton#Home_ChangePassword_Button:pressed {
 	background-color: #577590;
@@ -300,15 +333,13 @@ QPushButton#Home_ChangePassword_Button:pressed {
           <widget class="QPushButton" name="Home_Force_Sync_Button">
            <property name="styleSheet">
             <string notr="true">QPushButton#Home_Force_Sync_Button {
-background-color: #282c30;
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 26pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
+	padding: 6px;
+	font: 26pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	min-width: 10em;
+
 }
 QPushButton#Home_Force_Sync_Button:pressed {
 	background-color: #577590;
@@ -501,7 +532,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>182</width>
                  <height>51</height>
                 </size>
                </property>
@@ -516,9 +547,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -656,7 +684,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>182</width>
                  <height>51</height>
                 </size>
                </property>
@@ -671,9 +699,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -835,11 +860,61 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
            <item>
             <widget class="QTableWidget" name="Search_Display_Results_Table">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(78, 78, 78);</string>
+              <string notr="true">
+
+QTableWidget#Search_Display_Results_Table{
+	border-radius: 8;
+	background-color: #3f464d;
+	alternate-background-color: rgb(159, 162, 166);
+	Font: 14pt;
+	color: white;
+	gridline-color: #1C2321;
+}
+
+QTableView:item:selected:focus {background-color: #577590 ;}
+QTableView:item:selected {background-color: #577590 ;}
+
+QTableView QTableCornerButton::section {
+	border-top-left-radius: 8;
+	background-color: #5F6366;
+}
+
+QHeaderView::section {
+	background-color: #282c30   ;
+	color: white;
+	font: Bold 14pt;
+	padding: 5;
+	padding-left: 5px;
+	border: 1px solid #6c6c6c;
+}
+QHeaderView::section:checked
+{
+	background-color:#0D1218   ;
+}
+
+QProgressBar {
+	border-radius: 2;
+}
+QProgressBar::chunk{
+	background-color:#53a369;
+}
+</string>
              </property>
              <property name="sortingEnabled">
               <bool>true</bool>
              </property>
+             <attribute name="horizontalHeaderCascadingSectionResizes">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>100</number>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>200</number>
+             </attribute>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
              <column>
               <property name="text">
                <string>Asset#</string>
@@ -852,12 +927,12 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </column>
              <column>
               <property name="text">
-               <string>Timestamp</string>
+               <string>Status</string>
               </property>
              </column>
              <column>
               <property name="text">
-               <string>Status</string>
+               <string>Timestamp</string>
               </property>
              </column>
             </widget>
@@ -889,7 +964,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>182</width>
                <height>51</height>
               </size>
              </property>
@@ -898,9 +973,6 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1170,7 +1242,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <widget class="QPushButton" name="Edit_Search_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>246</width>
+                   <width>182</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1179,9 +1251,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1203,7 +1272,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Clear_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>246</width>
+                   <width>182</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1212,9 +1281,6 @@ background-color: #577590;
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1233,7 +1299,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Commit_Edits_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>246</width>
+                   <width>182</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1242,9 +1308,6 @@ background-color: #577590;
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1331,9 +1394,6 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1371,9 +1431,6 @@ QPushButton#Import_ImportAssets_Button:pressed {
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1422,7 +1479,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>182</width>
                <height>51</height>
               </size>
              </property>
@@ -1431,9 +1488,6 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1452,7 +1506,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>182</width>
                <height>51</height>
               </size>
              </property>
@@ -1461,9 +1515,6 @@ QPushButton#Create_Clear_Fields_Button:pressed {
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1621,6 +1672,35 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>Admin_Select</tabstop>
+  <tabstop>Home_ChangePassword_Button</tabstop>
+  <tabstop>Home_Force_Sync_Button</tabstop>
+  <tabstop>Search_Datetime_From</tabstop>
+  <tabstop>Search_Datetime_To</tabstop>
+  <tabstop>Search_Month_By_Month_Search_Dropdown</tabstop>
+  <tabstop>Search_Employee_ID_Entry_Field</tabstop>
+  <tabstop>Search_Asset_Numbers_Field</tabstop>
+  <tabstop>Search_Reset_Fields_Button</tabstop>
+  <tabstop>Search_SearchAsset_Query_Button</tabstop>
+  <tabstop>Search_Display_Results_Table</tabstop>
+  <tabstop>Search_Print_PDF_Button</tabstop>
+  <tabstop>Edit_Asset_Field</tabstop>
+  <tabstop>Edit_AssignTo_Field</tabstop>
+  <tabstop>Edit_Update_Status_Dropdown</tabstop>
+  <tabstop>Edit_Search_Button</tabstop>
+  <tabstop>Edit_Clear_Button</tabstop>
+  <tabstop>Edit_Commit_Edits_Button</tabstop>
+  <tabstop>Import_ImportAssets_Button</tabstop>
+  <tabstop>Import_ImportEmployees_Button</tabstop>
+  <tabstop>Create_Asset_Num_Field</tabstop>
+  <tabstop>Create_Asset_Description_Field</tabstop>
+  <tabstop>Create_RFID_Tag_Field_3</tabstop>
+  <tabstop>Create_Clear_Fields_Button</tabstop>
+  <tabstop>Create_Confirm_Entry_Button</tabstop>
+  <tabstop>Resolve_Display_Conflicts_Table</tabstop>
+  <tabstop>pushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
