@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(758, 641)
-        Admin_Interface.setStyleSheet("QWidget#centralWidget{\n"
+        Admin_Interface.resize(760, 648)
+        Admin_Interface.setStyleSheet("QWidget#Admin_Interface{\n"
 "    background-color: #5a5c5e;\n"
 "}\n"
-"QWidget#Base{\n"
+"QWidget#Admin_Select{\n"
 " color: #5a5c5e;\n"
 "}\n"
 "\n"
@@ -87,9 +87,27 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(Admin_Interface)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.Admin_Select = QtWidgets.QTabWidget(Admin_Interface)
-        self.Admin_Select.setStyleSheet("    background-color: #5a5c5e;\n"
-"QTabBar::Home_Tab { height: 100px; width: 100px; background: \'grey\'}")
-        self.Admin_Select.setIconSize(QtCore.QSize(12, 12))
+        self.Admin_Select.setStyleSheet("QWidget {    \n"
+"    background-color: #5a5c5e;\n"
+"}\n"
+"\n"
+"\n"
+"QTabWidget::tab-bar {\n"
+"        alignment: center;\n"
+"}\n"
+"\n"
+"QTabBar::tab { \n"
+"    height: 50px; \n"
+"    width: 100px; \n"
+"    background: \'grey\';\n"
+"    background-color: #3f464d;\n"
+"    alternate-background-color: rgb(159, 162, 166);\n"
+"    Font: 14pt;\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"")
+        self.Admin_Select.setIconSize(QtCore.QSize(100, 50))
         self.Admin_Select.setObjectName("Admin_Select")
         self.Home_Tab = QtWidgets.QWidget()
         self.Home_Tab.setStyleSheet("QWidget#centralWidget{\n"
@@ -170,7 +188,7 @@ class Ui_Admin_Interface(object):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem1)
         self.Home_ChangePassword_Button = QtWidgets.QPushButton(self.Home_Tab)
-        self.Home_ChangePassword_Button.setMinimumSize(QtCore.QSize(436, 58))
+        self.Home_ChangePassword_Button.setMinimumSize(QtCore.QSize(326, 58))
         self.Home_ChangePassword_Button.setMaximumSize(QtCore.QSize(436, 58))
         self.Home_ChangePassword_Button.setStyleSheet("QPushButton#Home_ChangePassword_Button {\n"
 "background-color: #282c30;\n"
@@ -314,7 +332,7 @@ class Ui_Admin_Interface(object):
         self.Search_Datetime_From.setObjectName("Search_Datetime_From")
         self.gridLayout.addWidget(self.Search_Datetime_From, 1, 1, 1, 1)
         self.Search_Reset_Fields_Button = QtWidgets.QPushButton(self.Search_Tab)
-        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Search_Reset_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_Reset_Fields_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_Reset_Fields_Button.setStyleSheet("QPushButton#Search_Reset_Fields_Button {\n"
 "background-color: #282c30;\n"
@@ -371,7 +389,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Search_SearchAsset_Query_Button.sizePolicy().hasHeightForWidth())
         self.Search_SearchAsset_Query_Button.setSizePolicy(sizePolicy)
-        self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Search_SearchAsset_Query_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setMaximumSize(QtCore.QSize(186, 51))
         self.Search_SearchAsset_Query_Button.setStyleSheet("QPushButton#Search_SearchAsset_Query_Button {\n"
 "background-color: #282c30;\n"
@@ -442,7 +460,45 @@ class Ui_Admin_Interface(object):
         self.gridLayout.addWidget(self.Search_UI_Message_Prompt, 9, 1, 1, 1)
         self.verticalLayout_2.addLayout(self.gridLayout)
         self.Search_Display_Results_Table = QtWidgets.QTableWidget(self.Search_Tab)
-        self.Search_Display_Results_Table.setStyleSheet("background-color: rgb(78, 78, 78);")
+        self.Search_Display_Results_Table.setStyleSheet("\n"
+"\n"
+"QTableWidget#Search_Display_Results_Table{\n"
+"    border-radius: 8;\n"
+"    background-color: #3f464d;\n"
+"    alternate-background-color: rgb(159, 162, 166);\n"
+"    Font: 14pt;\n"
+"    color: white;\n"
+"    gridline-color: #1C2321;\n"
+"}\n"
+"\n"
+"QTableView:item:selected:focus {background-color: #577590 ;}\n"
+"QTableView:item:selected {background-color: #577590 ;}\n"
+"\n"
+"QTableView QTableCornerButton::section {\n"
+"    border-top-left-radius: 8;\n"
+"    background-color: #5F6366;\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    background-color: #282c30   ;\n"
+"    color: white;\n"
+"    font: Bold 14pt;\n"
+"    padding: 5;\n"
+"    padding-left: 5px;\n"
+"    border: 1px solid #6c6c6c;\n"
+"}\n"
+"QHeaderView::section:checked\n"
+"{\n"
+"    background-color:#0D1218   ;\n"
+"}\n"
+"\n"
+"QProgressBar {\n"
+"    border-radius: 2;\n"
+"}\n"
+"QProgressBar::chunk{\n"
+"    background-color:#53a369;\n"
+"}\n"
+"")
         self.Search_Display_Results_Table.setObjectName("Search_Display_Results_Table")
         self.Search_Display_Results_Table.setColumnCount(4)
         self.Search_Display_Results_Table.setRowCount(0)
@@ -454,6 +510,8 @@ class Ui_Admin_Interface(object):
         self.Search_Display_Results_Table.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.Search_Display_Results_Table.setHorizontalHeaderItem(3, item)
+        self.Search_Display_Results_Table.horizontalHeader().setDefaultSectionSize(100)
+        self.Search_Display_Results_Table.horizontalHeader().setMinimumSectionSize(100)
         self.verticalLayout_2.addWidget(self.Search_Display_Results_Table)
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -466,7 +524,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Search_Print_PDF_Button.sizePolicy().hasHeightForWidth())
         self.Search_Print_PDF_Button.setSizePolicy(sizePolicy)
-        self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Search_Print_PDF_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Search_Print_PDF_Button.setStyleSheet("QPushButton#Search_Print_PDF_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -575,7 +633,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Assign_To_Label.setObjectName("Edit_Assign_To_Label")
         self.gridLayout_2.addWidget(self.Edit_Assign_To_Label, 2, 0, 1, 1)
         self.Edit_Search_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Search_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Search_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Search_Button.setStyleSheet("QPushButton#Edit_Search_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -595,7 +653,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Search_Button.setObjectName("Edit_Search_Button")
         self.gridLayout_2.addWidget(self.Edit_Search_Button, 5, 2, 1, 1)
         self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -614,7 +672,7 @@ class Ui_Admin_Interface(object):
         self.Edit_Clear_Button.setObjectName("Edit_Clear_Button")
         self.gridLayout_2.addWidget(self.Edit_Clear_Button, 6, 2, 1, 1)
         self.Edit_Commit_Edits_Button = QtWidgets.QPushButton(self.Edit_Tab)
-        self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Edit_Commit_Edits_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Edit_Commit_Edits_Button.setStyleSheet("QPushButton#Edit_Commit_Edits_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -712,7 +770,7 @@ class Ui_Admin_Interface(object):
         self.Create_UI_Message_Prompt.setObjectName("Create_UI_Message_Prompt")
         self.verticalLayout_8.addWidget(self.Create_UI_Message_Prompt)
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -731,7 +789,7 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button.setObjectName("Create_Clear_Fields_Button")
         self.verticalLayout_8.addWidget(self.Create_Clear_Fields_Button)
         self.Create_Confirm_Entry_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(246, 51))
+        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(186, 51))
         self.Create_Confirm_Entry_Button.setStyleSheet("QPushButton#Create_Confirm_Entry_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"

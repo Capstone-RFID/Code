@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
-    <height>641</height>
+    <width>760</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#centralWidget{
+   <string notr="true">QWidget#Admin_Interface{
 	background-color: #5a5c5e;
 }
-QWidget#Base{
+QWidget#Admin_Select{
  color: #5a5c5e;
 }
 
@@ -88,16 +88,34 @@ QMessageBox QPushButton {
    <item>
     <widget class="QTabWidget" name="Admin_Select">
      <property name="styleSheet">
-      <string notr="true">	background-color: #5a5c5e;
-QTabBar::Home_Tab { height: 100px; width: 100px; background: 'grey'}</string>
+      <string notr="true">QWidget {	
+	background-color: #5a5c5e;
+}
+
+
+QTabWidget::tab-bar {
+   	 alignment: center;
+}
+
+QTabBar::tab { 
+	height: 50px; 
+	width: 100px; 
+	background: 'grey';
+	background-color: #3f464d;
+	alternate-background-color: rgb(159, 162, 166);
+	Font: 14pt;
+	color: white;
+}
+
+</string>
      </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <property name="iconSize">
       <size>
-       <width>12</width>
-       <height>12</height>
+       <width>100</width>
+       <height>50</height>
       </size>
      </property>
      <widget class="QWidget" name="Home_Tab">
@@ -221,7 +239,7 @@ color: rgb(171, 171, 171);</string>
           <widget class="QPushButton" name="Home_ChangePassword_Button">
            <property name="minimumSize">
             <size>
-             <width>436</width>
+             <width>326</width>
              <height>58</height>
             </size>
            </property>
@@ -501,7 +519,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>186</width>
                  <height>51</height>
                 </size>
                </property>
@@ -656,7 +674,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>246</width>
+                 <width>186</width>
                  <height>51</height>
                 </size>
                </property>
@@ -835,11 +853,55 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
            <item>
             <widget class="QTableWidget" name="Search_Display_Results_Table">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(78, 78, 78);</string>
+              <string notr="true">
+
+QTableWidget#Search_Display_Results_Table{
+	border-radius: 8;
+	background-color: #3f464d;
+	alternate-background-color: rgb(159, 162, 166);
+	Font: 14pt;
+	color: white;
+	gridline-color: #1C2321;
+}
+
+QTableView:item:selected:focus {background-color: #577590 ;}
+QTableView:item:selected {background-color: #577590 ;}
+
+QTableView QTableCornerButton::section {
+	border-top-left-radius: 8;
+	background-color: #5F6366;
+}
+
+QHeaderView::section {
+	background-color: #282c30   ;
+	color: white;
+	font: Bold 14pt;
+	padding: 5;
+	padding-left: 5px;
+	border: 1px solid #6c6c6c;
+}
+QHeaderView::section:checked
+{
+	background-color:#0D1218   ;
+}
+
+QProgressBar {
+	border-radius: 2;
+}
+QProgressBar::chunk{
+	background-color:#53a369;
+}
+</string>
              </property>
              <property name="sortingEnabled">
               <bool>true</bool>
              </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>100</number>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>100</number>
+             </attribute>
              <column>
               <property name="text">
                <string>Asset#</string>
@@ -889,7 +951,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
@@ -1170,7 +1232,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <widget class="QPushButton" name="Edit_Search_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>246</width>
+                   <width>186</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1203,7 +1265,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Clear_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>246</width>
+                   <width>186</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1233,7 +1295,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Commit_Edits_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>246</width>
+                   <width>186</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1422,7 +1484,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
@@ -1452,7 +1514,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>246</width>
+               <width>186</width>
                <height>51</height>
               </size>
              </property>
