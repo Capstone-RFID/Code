@@ -111,9 +111,8 @@ class Ui_Admin_Interface(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected, QTabBar::tab:hover {\n"
-"    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
-"                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,\n"
-"                                stop: 0.5 #6c6c6c, stop: 1.0 #fafafa);\n"
+"\n"
+"    background-color: #577590;\n"
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
@@ -898,7 +897,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(3)
+        self.Admin_Select.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
 
     def retranslateUi(self, Admin_Interface):
