@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1119</width>
-    <height>789</height>
+    <width>1117</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,7 +128,7 @@ QTabBar::tab:selected {
 </string>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <property name="iconSize">
       <size>
@@ -257,7 +257,7 @@ color: rgb(171, 171, 171);</string>
           <widget class="QPushButton" name="Home_ChangePassword_Button">
            <property name="minimumSize">
             <size>
-             <width>326</width>
+             <width>312</width>
              <height>58</height>
             </size>
            </property>
@@ -269,15 +269,12 @@ color: rgb(171, 171, 171);</string>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton#Home_ChangePassword_Button {
-background-color: #282c30;
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 26pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
+	padding: 6px;
+	font: 26pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	min-width: 10em;
 }
 QPushButton#Home_ChangePassword_Button:pressed {
 	background-color: #577590;
@@ -336,15 +333,13 @@ QPushButton#Home_ChangePassword_Button:pressed {
           <widget class="QPushButton" name="Home_Force_Sync_Button">
            <property name="styleSheet">
             <string notr="true">QPushButton#Home_Force_Sync_Button {
-background-color: #282c30;
-color: rgb(255, 255, 255);
-border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
-font: 26pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
+	padding: 6px;
+	font: 26pt &quot;Arial&quot;;
+	color: white;
+	background-color: #282c30;
+	border-radius: 5px;
+	min-width: 10em;
+
 }
 QPushButton#Home_Force_Sync_Button:pressed {
 	background-color: #577590;
@@ -537,7 +532,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>182</width>
                  <height>51</height>
                 </size>
                </property>
@@ -552,9 +547,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -692,7 +684,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>186</width>
+                 <width>182</width>
                  <height>51</height>
                 </size>
                </property>
@@ -707,9 +699,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -975,7 +964,7 @@ QProgressBar::chunk{
              </property>
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>182</width>
                <height>51</height>
               </size>
              </property>
@@ -984,9 +973,6 @@ QProgressBar::chunk{
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1256,7 +1242,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                 <widget class="QPushButton" name="Edit_Search_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>182</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1265,9 +1251,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1289,7 +1272,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Clear_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>182</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1298,9 +1281,6 @@ background-color: #577590;
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1319,7 +1299,7 @@ background-color: #577590;
                 <widget class="QPushButton" name="Edit_Commit_Edits_Button">
                  <property name="minimumSize">
                   <size>
-                   <width>186</width>
+                   <width>182</width>
                    <height>51</height>
                   </size>
                  </property>
@@ -1328,9 +1308,6 @@ background-color: #577590;
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1417,9 +1394,6 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1457,9 +1431,6 @@ QPushButton#Import_ImportAssets_Button:pressed {
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1508,7 +1479,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>182</width>
                <height>51</height>
               </size>
              </property>
@@ -1517,9 +1488,6 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
@@ -1538,7 +1506,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>186</width>
+               <width>182</width>
                <height>51</height>
               </size>
              </property>
@@ -1547,9 +1515,6 @@ QPushButton#Create_Clear_Fields_Button:pressed {
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
-border-width: 2px;
-border-radius: 10px;
-border-color: beige;
 font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
