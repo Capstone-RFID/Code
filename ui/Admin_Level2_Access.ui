@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>648</height>
+    <width>1105</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,7 +94,8 @@ QMessageBox QPushButton {
 
 
 QTabWidget::tab-bar {
-   	 alignment: center;
+   	 alignment: left;
+
 }
 
 QTabBar::tab { 
@@ -105,12 +106,30 @@ QTabBar::tab {
 	alternate-background-color: rgb(159, 162, 166);
 	Font: 14pt;
 	color: white;
+	padding: 5;
+	padding-left: 5px;
+	border: 1px solid #6c6c6c;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                stop: 0.5 #6c6c6c, stop: 1.0 #fafafa);
+}
+
+QTabBar::tab:selected {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #fafafa, stop: 0.4  #6c6c6c,
+                                stop: 0.5 #6c6c6c, stop: 1.0 #6c6c6c);
+    border-color: #6c6c6c;
+    border-bottom-color: #3f464d; /* same as pane color */
+	color: black;
 }
 
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -896,6 +915,9 @@ QProgressBar::chunk{
              <property name="sortingEnabled">
               <bool>true</bool>
              </property>
+             <attribute name="horizontalHeaderCascadingSectionResizes">
+              <bool>true</bool>
+             </attribute>
              <attribute name="horizontalHeaderDefaultSectionSize">
               <number>100</number>
              </attribute>
