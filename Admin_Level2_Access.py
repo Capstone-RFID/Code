@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(1160, 824)
+        Admin_Interface.resize(1119, 789)
         Admin_Interface.setStyleSheet("QWidget#Admin_Interface{\n"
 "    background-color: #5a5c5e;\n"
 "}\n"
@@ -531,6 +531,7 @@ class Ui_Admin_Interface(object):
         self.Search_Display_Results_Table.horizontalHeader().setCascadingSectionResizes(False)
         self.Search_Display_Results_Table.horizontalHeader().setDefaultSectionSize(100)
         self.Search_Display_Results_Table.horizontalHeader().setMinimumSectionSize(200)
+        self.Search_Display_Results_Table.horizontalHeader().setStretchLastSection(True)
         self.verticalLayout_2.addWidget(self.Search_Display_Results_Table)
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -936,9 +937,9 @@ class Ui_Admin_Interface(object):
         item = self.Search_Display_Results_Table.horizontalHeaderItem(1)
         item.setText(_translate("Admin_Interface", "Employee ID"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(2)
-        item.setText(_translate("Admin_Interface", "Timestamp"))
-        item = self.Search_Display_Results_Table.horizontalHeaderItem(3)
         item.setText(_translate("Admin_Interface", "Status"))
+        item = self.Search_Display_Results_Table.horizontalHeaderItem(3)
+        item.setText(_translate("Admin_Interface", "Timestamp"))
         self.Search_Print_PDF_Button.setText(_translate("Admin_Interface", "Print to PDF"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Search_Tab), _translate("Admin_Interface", "Search"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(0)
