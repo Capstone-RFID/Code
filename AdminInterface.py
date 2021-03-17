@@ -456,7 +456,7 @@ class Admin_Interface(QWidget):
             else:
                 print('Edit search did not find the asset!')
                 #self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
-                self.qm.Critical(self, 'Invalid Entry', 'Asset does not exist in local database!')
+                self.qm.critical(self, 'Invalid Entry', 'Asset ' + self.ui.Edit_Asset_Field.text() + ' does not exist in local database!')
         except:
             logging.error('Error In function - edit_searchButtonClicked')
 
@@ -478,11 +478,13 @@ class Admin_Interface(QWidget):
 
 
     def edit_commitButtonClicked(self):
+
         try:
             print('Edit Tab Commit Button Clicked')
-
+            Edit_Employee = self.ui.Edit_AssignTo_Field.text()
+            Edit_Asset = self.ui.Edit_Asset_Field.text()
             #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
-            if self.ui.Edit_Update_Status_Dropdown.currentText() != '':
+            if (self.ui.Edit_Update_Status_Dropdown.currentText() != '') and self.Employee_ID_Check(Edit_Employee):
                 if self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked In':
                     AssetStatus_Dropdown = '1'
                 elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked Out':
@@ -497,8 +499,7 @@ class Admin_Interface(QWidget):
                     AssetStatus_Dropdown = '6'
                 elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee':
                     AssetStatus_Dropdown = '7'
-                Edit_Employee = self.ui.Edit_AssignTo_Field.text()
-                Edit_Asset = self.ui.Edit_Asset_Field.text()
+
 
                 insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
                 #Next two lines commit the edits present in the table
@@ -516,9 +517,15 @@ class Admin_Interface(QWidget):
                 self.ui.Edit_UI_Message_Name_From_ID.setText('')
 
             else:
-                print("Please fill status field before committing")
-                #self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
-                self.qm.critical(self, 'Critical Issue', 'Please fill status field!')
+                if not self.Employee_ID_Check(Edit_Employee) and self.ui.Edit_Update_Status_Dropdown.currentText() != '':
+                    self.qm.critical(self, 'Invalid Commit', 'Employee ID: ' + Edit_Employee +' does not exist in the local database')
+                elif (self.ui.Edit_Update_Status_Dropdown.currentText() == '' and self.Employee_ID_Check(Edit_Employee)):
+                    print("Please fill status field before committing")
+                    #self.ui.Edit_UI_Message_Prompt.setText('Please fill status field')
+                    self.qm.critical(self, 'Invalid Commit', 'Please fill status field!')
+                elif (self.ui.Edit_Update_Status_Dropdown.currentText() == '' and Edit_Employee == ''):
+
+                    self.qm.critical(self, 'Invalid Commit', 'Please search for asset, make desired changes to employee and status, then press commit!')
         except:
             logging.error('Error In function - edit_commitButtonClicked')
             print('Threw an exception in edit_commitButtonClicked function')
