@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1105</width>
-    <height>641</height>
+    <width>1160</width>
+    <height>824</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,7 +128,7 @@ QTabBar::tab:selected {
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="iconSize">
       <size>
@@ -915,13 +915,13 @@ QProgressBar::chunk{
               <bool>true</bool>
              </property>
              <attribute name="horizontalHeaderCascadingSectionResizes">
-              <bool>true</bool>
+              <bool>false</bool>
              </attribute>
              <attribute name="horizontalHeaderDefaultSectionSize">
               <number>100</number>
              </attribute>
              <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>100</number>
+              <number>200</number>
              </attribute>
              <column>
               <property name="text">
@@ -1001,6 +1001,54 @@ background-color: #577590;
           </layout>
          </item>
         </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Resolve_Tab">
+      <attribute name="title">
+       <string>Resolve</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QTableWidget" name="Resolve_Display_Conflicts_Table">
+         <column>
+          <property name="text">
+           <string>Asset #</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>RFID #</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Employee ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date checked out</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Date checked in</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Conflict Msg</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Conflict Details</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1649,54 +1697,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
           </layout>
          </item>
         </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="Resolve_Tab">
-      <attribute name="title">
-       <string>Resolve</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_12">
-       <item>
-        <widget class="QTableWidget" name="Resolve_Display_Conflicts_Table">
-         <column>
-          <property name="text">
-           <string>Asset #</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>RFID #</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Employee ID</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Date checked out</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Date checked in</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Conflict Msg</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Conflict Details</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
