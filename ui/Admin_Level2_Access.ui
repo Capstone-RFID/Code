@@ -128,7 +128,7 @@ QTabBar::tab:selected {
 </string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -1707,6 +1707,35 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>Home_ChangePassword_Button</tabstop>
+  <tabstop>Home_Force_Sync_Button</tabstop>
+  <tabstop>Search_Datetime_To</tabstop>
+  <tabstop>Search_Datetime_From</tabstop>
+  <tabstop>Search_Reset_Fields_Button</tabstop>
+  <tabstop>Search_Employee_ID_Entry_Field</tabstop>
+  <tabstop>Search_SearchAsset_Query_Button</tabstop>
+  <tabstop>Search_Asset_Numbers_Field</tabstop>
+  <tabstop>Search_Month_By_Month_Search_Dropdown</tabstop>
+  <tabstop>Search_Display_Results_Table</tabstop>
+  <tabstop>Search_Print_PDF_Button</tabstop>
+  <tabstop>Resolve_Display_Conflicts_Table</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>Admin_Select</tabstop>
+  <tabstop>Edit_Asset_Field</tabstop>
+  <tabstop>Edit_AssignTo_Field</tabstop>
+  <tabstop>Edit_Update_Status_Dropdown</tabstop>
+  <tabstop>Edit_Search_Button</tabstop>
+  <tabstop>Edit_Clear_Button</tabstop>
+  <tabstop>Edit_Commit_Edits_Button</tabstop>
+  <tabstop>Import_ImportAssets_Button</tabstop>
+  <tabstop>Import_ImportEmployees_Button</tabstop>
+  <tabstop>Create_Clear_Fields_Button</tabstop>
+  <tabstop>Create_Confirm_Entry_Button</tabstop>
+  <tabstop>Create_Asset_Description_Field</tabstop>
+  <tabstop>Create_RFID_Tag_Field_3</tabstop>
+  <tabstop>Create_Asset_Num_Field</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
