@@ -128,7 +128,7 @@ class Admin_Interface(QWidget):
 
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
-        self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
+        #self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
         self.ui.Edit_Asset_Field.returnPressed.connect(self.edit_searchButtonClicked)
         #self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
@@ -425,56 +425,56 @@ class Admin_Interface(QWidget):
 
     # Searches Asset Table to see if asset even exists, then searches
     # for most recent event regarding that asset and who it's assigned to/what is it's status
-    def edit_searchButtonClicked(self):
-        try:
-            print('Edit Tab Search Button Clicked')
-
-            #self.ui.Edit_UI_Message_Prompt.setText('Searching...')
-
-            #self.edit_clearTableResults()
-            if self.Asset_Check(self.ui.Edit_Asset_Field.text()):
-                print('Edit search found the asset!')
-                #self.ui.Edit_UI_Message_Prompt.setText('Asset Found')
-                #self.qm.information(self, 'Notice', 'Asset Found!')
-                #EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
-                #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
-                #self.edit_PopulateTable(EntryList)
-                AssetState = self.edit_Asset_List_Fetch(self.ui.Edit_Asset_Field.text())
-                # This updates the edit tab GUI fields w/ relevant info from the Event Log
-                #Current_Status = AssetState[0][4]
-                self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
-
-                #Query the name of employee using the asset from the employee table
-                EmployeeName = self.edit_FetchNameViaID(AssetState[0][2])
-                if EmployeeName != "":
-                    self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName[0])
-                else:
-                    self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName)
-
-
-
-                AssetStatus = AssetState[0][4]
-                if AssetStatus == '1':
-                    AssetStatus_Dropdown = 'Checked In'
-                elif AssetStatus == '2':
-                    AssetStatus_Dropdown = 'Checked Out'
-                if AssetStatus == '3':
-                    AssetStatus_Dropdown = 'In Repair'
-                elif AssetStatus == '4':
-                     AssetStatus_Dropdown = 'Retired'
-                if AssetStatus == '5':
-                    AssetStatus_Dropdown = 'Broken'
-                elif AssetStatus == '6':
-                     AssetStatus_Dropdown = 'New Item'
-                elif AssetStatus == '7':
-                    AssetStatus_Dropdown = 'New Employee'
-                self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
-            else:
-                print('Edit search did not find the asset!')
-                #self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
-                self.qm.critical(self, 'Invalid Entry', 'Asset ' + self.ui.Edit_Asset_Field.text() + ' does not exist in local database!')
-        except:
-            logging.error('Error In function - edit_searchButtonClicked')
+    # def edit_searchButtonClicked(self):
+    #     try:
+    #         print('Edit Tab Search Button Clicked')
+    #
+    #         #self.ui.Edit_UI_Message_Prompt.setText('Searching...')
+    #
+    #         #self.edit_clearTableResults()
+    #         if self.Asset_Check(self.ui.Edit_Asset_Field.text()):
+    #             print('Edit search found the asset!')
+    #             #self.ui.Edit_UI_Message_Prompt.setText('Asset Found')
+    #             #self.qm.information(self, 'Notice', 'Asset Found!')
+    #             #EntryList = self.edit_Asset_Info_Fetch(self.ui.Edit_Asset_Num_Field.text())
+    #             #self.edit_AssetSearchedInDatabase = self.ui.Edit_Asset_Field.text()
+    #             #self.edit_PopulateTable(EntryList)
+    #             AssetState = self.edit_Asset_List_Fetch(self.ui.Edit_Asset_Field.text())
+    #             # This updates the edit tab GUI fields w/ relevant info from the Event Log
+    #             #Current_Status = AssetState[0][4]
+    #             self.ui.Edit_AssignTo_Field.setText(AssetState[0][2])
+    #
+    #             #Query the name of employee using the asset from the employee table
+    #             EmployeeName = self.edit_FetchNameViaID(AssetState[0][2])
+    #             if EmployeeName != "":
+    #                 self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName[0])
+    #             else:
+    #                 self.ui.Edit_UI_Message_Name_From_ID.setText(EmployeeName)
+    #
+    #
+    #
+    #             AssetStatus = AssetState[0][4]
+    #             if AssetStatus == '1':
+    #                 AssetStatus_Dropdown = 'Checked In'
+    #             elif AssetStatus == '2':
+    #                 AssetStatus_Dropdown = 'Checked Out'
+    #             if AssetStatus == '3':
+    #                 AssetStatus_Dropdown = 'In Repair'
+    #             elif AssetStatus == '4':
+    #                  AssetStatus_Dropdown = 'Retired'
+    #             if AssetStatus == '5':
+    #                 AssetStatus_Dropdown = 'Broken'
+    #             elif AssetStatus == '6':
+    #                  AssetStatus_Dropdown = 'New Item'
+    #             elif AssetStatus == '7':
+    #                 AssetStatus_Dropdown = 'New Employee'
+    #             self.ui.Edit_Update_Status_Dropdown.setCurrentText(AssetStatus_Dropdown)
+    #         else:
+    #             print('Edit search did not find the asset!')
+    #             #self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
+    #             self.qm.critical(self, 'Invalid Entry', 'Asset ' + self.ui.Edit_Asset_Field.text() + ' does not exist in local database!')
+    #     except:
+    #         logging.error('Error In function - edit_searchButtonClicked')
 
 
     def edit_FetchNameViaID(self, EmployeeID):

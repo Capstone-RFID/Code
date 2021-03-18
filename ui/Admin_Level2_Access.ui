@@ -128,7 +128,7 @@ QTabBar::tab:selected {
 </string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <property name="iconSize">
       <size>
@@ -257,7 +257,7 @@ color: rgb(171, 171, 171);</string>
           <widget class="QPushButton" name="Home_ChangePassword_Button">
            <property name="minimumSize">
             <size>
-             <width>312</width>
+             <width>412</width>
              <height>50</height>
             </size>
            </property>
@@ -333,7 +333,7 @@ QPushButton#Home_ChangePassword_Button:pressed {
           <widget class="QPushButton" name="Home_Force_Sync_Button">
            <property name="minimumSize">
             <size>
-             <width>312</width>
+             <width>412</width>
              <height>50</height>
             </size>
            </property>
@@ -456,7 +456,7 @@ QComboBox::drop-down{
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>182</width>
+                 <width>242</width>
                  <height>51</height>
                 </size>
                </property>
@@ -507,7 +507,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
               <widget class="QPushButton" name="Search_Reset_Fields_Button">
                <property name="minimumSize">
                 <size>
-                 <width>182</width>
+                 <width>242</width>
                  <height>51</height>
                 </size>
                </property>
@@ -894,7 +894,7 @@ QProgressBar::chunk{
              </property>
              <property name="minimumSize">
               <size>
-               <width>182</width>
+               <width>242</width>
                <height>51</height>
               </size>
              </property>
@@ -963,7 +963,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0,0,0,0">
+        <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0">
          <property name="spacing">
           <number>4</number>
          </property>
@@ -1108,7 +1108,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
           <widget class="QPushButton" name="Edit_Clear_Button">
            <property name="minimumSize">
             <size>
-             <width>182</width>
+             <width>242</width>
              <height>51</height>
             </size>
            </property>
@@ -1131,41 +1131,11 @@ background-color: #577590;
            </property>
           </widget>
          </item>
-         <item row="0" column="5">
-          <widget class="QPushButton" name="Edit_Search_Button">
-           <property name="minimumSize">
-            <size>
-             <width>182</width>
-             <height>51</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton#Edit_Search_Button {
-background-color: #282c30;
-color: rgb(255, 255, 255);
-border-style: outset;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Edit_Search_Button:pressed {
-background-color: #577590;
-    border-style: inset;
-}</string>
-           </property>
-           <property name="text">
-            <string>Search</string>
-           </property>
-           <property name="default">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="5">
           <widget class="QPushButton" name="Edit_Commit_Edits_Button">
            <property name="minimumSize">
             <size>
-             <width>182</width>
+             <width>242</width>
              <height>51</height>
             </size>
            </property>
@@ -1264,7 +1234,7 @@ font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
-               <width>182</width>
+               <width>242</width>
                <height>51</height>
               </size>
              </property>
@@ -1291,7 +1261,7 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>182</width>
+               <width>242</width>
                <height>51</height>
               </size>
              </property>
@@ -1331,7 +1301,7 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
             <widget class="QPushButton" name="Import_ImportEmployees_Button">
              <property name="minimumSize">
               <size>
-               <width>182</width>
+               <width>242</width>
                <height>51</height>
               </size>
              </property>
@@ -1358,7 +1328,7 @@ QPushButton#Import_ImportEmployees_Button:pressed {
             <widget class="QPushButton" name="Import_ImportAssets_Button">
              <property name="minimumSize">
               <size>
-               <width>182</width>
+               <width>242</width>
                <height>51</height>
               </size>
              </property>
