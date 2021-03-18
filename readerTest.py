@@ -215,7 +215,7 @@ class mainWindow(QWidget):
 
     def adminButtonClicked(self):
         print('clicked admin')
-        self.admin.openAdmin(server, database)
+        self.admin.openAdmin(server, database,self.ui.Employee_ID_Input.text())
 
     def remove_action(self):
         if len(self.ui.New_Item_List.selectedItems()) != 0:

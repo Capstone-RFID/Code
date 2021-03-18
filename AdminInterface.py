@@ -72,6 +72,7 @@ class Admin_Interface(QWidget):
         self.ui.Search_Display_Results_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.ui.Resolve_Display_Conflicts_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         # ****************************************Private Var(s)*********************************
+        self.userLoggedIn = ""
 
         self.StateEntry = []
         self.ItemEntry = []
@@ -91,10 +92,8 @@ class Admin_Interface(QWidget):
         # ****************************************Asset Validators*********************************
         #Validator for each QLineEdit in
         # validator to only enter valid asset ID's into asset ID entry fields
-        self.onlyInt = QtGui.QIntValidator()
 
-        rExpSearch = QRegExp("(([Ee][0-9]{7}|[4][0-9]{6})(,{1}))*") #"(,?[E,e][0-9]{7}|[4][0-9]{6})* + (,)*"
-                                                                    #"(([E,e][0-9]{7}|[4][0-9]{6})(,))*"
+        rExpSearch = QRegExp("(([Ee][0-9]{7}|[4][0-9]{6})(,{1}))*")
         SearchTabValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
         self.ui.Search_Asset_Numbers_Field.setValidator(SearchTabValid)
 
@@ -102,9 +101,18 @@ class Admin_Interface(QWidget):
         EditTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Edit_Asset_Field)
         self.ui.Edit_Asset_Field.setValidator(EditTabValid)
 
+        Edit_EmployeeFieldsValid = QtGui.QIntValidator()
+        self.ui.Edit_AssignTo_Field.setValidator(Edit_EmployeeFieldsValid)
+
+        Edit_AssignTo_Valid = QtGui.QIntValidator()
+        self.ui.Search_Employee_ID_Entry_Field.setValidator(Edit_AssignTo_Valid)
+
+
+
+
         CreateTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Create_Asset_Num_Field)
         self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
-        # ****************************************End of Asset Validators*********************************
+        # ****************************************End of Validators*********************************
 
         # ****************************************Home Tab Button(s)*********************************
         self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
@@ -139,8 +147,12 @@ class Admin_Interface(QWidget):
         # ****************************************QMessageBox (Used across tabs)*********************************
         self.qm = QtWidgets.QMessageBox()
 
+
+
     # open up the admin window from the button on main window
-    def openAdmin(self, s, d):
+    def openAdmin(self, s, d, userLoggedIn):
+        self.userLoggedIn = userLoggedIn
+        print("The admin who just logged in has the ID: " + self.userLoggedIn)
         self.show()
         #set default tab on window opening to home tab
         self.ui.Admin_Select.setCurrentIndex(0)
@@ -485,8 +497,15 @@ class Admin_Interface(QWidget):
 
         try:
             print('Edit Tab Commit Button Clicked')
-            Edit_Employee = self.ui.Edit_AssignTo_Field.text()
             Edit_Asset = self.ui.Edit_Asset_Field.text()
+            #If the assign to field is blank, then record the event as the admin logged in
+            if self.ui.Edit_AssignTo_Field.text() == '':
+               Edit_Employee = self.userLoggedIn
+            else:
+                Edit_Employee = self.ui.Edit_AssignTo_Field.text()
+
+
+
             #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
             if (self.ui.Edit_Update_Status_Dropdown.currentText() != '') and self.Employee_ID_Check(Edit_Employee):
                 if self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked In':
