@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Etek_main_window_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Etek_main_window_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/readerTest/base_library.zip" beforeDir="false" afterPath="$PROJECT_DIR$/output/readerTest/base_library.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/readerTest/readerTest.exe" beforeDir="false" afterPath="$PROJECT_DIR$/output/readerTest/readerTest.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/Etek_main_window_v2.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

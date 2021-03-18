@@ -210,8 +210,7 @@ class mainWindow(QWidget):
             flag = "gtg"
         elif state[1] == "2":  ##if asset checked out
 
-            if state[
-                0] != self.ui.Employee_ID_Input.text():  ## if asset assigned to employee is not  the current employee
+            if state[0] != self.ui.Employee_ID_Input.text():  ## if asset assigned to employee is not  the current employee
                 # add name to this dialog box
 
                 response = self.qm.question(self, 'Input Required',
@@ -337,6 +336,8 @@ class mainWindow(QWidget):
         self.ui.Remove_Button.setEnabled(False)
         self.error_count = 0
         self.ui.Employee_ID_Enter.setStyleSheet("color : rgba(255, 255, 255,255)")
+
+        self.admin.close()
         return
 
     def done_button_clicked(self):
@@ -443,14 +444,10 @@ class mainWindow(QWidget):
             self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
 
     def check_in_action(self):
-        timestamp = datetime.datetime.now(tz=pytz.utc)
-        timestamp = timestamp.astimezone(timezone('US/Pacific'))
-        self.sql_call("1", timestamp)
+        self.sql_call("1")
 
     def check_out_action(self):
-        timestamp = datetime.datetime.now(tz=pytz.utc)
-        timestamp = timestamp.astimezone(timezone('US/Pacific'))
-        self.sql_call("2", timestamp)
+        self.sql_call("2")
 
     def confirmation_msg(self, entries):
         preString = ''
@@ -471,20 +468,20 @@ class mainWindow(QWidget):
                                 str1.join(entries))
         return
 
-    def sql_call(self, status, timestamp):
+    def sql_call(self, status):
         confirmation_list = []
         if len(self.markedList) != 0:
             for item in self.markedList:
                 Event_Log_Entry.append(
-                    [timestamp.strftime('%Y-%m-%d %H:%M:%S'), self.ui.Employee_ID_Input.text(), item, '5'])
+                    [self.ui.Employee_ID_Input.text(), item, '5'])
         for item in self.eventEntry:
-            Event_Log_Entry.append([timestamp.strftime('%Y-%m-%d %H:%M:%S'), item[0], item[1], status])
+            Event_Log_Entry.append([item[0], item[1], status])
 
-        insert_event_query = ''' INSERT INTO [Event Log Table] (TIMESTAMP,EMPLOYEEID,ASSETID, STATUS) VALUES(?,?,?,?);'''
+        insert_event_query = ''' INSERT INTO [Event Log Table] (EMPLOYEEID,ASSETID, STATUS) VALUES(?,?,?);'''
         for entry in Event_Log_Entry:
             # define the values to insert
-            eventValues = (entry[0], entry[1], entry[2], entry[3])
-            confirmation_list.append(entry[2])
+            eventValues = (entry[0], entry[1], entry[2])
+            confirmation_list.append(entry[1])
             # insert the data into the database
             cursor.execute(insert_event_query, eventValues)
         # commit the inserts
