@@ -235,7 +235,7 @@ class mainWindow(QWidget):
 
     def adminButtonClicked(self):
         print('clicked admin')
-        self.admin.openAdmin(server, database)
+        self.admin.openAdmin(server, database,self.ui.Employee_ID_Input.text())
 
     ##move asset from one table to another
     def move_action(self):
