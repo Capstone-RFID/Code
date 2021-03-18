@@ -183,6 +183,7 @@ class mainWindow(QWidget):
         self.ui.Asset_ID_Input.setValidator(valid)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
 
+        ### disable editing of tables
         self.ui.New_Item_List.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.ui.Existing_Item_list.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
@@ -237,6 +238,7 @@ class mainWindow(QWidget):
         print('clicked admin')
         self.admin.openAdmin(server, database)
 
+    ##move asset from one table to another
     def move_action(self):
         if self.ui.Check_In_Box.isChecked():
             if len(self.ui.Existing_Item_list.selectedItems()) != 0:
