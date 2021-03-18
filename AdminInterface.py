@@ -67,6 +67,10 @@ class Admin_Interface(QWidget):
         self.reactor = reactor
         self.ui = Ui_Admin_Interface()
         self.ui.setupUi(self)
+
+        #Stop user from editing tables
+        self.ui.Search_Display_Results_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.ui.Resolve_Display_Conflicts_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         # ****************************************Private Var(s)*********************************
 
         self.StateEntry = []
