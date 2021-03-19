@@ -87,6 +87,7 @@ class Admin_Interface(QWidget):
         self.import_EmployeeIDList = []
         self.import_EmployeeNameList = []
         self.import_AssetList = []
+        self.import_EmployeeIDList_AlreadyExisting = []
 
         #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
@@ -662,7 +663,7 @@ class Admin_Interface(QWidget):
             f = QFileDialog.getOpenFileName(qfd,'Import .xlsx',filter,path,'*.xlsx')
 
 
-            print('Picked out a file')
+            print('Picked an option on browser dialog')
             return f[0]
 
 
@@ -709,7 +710,7 @@ class Admin_Interface(QWidget):
                         df = df.reset_index(drop=True)
                         self.import_checkAssetsOrEmployeesToSQL(df)
                        # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
-                        self.qm.information(self, 'Notice', 'Import successful!')
+                        self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
                         logging.info('New Assets imported successfully through .xlsx file')
 
                     else:
@@ -724,27 +725,27 @@ class Admin_Interface(QWidget):
                 logging.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' clicked import assets button but did not select a .xlsx file from file browser prompt')
         except:
             logging.error('Error In function - Import_ImportAssets_ButtonClicked')
+            self.qm.critical(self, 'Critical Issue', 'Asset import failed: An exception was thrown')
 
     def Import_ImportEmployees_ButtonClicked(self):
         try:
             print('Import Tab ImportEmployees Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
-            name = "EmployeeList.xlsx"
             employeeFile = self.find_files()
 
             if (employeeFile != False):
 
 
                 dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
-                df = pd.DataFrame(dataEmployee, columns=['Name', 'EmployeeID'])
+                df = pd.DataFrame(dataEmployee, columns=['Name', 'Employee ID'])
 
-                if dataEmployee.columns[0] == 'Name' and dataEmployee.columns[1] == 'EmployeeID':
+                if dataEmployee.columns[0] == 'Name' and dataEmployee.columns[1] == 'Employee ID':
                     if not all (np.where(pd.isnull(df))):
                         self.import_checkAssetsOrEmployeesToSQL(df)
                         #self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
-                        self.qm.information(self, 'Notice', 'Import successful!')
-                        logging.info('New Employees imported successfully through .xlsx file')
 
+                        logging.info('New Employees imported successfully through .xlsx file')
+                        self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
                     else:
                         print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
                         #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
@@ -755,9 +756,7 @@ class Admin_Interface(QWidget):
                     self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
         except:
             logging.error('Error In function - Import_ImportEmployees_ButtonClicked')
-
-
-
+            self.qm.critical(self, 'Critical Issue', 'Employee import failed: An exception was thrown')
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
     # ****************************************Class Methods for Running Queries*******************************
@@ -1261,14 +1260,7 @@ class Admin_Interface(QWidget):
 
             return False
 
-    # def Asset_Return(self, AssetNum):
-    #     check_query = '''SELECT TOP 1 * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
-    #     self.cursor.execute(check_query, str(AssetNum))
-    #     if self.cursor.fetchone():
-    #         self.cursor.execute(check_query, str(AssetNum))
-    #         return self.cursor.fetchall()
-    #     else:
-    #         return False
+
 
     def edit_Asset_Info_Fetch(self, AssetNum):
         check_query = '''SELECT * FROM [Event Log Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
@@ -1322,6 +1314,8 @@ class Admin_Interface(QWidget):
         self.import_EmployeeIDList.clear()
         self.import_EmployeeNameList.clear()
         self.import_AssetList.clear()
+        self.import_EmployeeIDList_AlreadyExisting.clear()
+
 
         #Look at first column in Excel table to determine what data we're working with here
         for col in df.columns:
@@ -1337,21 +1331,29 @@ class Admin_Interface(QWidget):
         if importType == "Employees":
             for row in range(len(df.index)):
                 #if the employee ID already exists, it won't be imported to the lists
-                if not self.Employee_ID_Check(str(df.at[row, 'EmployeeID'])):
-                    self.import_EmployeeIDList.append(str(df.at[row, 'EmployeeID']))
+                if not self.Employee_ID_Check(str(df.at[row, 'Employee ID'])):
+                    self.import_EmployeeIDList.append(str(df.at[row, 'Employee ID']))
                     self.import_EmployeeNameList.append(str(df.at[row, 'Name']))
 
                     #Commit employee ID to Event log as a new addition (code 104) "10-4 good buddy"
-                    self.import_commitEmployeesToSQL(str(df.at[row, 'EmployeeID']),str(df.at[row, 'Name']))
+                    self.import_commitEmployeesToSQL(str(df.at[row, 'Employee ID']),str(df.at[row, 'Name']))
                     # NOTE: We should have a GUI notification that shows the import was sucessful
                     #self.ui.Create_UI_Message_Prompt.setText('Employee(s) imported')
-                    self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
+
 
 
                 #NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
+                    # self.import_EmployeeIDList_AlreadyExisting.append(str(df.at[row, 'Employee ID']))
                     print("The employee ID: "+ str(df.at[row, 'EmployeeID']) +" already exists in the database")
-
+            # if(len(self.import_EmployeeIDList_AlreadyExisting) > 0):
+            #     # initialize an empty string
+            #     str1 = ""
+            #
+            #     # traverse in the string
+            #     for ele in self.import_EmployeeIDList_AlreadyExisting:
+            #         str1 += (ele + ', ')
+            # self.qm.warning(self, 'Employee numbers already existing not imported ' + str(str1))
         # if we're importing assets, populate lists for SQL queries and importing into SQL
         if importType == "Assets":
             for row in range(len(df.index)):
@@ -1364,7 +1366,7 @@ class Admin_Interface(QWidget):
                     #Commit employee ID to Event log as a new addition (code 42) "The answer to everything"
                     self.import_commitAssetsToSQL(str(df.at[row, 'Asset ID']),str(df.at[row, 'RFID Tag']))
                     #self.ui.Create_UI_Message_Prompt.setText('Asset(s) imported')
-                    self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
+                    #self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     print("The Asset Number: "+ str(df.at[row, 'AssetID']) +" already exists in the database")
@@ -1381,6 +1383,7 @@ class Admin_Interface(QWidget):
         # Next two lines commit the edits present in the table
         self.cursor.execute(insert_event_query, str(EmployeeID), str(EmployeeName))
         self.cnxn.commit()
+
 
     # New asset imported appends with status #6
     def import_commitAssetsToSQL(self, AssetID, RFID_Tag):
