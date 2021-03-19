@@ -402,7 +402,7 @@ class Admin_Interface(QWidget):
             #Append date & time into filename (admin may do multiple searches + prints over several minutes)
             filepath = self.save_PDF_Filepath()
             today = str(datetime.now().strftime("%B %d, %Y %H %M %S"))
-            filename = filepath + "/Search Results " + today + ".pdf"
+            filename = filepath + "/E-TEK Search Results " + today + ".pdf"
             model = self.ui.Search_Display_Results_Table.model()
 
             #Below just prints a generic crappy table - modify to make formatting better if we have time later
