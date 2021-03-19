@@ -714,13 +714,13 @@ class Admin_Interface(QWidget):
                         logging.info('New Assets imported successfully through .xlsx file')
 
                     else:
-                        print('Please reformat excel into 2 columns "AssetID" and "Type" with no blank cells')
+                        print('Please reformat excel into 2 columns "AssetID" and "RFID Tag" with no blank cells')
                         #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
-                        self.qm.critical(self, 'Critical Issue', 'Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
+                        self.qm.critical(self, 'Critical Issue', 'Import failed: please reformat .xlsx file into 2 columns "AssetID" and "RFID Tag" with no blank cells')
                 else:
                     print('Please reformat excel into 2 columns "AssetID" and "Type"')
                     #self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
-                    self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
+                    self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "RFID Tag" with no blank cells')
             else:
                 logging.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' clicked import assets button but did not select a .xlsx file from file browser prompt')
         except:
@@ -747,13 +747,13 @@ class Admin_Interface(QWidget):
                         logging.info('New Employees imported successfully through .xlsx file')
                         self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
                     else:
-                        print('Please reformat excel into 2 columns "Name" and "EmployeeID" with no empty cells')
+                        print('Please reformat excel into 2 columns "Name" and "Employee ID" with no empty cells')
                         #self.ui.Create_UI_Message_Prompt.setText('Import failed: blank cells in file')
-                        self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
+                        self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "Employee ID" with no blank cells')
                 else:
                     print('Please reformat excel into 2 columns "Name" and "EmployeeID"')
                     #self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
-                    self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "EmployeeID" with no blank cells')
+                    self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "Employee ID" with no blank cells')
         except:
             logging.error('Error In function - Import_ImportEmployees_ButtonClicked')
             self.qm.critical(self, 'Critical Issue', 'Employee import failed: An exception was thrown')
@@ -1249,10 +1249,12 @@ class Admin_Interface(QWidget):
     #Searchs for a list of assets specified by lower and upper bound of asset #'s
     #returns list within and including bounds
 
-
+    #If it can fetch a query from the Asset Table, then it will return true, else it returns false
+    #For checking if the asset number already exists in the database
     def Asset_Check(self, AssetNum):
         check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
         self.cursor.execute(check_query, str(AssetNum))
+
         if self.cursor.fetchone():
             self.cursor.execute(check_query, str(AssetNum))
             return True
@@ -1345,7 +1347,7 @@ class Admin_Interface(QWidget):
                 #NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     # self.import_EmployeeIDList_AlreadyExisting.append(str(df.at[row, 'Employee ID']))
-                    print("The employee ID: "+ str(df.at[row, 'EmployeeID']) +" already exists in the database")
+                    print("The employee ID: "+ str(df.at[row, 'Employee ID']) +" already exists in the database")
             # if(len(self.import_EmployeeIDList_AlreadyExisting) > 0):
             #     # initialize an empty string
             #     str1 = ""
@@ -1369,12 +1371,12 @@ class Admin_Interface(QWidget):
                     #self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
-                    print("The Asset Number: "+ str(df.at[row, 'AssetID']) +" already exists in the database")
+                    print("The Asset Number: "+ str(df.at[row, 'Asset ID']) +" already exists in the database")
 
 
-        print(self.import_EmployeeIDList)
-        print(self.import_EmployeeNameList)
-        print(self.import_AssetList)
+        # print(self.import_EmployeeIDList)
+        # print(self.import_EmployeeNameList)
+        # print(self.import_AssetList)
 
 
     #New employee imported appends
