@@ -7,6 +7,7 @@ from datetime import date
 from threading import Thread
 import subprocess
 import keyboard
+
 import logging
 #format log file to save as 'ETEK.log' and store date time and message of actions or errors
 logging.basicConfig(filename='ETEK.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
@@ -129,7 +130,7 @@ class Admin_Interface(QWidget):
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
         #self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
-        self.ui.Edit_Asset_Field.returnPressed.connect(self.edit_searchButtonClicked)
+        #self.ui.Edit_Asset_Field.returnPressed.connect(self.edit_searchButtonClicked)
         #self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
 
@@ -652,34 +653,22 @@ class Admin_Interface(QWidget):
         except:
             logging.error('Error In function - create_confirmEntryButtonClicked')
 
-    def find_files(self,filename):
+    def find_files(self):
         try:
-            fileNotFoundFlag = 0 #Used to ask user if they want to search the C:\ drive
-            path_list = [Path("D:\\"),Path("E:\\"),Path("F:\\"),Path("G:\\"),Path("H:\\"),Path("I:\\"),Path("J:\\"),Path("K:\\"),Path("L:\\"),Path("M:\\"),Path("N:\\"),Path("O:\\"),Path("P\\"),Path("Q:\\"),Path("R:\\"),Path("S:\\"),Path("T:\\"),Path("U:\\"),Path("V:\\"),Path("W:\\"),Path("X:\\"),Path("Y:\\"),Path("Z:\\")]
-            # Walking top-down from the root
-            for search_path in path_list:
-                for root, dir, files in os.walk(search_path):
-                    if filename in files:
-                        #print(os.path.join(root, filename))
-                        return (os.path.join(root, filename))
 
-            response = self.qm.question(self, 'Input Required', "Could not find " + filename +" on letter drives D: thru Z:" + "\n\nDo you want to search the C: drive for "+ filename + "?" + "\nWARNING: Searching C: drive may take some time", self.qm.Yes | self.qm.No)
-            if response == self.qm.Yes:
-                for root, dir, files in os.walk(Path("C:\\")):
-                    if filename in files:
-                        # print(os.path.join(root, filename))
-                        return (os.path.join(root, filename))
-                    else:
-                        fileNotFoundFlag = 1
-            elif response == self.qm.No:
-                self.qm.warning(self, 'File not found',"Could not find " + filename + " on USB drive, please check that file exists on USB drive")
-                return False
+            qfd = QFileDialog()
+            path = "C:\Projects"
+            filter = "*.xlsx"
+            f = QFileDialog.getOpenFileName(qfd,'Import .xlsx',filter,path,'*.xlsx')
 
-            if fileNotFoundFlag == 1:
-                self.qm.warning(self, 'File not found', "Could not find " + filename + " on USB or C: drive, please check that file exists")
-                return False
+
+            print('Picked out a file')
+            return f[0]
+
+
         except:
             logging.error('Error In function - find_files')
+
 
 
 
@@ -692,17 +681,18 @@ class Admin_Interface(QWidget):
             print('Import Tab ImportAssets Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
             name = "AssetList.xlsx"
-            assetFile = self.find_files(name)
+            assetFile = self.find_files()
 
-            if(assetFile != False):
+
+            if(assetFile != ''):
                 dataAsset = pd.read_excel(assetFile, engine='openpyxl', dtype = str)
 
-                df = pd.DataFrame(dataAsset, columns=['AssetID', 'Type'])
+                df = pd.DataFrame(dataAsset, columns=['Asset ID', 'RFID Tag'])
 
-                if dataAsset.columns[0] == 'AssetID' and dataAsset.columns[1] == 'Type':
+                if dataAsset.columns[0] == 'Asset ID' and dataAsset.columns[1] == 'RFID Tag':
                     if not all (np.where(pd.isnull(df))):
                         count = 0
-                        for index in df["AssetID"]:
+                        for index in df["Asset ID"]:
                                 # Regex for getting asset numbers that start w/ 4,E or e and have 7 digits (numerical) after
                                 # If the number is the correct format, then start processing it
                             if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",index):
@@ -730,6 +720,8 @@ class Admin_Interface(QWidget):
                     print('Please reformat excel into 2 columns "AssetID" and "Type"')
                     #self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
                     self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "Type" with no blank cells')
+            else:
+                logging.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' clicked import assets button but did not select a .xlsx file from file browser prompt')
         except:
             logging.error('Error In function - Import_ImportAssets_ButtonClicked')
 
@@ -738,7 +730,7 @@ class Admin_Interface(QWidget):
             print('Import Tab ImportEmployees Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
             name = "EmployeeList.xlsx"
-            employeeFile = self.find_files(name)
+            employeeFile = self.find_files()
 
             if (employeeFile != False):
 
@@ -1336,7 +1328,7 @@ class Admin_Interface(QWidget):
             if col == "Name":
                 importType = "Employees"
                 break
-            elif col == "AssetID":
+            elif col == "Asset ID":
                 importType = "Assets"
                 break
 
@@ -1365,12 +1357,12 @@ class Admin_Interface(QWidget):
             for row in range(len(df.index)):
 
                 # if the asset ID already exists, it won't be imported to the lists or commited to SQL
-                if not self.Asset_Check(str(df.at[row, 'AssetID'])):
-                    self.import_AssetList.append(df.at[row, 'AssetID'])
-                    self.import_AssetList.append(str(df.at[row, 'Type']))
+                if not self.Asset_Check(str(df.at[row, 'Asset ID'])):
+                    self.import_AssetList.append(df.at[row, 'Asset ID'])
+                    self.import_AssetList.append(str(df.at[row, 'RFID Tag']))
 
                     #Commit employee ID to Event log as a new addition (code 42) "The answer to everything"
-                    self.import_commitAssetsToSQL(str(df.at[row, 'AssetID']),str(df.at[row, 'Type']))
+                    self.import_commitAssetsToSQL(str(df.at[row, 'Asset ID']),str(df.at[row, 'RFID Tag']))
                     #self.ui.Create_UI_Message_Prompt.setText('Asset(s) imported')
                     self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
@@ -1391,13 +1383,19 @@ class Admin_Interface(QWidget):
         self.cnxn.commit()
 
     # New asset imported appends with status #6
-    def import_commitAssetsToSQL(self, AssetID, Description):
+    def import_commitAssetsToSQL(self, AssetID, RFID_Tag):
         insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
         self.cursor.execute(insert_event_query, str(AssetID), '6')
 
-        insert_event_query = ''' INSERT INTO [Asset Table] (AssetID, Type) VALUES(?,?);'''
+        insert_event_query = ''' INSERT INTO [Asset Table] (AssetID) VALUES(?);'''
         # Next two lines commit the edits present in the table
-        self.cursor.execute(insert_event_query, str(AssetID), str(Description))
+        self.cursor.execute(insert_event_query, str(AssetID))
+
+        insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(RFID_Tag),str(AssetID))
+
+
 
         self.cnxn.commit()
