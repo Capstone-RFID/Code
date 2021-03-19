@@ -65,9 +65,11 @@ def get_logger(logger_name):
    logger.propagate = False
    return logger
 
+
+# define global logger variable using the global current user ID
 CurrentUser = ''
-#define global logger variable using the global current user ID
-ETEK_log = get_logger('User: ' + CurrentUser)
+ETEK_log = get_logger('Admin Action' + CurrentUser)
+
 
 
 
@@ -187,7 +189,7 @@ class Admin_Interface(QWidget):
         self.userLoggedIn = userLoggedIn
         global CurrentUser
         CurrentUser = userLoggedIn
-        ETEK_log = get_logger('User: ' + CurrentUser)
+        ETEK_log = get_logger('User: (' + CurrentUser + ')')
         print("The admin who just logged in has the ID: " + self.userLoggedIn)
         self.show()
         #set default tab on window opening to home tab
@@ -208,7 +210,7 @@ class Admin_Interface(QWidget):
             self.cursor = self.cnxn.cursor()
 
             ETEK_log.info('Connected to Server ' + server + ' and ' + database)
-            return CurrentUser
+
 
         except:
             ETEK_log.error('Unable to connect to Server ' + server + ' and ' + database + ' please check configuration file.')
