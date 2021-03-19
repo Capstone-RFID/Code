@@ -31,7 +31,9 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
+import sys
 
+from ScrollMessageBox import ScrollMessageBox
 
 #For reading passwords
 from configparser import ConfigParser
@@ -149,7 +151,7 @@ class Admin_Interface(QWidget):
 
         # ****************************************QMessageBox (Used across tabs)*********************************
         self.qm = QtWidgets.QMessageBox()
-
+        self.scrollqm = ScrollMessageBox
 
 
     # open up the admin window from the button on main window
@@ -657,17 +659,13 @@ class Admin_Interface(QWidget):
 
     def find_files(self):
         try:
-            f = QFileDialog.getOpenFileName(self, "Open .xlsx File","/home","Image Files (*.xlsx)")
-            #print(f)
+
+            #self.scrollqm.buttonClicked()
+            f = QFileDialog.getOpenFileName(self, "Open .xlsx File","/home",".xlsx files (*.xlsx)")
+
             return f[0]
         except:
             logging.error('Error In function - find_files')
-
-
-
-
-
-
 
 
     def Import_ImportAssets_ButtonClicked(self):
