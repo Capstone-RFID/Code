@@ -8,10 +8,6 @@ from threading import Thread
 import subprocess
 import keyboard
 
-import logging
-#format log file to save as 'ETEK.log' and store date time and message of actions or errors
-logging.basicConfig(filename='ETEK.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
 
 #for reading excel files
 import numpy as np
@@ -35,11 +31,43 @@ import sys
 
 from ScrollMessageBox import ScrollMessageBox
 
+
 #For reading passwords
 from configparser import ConfigParser
 
 
 import openpyxl
+
+#for generating log text file for exception handling and timestamp of all user actions
+import logging
+#format log file to save as 'ETEK.log' and store date time and message of actions or errors
+#logging.basicConfig(filename='ETEK.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+from logging.handlers import TimedRotatingFileHandler
+FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
+LOG_FILE = "ETEK.log"
+
+def get_console_handler():
+   console_handler = logging.StreamHandler(sys.stdout)
+   console_handler.setFormatter(FORMATTER)
+   return console_handler
+
+def get_file_handler():
+   file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+   file_handler.setFormatter(FORMATTER)
+   return file_handler
+
+def get_logger(logger_name):
+   logger = logging.getLogger(logger_name)
+   logger.setLevel(logging.DEBUG) # better to have too much log than not enough
+   logger.addHandler(get_console_handler())
+   logger.addHandler(get_file_handler())
+   # with this pattern, it's rarely necessary to propagate the error up to parent
+   logger.propagate = False
+   return logger
+
+CurrentUser = ''
+#define global logger variable using the global current user ID
+ETEK_log = get_logger('User: ' + CurrentUser)
 
 
 
@@ -157,6 +185,9 @@ class Admin_Interface(QWidget):
     # open up the admin window from the button on main window
     def openAdmin(self, s, d, userLoggedIn):
         self.userLoggedIn = userLoggedIn
+        global CurrentUser
+        CurrentUser = userLoggedIn
+        ETEK_log = get_logger('User: ' + CurrentUser)
         print("The admin who just logged in has the ID: " + self.userLoggedIn)
         self.show()
         #set default tab on window opening to home tab
@@ -176,12 +207,11 @@ class Admin_Interface(QWidget):
             # create the connection cursor as a private variable
             self.cursor = self.cnxn.cursor()
 
-            logging.info('Connected to Server ' + server + ' and ' + database)
-
+            ETEK_log.info('Connected to Server ' + server + ' and ' + database)
+            return CurrentUser
 
         except:
-            logging.error('Unable to connect to Server ' + server + ' and ' + database + ' please check configuration file.')
-
+            ETEK_log.error('Unable to connect to Server ' + server + ' and ' + database + ' please check configuration file.')
 
 
     #****************************************Class Methods for Tab Button(s)*********************************
@@ -203,9 +233,9 @@ class Admin_Interface(QWidget):
 
             #clear search results in table
             self.search_clearTableResults()
-            logging.info('Search Filters reset')
+            ETEK_log.info('Search Filters reset')
         except:
-            logging.error('Error while resetting Search Filters')
+            ETEK_log.error('Error while resetting Search Filters')
 
 
 
@@ -220,20 +250,20 @@ class Admin_Interface(QWidget):
                 EmployeeAssetList = self.Employee_ID_FindAssets(EmployeeNum)
                 if EmployeeAssetList != False:
                     self.search_PopulateTable(EmployeeAssetList)
-                    logging.info('Search for Employee ID (' + EmployeeNum + ') - events found')
+                    ETEK_log.info('Search for Employee ID (' + EmployeeNum + ') - events found')
                 else:
                     self.qm.warning(self, 'No events found for Employee ID')
-                    logging.info('Search for Employee ID (' + EmployeeNum + ') - no events found')
+                    ETEK_log.info('Search for Employee ID (' + EmployeeNum + ') - no events found')
             else:
                 #self.ui.Search_UI_Message_Prompt.setText('No matching employee ID found')
                 self.qm.warning(self, 'Notice', 'No matching employee ID found')
-                logging.info('Search for Employee ID (' + EmployeeNum + ') - no matching employee found')
+                ETEK_log.info('Search for Employee ID (' + EmployeeNum + ') - no matching employee found')
 
                 #self.ui.Search_UI_Message_Prompt.setText('Found Employee ID')
         # Generates list of EmployeeID in event log based on Assets in search Filter
 
         except:
-            logging.error('Error while searching for Employee ID. In function - search_searchIDButtonClicked')
+            ETEK_log.error('Error while searching for Employee ID. In function - search_searchIDButtonClicked')
 
     #Checks to see if entered asset# exists in asset table, populates table w/ query results if it is
     def search_searchAssetButtonClicked(self, AssetInputs):
@@ -246,16 +276,16 @@ class Admin_Interface(QWidget):
                 if self.Asset_Check(AssetNum):
                     AssetList = self.Asset_List_Fetch(AssetNum)
                     self.search_PopulateTable(AssetList)
-                    logging.info('Search for Asset Number (' + AssetNum + ') - events found')
+                    ETEK_log.info('Search for Asset Number (' + AssetNum + ') - events found')
                 elif not self.Asset_Check(AssetNum) and (len(AssetInputs) > 1):
                     self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
                     self.qm.warning(self, 'Notice', 'At least one asset not found')
-                    logging.info('Search for Asset Number (' + AssetNum + ') - does not exist in local database')
+                    ETEK_log.info('Search for Asset Number (' + AssetNum + ') - does not exist in local database')
                 elif not self.Asset_Check(AssetNum):
                     self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
-                    logging.info('Search for Asset Number (' + AssetNum + ') - does not exist in local database')
+                    ETEK_log.info('Search for Asset Number (' + AssetNum + ') - does not exist in local database')
         except:
-            logging.error('Error while searching for Assets. In function - search_searchAssetButtonClicked')
+            ETEK_log.error('Error while searching for Assets. In function - search_searchAssetButtonClicked')
 
     def search_searchAssetandIDButtonClicked(self,AssetString):
 
@@ -266,7 +296,7 @@ class Admin_Interface(QWidget):
             EmployeeNum = self.ui.Search_Employee_ID_Entry_Field.text()
             if(not self.Employee_ID_Check(EmployeeNum)):
                 self.qm.critical(self, 'Notice', 'Unknown employee ID')
-                logging.info('Employee ID (' + EmployeeNum + ') does not exist in local database')
+                ETEK_log.info('Employee ID (' + EmployeeNum + ') does not exist in local database')
 
             for AssetNum in AssetString:
 
@@ -275,12 +305,12 @@ class Admin_Interface(QWidget):
                    EmployeeAndAssetList = self.search_fetchAssetAndID(AssetNum, EmployeeNum)
                    if EmployeeAndAssetList:
                        self.search_PopulateTable(EmployeeAndAssetList)
-                       logging.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - events found')
+                       ETEK_log.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - events found')
                    else:
                        print('No ID found with that Asset')
                        atLeastOneAssetNotFound_Flag = 1
                        #self.qm.information(self, 'Notice', 'No employee ID found with the asset number '+ AssetNum)
-                       logging.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - events not found')
+                       ETEK_log.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - events not found')
 
 
 
@@ -288,34 +318,34 @@ class Admin_Interface(QWidget):
                 elif not self.Asset_Check(AssetNum) and (len(AssetString) > 1) and self.Employee_ID_Check(EmployeeNum):
                     self.qm.critical(self, 'Notice', 'Asset number ' + AssetNum + ' does not exist in local database')
                     atLeastOneAssetNotFound_Flag = 1
-                    logging.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Asset not in database')
+                    ETEK_log.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Asset not in database')
 
 
                 #If the asset doesn't exist, the employee does exist, then display this prompt
                 elif(not self.Asset_Check(AssetNum) and self.Employee_ID_Check(EmployeeNum)):
                     #self.ui.Search_UI_Message_Prompt.setText('At least one asset not found')
                     self.qm.critical(self, 'Notice','Asset number ' + AssetNum + ' does not exist in local database')
-                    logging.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Asset not in database')
+                    ETEK_log.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Asset not in database')
 
                 # If the employee ID does not exist, notify the user, then display this prompt
                 elif (not self.Employee_ID_Check(EmployeeNum)):
                     # self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
                     print('Unknown employee ID')
                     self.qm.critical(self, 'Notice', 'Employee ID ' + EmployeeNum + ' does not exist in local database')
-                    logging.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Employee ID not in database')
+                    ETEK_log.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Employee ID not in database')
 
                 # If the employee ID does not exist, notify the user, don't search anything then display this prompt
                 elif (not self.Asset_Check(AssetNum)):
                     # self.ui.Search_UI_Message_Prompt.setText('Unknown employee ID')
                     print('Unknown employee ID')
                     self.qm.critical(self, 'Notice', 'Asset ID ' + AssetNum + ' does not exist in local database')
-                    logging.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Employee ID and Asset both not in database')
+                    ETEK_log.info('Search for Asset (' + AssetNum + ') used by Employee ID (' + EmployeeNum + ') - Employee ID and Asset both not in database')
 
 
             if(atLeastOneAssetNotFound_Flag == 1):
                 self.qm.warning(self, 'Notice', 'At least one asset not found')
         except:
-            logging.error('Error while searching for Assets used by Employee. In function - search_searchAssetandIDButtonClicked')
+            ETEK_log.error('Error while searching for Assets used by Employee. In function - search_searchAssetandIDButtonClicked')
 
 
     def search_searchDateButtonClicked(self):
@@ -338,24 +368,24 @@ class Admin_Interface(QWidget):
                 DateList = self.search_fetchDateTime(dateTimeLowerBound, dateTimeUpperBound)
                 if DateList:
                     self.search_PopulateTable(DateList)
-                    logging.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - events found for date range')
+                    ETEK_log.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - events found for date range')
             else:
                 #self.ui.Search_UI_Message_Prompt.setText('No events found between these dates')
                 self.qm.information(self, 'Notice', 'No events found between these dates')
-                logging.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - no events found for date range')
+                ETEK_log.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - no events found for date range')
 
                 if not self.Employee_ID_Check(EmployeeID) and (EmployeeID != ''):
                     self.qm.critical(self, 'Critical Issue','Employee ID ' + EmployeeID + ' does not exist in the local database')
-                    logging.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - Employee  ' + EmployeeID + ' does not exist in database.')
+                    ETEK_log.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - Employee  ' + EmployeeID + ' does not exist in database.')
 
                 if len(AssetList) != 0:
                     for Asset in AssetList:
                         if not self.Asset_Check(Asset):
                             self.qm.critical(self, 'Critical Issue','Asset ID ' + Asset + ' does not exist in the local database')
-                            logging.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - Asset ' + Asset + ' does not exist in database.')
+                            ETEK_log.info('Search for Dates between (' + dateTimeLowerBound + ') and (' + dateTimeUpperBound + ') - Asset ' + Asset + ' does not exist in database.')
 
         except:
-            logging.error('Error while searching for Date range. In function - search_searchDateButtonClicked')
+            ETEK_log.error('Error while searching for Date range. In function - search_searchDateButtonClicked')
 
 
 
@@ -411,10 +441,10 @@ class Admin_Interface(QWidget):
 
             self.ui.Search_UI_Message_Prompt.setText('')
             self.qm.information(self, 'Notice', 'Successful PDF Print!')
-            logging.info('Print to PDF Search Results Completed')
+            ETEK_log.info('Print to PDF Search Results Completed')
 
         except:
-            logging.error('Error while printing to PDF. In function - search_printPDFButtonClicked')
+            ETEK_log.error('Error while printing to PDF. In function - search_printPDFButtonClicked')
 
 
     def edit_clearButtonClicked(self):
@@ -426,7 +456,7 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
             self.ui.Edit_UI_Message_Name_From_ID.setText('')
         except:
-            logging.error('Error In function - edit_clearButtonClicked')
+            ETEK_log.error('Error In function - edit_clearButtonClicked')
 
     # Searches Asset Table to see if asset even exists, then searches
     # for most recent event regarding that asset and who it's assigned to/what is it's status
@@ -479,7 +509,7 @@ class Admin_Interface(QWidget):
     #             #self.ui.Edit_UI_Message_Prompt.setText('Asset not found')
     #             self.qm.critical(self, 'Invalid Entry', 'Asset ' + self.ui.Edit_Asset_Field.text() + ' does not exist in local database!')
     #     except:
-    #         logging.error('Error In function - edit_searchButtonClicked')
+    #         ETEK_log.error('Error In function - edit_searchButtonClicked')
 
 
     def edit_FetchNameViaID(self, EmployeeID):
@@ -495,7 +525,7 @@ class Admin_Interface(QWidget):
                 #self.qm.information(self, 'Notice', 'Unknown Employee ID')
                 return str("")
         except:
-            logging.error('Error In function - edit_FetchNameViaID')
+            ETEK_log.error('Error In function - edit_FetchNameViaID')
 
 
     def edit_commitButtonClicked(self):
@@ -536,7 +566,7 @@ class Admin_Interface(QWidget):
                 self.ui.Edit_UI_Message_Prompt.setText('')
                 EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
                 self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
-                logging.info('Asset Edits Committed to Database')
+                ETEK_log.info('Asset Edits Committed to Database')
 
                 #clear fields after commit
                 self.ui.Edit_AssignTo_Field.setText('')
@@ -555,7 +585,7 @@ class Admin_Interface(QWidget):
 
                     self.qm.critical(self, 'Invalid Commit', 'Please search for asset, make desired changes to employee and status, then press commit!')
         except:
-            logging.error('Error In function - edit_commitButtonClicked')
+            ETEK_log.error('Error In function - edit_commitButtonClicked')
             print('Threw an exception in edit_commitButtonClicked function')
 
 
@@ -570,7 +600,7 @@ class Admin_Interface(QWidget):
             self.ui.Create_RFID_Tag_Field_3.setText("")
             self.ui.Create_UI_Message_Prompt.setText('')
         except:
-            logging.error('Error In function - create_clearButtonClicked')
+            ETEK_log.error('Error In function - create_clearButtonClicked')
 
 
     #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
@@ -611,7 +641,7 @@ class Admin_Interface(QWidget):
                         self.cnxn.commit()
                         #self.ui.Create_UI_Message_Prompt.setText('New tag applied to asset')
                         self.qm.information(self,'Notice', 'New tag applied to asset!')
-                        logging.info('New RFID tag added to existing Asset in Database')
+                        ETEK_log.info('New RFID tag added to existing Asset in Database')
 
 
                     #Edit this so it prints info somewhere so user can edit association
@@ -644,7 +674,7 @@ class Admin_Interface(QWidget):
                     self.cnxn.commit()
                     #self.ui.Create_UI_Message_Prompt.setText('Asset Successfully Created!')
                     self.qm.information(self, 'Notice', "Asset Successfully Created!")
-                    logging.info('New Asset linked to RFID and created in Database')
+                    ETEK_log.info('New Asset linked to RFID and created in Database')
             else:
                 print("Enter both a valid asset number and description!")
                 #self.ui.Create_UI_Message_Prompt.setText('Enter valid asset # and description')
@@ -655,7 +685,7 @@ class Admin_Interface(QWidget):
             self.ui.Create_Asset_Description_Field.setText("")
             self.ui.Create_RFID_Tag_Field_3.setText("")
         except:
-            logging.error('Error In function - create_confirmEntryButtonClicked')
+            ETEK_log.error('Error In function - create_confirmEntryButtonClicked')
 
     def find_files(self):
         try:
@@ -665,7 +695,7 @@ class Admin_Interface(QWidget):
 
             return f[0]
         except:
-            logging.error('Error In function - find_files')
+            ETEK_log.error('Error In function - find_files')
 
 
     def Import_ImportAssets_ButtonClicked(self):
@@ -702,7 +732,7 @@ class Admin_Interface(QWidget):
                         self.import_checkAssetsOrEmployeesToSQL(df)
                        # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
                         self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
-                        logging.info('New Assets imported successfully through .xlsx file')
+                        ETEK_log.info('New Assets imported successfully through .xlsx file')
 
                     else:
                         print('Please reformat excel into 2 columns "AssetID" and "RFID Tag" with no blank cells')
@@ -713,9 +743,9 @@ class Admin_Interface(QWidget):
                     #self.ui.Create_UI_Message_Prompt.setText('Import failed: check column headers')
                     self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "AssetID" and "RFID Tag" with no blank cells')
             else:
-                logging.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' clicked import assets button but did not select a .xlsx file from file browser prompt')
+                ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' clicked import assets button but did not select a .xlsx file from file browser prompt')
         except:
-            logging.error('Error In function - Import_ImportAssets_ButtonClicked')
+            ETEK_log.error('Error In function - Import_ImportAssets_ButtonClicked')
             self.qm.critical(self, 'Critical Issue', 'Asset import failed: An exception was thrown')
 
     def Import_ImportEmployees_ButtonClicked(self):
@@ -735,7 +765,7 @@ class Admin_Interface(QWidget):
                         self.import_checkAssetsOrEmployeesToSQL(df)
                         #self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
 
-                        logging.info('New Employees imported successfully through .xlsx file')
+                        ETEK_log.info('New Employees imported successfully through .xlsx file')
                         self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
                     else:
                         print('Please reformat excel into 2 columns "Name" and "Employee ID" with no empty cells')
@@ -746,7 +776,7 @@ class Admin_Interface(QWidget):
                     #self.ui.Create_UI_Message_Prompt.setText('Import failed: bad column header(s)')
                     self.qm.critical(self, 'Critical Issue','Import failed: please reformat .xlsx file into 2 columns "Name" and "Employee ID" with no blank cells')
         except:
-            logging.error('Error In function - Import_ImportEmployees_ButtonClicked')
+            ETEK_log.error('Error In function - Import_ImportEmployees_ButtonClicked')
             self.qm.critical(self, 'Critical Issue', 'Employee import failed: An exception was thrown')
 
     # ****************************************End Class Methods for Tab Button(s)*****************************
@@ -874,7 +904,7 @@ class Admin_Interface(QWidget):
             #     print("No Asset or Employee ID or Date Range Entered!")
             #     self.ui.Search_UI_Message_Prompt.setText('Specify Search Filters!')
         except:
-            logging.error('Error while searching. In function - search_checkFieldInputs')
+            ETEK_log.error('Error while searching. In function - search_checkFieldInputs')
 
     #This method uses Regex to separate a string of #'s separated by commas into a list that we can put into
     #our search and populate table methods.  This also ignores whitespace to allow more robust valid inputs
@@ -938,13 +968,13 @@ class Admin_Interface(QWidget):
             MonthList = self.search_FindMonthsSQLQuery()
             if MonthList:
                 self.search_PopulateTable(MonthList)
-                logging.info('Search by Specific Month - events found')
+                ETEK_log.info('Search by Specific Month - events found')
             else:
                 #self.ui.Search_UI_Message_Prompt.setText('No events found for that month')
                 #self.qm.information(self, 'Notice', 'No events found for that month')
-                logging.info('Search by Specific Month - no events found')
+                ETEK_log.info('Search by Specific Month - no events found')
         except:
-            logging.error('Error while searching by Month. In function - search_Find_Months ')
+            ETEK_log.error('Error while searching by Month. In function - search_Find_Months ')
 
     def search_FindMonthsSQLQuery(self):
         Month = self.ui.Search_Month_By_Month_Search_Dropdown.currentText()
@@ -1395,3 +1425,4 @@ class Admin_Interface(QWidget):
 
 
         self.cnxn.commit()
+
