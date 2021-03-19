@@ -7,7 +7,6 @@
     <list default="true" id="af95aa7c-f59a-470a-827d-8cfc6e50cd9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AdminInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/AdminInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readerTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/readerTest.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -390,12 +389,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>557</line>
+          <line>560</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>573</line>
+          <line>576</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -415,12 +414,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>412</line>
+          <line>413</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>695</line>
+          <line>698</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>

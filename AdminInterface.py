@@ -394,54 +394,57 @@ class Admin_Interface(QWidget):
     def search_printPDFButtonClicked(self):
         try:
             print('Search Tab Print Button Clicked')
-            self.ui.Search_UI_Message_Prompt.setText('Printing to PDF...')
+            #self.ui.Search_UI_Message_Prompt.setText('Printing to PDF...')
 
             #calling the qt object constantly was long and unwieldy, just call it w and move on
             #w = self.ui.Search_Display_Results_Table
 
             #Append date & time into filename (admin may do multiple searches + prints over several minutes)
             filepath = self.save_PDF_Filepath()
-            today = str(datetime.now().strftime("%B %d, %Y %H %M %S"))
-            filename = filepath + "/E-TEK Search Results " + today + ".pdf"
-            model = self.ui.Search_Display_Results_Table.model()
+            if filepath != '':
+                today = str(datetime.now().strftime("%B %d, %Y %H %M %S"))
+                filename = filepath + "/E-TEK Search Results " + today + ".pdf"
+                model = self.ui.Search_Display_Results_Table.model()
 
-            #Below just prints a generic crappy table - modify to make formatting better if we have time later
-            printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.PrinterResolution)
-            printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
-            printer.setPaperSize(QtPrintSupport.QPrinter.Letter)
-            printer.setOrientation(QtPrintSupport.QPrinter.Portrait)
-            printer.setOutputFileName(filename)
+                #Below just prints a generic crappy table - modify to make formatting better if we have time later
+                printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.PrinterResolution)
+                printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
+                printer.setPaperSize(QtPrintSupport.QPrinter.Letter)
+                printer.setOrientation(QtPrintSupport.QPrinter.Portrait)
+                printer.setOutputFileName(filename)
 
-            doc = QtGui.QTextDocument()
+                doc = QtGui.QTextDocument()
 
-            html = """<html>
-            <head>
-            <style>
-            table, th, td {
-              border: 1px solid black;
-              border-collapse: collapse;
-            }
-            </style>
-            </head>"""
-            html += "<table><thead>"
-            html += "<tr>"
-            for c in range(model.columnCount()):
-                html += "<th>{}</th>".format(model.headerData(c, QtCore.Qt.Horizontal))
-
-            html += "</tr></thead>"
-            html += "<tbody>"
-            for r in range(model.rowCount()):
+                html = """<html>
+                <head>
+                <style>
+                table, th, td {
+                  border: 1px solid black;
+                  border-collapse: collapse;
+                }
+                </style>
+                </head>"""
+                html += "<table><thead>"
                 html += "<tr>"
                 for c in range(model.columnCount()):
-                    html += "<td>{}</td>".format(model.index(r, c).data() or "")
-                html += "</tr>"
-            html += "</tbody></table>"
-            doc.setHtml(html)
-            doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
-            doc.print_(printer)
+                    html += "<th>{}</th>".format(model.headerData(c, QtCore.Qt.Horizontal))
 
-            self.ui.Search_UI_Message_Prompt.setText('')
-            self.qm.information(self, 'Notice', 'Successful PDF Print!')
+                html += "</tr></thead>"
+                html += "<tbody>"
+                for r in range(model.rowCount()):
+                    html += "<tr>"
+                    for c in range(model.columnCount()):
+                        html += "<td>{}</td>".format(model.index(r, c).data() or "")
+                    html += "</tr>"
+                html += "</tbody></table>"
+                doc.setHtml(html)
+                doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
+                doc.print_(printer)
+
+                self.ui.Search_UI_Message_Prompt.setText('')
+                self.qm.information(self, 'PDF File Created', 'Successful PDF print!')
+            else:
+                self.qm.information(self, 'Canceled Print Action', 'PDF print was cancelled')
             ETEK_log.info('Print to PDF Search Results Completed')
 
         except:
