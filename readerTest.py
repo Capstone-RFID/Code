@@ -33,6 +33,7 @@ reading = "off"
 @pyqtSlot(list)
 ##If valid employee use SQL querries to find out the Asset iD from RFID ID and call rfid_insert function with Asset ID
 def update_RFID(result):
+
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         for tag in result:
             rfid_check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
@@ -45,6 +46,7 @@ def update_RFID(result):
                 reading = "off"
                 window.rfid_insert(assetID[0])
                 reading = "on"
+
 
 
 class WorkerThread(QThread):
@@ -189,9 +191,12 @@ class mainWindow(QWidget):
 
     # Help button text to be displayed:
     def help_button(self):
-        self.qm.setFixedSize(3000, 5000)
-        self.qm.information(self, 'Help',
-                            '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press '!' to mark item as broken\n   (3b) Press '-' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
+        try:
+            self.qm.setFixedSize(3000, 5000)
+            self.qm.information(self, 'Help',
+                                '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press '!' to mark item as broken\n   (3b) Press '-' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
+        except:
+            self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
 
     def alreadyCheckedOut(self, assetID):
         status_check_query = '''SELECT TOP(1)
@@ -234,82 +239,104 @@ class mainWindow(QWidget):
         return flag
 
     def adminButtonClicked(self):
-        print('clicked admin')
-        self.admin.openAdmin(server, database,self.ui.Employee_ID_Input.text())
+        try:
+            print('clicked admin')
+            self.admin.openAdmin(server, database,self.ui.Employee_ID_Input.text())
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
 
     ##move asset from one table to another
     def move_action(self):
-        if self.ui.Check_In_Box.isChecked():
-            if len(self.ui.Existing_Item_list.selectedItems()) != 0:
-                while len(self.ui.Existing_Item_list.selectedItems()) > 0:
-                    targetRow = self.ui.New_Item_List.rowCount()
-                    self.ui.New_Item_List.insertRow(targetRow)
-                    for column in range(self.ui.Existing_Item_list.columnCount()):
-                        row = self.ui.Existing_Item_list.currentRow()
-                        item = self.ui.Existing_Item_list.takeItem(row, column)
-                        self.eventEntry.append([self.ui.Employee_ID_Input.text(), item.text()])
-                        if item:
-                            self.ui.New_Item_List.setItem(targetRow, column, item)
-                        self.ui.Existing_Item_list.removeRow(row)
+        try:
+            if self.ui.Check_In_Box.isChecked():
+                if len(self.ui.Existing_Item_list.selectedItems()) != 0:
+                    while len(self.ui.Existing_Item_list.selectedItems()) > 0:
+                        targetRow = self.ui.New_Item_List.rowCount()
+                        self.ui.New_Item_List.insertRow(targetRow)
+                        for column in range(self.ui.Existing_Item_list.columnCount()):
+                            row = self.ui.Existing_Item_list.currentRow()
+                            item = self.ui.Existing_Item_list.takeItem(row, column)
+                            self.eventEntry.append([self.ui.Employee_ID_Input.text(), item.text()])
+                            if item:
+                                self.ui.New_Item_List.setItem(targetRow, column, item)
+                            self.ui.Existing_Item_list.removeRow(row)
+                else:
+                    self.qm.information(self, 'Selection Required', "Please select an asset to move first")
+                    return
             else:
-                self.qm.information(self, 'Selection Required', "Please select an asset to move first")
-                return
-        else:
-            self.qm.information(self, 'Selection Required', "Please select Check-In action")
+                self.qm.information(self, 'Selection Required', "Please select Check-In action")
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
+
+
 
     def remove_action(self):
-        if len(self.ui.New_Item_List.selectedItems()) != 0:
-            # if len(self.eventEntry) != 0: ###this is incorrect
-            row = self.ui.New_Item_List.currentRow()
-            text = self.ui.New_Item_List.item(row, 0).text()
-            if text not in self.RemovedItems:
-                self.RemovedItems.append(text)
-            y = [x for x in self.eventEntry if text in x]
-            k = [x for x in self.markedList if text in x]
-            if len(y) != 0:
-                z = self.eventEntry.index(y[0])
-                del self.eventEntry[z]
-            if len(k) != 0:
-                p = self.markedList.index(k[0])
-                del self.markedList[p]
+        try:
+            if len(self.ui.New_Item_List.selectedItems()) != 0:
+                # if len(self.eventEntry) != 0: ###this is incorrect
+                row = self.ui.New_Item_List.currentRow()
+                text = self.ui.New_Item_List.item(row, 0).text()
+                if text not in self.RemovedItems:
+                    self.RemovedItems.append(text)
+                y = [x for x in self.eventEntry if text in x]
+                k = [x for x in self.markedList if text in x]
+                if len(y) != 0:
+                    z = self.eventEntry.index(y[0])
+                    del self.eventEntry[z]
+                if len(k) != 0:
+                    p = self.markedList.index(k[0])
+                    del self.markedList[p]
 
-            self.ui.New_Item_List.removeRow(row)
-        else:
-            self.qm.information(self, 'Selection Required', "Please select an asset to remove first")
-            return
+                self.ui.New_Item_List.removeRow(row)
+            else:
+                self.qm.information(self, 'Selection Required', "Please select an asset to remove first")
+                return
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
 
     def Employee_enter(self):
-        self.ui.Employee_ID_Enter.setEnabled(False)
-        if Permission_Check(self.ui.Employee_ID_Input.text()):
-            self.ui.Admin_Button.setEnabled(True)
-            self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
-        if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
-            self.current_items(self.ui.Employee_ID_Input.text())
-            self.ui.Asset_ID_Input.setEnabled(True)
-            self.ui.Asset_ID_Input.setFocus()
-            self.ui.Employee_ID_Input.setReadOnly(True)
-            employeeName = getEmployeeName(self.ui.Employee_ID_Input.text())
-            self.ui.Name_Label.setText(str(employeeName))
-            self.ui.Employee_ID_Enter.setStyleSheet("color : rgba(0, 0, 0, 50%)")
-        else:
-            self.qm.information(self, 'Input Required', "Enter a valid Employee ID before continuing")
-            self.ui.Employee_ID_Input.clear()
-            return
+        try:
+            self.ui.Employee_ID_Enter.setEnabled(False)
+            if Permission_Check(self.ui.Employee_ID_Input.text()):
+                self.ui.Admin_Button.setEnabled(True)
+                self.ui.Admin_Button.clicked.connect(self.adminButtonClicked)
+            if Employee_ID_Check(self.ui.Employee_ID_Input.text()):
+                self.current_items(self.ui.Employee_ID_Input.text())
+                self.ui.Asset_ID_Input.setEnabled(True)
+                self.ui.Asset_ID_Input.setFocus()
+                self.ui.Employee_ID_Input.setReadOnly(True)
+                employeeName = getEmployeeName(self.ui.Employee_ID_Input.text())
+                self.ui.Name_Label.setText(str(employeeName))
+                self.ui.Employee_ID_Enter.setStyleSheet("color : rgba(0, 0, 0, 50%)")
+            else:
+                self.qm.information(self, 'Input Required', "Enter a valid Employee ID before continuing")
+                self.ui.Employee_ID_Input.clear()
+                return
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
 
     def mark_assets(self):
-        if len(self.ui.New_Item_List.selectedItems()) != 0:
-            row = self.ui.New_Item_List.currentRow()
-            text = self.ui.New_Item_List.item(row, 0).text()
-            if text not in self.markedList:
-                self.markedList.append(text)
-            y = [x for x in self.eventEntry if text in x]
-            z = self.eventEntry.index(y[0])
-            del self.eventEntry[z]
-            self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
-            self.ui.New_Item_List.clearSelection()
-        else:
-            self.qm.information(self, 'Selection Required', "Please select an asset to mark as broken first")
-            return
+        try:
+            if len(self.ui.New_Item_List.selectedItems()) != 0:
+                row = self.ui.New_Item_List.currentRow()
+                text = self.ui.New_Item_List.item(row, 0).text()
+                if text not in self.markedList:
+                    self.markedList.append(text)
+                y = [x for x in self.eventEntry if text in x]
+                z = self.eventEntry.index(y[0])
+                del self.eventEntry[z]
+                self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
+                self.ui.New_Item_List.clearSelection()
+            else:
+                self.qm.information(self, 'Selection Required', "Please select an asset to mark as broken first")
+                return
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
 
     def clear_lists(self):
         self.ui.New_Item_List.setRowCount(0)
@@ -341,22 +368,30 @@ class mainWindow(QWidget):
         return
 
     def done_button_clicked(self):
-        if self.ui.Check_In_Box.isChecked():
-            print('Check IN action')
-            self.check_in_action()
-        elif self.ui.Check_Out_Box.isChecked():
-            print('Check OUT action')
-            self.check_out_action()
-        else:
-            self.confirmation_msg([])
-        self.clear_lists()
+        try:
+            if self.ui.Check_In_Box.isChecked():
+                print('Check IN action')
+                self.check_in_action()
+            elif self.ui.Check_Out_Box.isChecked():
+                print('Check OUT action')
+                self.check_out_action()
+            else:
+                self.confirmation_msg([])
+            self.clear_lists()
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
+
 
     def cancel_button_clicked(self):
-        self.ui.Employee_ID_Input.setReadOnly(False)
-        self.ui.Employee_ID_Input.clear()
-        self.ui.Asset_ID_Input.clear()
-        self.ui.Asset_ID_Input.setEnabled(False)
-        self.clear_lists()
+        try:
+            self.ui.Employee_ID_Input.setReadOnly(False)
+            self.ui.Employee_ID_Input.clear()
+            self.ui.Asset_ID_Input.clear()
+            self.ui.Asset_ID_Input.setEnabled(False)
+            self.clear_lists()
+        except:
+            self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
 
     def timer_timeout(self):
         print("timer running")
@@ -376,49 +411,53 @@ class mainWindow(QWidget):
             self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
 
     def asset_enter_action(self):
-        Asset = self.ui.Asset_ID_Input.text()
-        if re.findall(r"\Ae", Asset):
-            Asset = str.capitalize(Asset)
-        else:
-            Asset = Asset
-        if [self.ui.Employee_ID_Input.text(), Asset] in self.eventEntry:
-            self.qm.information(self, 'Already Selected', "Asset " + Asset + " is already selected ")
-        else:
-            if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
-                if Asset_Check(Asset):
-                    self.ui.Check_Out_Box.setEnabled(False)
-                    self.ui.Check_In_Box.setEnabled(False)
-                    flag = self.alreadyCheckedOut(Asset)
-                    if flag == "gtg":
-                        if not any(Asset in sublist for sublist in self.eventEntry):
-                            self.insert_into_table(1, Asset)
-                            # append the entries into a list
-                            self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
-                            # self.StateEntry.append(self.ui.Employee_ID_Input.text())
-                            # self.ui.New_Item_List.insertRow()
-                            self.ui.Asset_ID_Input.clear()
-                    ##decided to not check out an already checked out item
-                    elif flag == "discard":
-                        self.ui.Asset_ID_Input.clear()
-                    ##broken or something
-                    elif flag == "broken":
-                        self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is broken. Do NOT use.")
-                        self.ui.Asset_ID_Input.clear()
-                    elif flag == "brokenCheckIn":
-                        if not any(Asset in sublist for sublist in self.eventEntry):
-                            self.insert_into_table(1, Asset)
-                            # append the entries into a list
-                            self.markedList.append(Asset)
-                            row = self.ui.New_Item_List.rowCount() - 1
-                            self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
-                            self.ui.Asset_ID_Input.clear()
-                else:
-                    self.qm.warning(self, 'Check Asset',
-                                    "Asset " + Asset + " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
-                    self.ui.Asset_ID_Input.clear()
+        try:
+            Asset = self.ui.Asset_ID_Input.text()
+            if re.findall(r"\Ae", Asset):
+                Asset = str.capitalize(Asset)
             else:
-                self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
-            return
+                Asset = Asset
+            if [self.ui.Employee_ID_Input.text(), Asset] in self.eventEntry:
+                self.qm.information(self, 'Already Selected', "Asset " + Asset + " is already selected ")
+            else:
+                if self.ui.Check_In_Box.isChecked() or self.ui.Check_Out_Box.isChecked():
+                    if Asset_Check(Asset):
+                        self.ui.Check_Out_Box.setEnabled(False)
+                        self.ui.Check_In_Box.setEnabled(False)
+                        flag = self.alreadyCheckedOut(Asset)
+                        if flag == "gtg":
+                            if not any(Asset in sublist for sublist in self.eventEntry):
+                                self.insert_into_table(1, Asset)
+                                # append the entries into a list
+                                self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
+                                # self.StateEntry.append(self.ui.Employee_ID_Input.text())
+                                # self.ui.New_Item_List.insertRow()
+                                self.ui.Asset_ID_Input.clear()
+                        ##decided to not check out an already checked out item
+                        elif flag == "discard":
+                            self.ui.Asset_ID_Input.clear()
+                        ##broken or something
+                        elif flag == "broken":
+                            self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is broken. Do NOT use.")
+                            self.ui.Asset_ID_Input.clear()
+                        elif flag == "brokenCheckIn":
+                            if not any(Asset in sublist for sublist in self.eventEntry):
+                                self.insert_into_table(1, Asset)
+                                # append the entries into a list
+                                self.markedList.append(Asset)
+                                row = self.ui.New_Item_List.rowCount() - 1
+                                self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
+                                self.ui.Asset_ID_Input.clear()
+                    else:
+                        self.qm.warning(self, 'Check Asset',
+                                        "Asset " + Asset + " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
+                        self.ui.Asset_ID_Input.clear()
+                else:
+                    self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
+                return
+        except:
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
 
     def rfid_insert(self, asset):
         self.error_count += 1
