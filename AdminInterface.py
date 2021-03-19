@@ -32,6 +32,7 @@ from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
 
+
 #For reading passwords
 from configparser import ConfigParser
 
@@ -656,17 +657,9 @@ class Admin_Interface(QWidget):
 
     def find_files(self):
         try:
-
-            qfd = QFileDialog()
-            path = "C:\Projects"
-            filter = "*.xlsx"
-            f = QFileDialog.getOpenFileName(qfd,'Import .xlsx',filter,path,'*.xlsx')
-
-
-            print('Picked an option on browser dialog')
+            f = QFileDialog.getOpenFileName(self, "Open .xlsx File","/home","Image Files (*.xlsx)")
+            #print(f)
             return f[0]
-
-
         except:
             logging.error('Error In function - find_files')
 
