@@ -400,15 +400,16 @@ class Admin_Interface(QWidget):
             #w = self.ui.Search_Display_Results_Table
 
             #Append date & time into filename (admin may do multiple searches + prints over several minutes)
+            filepath = self.save_PDF_Filepath()
             today = str(datetime.now().strftime("%B %d, %Y %H %M %S"))
-            filename = "Search Results " + today + ".pdf"
+            filename = filepath + "/Search Results " + today + ".pdf"
             model = self.ui.Search_Display_Results_Table.model()
 
             #Below just prints a generic crappy table - modify to make formatting better if we have time later
             printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.PrinterResolution)
             printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
-            printer.setPaperSize(QtPrintSupport.QPrinter.A4)
-            printer.setOrientation(QtPrintSupport.QPrinter.Landscape)
+            printer.setPaperSize(QtPrintSupport.QPrinter.Letter)
+            printer.setOrientation(QtPrintSupport.QPrinter.Portrait)
             printer.setOutputFileName(filename)
 
             doc = QtGui.QTextDocument()
@@ -686,6 +687,15 @@ class Admin_Interface(QWidget):
             self.ui.Create_RFID_Tag_Field_3.setText("")
         except:
             ETEK_log.error('Error In function - create_confirmEntryButtonClicked')
+
+    def save_PDF_Filepath(self):
+        try:
+
+            file = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+
+            return file
+        except:
+            ETEK_log.error('Error In function - save_PDF_Filepath')
 
     def find_files(self):
         try:

@@ -204,7 +204,7 @@ class mainWindow(QWidget):
             elif self.ui.Check_In_Box.isChecked() and state[0] == self.ui.Employee_ID_Input.text():
                 flag = "gtg"
             elif self.ui.Check_Out_Box.isChecked() and state[0] == self.ui.Employee_ID_Input.text():
-                self.qm.warning(self, 'Notice',"You already have asset "+ assetID+" assigned to you")
+                self.qm.warning(self, 'Notice',"You already have asset " + assetID + " assigned to you")
                 self.RemovedItems.append(assetID)
                 flag = "discard"
         elif state[1] == "5" and self.ui.Check_In_Box.isChecked():
