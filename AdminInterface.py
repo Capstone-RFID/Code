@@ -533,6 +533,20 @@ class Admin_Interface(QWidget):
         except:
             ETEK_log.error('Error In function - edit_FetchNameViaID')
 
+    def edit_AssignTo_commitSQL(self,edit_Employee,Edit_Asset,AssetStatus_Dropdown):
+
+        insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(edit_Employee), str(Edit_Asset),
+                            str(AssetStatus_Dropdown))
+        self.cnxn.commit()
+
+    def edit_UpdateStatus_commitSQL(self, Edit_Asset, AssetStatus_Dropdown):
+        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(Edit_Asset),
+                            str(AssetStatus_Dropdown))
+        self.cnxn.commit()
 
     def edit_commitButtonClicked(self):
 
@@ -564,21 +578,93 @@ class Admin_Interface(QWidget):
                 elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee':
                     AssetStatus_Dropdown = '7'
 
+                #This is a big logical or statement so that we don't get events w/ employee numbers that are associated
+                #with assets that are in repair, retire, broken, a new item the introduction of a new employee from the
+                # edit tab.
+                # Made this into a flag for ease of reference
+                invalidEmployeeStatusFlag = (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Item') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Retired') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'In Repair')
 
-                insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
-                #Next two lines commit the edits present in the table
-                self.cursor.execute(insert_event_query, str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
-                self.cnxn.commit()
-                self.ui.Edit_UI_Message_Prompt.setText('')
-                EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
-                self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
-                ETEK_log.info('Asset Edits Committed to Database')
 
-                #clear fields after commit
-                self.ui.Edit_AssignTo_Field.setText('')
-                self.ui.Edit_Asset_Field.setText('')
-                self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
-                self.ui.Edit_UI_Message_Name_From_ID.setText('')
+                #This should not commit w/ any employee ID if the status is set to Retired, Broken, In Repair, New Item or New Employee
+                #If it's not any of those listed and the Assign To field isn't blank, then commit all three into the database
+                if not invalidEmployeeStatusFlag:
+                    response = self.qm.question(self, 'Input Required',
+                                                'Do you want to check out or check in this asset as your logged in admin employee ID?',
+                                                self.qm.Yes | self.qm.No)
+                    # Employee field is empty and admin wants to sign this asset out
+                    if (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() == ''):
+                        Edit_Employee = self.userLoggedIn
+                        self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
+
+                        self.ui.Edit_UI_Message_Prompt.setText('')
+                        EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                        self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
+                        ETEK_log.info('Asset Edits Committed to Database')
+
+                        # clear fields after commit
+                        self.ui.Edit_AssignTo_Field.setText('')
+                        self.ui.Edit_Asset_Field.setText('')
+                        self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                        self.ui.Edit_UI_Message_Name_From_ID.setText('')
+                    # Employee field is empty and admin does not want to sign this asset out
+
+                    elif (response == self.qm.No) and self.ui.Edit_AssignTo_Field.text() == '':
+                        self.qm.warning(self, 'Invalid commit','Please fill in the "Assign To" field if you are not checking an asset in/out')
+
+                    # Employee field is not empty and admin does not want to sign this asset out
+                    elif (response == self.qm.No) and self.ui.Edit_AssignTo_Field.text() != '':
+                        Edit_Employee = self.ui.Edit_AssignTo_Field.text()
+                        self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
+                        self.ui.Edit_UI_Message_Prompt.setText('')
+                        EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                        self.qm.information(self, 'Edit Confirmation',
+                                            'Asset ' + Edit_Asset + ' was assigned to ' + EmployeeName[
+                                                0] + ' (Employee ID: ' + Edit_Employee + ') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
+                        ETEK_log.info('Asset Edits Committed to Database')
+                    # Employee field is not empty and admin does want to sign this asset out
+                    elif (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() != ''):
+                        self.qm.warning(self, 'Invalid commit','Please leave the "Assign To" field blank if you are checking an asset in/out')
+
+                # If it's not any of those listed and the Assign To field isn't blank, then commit all three into the
+                else:
+                    response = self.qm.question(self, 'Input Required', 'Do you want to check out or check in this asset as your logged in admin employee ID?', self.qm.Yes | self.qm.No)
+                    if response == self.qm.Yes:
+                        if invalidEmployeeStatusFlag:
+                            self.qm.warning(self, 'Invalid Status for Assignment', 'Can not assign an asset to an employee with the status ' + self.ui.Edit_Update_Status_Dropdown.currentText() + '\n\nPlease pick either "Checked In" or ""Checked out" if assigning to an employee or yourself')
+                        else:
+                            self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset), str(AssetStatus_Dropdown))
+                            self.ui.Edit_UI_Message_Prompt.setText('')
+                            EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                            self.qm.information(self, 'Edit Confirmation',
+                                                'Asset ' + Edit_Asset + ' was assigned to ' + EmployeeName[
+                                                    0] + ' (Employee ID: ' + Edit_Employee + ') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
+                            ETEK_log.info('Asset Edits Committed to Database w/ admin employee ID')
+
+                            # clear fields after commit
+                            self.ui.Edit_AssignTo_Field.setText('')
+                            self.ui.Edit_Asset_Field.setText('')
+                            self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                            self.ui.Edit_UI_Message_Name_From_ID.setText('')
+
+                            #*********************************************************************************************************************************************************************************************************************************
+                    else:
+                        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
+                        # Next two lines commit the edits present in the table
+                        self.edit_UpdateStatus_commitSQL(str(Edit_Asset),str(AssetStatus_Dropdown))
+                        self.ui.Edit_UI_Message_Prompt.setText('')
+                        self.qm.information(self, 'Edit Confirmation',
+                                            'Asset ' + Edit_Asset + ' was updated to being "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
+                        ETEK_log.info('Asset Edits Committed to Database as status update')
+
+                        # clear fields after commit
+                        self.ui.Edit_AssignTo_Field.setText('')
+                        self.ui.Edit_Asset_Field.setText('')
+                        self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                        self.ui.Edit_UI_Message_Name_From_ID.setText('')
+
+
+
+
 
             else:
                 if not self.Employee_ID_Check(Edit_Employee) and self.ui.Edit_Update_Status_Dropdown.currentText() != '':

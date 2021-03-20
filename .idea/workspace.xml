@@ -389,13 +389,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>560</line>
+          <line>574</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>576</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ScrollMessageBox.py</url>
@@ -419,7 +414,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AdminInterface.py</url>
-          <line>698</line>
+          <line>784</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
