@@ -43,7 +43,7 @@ import logging
 #format log file to save as 'ETEK.log' and store date time and message of actions or errors
 #logging.basicConfig(filename='ETEK.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 from logging.handlers import TimedRotatingFileHandler
-FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
+FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s", datefmt='%d-%b-%y %H:%M:%S')
 LOG_FILE = "ETEK.log"
 
 def get_console_handler():
@@ -68,6 +68,7 @@ def get_logger(logger_name):
 
 # define global logger variable using the global current user ID
 CurrentUser = ''
+
 ETEK_log = get_logger('Admin Action' + CurrentUser)
 
 
@@ -189,7 +190,7 @@ class Admin_Interface(QWidget):
         self.userLoggedIn = userLoggedIn
         global CurrentUser
         CurrentUser = userLoggedIn
-        ETEK_log = get_logger('User: (' + CurrentUser + ')')
+        ETEK_log = get_logger('UserID:(' + CurrentUser + ')')
         print("The admin who just logged in has the ID: " + self.userLoggedIn)
         self.show()
         #set default tab on window opening to home tab
