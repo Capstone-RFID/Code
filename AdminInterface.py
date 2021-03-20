@@ -647,10 +647,8 @@ class Admin_Interface(QWidget):
                             self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
                             self.ui.Edit_UI_Message_Name_From_ID.setText('')
 
-                            #*********************************************************************************************************************************************************************************************************************************
                     else:
-                        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
-                        # Next two lines commit the edits present in the table
+
                         self.edit_UpdateStatus_commitSQL(str(Edit_Asset),str(AssetStatus_Dropdown))
                         self.ui.Edit_UI_Message_Prompt.setText('')
                         self.qm.information(self, 'Edit Confirmation',
