@@ -1,11 +1,6 @@
-from PyQt5.QtGui import QAbstractTextDocumentLayout
 from sllurp import llrp
 from twisted.internet import reactor
 import pyodbc
-
-from pytz import timezone
-import pytz
-import datetime
 
 from threading import Thread
 import subprocess
@@ -24,6 +19,7 @@ import re
 from password_prompt import Ui_Dialog
 from configparser import ConfigParser
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
+import hashlib
 
 Event_Log_Entry = []
 reading = "off"
@@ -132,7 +128,12 @@ class passwordWindow(QtWidgets.QDialog):
 
     # setup the password and and the conditions of correct and wrong password in this method
     def handleLogin(self):
-        if self.ui.lineEdit.text() == 'foo':  # password
+        password = self.ui.lineEdit.text().encode('utf-8')
+        hashpass = hashlib.sha256(password).hexdigest()
+        config = ConfigParser()
+        config.read('config.ini')
+        storedPass= config.get('password', 'pass')
+        if hashpass == storedPass:  # password
             self.accept()
         else:
             QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
@@ -145,7 +146,13 @@ class mainWindow(QWidget):
         super(mainWindow, self).__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        global server, database
+        # define the server name and the database name
+        config = ConfigParser()
+        config.read('config.ini')
+        #server, database
+        self.server = config.get('database_info', 'server')
+        self.database = config.get('database_info', 'database')
+
         self.admin = Admin_Interface()
         self.show()
         self.eventEntry = []
@@ -180,7 +187,8 @@ class mainWindow(QWidget):
         self.ui.Remove_Button.setEnabled(False)
         # validator to only enter integer values into the entry fields
         self.onlyInt = QtGui.QIntValidator()
-        rExp = QRegExp("[E,e][0-9]{7}$||[4][0-9]{6}$")
+        regExp = config.get('assetID', 'regex')
+        rExp = QRegExp(regExp)
         valid = QtGui.QRegExpValidator(rExp, self.ui.Asset_ID_Input)
         self.ui.Asset_ID_Input.setValidator(valid)
         self.ui.Employee_ID_Input.setValidator(self.onlyInt)
@@ -582,6 +590,8 @@ class mainWindow(QWidget):
 
 
 if __name__ == "__main__":
+
+    # print(hashlib.sha256(b"foo").hexdigest())
     app = QtWidgets.QApplication(sys.argv)
     login = passwordWindow()
     # RFID init
@@ -594,14 +604,8 @@ if __name__ == "__main__":
         factory.addTagReportCallback(work.cb)
         reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
-        # define the server name and the database name
-        config = ConfigParser()
-        config.read('config.ini')
-        global server, database
-        server = config.get('database_info', 'server')
-        database = config.get('database_info', 'database')
-        print(server)
-        print(database)
+        server = window.server
+        database = window.database
 
         # define a connection string
         cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server}; \
