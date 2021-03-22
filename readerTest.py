@@ -202,7 +202,7 @@ class mainWindow(QWidget):
         try:
             self.qm.setFixedSize(3000, 5000)
             self.qm.information(self, 'Help',
-                                '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press '!' to mark item as broken\n   (3b) Press '-' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
+                                '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press 'Mark Broken' to mark item as broken\n   (3b) Press 'Remove Item' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
         except:
             self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
 
