@@ -126,16 +126,19 @@ class Admin_Interface(QWidget):
         #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
         # ****************************************Asset Validators*********************************
-        #Validator for each QLineEdit in
         # validator to only enter valid asset ID's into asset ID entry fields
 
         rExpSearch = QRegExp("(([Ee][0-9]{7}|[4][0-9]{6})(,{1}))*")
-        SearchTabValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
-        self.ui.Search_Asset_Numbers_Field.setValidator(SearchTabValid)
+        MultiAssetValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
+        self.ui.Search_Asset_Numbers_Field.setValidator(MultiAssetValid)
 
-        rExpEditAndCreate = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
-        EditTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Edit_Asset_Field)
-        self.ui.Edit_Asset_Field.setValidator(EditTabValid)
+        rExpEditCreateAssigntag = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
+        SingleAssetValid = QtGui.QRegExpValidator(rExpEditCreateAssigntag, self.ui.Edit_Asset_Field)
+        self.ui.Edit_Asset_Field.setValidator(SingleAssetValid)
+        self.ui.AssetTag_Asset_Num_Field.setValidator(SingleAssetValid)
+
+        CreateTabValid = QtGui.QRegExpValidator(rExpEditCreateAssigntag, self.ui.Create_Asset_Num_Field)
+        self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
 
         Edit_EmployeeFieldsValid = QtGui.QIntValidator()
         self.ui.Edit_AssignTo_Field.setValidator(Edit_EmployeeFieldsValid)
@@ -143,11 +146,6 @@ class Admin_Interface(QWidget):
         Edit_AssignTo_Valid = QtGui.QIntValidator()
         self.ui.Search_Employee_ID_Entry_Field.setValidator(Edit_AssignTo_Valid)
 
-
-
-
-        CreateTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Create_Asset_Num_Field)
-        self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
         # ****************************************End of Validators*********************************
 
         # ****************************************Home Tab Button(s)*********************************
@@ -175,14 +173,16 @@ class Admin_Interface(QWidget):
         self.ui.Create_Confirm_Entry_Button.clicked.connect(self.create_confirmEntryButtonClicked)
         self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
         self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
-        #
-
+        # ****************************************Assign Tag Tab Button(s)*********************************
+        self.ui.AssignTag_Confirm_Entry_Button.clicked.connect(self.AssignTag_confirmButtonClicked)
+        self.ui.AssignTag_Clear_Fields_Button.clicked.connect(self.AssignTag_clearButtonClicked)
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
         # ****************************************QMessageBox (Used across tabs)*********************************
         self.qm = QtWidgets.QMessageBox()
         self.scrollqm = ScrollMessageBox
+
 
 
     # open up the admin window from the button on main window
@@ -1526,3 +1526,22 @@ class Admin_Interface(QWidget):
 
         self.cnxn.commit()
 
+    def AssignTag_clearButtonClicked(self):
+        self.ui.AssetTag_Asset_Num_Field.setText('')
+        self.ui.AssignTag_RFID_Tag_Field.setText('')
+
+    def AssignTag_confirmButtonClicked(self):
+        AssetID = self.ui.AssetTag_Asset_Num_Field.text()
+        RFID_Tag = self.ui.AssignTag_RFID_Tag_Field.text()
+
+        #Asset does not exist
+        if not self.Asset_Check(AssetID):
+            self.qm.critical(self,'Asset ID not found','Asset ID '+ AssetID +' not found in the database' + '\n\nCan not associate RFID tag unless asset is either created or imported into local database')
+        #User entered in whitespace somehow into RFID field
+        elif re.match('\s*',RFID_Tag):
+            self.qm.critical(self, 'Invalid RFID Tag in Field',
+                             'The RFID tag "' + RFID_Tag + '" has whitespace, can not associate invalid RFID tag with asset' + '\n\nPlease try scanning RFID tag again')
+
+
+        if self.RFID_Check(RFID_Tag):
+            response = self.qm.question(self, 'Input Required','This tag is already associated with an asset, do you want to reassociate it with this asset?',self.qm.Yes | self.qm.No)

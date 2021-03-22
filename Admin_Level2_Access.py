@@ -804,6 +804,100 @@ class Ui_Admin_Interface(object):
         self.gridLayout_6.addLayout(self.gridLayout_5, 1, 0, 1, 1)
         self.verticalLayout_11.addLayout(self.gridLayout_6)
         self.Admin_Select.addTab(self.Create_Tab, "")
+        self.Assign_Tag_Tab = QtWidgets.QWidget()
+        self.Assign_Tag_Tab.setObjectName("Assign_Tag_Tab")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.Assign_Tag_Tab)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.gridLayout_7 = QtWidgets.QGridLayout()
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.Create_Prompt_Label_2 = QtWidgets.QLabel(self.Assign_Tag_Tab)
+        self.Create_Prompt_Label_2.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: Bold 14pt \"MS Shell Dlg 2\";")
+        self.Create_Prompt_Label_2.setObjectName("Create_Prompt_Label_2")
+        self.gridLayout_7.addWidget(self.Create_Prompt_Label_2, 0, 0, 1, 2)
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.AssignTag_Clear_Fields_Button = QtWidgets.QPushButton(self.Assign_Tag_Tab)
+        self.AssignTag_Clear_Fields_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.AssignTag_Clear_Fields_Button.setStyleSheet("QPushButton#AssignTag_Clear_Fields_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#AssignTag_Clear_Fields_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.AssignTag_Clear_Fields_Button.setObjectName("AssignTag_Clear_Fields_Button")
+        self.verticalLayout_9.addWidget(self.AssignTag_Clear_Fields_Button)
+        self.AssignTag_Confirm_Entry_Button = QtWidgets.QPushButton(self.Assign_Tag_Tab)
+        self.AssignTag_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.AssignTag_Confirm_Entry_Button.setStyleSheet("QPushButton#AssignTag_Confirm_Entry_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#AssignTag_Confirm_Entry_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.AssignTag_Confirm_Entry_Button.setObjectName("AssignTag_Confirm_Entry_Button")
+        self.verticalLayout_9.addWidget(self.AssignTag_Confirm_Entry_Button)
+        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem21)
+        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem22)
+        spacerItem23 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem23)
+        spacerItem24 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem24)
+        spacerItem25 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem25)
+        spacerItem26 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem26)
+        self.gridLayout_7.addLayout(self.verticalLayout_9, 1, 1, 1, 1)
+        self.gridLayout_8 = QtWidgets.QGridLayout()
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        spacerItem27 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_8.addItem(spacerItem27, 0, 3, 1, 1)
+        spacerItem28 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_8.addItem(spacerItem28, 0, 1, 1, 1)
+        self.AssignTag_RFID_Tag_Field = QtWidgets.QLineEdit(self.Assign_Tag_Tab)
+        self.AssignTag_RFID_Tag_Field.setMinimumSize(QtCore.QSize(250, 30))
+        self.AssignTag_RFID_Tag_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: #282c30;\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_RFID_Tag_Field.setText("")
+        self.AssignTag_RFID_Tag_Field.setObjectName("AssignTag_RFID_Tag_Field")
+        self.gridLayout_8.addWidget(self.AssignTag_RFID_Tag_Field, 1, 2, 1, 1)
+        self.AssetTag_Asset_Num_Field = QtWidgets.QLineEdit(self.Assign_Tag_Tab)
+        self.AssetTag_Asset_Num_Field.setMinimumSize(QtCore.QSize(250, 30))
+        self.AssetTag_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: #282c30;\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssetTag_Asset_Num_Field.setObjectName("AssetTag_Asset_Num_Field")
+        self.gridLayout_8.addWidget(self.AssetTag_Asset_Num_Field, 0, 2, 1, 1)
+        self.AssignTag_RFID_Tag_Label = QtWidgets.QLabel(self.Assign_Tag_Tab)
+        self.AssignTag_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_RFID_Tag_Label.setObjectName("AssignTag_RFID_Tag_Label")
+        self.gridLayout_8.addWidget(self.AssignTag_RFID_Tag_Label, 1, 0, 1, 1)
+        self.AssignTag_Asset_Num_Label = QtWidgets.QLabel(self.Assign_Tag_Tab)
+        self.AssignTag_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_Asset_Num_Label.setObjectName("AssignTag_Asset_Num_Label")
+        self.gridLayout_8.addWidget(self.AssignTag_Asset_Num_Label, 0, 0, 1, 1)
+        spacerItem29 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_8.addItem(spacerItem29, 5, 2, 1, 1)
+        self.gridLayout_7.addLayout(self.gridLayout_8, 1, 0, 1, 1)
+        self.horizontalLayout_4.addLayout(self.gridLayout_7)
+        self.Admin_Select.addTab(self.Assign_Tag_Tab, "")
         self.Resolve_Tab = QtWidgets.QWidget()
         self.Resolve_Tab.setObjectName("Resolve_Tab")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.Resolve_Tab)
@@ -832,7 +926,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(3)
+        self.Admin_Select.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
         Admin_Interface.setTabOrder(self.Home_ChangePassword_Button, self.Home_Force_Sync_Button)
         Admin_Interface.setTabOrder(self.Home_Force_Sync_Button, self.Search_Datetime_From)
@@ -913,6 +1007,12 @@ class Ui_Admin_Interface(object):
         self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset #:"))
         self.Create_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Create_Tab), _translate("Admin_Interface", "Create"))
+        self.Create_Prompt_Label_2.setText(_translate("Admin_Interface", "Enter existing asset ID and RFID tag then press enter to associate tag with asset"))
+        self.AssignTag_Clear_Fields_Button.setText(_translate("Admin_Interface", "Clear Fields"))
+        self.AssignTag_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Confirm Entry"))
+        self.AssignTag_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
+        self.AssignTag_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset #:"))
+        self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Assign_Tag_Tab), _translate("Admin_Interface", "Assign Tag"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset #"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(1)
