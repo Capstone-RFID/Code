@@ -269,11 +269,12 @@ class mainWindow(QWidget):
                             if item:
                                 self.ui.New_Item_List.setItem(targetRow, column, item)
                             self.ui.Existing_Item_list.removeRow(row)
+                    self.ui.Mark_Button.setEnabled(True)
                 else:
                     self.qm.information(self, 'Selection Required', "Please select an asset to move first")
                     return
             else:
-                self.qm.information(self, 'Selection Required', "Please select Check-In action")
+                self.qm.information(self, 'Selection Required', "This button only works when Check-In action selected")
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
