@@ -1,0 +1,40 @@
+19-Mar-21 11:33:01 - connecting to 169.254.10.1:5084...
+19-Mar-21 11:33:05 - Connected to Server BIGACER and BALKARAN09
+19-Mar-21 11:33:15 - New Employees imported successfully through .xlsx file
+2021-03-19 12:02:17,506 — User: 000123 — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 12:02:23,596 — User:  — INFO — Search for Asset Number (E0000000) - events found
+2021-03-19 12:03:22,220 — User: 000123 — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 12:03:30,438 — User:  — INFO — Search for Asset Number (E0000000) - events found
+2021-03-19 12:03:45,876 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 12:04:32,796 — User: 000123 — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 12:04:40,867 — User:  — INFO — Search for Asset Number (E1111111) - events found
+2021-03-19 12:05:02,558 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 12:17:56,055 — User: 000123 — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 12:18:48,410 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 12:20:03,785 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 12:21:59,284 — User: 000123 — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 12:22:10,848 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 12:22:54,393 — User: 000123 — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 12:22:59,376 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 12:23:05,417 — User:  — INFO — Print to PDF Search Results Completed
+2021-03-19 13:56:35,671 — User: (000123) — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 14:53:36,250 — Admin Action — INFO — Print to PDF Search Results Completed
+2021-03-19 14:53:47,241 — Admin Action — INFO — Print to PDF Search Results Completed
+2021-03-19 15:01:51,272 — Admin Action — INFO — Print to PDF Search Results Completed
+2021-03-19 16:55:34,475 — User: (000123) — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 16:57:07,678 — Admin Action — INFO — Asset Edits Committed to Database as status update
+2021-03-19 16:57:34,217 — User: (000123) — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 16:58:28,529 — Admin Action — INFO — Asset Edits Committed to Database as status update
+2021-03-19 16:58:50,218 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:08:51,302 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:09:02,686 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:20:22,692 — User: (000123) — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 17:20:50,123 — Admin Action — INFO — Asset Edits Committed to Database as status update
+2021-03-19 17:21:33,906 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:22:22,078 — Admin Action — ERROR — Error In function - edit_commitButtonClicked
+2021-03-19 17:23:51,194 — User: (000123) — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 17:24:05,827 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:24:40,498 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:34:56,377 — User: (000123) — INFO — Connected to Server BIGACER and BALKARAN09
+2021-03-19 17:46:55,077 — Admin Action — INFO — Asset Edits Committed to Database
+2021-03-19 17:47:14,938 — Admin Action — INFO — Asset Edits Committed to Database

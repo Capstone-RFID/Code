@@ -722,9 +722,38 @@ class Admin_Interface(QWidget):
     #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
     def create_confirmEntryButtonClicked(self):
         try:
-            print('memes')
+            ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + 'pressed enter button on create tab')
+            assetID = self.ui.Create_Asset_Num_Field.text()
+            if assetID != '':
+                if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",assetID):
+                    if not self.Asset_Check(assetID):
+                        self.create_commitAssetOnly(assetID)
+                        self.qm.information(self, 'Asset ID added to local database','The asset ID "' + assetID + '" was commited to the asset table')
+                        ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + 'added the asset ID ' + assetID + ' to the asset table in the local database')
+                    else:
+                        self.qm.warning(self, 'Asset already exists',
+                                        'The asset number entered is already in the Asset Table of the local database')
+                        ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to add an asset that already exists in the asset table')
+                else:
+                    ETEK_log.info(
+                        'Admin logged in as Employee ID ' + self.userLoggedIn + 'entered an incomplete asset number - not in "Exxxxxxx" or "4xxxxxx"')
+                    self.qm.warning(self, 'Incomplete asset number',
+                                    'Please enter a valid asset # into the field before pressing enter\n\n Two accepted formats are: "Exxxxxxx" and "4xxxxxx"\n\nWhere x is a numerical digit')
+            else:
+                ETEK_log.info(
+                    'Admin logged in as Employee ID ' + self.userLoggedIn + 'pressed enter button with nothing in asset field')
+                self.qm.warning(self,'Empty asset field','Please enter text into the asset # field before pressing enter')
+            self.ui.Create_Asset_Num_Field.setText('')
         except:
             ETEK_log.error('Error In function - create_confirmEntryButtonClicked')
+            self.qm.warning(self, 'Error: exception thrown','An exception was thrown in the create_confirmEntryButtonClicked function, see ETEK.log file for more details')
+            self.ui.Create_Asset_Num_Field.setText('')
+
+
+    def create_commitAssetOnly(self,assetID):
+        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
+        self.cursor.execute(insert_event_query, str(assetID),str('6'))
+        self.cnxn.commit()
 
     def save_PDF_Filepath(self):
         try:
