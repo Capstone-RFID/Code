@@ -135,7 +135,7 @@ class Admin_Interface(QWidget):
         rExpEditCreateAssigntag = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
         SingleAssetValid = QtGui.QRegExpValidator(rExpEditCreateAssigntag, self.ui.Edit_Asset_Field)
         self.ui.Edit_Asset_Field.setValidator(SingleAssetValid)
-        self.ui.AssetTag_Asset_Num_Field.setValidator(SingleAssetValid)
+
 
         CreateTabValid = QtGui.QRegExpValidator(rExpEditCreateAssigntag, self.ui.Create_Asset_Num_Field)
         self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
@@ -145,6 +145,14 @@ class Admin_Interface(QWidget):
 
         Edit_AssignTo_Valid = QtGui.QIntValidator()
         self.ui.Search_Employee_ID_Entry_Field.setValidator(Edit_AssignTo_Valid)
+
+        #Regex for a 24 digit hex number (either ABCDEF OR Numerical 0-9)
+        rExpRFID = QRegExp("([ABCDEF]|[0-9]){24}")
+        RFIDValid = QtGui.QRegExpValidator(rExpRFID, self.ui.AssignTag_RFID_Tag_Field)
+        self.ui.AssignTag_RFID_Tag_Field.setValidator(RFIDValid)
+
+        self.ui.AssignTag_Asset_Num_Field.setValidator(SingleAssetValid)
+
 
         # ****************************************End of Validators*********************************
 
@@ -1527,21 +1535,78 @@ class Admin_Interface(QWidget):
         self.cnxn.commit()
 
     def AssignTag_clearButtonClicked(self):
-        self.ui.AssetTag_Asset_Num_Field.setText('')
-        self.ui.AssignTag_RFID_Tag_Field.setText('')
+        try:
+            self.ui.AssignTag_Asset_Num_Field.setText('')
+            self.ui.AssignTag_RFID_Tag_Field.setText('')
+        except:
+            self.qm.critical(self, 'Error', 'An exception was thrown in AssignTag_clearButtonClicked function')
 
     def AssignTag_confirmButtonClicked(self):
-        AssetID = self.ui.AssetTag_Asset_Num_Field.text()
-        RFID_Tag = self.ui.AssignTag_RFID_Tag_Field.text()
+        try:
+            AssetID = self.ui.AssignTag_Asset_Num_Field.text()
+            RFID_Tag = self.ui.AssignTag_RFID_Tag_Field.text()
 
-        #Asset does not exist
-        if not self.Asset_Check(AssetID):
-            self.qm.critical(self,'Asset ID not found','Asset ID '+ AssetID +' not found in the database' + '\n\nCan not associate RFID tag unless asset is either created or imported into local database')
-        #User entered in whitespace somehow into RFID field
-        elif re.match('\s*',RFID_Tag):
-            self.qm.critical(self, 'Invalid RFID Tag in Field',
-                             'The RFID tag "' + RFID_Tag + '" has whitespace, can not associate invalid RFID tag with asset' + '\n\nPlease try scanning RFID tag again')
+            #Asset does not exist
+            if not (AssetID == '') or not (RFID_Tag == ''):
+                if not self.Asset_Check(AssetID):
+                    self.qm.critical(self,'Asset ID not found','Asset ID '+ AssetID +' not found in the database' + '\n\nCan not associate RFID tag unless asset is either created or imported into local database')
+                #User entered in whitespace into RFID field
+                if not re.findall("([ABCDEF]|[0-9]){24}",RFID_Tag):
+                    self.qm.critical(self, 'Invalid RFID Tag','The RFID tag "' + RFID_Tag + '" must be a 24-digit hexidecimal value ' + '\n\nPlease try scanning RFID tag again')
+                else:
+                    #The asset exists in the RFID table already (it has a tag assigned already)
+                    if self.RFIDTable_AssetCheck(AssetID)[0]:
+                        response = self.qm.question(self, 'Input Required',
+                                                    'The asset ID " ' + AssetID + '" already has the RFID tag "'+ self.RFIDTable_AssetCheck(AssetID)[1][0] + '" associated with it\n\n Do you want to assign the current RFID tag "' + RFID_Tag + '" to this asset ID?',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            response = self.qm.question(self, 'Input Required',
+                                                        'Please confirm that you want to assign the RFID tag: "' + RFID_Tag + '" to the asset ID "' + AssetID + '"',
+                                                        self.qm.Yes | self.qm.No)
+                            if response == self.qm.Yes:
+                                self.RFIDTable_UpdateRow(AssetID,RFID_Tag)
+                                self.qm.information(self, 'RFID Tag Assignment Successful',
+                                                    'The assignment of RFID tag"' + RFID_Tag + 'to asset ID "' + AssetID + '" was sucessful!')
+
+                            else:
+                                self.qm.information(self, 'RFID Assignment Cancelled',
+                                                    'The assignment of an RFID tag to an asset ID was cancelled')
+                        else:
+                            self.qm.information(self, 'RFID Assignment Cancelled', 'The assignment of an RFID tag to an asset ID was cancelled')
+                    else:
+                        response = self.qm.question(self, 'Input Required',
+                                                    'Please confirm that you want to assign the RFID tag: "' + RFID_Tag + '" to the asset ID "' + AssetID + '"',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            self.RFIDTable_InsertRow(AssetID,RFID_Tag)
+                        else:
+                            self.qm.information(self, 'RFID Assignment Cancelled', 'The assignment of an RFID tag to an asset ID was cancelled')
 
 
-        if self.RFID_Check(RFID_Tag):
-            response = self.qm.question(self, 'Input Required','This tag is already associated with an asset, do you want to reassociate it with this asset?',self.qm.Yes | self.qm.No)
+            else:
+                self.qm.critical(self, 'Blank Fields','One or more fields are blank, please fill both to assign a tag to an asset ID')
+
+
+        except:
+            self.qm.critical(self,'Error','An exception was thrown in AssignTag_confirmButtonClicked function')
+
+    #Returns true if asset exists in table, returns true if it does, false if it doesn't
+    def RFIDTable_AssetCheck(self,AssetID):
+        check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetID))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(AssetID))
+            record = self.cursor.fetchone()
+            return [True,record]
+        else:
+            return [False]
+
+    def RFIDTable_InsertRow(self, AssetID, RFID_Tag):
+        insert_event_query = ''' INSERT INTO [RFID Table] (AssetID, TagID) VALUES(?,?);'''
+        self.cursor.execute(insert_event_query, str(AssetID),str(RFID_Tag))
+        self.cnxn.commit()
+
+    def RFIDTable_UpdateRow(self,AssetID, RFID_Tag):
+        update_event_query = '''UPDATE [RFID Table] SET AssetID = (?), TagID = (?) WHERE AssetID = (?);'''
+        self.cursor.execute(update_event_query, str(AssetID), str(RFID_Tag),str(AssetID))
+        self.cnxn.commit()

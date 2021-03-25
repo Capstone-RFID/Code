@@ -876,13 +876,13 @@ class Ui_Admin_Interface(object):
         self.AssignTag_RFID_Tag_Field.setText("")
         self.AssignTag_RFID_Tag_Field.setObjectName("AssignTag_RFID_Tag_Field")
         self.gridLayout_8.addWidget(self.AssignTag_RFID_Tag_Field, 1, 2, 1, 1)
-        self.AssetTag_Asset_Num_Field = QtWidgets.QLineEdit(self.Assign_Tag_Tab)
-        self.AssetTag_Asset_Num_Field.setMinimumSize(QtCore.QSize(250, 30))
-        self.AssetTag_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+        self.AssignTag_Asset_Num_Field = QtWidgets.QLineEdit(self.Assign_Tag_Tab)
+        self.AssignTag_Asset_Num_Field.setMinimumSize(QtCore.QSize(250, 30))
+        self.AssignTag_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.AssetTag_Asset_Num_Field.setObjectName("AssetTag_Asset_Num_Field")
-        self.gridLayout_8.addWidget(self.AssetTag_Asset_Num_Field, 0, 2, 1, 1)
+        self.AssignTag_Asset_Num_Field.setObjectName("AssignTag_Asset_Num_Field")
+        self.gridLayout_8.addWidget(self.AssignTag_Asset_Num_Field, 0, 2, 1, 1)
         self.AssignTag_RFID_Tag_Label = QtWidgets.QLabel(self.Assign_Tag_Tab)
         self.AssignTag_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
