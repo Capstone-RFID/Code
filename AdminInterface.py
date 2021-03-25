@@ -45,6 +45,7 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s", datefmt='%d-%b-%y %H:%M:%S')
 LOG_FILE = "ETEK.log"
+IMPORT_LOG_FILE = "IMPORT.log"
 
 def get_console_handler():
    console_handler = logging.StreamHandler(sys.stdout)
@@ -53,6 +54,11 @@ def get_console_handler():
 
 def get_file_handler():
    file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+   file_handler.setFormatter(FORMATTER)
+   return file_handler
+
+def get_file_handler2():
+   file_handler = TimedRotatingFileHandler(IMPORT_LOG_FILE, when='midnight')
    file_handler.setFormatter(FORMATTER)
    return file_handler
 
@@ -65,11 +71,22 @@ def get_logger(logger_name):
    logger.propagate = False
    return logger
 
+def get_logger2(logger_name):
+   logger = logging.getLogger(logger_name)
+   logger.setLevel(logging.DEBUG) # better to have too much log than not enough
+   logger.addHandler(get_console_handler())
+   logger.addHandler(get_file_handler2())
+   # with this pattern, it's rarely necessary to propagate the error up to parent
+   logger.propagate = False
+   return logger
+
+
 
 # define global logger variable using the global current user ID
 CurrentUser = ''
 
 ETEK_log = get_logger('Admin Action' + CurrentUser)
+Import_log = get_logger2('Import')
 
 
 
@@ -808,6 +825,7 @@ class Admin_Interface(QWidget):
 
     def Import_ImportAssets_ButtonClicked(self):
         try:
+            Import_log.info('User:(' + self.userLoggedIn + ') - Clicked Import Assets Button')
             print('Import Tab ImportAssets Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
             name = "AssetList.xlsx"
@@ -834,13 +852,14 @@ class Admin_Interface(QWidget):
                             else:
                                 df.drop([count], inplace = True)
                                 print("Wrong format in Asset field")
+                                Import_log.info('Asset: (' + index + ") in wrong format, Asset not imported")
                             count = count +1
 
                         df = df.reset_index(drop=True)
                         self.import_checkAssetsOrEmployeesToSQL(df)
                        # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
                         self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
-                        ETEK_log.info('New Assets imported successfully through .xlsx file')
+                        ETEK_log.info('New Assets imported successfully through .xlsx file. Check Import Log for details.')
 
                     else:
                         print('Please reformat excel into 2 columns "AssetID" and "RFID Tag" with no blank cells')
@@ -858,6 +877,7 @@ class Admin_Interface(QWidget):
 
     def Import_ImportEmployees_ButtonClicked(self):
         try:
+            Import_log.info('User:(' + self.userLoggedIn + ') - Clicked Import Employees Button')
             print('Import Tab ImportEmployees Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
             employeeFile = self.find_files()
@@ -873,7 +893,7 @@ class Admin_Interface(QWidget):
                         self.import_checkAssetsOrEmployeesToSQL(df)
                         #self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
 
-                        ETEK_log.info('New Employees imported successfully through .xlsx file')
+                        ETEK_log.info('New Employees imported successfully through .xlsx file. Check Import log for details')
                         self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
                     else:
                         print('Please reformat excel into 2 columns "Name" and "Employee ID" with no empty cells')
@@ -1477,6 +1497,7 @@ class Admin_Interface(QWidget):
                 else:
                     # self.import_EmployeeIDList_AlreadyExisting.append(str(df.at[row, 'Employee ID']))
                     print("The employee ID: "+ str(df.at[row, 'Employee ID']) +" already exists in the database")
+                    Import_log.info('Employee: ' + str(df.at[row, 'Employee ID']) + " already exists in the database, Employee not imported")
             # if(len(self.import_EmployeeIDList_AlreadyExisting) > 0):
             #     # initialize an empty string
             #     str1 = ""
@@ -1501,6 +1522,7 @@ class Admin_Interface(QWidget):
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     print("The Asset Number: "+ str(df.at[row, 'Asset ID']) +" already exists in the database")
+                    Import_log.info('Asset: ' + str(df.at[row, 'Asset ID']) +" already exists in the database, asset not imported")
 
 
         # print(self.import_EmployeeIDList)
