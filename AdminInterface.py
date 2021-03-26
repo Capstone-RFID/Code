@@ -174,42 +174,60 @@ class Admin_Interface(QWidget):
         # ****************************************End of Validators*********************************
 
         # ****************************************Home Tab Button(s)*********************************
-        self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
+        #self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
         #self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
         self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_checkFieldInputs)
         self.ui.Search_Employee_ID_Entry_Field.returnPressed.connect(self.search_checkFieldInputs)
         self.ui.Search_Asset_Numbers_Field.returnPressed.connect(self.search_checkFieldInputs)
-        #self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
         self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
         self.ui.Search_Reset_Fields_Button.clicked.connect(self.search_searchResetFieldsButtonClicked)
-
+        self.ui.Search_Display_Help_Button.clicked.connect(self.search_helpButton)
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
-        #self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
-        #self.ui.Edit_Asset_Field.returnPressed.connect(self.edit_searchButtonClicked)
-        #self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
-
+        self.ui.Edit_Display_Help_Button.clicked.connect(self.edit_helpButton)
 
         # ****************************************Create Tab Button(s)*********************************
         self.ui.Create_Clear_Fields_Button.clicked.connect(self.create_clearButtonClicked)
         self.ui.Create_Confirm_Entry_Button.clicked.connect(self.create_confirmEntryButtonClicked)
         self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
         self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
+        self.ui.Create_Display_Help_Button.clicked.connect(self.create_helpButton)
         # ****************************************Assign Tag Tab Button(s)*********************************
         self.ui.AssignTag_Confirm_Entry_Button.clicked.connect(self.AssignTag_confirmButtonClicked)
+        self.ui.AssignTag_Remove_Tag_Button.clicked.connect(self.AssignTag_removeButtonClicked)
         self.ui.AssignTag_Clear_Fields_Button.clicked.connect(self.AssignTag_clearButtonClicked)
+        self.ui.AssignTag_Display_Help_Button.clicked.connect(self.AssignTag_helpButton)
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
         # ****************************************QMessageBox (Used across tabs)*********************************
         self.qm = QtWidgets.QMessageBox()
-        self.scrollqm = ScrollMessageBox
 
+    def search_helpButton(self):
 
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'The search tab allows you to list records from the event log table in the local database\n\nUse/combine filters to find records that meet the criteria specified\n\nUsing the Date/Time filters allows you to set two dates and retrieve records from between those dates\n\nMonth by Month returns records from that month across all years in the database\n\nThe Employee and Asset ID(s) allow you to look for only the employees and assets specified\n\nTo search multiple assets at once, type in each asset ID seperated by a comma')
 
+    def edit_helpButton(self):
+
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'The edit tab allows you to update the status of an asset\n\nYou can update an asset as assigned to an employee ID as either checked-in or checked-out\n\nPlease note that you can not assign something to an employee as any other status than specified above ')
+    def create_helpButton(self):
+
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'The create tab is where you can enter new asset ID(s) into the local database by:\n\n1. Entering in the new Asset\n\n2. Making a .xlsx file in excel as in the user manual **insert page # here**\n\nYou can also add in new employee IDs into the database by making a .xlsx file in excel as in the user manual **insert page # here**\n\nIf you need to assign an RFID tag to an individual asset, please use the "Assign Tag" tab')
+
+    def AssignTag_helpButton(self):
+
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'To assign an RFID Tag to an asset:\n\n1. Enter the asset number into the asset field\n\n2. Enter in the 24-digit hexidecimal value of the RFID tag you want to assign to that asset ID\n\nTo remove an RFID tag from an asset, enter the asset number and click the "remove tag" button')
     # open up the admin window from the button on main window
     def openAdmin(self, s, d, userLoggedIn):
         self.userLoggedIn = userLoggedIn
@@ -1515,13 +1533,55 @@ class Admin_Interface(QWidget):
         except:
             self.qm.critical(self, 'Error', 'An exception was thrown in AssignTag_clearButtonClicked function')
 
+    def AssignTag_removeButtonClicked(self):
+        try:
+            AssetID = self.ui.AssignTag_Asset_Num_Field.text()
+            RFID_Tag = self.RFIDTable_AssetCheck(AssetID)[1][0]
+            if not (AssetID == ''):
+                # Asset does not exist
+                if self.Asset_Check(AssetID):
+                    #The asset exists in the RFID table already (it has a tag assigned already)
+                    if self.RFIDTable_AssetCheck(AssetID)[0]:
+                        response = self.qm.question(self, 'Input Required',
+                                                    'The asset ID " ' + AssetID + '"has the RFID tag "' +
+                                                    self.RFIDTable_AssetCheck(AssetID)[1][0] + '" associated with it\n\n Please confirm that you want to remove this RFID tag association from this asset ID,',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            self.RFIDTable_RemoveRow(AssetID)
+                            self.qm.information(self, 'RFID Tag Removal Successful',
+                                                'The removal of RFID tag "' + RFID_Tag + ' from asset ID "' + AssetID + '" was sucessful!')
+                            ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + 'removed RFID Tag "' + RFID_Tag + '" from the asset "' + AssetID +'"')
+
+                        else:
+                            self.qm.information(self, 'RFID Tag Removal Cancelled',
+                                            'The removal of an RFID tag from an asset ID was cancelled')
+                            ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' selected "No" on confirmation prompt to remove RFID tag')
+                    else:
+                        self.qm.warning(self, 'No RFID tag found for asset',
+                                            'There is no RFID tag associated with this asset ID\n\nRemoval of RFID tag from asset ID cancelled')
+                        ETEK_log.info(
+                            'Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to remove RFID tag from asset with no associated RFID tag')
+                else:
+                    self.qm.critical(self, 'Asset does not exist','This asset does not exist in the asset table of the local database')
+                    ETEK_log.info(
+                        'Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to remove RFID tag from asset that does not exist in database')
+            else:
+                self.qm.critical(self, 'Blank Field',
+                                 'Asset ID field is blank, please fill in the field to remove association with an RFID tag')
+                ETEK_log.info(
+                    'Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to remove RFID tag from asset when asset ID field was blank')
+        except:
+            ETEK_log.error(self, 'An exception was thrown in AssignTag_removeButtonClicked function')
+            self.qm.critical(self, 'Error', 'An exception was thrown in AssignTag_removeButtonClicked function')
+
     def AssignTag_confirmButtonClicked(self):
         try:
             AssetID = self.ui.AssignTag_Asset_Num_Field.text()
             RFID_Tag = self.ui.AssignTag_RFID_Tag_Field.text()
 
-            #Asset does not exist
+
             if not (AssetID == '') or not (RFID_Tag == ''):
+                # Asset does not exist
                 if not self.Asset_Check(AssetID):
                     self.qm.critical(self,'Asset ID not found','Asset ID '+ AssetID +' not found in the database' + '\n\nCan not associate RFID tag unless asset is either created or imported into local database')
                 #User entered in whitespace into RFID field
@@ -1563,6 +1623,7 @@ class Admin_Interface(QWidget):
 
         except:
             self.qm.critical(self,'Error','An exception was thrown in AssignTag_confirmButtonClicked function')
+            ETEK_log.error(self, 'An exception was thrown in AssignTag_confirmButtonClicked function')
 
     #Returns true if asset exists in table, returns true if it does, false if it doesn't
     def RFIDTable_AssetCheck(self,AssetID):
@@ -1575,12 +1636,17 @@ class Admin_Interface(QWidget):
         else:
             return [False]
 
+    def RFIDTable_RemoveRow(self, AssetID):
+        delete_query = ''' DELETE FROM [RFID Table] WHERE (AssetID = (?));'''
+        self.cursor.execute(delete_query, str(AssetID))
+        self.cnxn.commit()
+
     def RFIDTable_InsertRow(self, AssetID, RFID_Tag):
-        insert_event_query = ''' INSERT INTO [RFID Table] (AssetID, TagID) VALUES(?,?);'''
-        self.cursor.execute(insert_event_query, str(AssetID),str(RFID_Tag))
+        insert_query = ''' INSERT INTO [RFID Table] (AssetID, TagID) VALUES(?,?);'''
+        self.cursor.execute(insert_query, str(AssetID),str(RFID_Tag))
         self.cnxn.commit()
 
     def RFIDTable_UpdateRow(self,AssetID, RFID_Tag):
-        update_event_query = '''UPDATE [RFID Table] SET AssetID = (?), TagID = (?) WHERE AssetID = (?);'''
-        self.cursor.execute(update_event_query, str(AssetID), str(RFID_Tag),str(AssetID))
+        update_query = '''UPDATE [RFID Table] SET AssetID = (?), TagID = (?) WHERE AssetID = (?);'''
+        self.cursor.execute(update_query, str(AssetID), str(RFID_Tag),str(AssetID))
         self.cnxn.commit()

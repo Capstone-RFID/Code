@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>871</width>
-    <height>597</height>
+    <width>819</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -128,7 +128,7 @@ QTabBar::tab:selected {
 </string>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -330,34 +330,6 @@ QPushButton#Home_ChangePassword_Button:pressed {
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="Home_Force_Sync_Button">
-           <property name="minimumSize">
-            <size>
-             <width>412</width>
-             <height>50</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton#Home_Force_Sync_Button {
-	padding: 6px;
-	font: 26pt &quot;Arial&quot;;
-	color: white;
-	background-color: #282c30;
-	border-radius: 5px;
-	min-width: 10em;
-
-}
-QPushButton#Home_Force_Sync_Button:pressed {
-	background-color: #577590;
-    border-style: inset;
-}</string>
-           </property>
-           <property name="text">
-            <string>Sync with Central</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -543,7 +515,7 @@ QPushButton#Search_Reset_Fields_Button:pressed {
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
                </property>
                <property name="text">
-                <string>Asset Numbers:</string>
+                <string>Asset ID(s):</string>
                </property>
               </widget>
              </item>
@@ -847,7 +819,7 @@ QProgressBar::chunk{
              </attribute>
              <column>
               <property name="text">
-               <string>Asset#</string>
+               <string>Asset ID</string>
               </property>
              </column>
              <column>
@@ -871,6 +843,45 @@ QProgressBar::chunk{
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="Search_Display_Help_Button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>242</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Search_Display_Help_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Search_Display_Help_Button:pressed {
+background-color: #577590;
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Help</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <spacer name="horizontalSpacer_13">
              <property name="orientation">
@@ -929,44 +940,193 @@ background-color: #577590;
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="Edit_Prompt1_Label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);
-font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Enter Asset # to search for existing asset</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="Edit_Prompt2_Label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);
-font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Edit fields then click commit to change in local database</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0">
+        <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0,0,0">
          <property name="spacing">
           <number>4</number>
          </property>
+         <item row="3" column="2">
+          <spacer name="verticalSpacer_20">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="Edit_Assign_To_Label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Assign To:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="Edit_AssignTo_Field">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: #282c30;
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="Edit_Asset_Field">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+background-color: #282c30;
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLabel" name="Edit_UI_Message_Name_From_ID">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_18">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="5">
+          <widget class="QPushButton" name="Edit_Clear_Button">
+           <property name="minimumSize">
+            <size>
+             <width>242</width>
+             <height>51</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#Edit_Clear_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Edit_Clear_Button:pressed {
+background-color: #577590;
+    border-style: inset;
+}</string>
+           </property>
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="5">
+          <widget class="QPushButton" name="Edit_Commit_Edits_Button">
+           <property name="minimumSize">
+            <size>
+             <width>242</width>
+             <height>51</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#Edit_Commit_Edits_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Edit_Commit_Edits_Button:pressed {
+    background-color: #577590;
+    border-style: inset;
+}</string>
+           </property>
+           <property name="text">
+            <string>Commit Edits</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="Edit_Update_Status_Label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Update Status:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="Edit_Asset_Label">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Asset ID:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="2">
+          <spacer name="verticalSpacer_10">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item row="2" column="3">
           <widget class="QLabel" name="Edit_UI_Message_Prompt">
            <property name="styleSheet">
@@ -1036,84 +1196,28 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
            </item>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="Edit_Asset_Field">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>30</height>
-            </size>
+         <item row="9" column="0">
+          <widget class="QPushButton" name="Edit_Display_Help_Button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-background-color: #282c30;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <spacer name="horizontalSpacer_16">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="Edit_Assign_To_Label">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Assign To:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="Edit_AssignTo_Field">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-background-color: #282c30;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLabel" name="Edit_UI_Message_Name_From_ID">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="5">
-          <widget class="QPushButton" name="Edit_Clear_Button">
            <property name="minimumSize">
             <size>
              <width>242</width>
-             <height>51</height>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>50</height>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton#Edit_Clear_Button {
+            <string notr="true">QPushButton#Edit_Display_Help_Button {
 background-color: #282c30;
 color: rgb(255, 255, 255);
 border-style: outset;
@@ -1121,92 +1225,82 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;
 min-width: 10em;
 padding: 6px;
 }
-QPushButton#Edit_Clear_Button:pressed {
+QPushButton#Edit_Display_Help_Button:pressed {
 background-color: #577590;
     border-style: inset;
 }</string>
            </property>
            <property name="text">
-            <string>Clear</string>
+            <string>Help</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="5">
-          <widget class="QPushButton" name="Edit_Commit_Edits_Button">
-           <property name="minimumSize">
-            <size>
-             <width>242</width>
-             <height>51</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton#Edit_Commit_Edits_Button {
-background-color: #282c30;
-color: rgb(255, 255, 255);
-border-style: outset;
-font: 14pt &quot;MS Shell Dlg 2&quot;;
-min-width: 10em;
-padding: 6px;
-}
-QPushButton#Edit_Commit_Edits_Button:pressed {
-    background-color: #577590;
-    border-style: inset;
-}</string>
-           </property>
-           <property name="text">
-            <string>Commit Edits</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <spacer name="horizontalSpacer_18">
+         <item row="7" column="2">
+          <spacer name="verticalSpacer_22">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>20</width>
+             <height>40</height>
             </size>
            </property>
           </spacer>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="Edit_Update_Status_Label">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+         <item row="6" column="2">
+          <spacer name="verticalSpacer_23">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
-           <property name="text">
-            <string>Update Status:</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
            </property>
-          </widget>
+          </spacer>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="Edit_Asset_Label">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+         <item row="5" column="2">
+          <spacer name="verticalSpacer_24">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
-           <property name="text">
-            <string>Asset #:</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
            </property>
-          </widget>
+          </spacer>
+         </item>
+         <item row="8" column="2">
+          <spacer name="verticalSpacer_21">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="2">
+          <spacer name="verticalSpacer_25">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_10">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>294</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -1217,18 +1311,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
         <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="Create_Prompt_Label">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Enter asset info, then confirm new entry in local database</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
@@ -1280,7 +1363,7 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Confirm Entry</string>
+              <string>Enter</string>
              </property>
             </widget>
            </item>
@@ -1418,7 +1501,7 @@ QPushButton#Import_ImportAssets_Button:pressed {
            </item>
           </layout>
          </item>
-         <item row="1" column="0">
+         <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="1">
             <spacer name="horizontalSpacer_4">
@@ -1432,72 +1515,6 @@ QPushButton#Import_ImportAssets_Button:pressed {
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="Create_Asset_Description_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asset Description:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLineEdit" name="Create_Asset_Description_Field">
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: #282c30;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLineEdit" name="Create_RFID_Tag_Field_3">
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: #282c30;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="Create_Asset_Num_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asset #:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="Create_RFID_Tag_Label">
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string>RFID Tag #:</string>
-             </property>
-            </widget>
            </item>
            <item row="0" column="2">
             <widget class="QLineEdit" name="Create_Asset_Num_Field">
@@ -1514,20 +1531,18 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="2">
-            <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+           <item row="0" column="0">
+            <widget class="QLabel" name="Create_Asset_Num_Label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>88</height>
-              </size>
+             <property name="text">
+              <string>Asset ID:</string>
              </property>
-            </spacer>
+            </widget>
            </item>
-           <item row="6" column="2">
+           <item row="8" column="2">
             <widget class="QLabel" name="Create_UI_Message_Prompt">
              <property name="minimumSize">
               <size>
@@ -1557,6 +1572,58 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </spacer>
            </item>
+           <item row="1" column="2">
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>88</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="8" column="0">
+            <widget class="QPushButton" name="Create_Display_Help_Button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>242</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#Create_Display_Help_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#Create_Display_Help_Button:pressed {
+    background-color: #577590;
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Help</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -1570,18 +1637,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <layout class="QGridLayout" name="gridLayout_7">
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="Create_Prompt_Label_2">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: Bold 14pt &quot;MS Shell Dlg 2&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Enter existing asset ID and RFID tag then press enter to associate tag with asset</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
             <widget class="QPushButton" name="AssignTag_Clear_Fields_Button">
@@ -1633,22 +1689,36 @@ QPushButton#AssignTag_Confirm_Entry_Button:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Confirm Entry</string>
+              <string>Assign Tag to Asset</string>
              </property>
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer_11">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
+            <widget class="QPushButton" name="AssignTag_Remove_Tag_Button">
+             <property name="minimumSize">
               <size>
-               <width>20</width>
-               <height>40</height>
+               <width>242</width>
+               <height>51</height>
               </size>
              </property>
-            </spacer>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#AssignTag_Remove_Tag_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#AssignTag_Remove_Tag_Button:pressed {
+    background-color: #577590;
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Remove Tag from Asset</string>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="verticalSpacer_12">
@@ -1665,6 +1735,32 @@ QPushButton#AssignTag_Confirm_Entry_Button:pressed {
            </item>
            <item>
             <spacer name="verticalSpacer_13">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_19">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_18">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -1717,7 +1813,7 @@ QPushButton#AssignTag_Confirm_Entry_Button:pressed {
            </item>
           </layout>
          </item>
-         <item row="1" column="0">
+         <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="0" column="3">
             <spacer name="horizontalSpacer_8">
@@ -1745,24 +1841,6 @@ QPushButton#AssignTag_Confirm_Entry_Button:pressed {
              </property>
             </spacer>
            </item>
-           <item row="1" column="2">
-            <widget class="QLineEdit" name="AssignTag_RFID_Tag_Field">
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);
-background-color: #282c30;
-font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="2">
             <widget class="QLineEdit" name="AssignTag_Asset_Num_Field">
              <property name="minimumSize">
@@ -1789,6 +1867,24 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
             </widget>
            </item>
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="AssignTag_RFID_Tag_Field">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: #282c30;
+font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="AssignTag_Asset_Num_Label">
              <property name="styleSheet">
@@ -1796,11 +1892,50 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
-              <string>Asset #:</string>
+              <string>Asset ID:</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="2">
+           <item row="4" column="0">
+            <widget class="QPushButton" name="AssignTag_Display_Help_Button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>242</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#AssignTag_Display_Help_Button {
+background-color: #282c30;
+color: rgb(255, 255, 255);
+border-style: outset;
+font: 14pt &quot;MS Shell Dlg 2&quot;;
+min-width: 10em;
+padding: 6px;
+}
+QPushButton#AssignTag_Display_Help_Button:pressed {
+    background-color: #577590;
+    border-style: inset;
+}</string>
+             </property>
+             <property name="text">
+              <string>Help</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
             <spacer name="verticalSpacer_17">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -1808,7 +1943,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              <property name="sizeHint" stdset="0">
               <size>
                <width>20</width>
-               <height>88</height>
+               <height>40</height>
               </size>
              </property>
             </spacer>
@@ -1873,7 +2008,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
  </widget>
  <tabstops>
   <tabstop>Home_ChangePassword_Button</tabstop>
-  <tabstop>Home_Force_Sync_Button</tabstop>
   <tabstop>Search_Datetime_From</tabstop>
   <tabstop>Search_Datetime_To</tabstop>
   <tabstop>Search_Month_By_Month_Search_Dropdown</tabstop>
@@ -1882,8 +2016,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
   <tabstop>Search_Print_PDF_Button</tabstop>
   <tabstop>Edit_Asset_Field</tabstop>
   <tabstop>Create_Asset_Num_Field</tabstop>
-  <tabstop>Create_Asset_Description_Field</tabstop>
-  <tabstop>Create_RFID_Tag_Field_3</tabstop>
   <tabstop>Resolve_Display_Conflicts_Table</tabstop>
   <tabstop>pushButton</tabstop>
  </tabstops>
