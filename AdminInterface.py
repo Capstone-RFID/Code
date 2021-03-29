@@ -181,6 +181,10 @@ class Admin_Interface(QWidget):
         self.qm = QtWidgets.QMessageBox()
         self.scrollqm = ScrollMessageBox
 
+    def RFIDINSERT(self, tag):
+        if self.ui.Create_Tab.isVisible() and self.ui.Create_RFID_Tag_Field_3.text()=="":
+            self.ui.Create_RFID_Tag_Field_3.insert(tag)
+
 
     # open up the admin window from the button on main window
     def openAdmin(self, s, d, userLoggedIn):

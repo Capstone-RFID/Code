@@ -22,7 +22,7 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
 import hashlib
 
 Event_Log_Entry = []
-reading = "off"
+reading = "on"
 
 
 # ************Using PyQt5 signals and slots to read and process RFID data********
@@ -38,10 +38,13 @@ def update_RFID(result):
                 get_asset_query = '''SELECT AssetID FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
                 cursor.execute(get_asset_query, str(tag))
                 assetID = cursor.fetchone()
-                global reading
-                reading = "off"
-                window.rfid_insert(assetID[0])
-                reading = "on"
+                if window.admin.isVisible() and len(tag) != 0:
+                    window.admin.RFIDINSERT(str(tag))
+                else:
+                    window.rfid_insert(assetID[0])
+
+
+
 
 
 
