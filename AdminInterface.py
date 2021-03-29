@@ -228,6 +228,9 @@ class Admin_Interface(QWidget):
         self.qm.setFixedSize(3000, 5000)
         self.qm.information(self, 'Help',
                             'To assign an RFID Tag to an asset:\n\n1. Enter the asset number into the asset field\n\n2. Enter in the 24-digit hexidecimal value of the RFID tag you want to assign to that asset ID\n\nTo remove an RFID tag from an asset, enter the asset number and click the "remove tag" button')
+    def RFIDINSERT(self, tag):
+        if self.ui.Create_Tab.isVisible() and self.ui.Create_RFID_Tag_Field_3.text()=="":
+            self.ui.Create_RFID_Tag_Field_3.insert(tag)
     # open up the admin window from the button on main window
     def openAdmin(self, s, d, userLoggedIn):
         self.userLoggedIn = userLoggedIn
@@ -1650,3 +1653,5 @@ class Admin_Interface(QWidget):
         update_query = '''UPDATE [RFID Table] SET AssetID = (?), TagID = (?) WHERE AssetID = (?);'''
         self.cursor.execute(update_query, str(AssetID), str(RFID_Tag),str(AssetID))
         self.cnxn.commit()
+
+
