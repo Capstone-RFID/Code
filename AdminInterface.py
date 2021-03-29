@@ -236,7 +236,6 @@ class Admin_Interface(QWidget):
         self.userLoggedIn = userLoggedIn
         global CurrentUser
         CurrentUser = userLoggedIn
-        ETEK_log = get_logger('UserID:(' + CurrentUser + ')')
         print("The admin who just logged in has the ID: " + self.userLoggedIn)
         self.show()
         #set default tab on window opening to home tab
