@@ -85,7 +85,7 @@ def get_logger2(logger_name):
 # define global logger variable using the global current user ID
 CurrentUser = ''
 
-ETEK_log = get_logger('Admin Action' + CurrentUser)
+ETEK_log = get_logger('User Action' + CurrentUser)
 Import_log = get_logger2('Import')
 
 
@@ -255,7 +255,7 @@ class Admin_Interface(QWidget):
             # create the connection cursor as a private variable
             self.cursor = self.cnxn.cursor()
 
-            ETEK_log.info('Connected to Server ' + server + ' and ' + database)
+
 
 
         except:
