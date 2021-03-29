@@ -43,8 +43,9 @@ import logging
 #format log file to save as 'ETEK.log' and store date time and message of actions or errors
 #logging.basicConfig(filename='ETEK.log', filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 from logging.handlers import TimedRotatingFileHandler
-FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
+FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s", datefmt='%d-%b-%y %H:%M:%S')
 LOG_FILE = "ETEK.log"
+IMPORT_LOG_FILE = "IMPORT.log"
 
 def get_console_handler():
    console_handler = logging.StreamHandler(sys.stdout)
@@ -53,6 +54,11 @@ def get_console_handler():
 
 def get_file_handler():
    file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+   file_handler.setFormatter(FORMATTER)
+   return file_handler
+
+def get_file_handler2():
+   file_handler = TimedRotatingFileHandler(IMPORT_LOG_FILE, when='midnight')
    file_handler.setFormatter(FORMATTER)
    return file_handler
 
@@ -65,9 +71,23 @@ def get_logger(logger_name):
    logger.propagate = False
    return logger
 
+def get_logger2(logger_name):
+   logger = logging.getLogger(logger_name)
+   logger.setLevel(logging.DEBUG) # better to have too much log than not enough
+   logger.addHandler(get_console_handler())
+   logger.addHandler(get_file_handler2())
+   # with this pattern, it's rarely necessary to propagate the error up to parent
+   logger.propagate = False
+   return logger
+
+
+
+# define global logger variable using the global current user ID
 CurrentUser = ''
-#define global logger variable using the global current user ID
-ETEK_log = get_logger('User: ' + CurrentUser)
+
+ETEK_log = get_logger('Admin Action' + CurrentUser)
+Import_log = get_logger2('Import')
+
 
 
 
@@ -123,16 +143,19 @@ class Admin_Interface(QWidget):
         #Initialize this with nothing to start
         self.edit_AssetSearchedInDatabase = None
         # ****************************************Asset Validators*********************************
-        #Validator for each QLineEdit in
         # validator to only enter valid asset ID's into asset ID entry fields
 
         rExpSearch = QRegExp("(([Ee][0-9]{7}|[4][0-9]{6})(,{1}))*")
-        SearchTabValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
-        self.ui.Search_Asset_Numbers_Field.setValidator(SearchTabValid)
+        MultiAssetValid = QtGui.QRegExpValidator(rExpSearch, self.ui.Search_Asset_Numbers_Field)
+        self.ui.Search_Asset_Numbers_Field.setValidator(MultiAssetValid)
 
-        rExpEditAndCreate = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
-        EditTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Edit_Asset_Field)
-        self.ui.Edit_Asset_Field.setValidator(EditTabValid)
+        rExpEditCreateAssigntag = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
+        SingleAssetValid = QtGui.QRegExpValidator(rExpEditCreateAssigntag, self.ui.Edit_Asset_Field)
+        self.ui.Edit_Asset_Field.setValidator(SingleAssetValid)
+
+
+        CreateTabValid = QtGui.QRegExpValidator(rExpEditCreateAssigntag, self.ui.Create_Asset_Num_Field)
+        self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
 
         Edit_EmployeeFieldsValid = QtGui.QIntValidator()
         self.ui.Edit_AssignTo_Field.setValidator(Edit_EmployeeFieldsValid)
@@ -140,58 +163,77 @@ class Admin_Interface(QWidget):
         Edit_AssignTo_Valid = QtGui.QIntValidator()
         self.ui.Search_Employee_ID_Entry_Field.setValidator(Edit_AssignTo_Valid)
 
+        #Regex for a 24 digit hex number (either ABCDEF OR Numerical 0-9)
+        rExpRFID = QRegExp("([ABCDEF]|[0-9]){24}")
+        RFIDValid = QtGui.QRegExpValidator(rExpRFID, self.ui.AssignTag_RFID_Tag_Field)
+        self.ui.AssignTag_RFID_Tag_Field.setValidator(RFIDValid)
+
+        self.ui.AssignTag_Asset_Num_Field.setValidator(SingleAssetValid)
 
 
-
-        CreateTabValid = QtGui.QRegExpValidator(rExpEditAndCreate, self.ui.Create_Asset_Num_Field)
-        self.ui.Create_Asset_Num_Field.setValidator(CreateTabValid)
         # ****************************************End of Validators*********************************
 
         # ****************************************Home Tab Button(s)*********************************
-        self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
+        #self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
         #self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
         self.ui.Search_SearchAsset_Query_Button.clicked.connect(self.search_checkFieldInputs)
         self.ui.Search_Employee_ID_Entry_Field.returnPressed.connect(self.search_checkFieldInputs)
         self.ui.Search_Asset_Numbers_Field.returnPressed.connect(self.search_checkFieldInputs)
-        #self.ui.Search_SearchDate_Query_Button.clicked.connect(self.search_searchDateButtonClicked)
         self.ui.Search_Print_PDF_Button.clicked.connect(self.search_printPDFButtonClicked)
         self.ui.Search_Reset_Fields_Button.clicked.connect(self.search_searchResetFieldsButtonClicked)
-
+        self.ui.Search_Display_Help_Button.clicked.connect(self.search_helpButton)
         # ****************************************Edit Tab Button(s)*********************************
         self.ui.Edit_Clear_Button.clicked.connect(self.edit_clearButtonClicked)
-        #self.ui.Edit_Search_Button.clicked.connect(self.edit_searchButtonClicked)
-        #self.ui.Edit_Asset_Field.returnPressed.connect(self.edit_searchButtonClicked)
-        #self.ui.Edit_Delete_Entry_Button.clicked.connect(self.edit_deleteButtonClicked)
         self.ui.Edit_Commit_Edits_Button.clicked.connect(self.edit_commitButtonClicked)
-
+        self.ui.Edit_Display_Help_Button.clicked.connect(self.edit_helpButton)
 
         # ****************************************Create Tab Button(s)*********************************
         self.ui.Create_Clear_Fields_Button.clicked.connect(self.create_clearButtonClicked)
         self.ui.Create_Confirm_Entry_Button.clicked.connect(self.create_confirmEntryButtonClicked)
         self.ui.Import_ImportAssets_Button.clicked.connect(self.Import_ImportAssets_ButtonClicked)
         self.ui.Import_ImportEmployees_Button.clicked.connect(self.Import_ImportEmployees_ButtonClicked)
-        #
-
+        self.ui.Create_Display_Help_Button.clicked.connect(self.create_helpButton)
+        # ****************************************Assign Tag Tab Button(s)*********************************
+        self.ui.AssignTag_Confirm_Entry_Button.clicked.connect(self.AssignTag_confirmButtonClicked)
+        self.ui.AssignTag_Remove_Tag_Button.clicked.connect(self.AssignTag_removeButtonClicked)
+        self.ui.AssignTag_Clear_Fields_Button.clicked.connect(self.AssignTag_clearButtonClicked)
+        self.ui.AssignTag_Display_Help_Button.clicked.connect(self.AssignTag_helpButton)
         # ****************************************Resolve Tab Button(s)*********************************
         #Nothing here yet, define button connections here when we put something in the GUI
 
         # ****************************************QMessageBox (Used across tabs)*********************************
         self.qm = QtWidgets.QMessageBox()
-        self.scrollqm = ScrollMessageBox
 
-    def RFIDINSERT(self, tag):
-        if self.ui.Create_Tab.isVisible() and self.ui.Create_RFID_Tag_Field_3.text()=="":
-            self.ui.Create_RFID_Tag_Field_3.insert(tag)
+    def search_helpButton(self):
 
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'The search tab allows you to list records from the event log table in the local database\n\nUse/combine filters to find records that meet the criteria specified\n\nUsing the Date/Time filters allows you to set two dates and retrieve records from between those dates\n\nMonth by Month returns records from that month across all years in the database\n\nThe Employee and Asset ID(s) allow you to look for only the employees and assets specified\n\nTo search multiple assets at once, type in each asset ID seperated by a comma')
 
+    def edit_helpButton(self):
+
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'The edit tab allows you to update the status of an asset\n\nYou can update an asset as assigned to an employee ID as either checked-in or checked-out\n\nPlease note that you can not assign something to an employee as any other status than specified above ')
+    def create_helpButton(self):
+
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'The create tab is where you can enter new asset ID(s) into the local database by:\n\n1. Entering in the new Asset\n\n2. Making a .xlsx file in excel as in the user manual **insert page # here**\n\nYou can also add in new employee IDs into the database by making a .xlsx file in excel as in the user manual **insert page # here**\n\nIf you need to assign an RFID tag to an individual asset, please use the "Assign Tag" tab')
+
+    def AssignTag_helpButton(self):
+
+        self.qm.setFixedSize(3000, 5000)
+        self.qm.information(self, 'Help',
+                            'To assign an RFID Tag to an asset:\n\n1. Enter the asset number into the asset field\n\n2. Enter in the 24-digit hexidecimal value of the RFID tag you want to assign to that asset ID\n\nTo remove an RFID tag from an asset, enter the asset number and click the "remove tag" button')
     # open up the admin window from the button on main window
     def openAdmin(self, s, d, userLoggedIn):
         self.userLoggedIn = userLoggedIn
         global CurrentUser
         CurrentUser = userLoggedIn
-        ETEK_log = get_logger('User: ' + CurrentUser)
+        ETEK_log = get_logger('UserID:(' + CurrentUser + ')')
         print("The admin who just logged in has the ID: " + self.userLoggedIn)
         self.show()
         #set default tab on window opening to home tab
@@ -212,7 +254,7 @@ class Admin_Interface(QWidget):
             self.cursor = self.cnxn.cursor()
 
             ETEK_log.info('Connected to Server ' + server + ' and ' + database)
-            return CurrentUser
+
 
         except:
             ETEK_log.error('Unable to connect to Server ' + server + ' and ' + database + ' please check configuration file.')
@@ -535,6 +577,20 @@ class Admin_Interface(QWidget):
         except:
             ETEK_log.error('Error In function - edit_FetchNameViaID')
 
+    def edit_AssignTo_commitSQL(self,edit_Employee,Edit_Asset,AssetStatus_Dropdown):
+
+        insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(edit_Employee), str(Edit_Asset),
+                            str(AssetStatus_Dropdown))
+        self.cnxn.commit()
+
+    def edit_UpdateStatus_commitSQL(self, Edit_Asset, AssetStatus_Dropdown):
+        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
+        # Next two lines commit the edits present in the table
+        self.cursor.execute(insert_event_query, str(Edit_Asset),
+                            str(AssetStatus_Dropdown))
+        self.cnxn.commit()
 
     def edit_commitButtonClicked(self):
 
@@ -566,21 +622,91 @@ class Admin_Interface(QWidget):
                 elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee':
                     AssetStatus_Dropdown = '7'
 
+                #This is a big logical or statement so that we don't get events w/ employee numbers that are associated
+                #with assets that are in repair, retire, broken, a new item the introduction of a new employee from the
+                # edit tab.
+                # Made this into a flag for ease of reference
+                invalidEmployeeStatusFlag = (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Item') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Retired') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'In Repair')
 
-                insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
-                #Next two lines commit the edits present in the table
-                self.cursor.execute(insert_event_query, str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
-                self.cnxn.commit()
-                self.ui.Edit_UI_Message_Prompt.setText('')
-                EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
-                self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
-                ETEK_log.info('Asset Edits Committed to Database')
 
-                #clear fields after commit
-                self.ui.Edit_AssignTo_Field.setText('')
-                self.ui.Edit_Asset_Field.setText('')
-                self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
-                self.ui.Edit_UI_Message_Name_From_ID.setText('')
+                #This should not commit w/ any employee ID if the status is set to Retired, Broken, In Repair, New Item or New Employee
+                #If it's not any of those listed and the Assign To field isn't blank, then commit all three into the database
+                if not invalidEmployeeStatusFlag:
+                    response = self.qm.question(self, 'Input Required',
+                                                'Do you want to check out or check in this asset as your logged in admin employee ID?',
+                                                self.qm.Yes | self.qm.No)
+                    # Employee field is empty and admin wants to sign this asset out
+                    if (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() == ''):
+                        Edit_Employee = self.userLoggedIn
+                        self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
+
+                        self.ui.Edit_UI_Message_Prompt.setText('')
+                        EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                        self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
+                        ETEK_log.info('Asset Edits Committed to Database')
+
+                        # clear fields after commit
+                        self.ui.Edit_AssignTo_Field.setText('')
+                        self.ui.Edit_Asset_Field.setText('')
+                        self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                        self.ui.Edit_UI_Message_Name_From_ID.setText('')
+                    # Employee field is empty and admin does not want to sign this asset out
+
+                    elif (response == self.qm.No) and self.ui.Edit_AssignTo_Field.text() == '':
+                        self.qm.warning(self, 'Invalid commit','Please fill in the "Assign To" field if you are not checking an asset in/out')
+
+                    # Employee field is not empty and admin does not want to sign this asset out
+                    elif (response == self.qm.No) and self.ui.Edit_AssignTo_Field.text() != '':
+                        Edit_Employee = self.ui.Edit_AssignTo_Field.text()
+                        self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
+                        self.ui.Edit_UI_Message_Prompt.setText('')
+                        EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                        self.qm.information(self, 'Edit Confirmation',
+                                            'Asset ' + Edit_Asset + ' was assigned to ' + EmployeeName[
+                                                0] + ' (Employee ID: ' + Edit_Employee + ') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
+                        ETEK_log.info('Asset Edits Committed to Database')
+                    # Employee field is not empty and admin does want to sign this asset out
+                    elif (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() != ''):
+                        self.qm.warning(self, 'Invalid commit','Please leave the "Assign To" field blank if you are checking an asset in/out')
+
+                # If it's not any of those listed and the Assign To field isn't blank, then commit all three into the
+                else:
+                    response = self.qm.question(self, 'Input Required', 'Do you want to check out or check in this asset as your logged in admin employee ID?', self.qm.Yes | self.qm.No)
+                    if response == self.qm.Yes:
+                        if invalidEmployeeStatusFlag:
+                            self.qm.warning(self, 'Invalid Status for Assignment', 'Can not assign an asset to an employee with the status ' + self.ui.Edit_Update_Status_Dropdown.currentText() + '\n\nPlease pick either "Checked In" or ""Checked out" if assigning to an employee or yourself')
+                        else:
+                            self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset), str(AssetStatus_Dropdown))
+                            self.ui.Edit_UI_Message_Prompt.setText('')
+                            EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                            self.qm.information(self, 'Edit Confirmation',
+                                                'Asset ' + Edit_Asset + ' was assigned to ' + EmployeeName[
+                                                    0] + ' (Employee ID: ' + Edit_Employee + ') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
+                            ETEK_log.info('Asset Edits Committed to Database w/ admin employee ID')
+
+                            # clear fields after commit
+                            self.ui.Edit_AssignTo_Field.setText('')
+                            self.ui.Edit_Asset_Field.setText('')
+                            self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                            self.ui.Edit_UI_Message_Name_From_ID.setText('')
+
+                    else:
+
+                        self.edit_UpdateStatus_commitSQL(str(Edit_Asset),str(AssetStatus_Dropdown))
+                        self.ui.Edit_UI_Message_Prompt.setText('')
+                        self.qm.information(self, 'Edit Confirmation',
+                                            'Asset ' + Edit_Asset + ' was updated to being "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
+                        ETEK_log.info('Asset Edits Committed to Database as status update')
+
+                        # clear fields after commit
+                        self.ui.Edit_AssignTo_Field.setText('')
+                        self.ui.Edit_Asset_Field.setText('')
+                        self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                        self.ui.Edit_UI_Message_Name_From_ID.setText('')
+
+
+
+
 
             else:
                 if not self.Employee_ID_Check(Edit_Employee) and self.ui.Edit_Update_Status_Dropdown.currentText() != '':
@@ -614,86 +740,38 @@ class Admin_Interface(QWidget):
     #Edit from RFID text field to RFID scan for entering the tag (maybe change lineEdit field to text display)
     def create_confirmEntryButtonClicked(self):
         try:
-            self.ui.Create_UI_Message_Prompt.setText('')
-
-            #Turn text field string into a list of a single string
-            AssetFiltered = self.checkMultiItemsCommas(self.ui.Create_Asset_Num_Field.text())
-
-            #If the format is good, then go ahead, else this is replaced with a blank list
-            AssetFiltered = self.checkInputAssetFormat(AssetFiltered)
-
-
-            if (AssetFiltered) and (self.ui.Create_Asset_Description_Field.text() != ''):
-                print('Create Tab Confirm Entry Button Clicked')
-
-                if (self.AssetRFID_Check(self.ui.Create_Asset_Num_Field.text()) or self.Asset_Check(AssetFiltered[0])):
-                    print('This asset ID already exists! ')
-                    #self.ui.Create_UI_Message_Prompt.setText('ID already exists')
-                    self.qm.warning(self, 'Notice', 'ID already exists')
-
-                    # If the RFID number does not exist yet (and field is not blank) , then write it to the RFID table with existing asset
-                    if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
-                        print('Linking existing asset to new RFID tag ')
-
-                        insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
-                        # Next two lines commit the edits present in the table
-                        self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()),
-                                            str(self.ui.Create_Asset_Num_Field.text()))
-                        #self.cnxn.commit()
-
-                        # Create an event in the Event Log Table to show linking
-                        # Append status # 420 (An RFID tag was linked to an existing asset in the system)
-                        insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
-                        # Next two lines commit the edits present in the table
-                        self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()), str(420))
-                        self.cnxn.commit()
-                        #self.ui.Create_UI_Message_Prompt.setText('New tag applied to asset')
-                        self.qm.information(self,'Notice', 'New tag applied to asset!')
-                        ETEK_log.info('New RFID tag added to existing Asset in Database')
-
-
-                    #Edit this so it prints info somewhere so user can edit association
-                    elif(self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != '')):
-
-                        print('This tag already associated with another asset!')
-                        #self.ui.Create_UI_Message_Prompt.setText('Tag associated w/ another asset')
-                        self.qm.warning(self, 'Notice', 'This tag already associated with another asset!')
-
+            ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + 'pressed enter button on create tab')
+            assetID = self.ui.Create_Asset_Num_Field.text()
+            if assetID != '':
+                if re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",assetID):
+                    if not self.Asset_Check(assetID):
+                        self.create_commitAssetOnly(assetID)
+                        self.qm.information(self, 'Asset ID added to local database','The asset ID "' + assetID + '" was commited to the asset table')
+                        ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + 'added the asset ID ' + assetID + ' to the asset table in the local database')
+                    else:
+                        self.qm.warning(self, 'Asset already exists',
+                                        'The asset number entered is already in the Asset Table of the local database')
+                        ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to add an asset that already exists in the asset table')
                 else:
-                    # If the RFID number does not exist yet (and field is not blank) and the asset does not already exist, then write it to the RFID table
-                    if ((not self.RFID_Check(self.ui.Create_RFID_Tag_Field_3.text()) and (self.ui.Create_RFID_Tag_Field_3.text() != ''))):
-                        insert_event_query = ''' INSERT INTO [RFID Table] (TagID, AssetID) VALUES(?,?);'''
-                        # Next two lines commit the edits present in the table
-                        self.cursor.execute(insert_event_query, str(self.ui.Create_RFID_Tag_Field_3.text()),
-                                            str(self.ui.Create_Asset_Num_Field.text()))
-                    #self.cnxn.commit()
-                    #Create an event in the Event Log Table
-                    #Append status # 3 (A new asset was added to the system)
-                    insert_event_query = ''' INSERT INTO [Event Log Table] (EmployeeID, AssetID, Status) VALUES(?,?,?);'''
-                    # Next two lines commit the edits present in the table
-                    self.cursor.execute(insert_event_query, str(''), str(self.ui.Create_Asset_Num_Field.text()),str(3))
-
-
-                    #insert new Asset into Asset Table
-                    insert_event_query = ''' INSERT INTO [Asset Table] (AssetID, Type) VALUES(?,?);'''
-                    # Next two lines commit the edits present in the table
-                    self.cursor.execute(insert_event_query, str(self.ui.Create_Asset_Num_Field.text()), str(self.ui.Create_Asset_Description_Field.text()))
-
-                    self.cnxn.commit()
-                    #self.ui.Create_UI_Message_Prompt.setText('Asset Successfully Created!')
-                    self.qm.information(self, 'Notice', "Asset Successfully Created!")
-                    ETEK_log.info('New Asset linked to RFID and created in Database')
+                    ETEK_log.info(
+                        'Admin logged in as Employee ID ' + self.userLoggedIn + 'entered an incomplete asset number - not in "Exxxxxxx" or "4xxxxxx"')
+                    self.qm.warning(self, 'Incomplete asset number',
+                                    'Please enter a valid asset # into the field before pressing enter\n\n Two accepted formats are: "Exxxxxxx" and "4xxxxxx"\n\nWhere x is a numerical digit')
             else:
-                print("Enter both a valid asset number and description!")
-                #self.ui.Create_UI_Message_Prompt.setText('Enter valid asset # and description')
-                self.qm.warning(self, 'Notice', 'Enter valid asset number (Exxxxxxx OR 4xxxxxx, x ~ digit) and a description!')
-
-            # clear fields after commit
-            self.ui.Create_Asset_Num_Field.setText("")
-            self.ui.Create_Asset_Description_Field.setText("")
-            self.ui.Create_RFID_Tag_Field_3.setText("")
+                ETEK_log.info(
+                    'Admin logged in as Employee ID ' + self.userLoggedIn + 'pressed enter button with nothing in asset field')
+                self.qm.warning(self,'Empty asset field','Please enter text into the asset # field before pressing enter')
+            self.ui.Create_Asset_Num_Field.setText('')
         except:
             ETEK_log.error('Error In function - create_confirmEntryButtonClicked')
+            self.qm.warning(self, 'Error: exception thrown','An exception was thrown in the create_confirmEntryButtonClicked function, see ETEK.log file for more details')
+            self.ui.Create_Asset_Num_Field.setText('')
+
+
+    def create_commitAssetOnly(self,assetID):
+        insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
+        self.cursor.execute(insert_event_query, str(assetID),str('6'))
+        self.cnxn.commit()
 
     def save_PDF_Filepath(self):
         try:
@@ -717,6 +795,7 @@ class Admin_Interface(QWidget):
 
     def Import_ImportAssets_ButtonClicked(self):
         try:
+            Import_log.info('User:(' + self.userLoggedIn + ') - Clicked Import Assets Button')
             print('Import Tab ImportAssets Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
             name = "AssetList.xlsx"
@@ -743,13 +822,14 @@ class Admin_Interface(QWidget):
                             else:
                                 df.drop([count], inplace = True)
                                 print("Wrong format in Asset field")
+                                Import_log.info('Asset: (' + index + ") in wrong format, Asset not imported")
                             count = count +1
 
                         df = df.reset_index(drop=True)
                         self.import_checkAssetsOrEmployeesToSQL(df)
                        # self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
                         self.qm.information(self, 'Notice', 'New asset(s) imported successfully!')
-                        ETEK_log.info('New Assets imported successfully through .xlsx file')
+                        ETEK_log.info('New Assets imported successfully through .xlsx file. Check Import Log for details.')
 
                     else:
                         print('Please reformat excel into 2 columns "AssetID" and "RFID Tag" with no blank cells')
@@ -767,6 +847,7 @@ class Admin_Interface(QWidget):
 
     def Import_ImportEmployees_ButtonClicked(self):
         try:
+            Import_log.info('User:(' + self.userLoggedIn + ') - Clicked Import Employees Button')
             print('Import Tab ImportEmployees Button Clicked')
             self.ui.Create_UI_Message_Prompt.setText('')
             employeeFile = self.find_files()
@@ -782,7 +863,7 @@ class Admin_Interface(QWidget):
                         self.import_checkAssetsOrEmployeesToSQL(df)
                         #self.ui.Create_UI_Message_Prompt.setText('Import Successful!')
 
-                        ETEK_log.info('New Employees imported successfully through .xlsx file')
+                        ETEK_log.info('New Employees imported successfully through .xlsx file. Check Import log for details')
                         self.qm.information(self, 'Notice', 'New employee(s) imported successfully!')
                     else:
                         print('Please reformat excel into 2 columns "Name" and "Employee ID" with no empty cells')
@@ -1386,6 +1467,7 @@ class Admin_Interface(QWidget):
                 else:
                     # self.import_EmployeeIDList_AlreadyExisting.append(str(df.at[row, 'Employee ID']))
                     print("The employee ID: "+ str(df.at[row, 'Employee ID']) +" already exists in the database")
+                    Import_log.info('Employee: ' + str(df.at[row, 'Employee ID']) + " already exists in the database, Employee not imported")
             # if(len(self.import_EmployeeIDList_AlreadyExisting) > 0):
             #     # initialize an empty string
             #     str1 = ""
@@ -1410,6 +1492,7 @@ class Admin_Interface(QWidget):
                 # NOTE: We should have a case where it notifies you on the GUI if you're trying to enter data that already exists and what entries would be duplicates
                 else:
                     print("The Asset Number: "+ str(df.at[row, 'Asset ID']) +" already exists in the database")
+                    Import_log.info('Asset: ' + str(df.at[row, 'Asset ID']) +" already exists in the database, asset not imported")
 
 
         # print(self.import_EmployeeIDList)
@@ -1443,3 +1526,127 @@ class Admin_Interface(QWidget):
 
         self.cnxn.commit()
 
+    def AssignTag_clearButtonClicked(self):
+        try:
+            self.ui.AssignTag_Asset_Num_Field.setText('')
+            self.ui.AssignTag_RFID_Tag_Field.setText('')
+        except:
+            self.qm.critical(self, 'Error', 'An exception was thrown in AssignTag_clearButtonClicked function')
+
+    def AssignTag_removeButtonClicked(self):
+        try:
+            AssetID = self.ui.AssignTag_Asset_Num_Field.text()
+            RFID_Tag = self.RFIDTable_AssetCheck(AssetID)[1][0]
+            if not (AssetID == ''):
+                # Asset does not exist
+                if self.Asset_Check(AssetID):
+                    #The asset exists in the RFID table already (it has a tag assigned already)
+                    if self.RFIDTable_AssetCheck(AssetID)[0]:
+                        response = self.qm.question(self, 'Input Required',
+                                                    'The asset ID " ' + AssetID + '"has the RFID tag "' +
+                                                    self.RFIDTable_AssetCheck(AssetID)[1][0] + '" associated with it\n\n Please confirm that you want to remove this RFID tag association from this asset ID,',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            self.RFIDTable_RemoveRow(AssetID)
+                            self.qm.information(self, 'RFID Tag Removal Successful',
+                                                'The removal of RFID tag "' + RFID_Tag + ' from asset ID "' + AssetID + '" was sucessful!')
+                            ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + 'removed RFID Tag "' + RFID_Tag + '" from the asset "' + AssetID +'"')
+
+                        else:
+                            self.qm.information(self, 'RFID Tag Removal Cancelled',
+                                            'The removal of an RFID tag from an asset ID was cancelled')
+                            ETEK_log.info('Admin logged in as Employee ID ' + self.userLoggedIn + ' selected "No" on confirmation prompt to remove RFID tag')
+                    else:
+                        self.qm.warning(self, 'No RFID tag found for asset',
+                                            'There is no RFID tag associated with this asset ID\n\nRemoval of RFID tag from asset ID cancelled')
+                        ETEK_log.info(
+                            'Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to remove RFID tag from asset with no associated RFID tag')
+                else:
+                    self.qm.critical(self, 'Asset does not exist','This asset does not exist in the asset table of the local database')
+                    ETEK_log.info(
+                        'Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to remove RFID tag from asset that does not exist in database')
+            else:
+                self.qm.critical(self, 'Blank Field',
+                                 'Asset ID field is blank, please fill in the field to remove association with an RFID tag')
+                ETEK_log.info(
+                    'Admin logged in as Employee ID ' + self.userLoggedIn + ' attempted to remove RFID tag from asset when asset ID field was blank')
+        except:
+            ETEK_log.error(self, 'An exception was thrown in AssignTag_removeButtonClicked function')
+            self.qm.critical(self, 'Error', 'An exception was thrown in AssignTag_removeButtonClicked function')
+
+    def AssignTag_confirmButtonClicked(self):
+        try:
+            AssetID = self.ui.AssignTag_Asset_Num_Field.text()
+            RFID_Tag = self.ui.AssignTag_RFID_Tag_Field.text()
+
+
+            if not (AssetID == '') or not (RFID_Tag == ''):
+                # Asset does not exist
+                if not self.Asset_Check(AssetID):
+                    self.qm.critical(self,'Asset ID not found','Asset ID '+ AssetID +' not found in the database' + '\n\nCan not associate RFID tag unless asset is either created or imported into local database')
+                #User entered in whitespace into RFID field
+                if not re.findall("([ABCDEF]|[0-9]){24}",RFID_Tag):
+                    self.qm.critical(self, 'Invalid RFID Tag','The RFID tag "' + RFID_Tag + '" must be a 24-digit hexidecimal value ' + '\n\nPlease try scanning RFID tag again')
+                else:
+                    #The asset exists in the RFID table already (it has a tag assigned already)
+                    if self.RFIDTable_AssetCheck(AssetID)[0]:
+                        response = self.qm.question(self, 'Input Required',
+                                                    'The asset ID " ' + AssetID + '" already has the RFID tag "'+ self.RFIDTable_AssetCheck(AssetID)[1][0] + '" associated with it\n\n Do you want to assign the current RFID tag "' + RFID_Tag + '" to this asset ID?',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            response = self.qm.question(self, 'Input Required',
+                                                        'Please confirm that you want to assign the RFID tag: "' + RFID_Tag + '" to the asset ID "' + AssetID + '"',
+                                                        self.qm.Yes | self.qm.No)
+                            if response == self.qm.Yes:
+                                self.RFIDTable_UpdateRow(AssetID,RFID_Tag)
+                                self.qm.information(self, 'RFID Tag Assignment Successful',
+                                                    'The assignment of RFID tag"' + RFID_Tag + 'to asset ID "' + AssetID + '" was sucessful!')
+
+                            else:
+                                self.qm.information(self, 'RFID Assignment Cancelled',
+                                                    'The assignment of an RFID tag to an asset ID was cancelled')
+                        else:
+                            self.qm.information(self, 'RFID Assignment Cancelled', 'The assignment of an RFID tag to an asset ID was cancelled')
+                    else:
+                        response = self.qm.question(self, 'Input Required',
+                                                    'Please confirm that you want to assign the RFID tag: "' + RFID_Tag + '" to the asset ID "' + AssetID + '"',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            self.RFIDTable_InsertRow(AssetID,RFID_Tag)
+                        else:
+                            self.qm.information(self, 'RFID Assignment Cancelled', 'The assignment of an RFID tag to an asset ID was cancelled')
+
+
+            else:
+                self.qm.critical(self, 'Blank Fields','One or more fields are blank, please fill both to assign a tag to an asset ID')
+
+
+        except:
+            self.qm.critical(self,'Error','An exception was thrown in AssignTag_confirmButtonClicked function')
+            ETEK_log.error(self, 'An exception was thrown in AssignTag_confirmButtonClicked function')
+
+    #Returns true if asset exists in table, returns true if it does, false if it doesn't
+    def RFIDTable_AssetCheck(self,AssetID):
+        check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE (AssetID =  (?));'''  # '?' is a placeholder
+        self.cursor.execute(check_query, str(AssetID))
+        if self.cursor.fetchone():
+            self.cursor.execute(check_query, str(AssetID))
+            record = self.cursor.fetchone()
+            return [True,record]
+        else:
+            return [False]
+
+    def RFIDTable_RemoveRow(self, AssetID):
+        delete_query = ''' DELETE FROM [RFID Table] WHERE (AssetID = (?));'''
+        self.cursor.execute(delete_query, str(AssetID))
+        self.cnxn.commit()
+
+    def RFIDTable_InsertRow(self, AssetID, RFID_Tag):
+        insert_query = ''' INSERT INTO [RFID Table] (AssetID, TagID) VALUES(?,?);'''
+        self.cursor.execute(insert_query, str(AssetID),str(RFID_Tag))
+        self.cnxn.commit()
+
+    def RFIDTable_UpdateRow(self,AssetID, RFID_Tag):
+        update_query = '''UPDATE [RFID Table] SET AssetID = (?), TagID = (?) WHERE AssetID = (?);'''
+        self.cursor.execute(update_query, str(AssetID), str(RFID_Tag),str(AssetID))
+        self.cnxn.commit()

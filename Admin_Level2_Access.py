@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(871, 597)
+        Admin_Interface.resize(819, 600)
         Admin_Interface.setStyleSheet("QWidget#Admin_Interface{\n"
 "    background-color: #5a5c5e;\n"
 "}\n"
@@ -231,23 +231,6 @@ class Ui_Admin_Interface(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem4 = QtWidgets.QSpacerItem(68, 38, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem4)
-        self.Home_Force_Sync_Button = QtWidgets.QPushButton(self.Home_Tab)
-        self.Home_Force_Sync_Button.setMinimumSize(QtCore.QSize(412, 50))
-        self.Home_Force_Sync_Button.setStyleSheet("QPushButton#Home_Force_Sync_Button {\n"
-"    padding: 6px;\n"
-"    font: 26pt \"Arial\";\n"
-"    color: white;\n"
-"    background-color: #282c30;\n"
-"    border-radius: 5px;\n"
-"    min-width: 10em;\n"
-"\n"
-"}\n"
-"QPushButton#Home_Force_Sync_Button:pressed {\n"
-"    background-color: #577590;\n"
-"    border-style: inset;\n"
-"}")
-        self.Home_Force_Sync_Button.setObjectName("Home_Force_Sync_Button")
-        self.horizontalLayout.addWidget(self.Home_Force_Sync_Button)
         spacerItem5 = QtWidgets.QSpacerItem(68, 38, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem5)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -515,6 +498,28 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.Search_Display_Help_Button = QtWidgets.QPushButton(self.Search_Tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Search_Display_Help_Button.sizePolicy().hasHeightForWidth())
+        self.Search_Display_Help_Button.setSizePolicy(sizePolicy)
+        self.Search_Display_Help_Button.setMinimumSize(QtCore.QSize(242, 50))
+        self.Search_Display_Help_Button.setMaximumSize(QtCore.QSize(100, 50))
+        self.Search_Display_Help_Button.setStyleSheet("QPushButton#Search_Display_Help_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Search_Display_Help_Button:pressed {\n"
+"background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.Search_Display_Help_Button.setObjectName("Search_Display_Help_Button")
+        self.horizontalLayout_3.addWidget(self.Search_Display_Help_Button)
         spacerItem8 = QtWidgets.QSpacerItem(258, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem8)
         self.Search_Print_PDF_Button = QtWidgets.QPushButton(self.Search_Tab)
@@ -545,44 +550,25 @@ class Ui_Admin_Interface(object):
         self.Edit_Tab.setObjectName("Edit_Tab")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.Edit_Tab)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.Edit_Prompt1_Label = QtWidgets.QLabel(self.Edit_Tab)
-        self.Edit_Prompt1_Label.setMaximumSize(QtCore.QSize(16777215, 50))
-        self.Edit_Prompt1_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: Bold 14pt \"MS Shell Dlg 2\";")
-        self.Edit_Prompt1_Label.setObjectName("Edit_Prompt1_Label")
-        self.verticalLayout_5.addWidget(self.Edit_Prompt1_Label)
-        self.Edit_Prompt2_Label = QtWidgets.QLabel(self.Edit_Tab)
-        self.Edit_Prompt2_Label.setMaximumSize(QtCore.QSize(16777215, 50))
-        self.Edit_Prompt2_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: Bold 14pt \"MS Shell Dlg 2\";")
-        self.Edit_Prompt2_Label.setObjectName("Edit_Prompt2_Label")
-        self.verticalLayout_5.addWidget(self.Edit_Prompt2_Label)
         self.gridLayout_2 = QtWidgets.QGridLayout()
         self.gridLayout_2.setSpacing(4)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.Edit_UI_Message_Prompt = QtWidgets.QLabel(self.Edit_Tab)
-        self.Edit_UI_Message_Prompt.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 14pt \"MS Shell Dlg 2\";")
-        self.Edit_UI_Message_Prompt.setText("")
-        self.Edit_UI_Message_Prompt.setObjectName("Edit_UI_Message_Prompt")
-        self.gridLayout_2.addWidget(self.Edit_UI_Message_Prompt, 2, 3, 1, 1)
-        self.Edit_Update_Status_Dropdown = QtWidgets.QComboBox(self.Edit_Tab)
-        self.Edit_Update_Status_Dropdown.setMinimumSize(QtCore.QSize(250, 30))
-        self.Edit_Update_Status_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
+        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem9, 3, 2, 1, 1)
+        self.Edit_Assign_To_Label = QtWidgets.QLabel(self.Edit_Tab)
+        self.Edit_Assign_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Edit_Assign_To_Label.setObjectName("Edit_Assign_To_Label")
+        self.gridLayout_2.addWidget(self.Edit_Assign_To_Label, 1, 0, 1, 1)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem10, 0, 3, 1, 1)
+        self.Edit_AssignTo_Field = QtWidgets.QLineEdit(self.Edit_Tab)
+        self.Edit_AssignTo_Field.setMinimumSize(QtCore.QSize(250, 30))
+        self.Edit_AssignTo_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: #282c30;\n"
 "font: 12pt \"MS Shell Dlg 2\";")
-        self.Edit_Update_Status_Dropdown.setEditable(True)
-        self.Edit_Update_Status_Dropdown.setObjectName("Edit_Update_Status_Dropdown")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.setItemText(0, "")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.Edit_Update_Status_Dropdown.addItem("")
-        self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 2, 2, 1, 1)
+        self.Edit_AssignTo_Field.setObjectName("Edit_AssignTo_Field")
+        self.gridLayout_2.addWidget(self.Edit_AssignTo_Field, 1, 2, 1, 1)
         self.Edit_Asset_Field = QtWidgets.QLineEdit(self.Edit_Tab)
         self.Edit_Asset_Field.setMinimumSize(QtCore.QSize(250, 30))
         self.Edit_Asset_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -591,26 +577,14 @@ class Ui_Admin_Interface(object):
         self.Edit_Asset_Field.setText("")
         self.Edit_Asset_Field.setObjectName("Edit_Asset_Field")
         self.gridLayout_2.addWidget(self.Edit_Asset_Field, 0, 2, 1, 1)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem9, 0, 3, 1, 1)
-        self.Edit_Assign_To_Label = QtWidgets.QLabel(self.Edit_Tab)
-        self.Edit_Assign_To_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Edit_Assign_To_Label.setObjectName("Edit_Assign_To_Label")
-        self.gridLayout_2.addWidget(self.Edit_Assign_To_Label, 1, 0, 1, 1)
-        self.Edit_AssignTo_Field = QtWidgets.QLineEdit(self.Edit_Tab)
-        self.Edit_AssignTo_Field.setMinimumSize(QtCore.QSize(250, 30))
-        self.Edit_AssignTo_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: #282c30;\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Edit_AssignTo_Field.setObjectName("Edit_AssignTo_Field")
-        self.gridLayout_2.addWidget(self.Edit_AssignTo_Field, 1, 2, 1, 1)
         self.Edit_UI_Message_Name_From_ID = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_UI_Message_Name_From_ID.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_UI_Message_Name_From_ID.setText("")
         self.Edit_UI_Message_Name_From_ID.setObjectName("Edit_UI_Message_Name_From_ID")
         self.gridLayout_2.addWidget(self.Edit_UI_Message_Name_From_ID, 1, 3, 1, 1)
+        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_2.addItem(spacerItem11, 0, 1, 1, 1)
         self.Edit_Clear_Button = QtWidgets.QPushButton(self.Edit_Tab)
         self.Edit_Clear_Button.setMinimumSize(QtCore.QSize(242, 51))
         self.Edit_Clear_Button.setStyleSheet("QPushButton#Edit_Clear_Button {\n"
@@ -643,8 +617,6 @@ class Ui_Admin_Interface(object):
 "}")
         self.Edit_Commit_Edits_Button.setObjectName("Edit_Commit_Edits_Button")
         self.gridLayout_2.addWidget(self.Edit_Commit_Edits_Button, 2, 5, 1, 1)
-        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem10, 0, 1, 1, 1)
         self.Edit_Update_Status_Label = QtWidgets.QLabel(self.Edit_Tab)
         self.Edit_Update_Status_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 12pt \"MS Shell Dlg 2\";")
@@ -655,9 +627,64 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Edit_Asset_Label.setObjectName("Edit_Asset_Label")
         self.gridLayout_2.addWidget(self.Edit_Asset_Label, 0, 0, 1, 1)
+        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem12, 9, 2, 1, 1)
+        self.Edit_UI_Message_Prompt = QtWidgets.QLabel(self.Edit_Tab)
+        self.Edit_UI_Message_Prompt.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 14pt \"MS Shell Dlg 2\";")
+        self.Edit_UI_Message_Prompt.setText("")
+        self.Edit_UI_Message_Prompt.setObjectName("Edit_UI_Message_Prompt")
+        self.gridLayout_2.addWidget(self.Edit_UI_Message_Prompt, 2, 3, 1, 1)
+        self.Edit_Update_Status_Dropdown = QtWidgets.QComboBox(self.Edit_Tab)
+        self.Edit_Update_Status_Dropdown.setMinimumSize(QtCore.QSize(250, 30))
+        self.Edit_Update_Status_Dropdown.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: #282c30;\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Edit_Update_Status_Dropdown.setEditable(True)
+        self.Edit_Update_Status_Dropdown.setObjectName("Edit_Update_Status_Dropdown")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.setItemText(0, "")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.Edit_Update_Status_Dropdown.addItem("")
+        self.gridLayout_2.addWidget(self.Edit_Update_Status_Dropdown, 2, 2, 1, 1)
+        self.Edit_Display_Help_Button = QtWidgets.QPushButton(self.Edit_Tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Edit_Display_Help_Button.sizePolicy().hasHeightForWidth())
+        self.Edit_Display_Help_Button.setSizePolicy(sizePolicy)
+        self.Edit_Display_Help_Button.setMinimumSize(QtCore.QSize(242, 50))
+        self.Edit_Display_Help_Button.setMaximumSize(QtCore.QSize(100, 50))
+        self.Edit_Display_Help_Button.setStyleSheet("QPushButton#Edit_Display_Help_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Edit_Display_Help_Button:pressed {\n"
+"background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.Edit_Display_Help_Button.setObjectName("Edit_Display_Help_Button")
+        self.gridLayout_2.addWidget(self.Edit_Display_Help_Button, 9, 0, 1, 1)
+        spacerItem13 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem13, 7, 2, 1, 1)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem14, 6, 2, 1, 1)
+        spacerItem15 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem15, 5, 2, 1, 1)
+        spacerItem16 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem16, 8, 2, 1, 1)
+        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem17, 4, 2, 1, 1)
         self.verticalLayout_5.addLayout(self.gridLayout_2)
-        spacerItem11 = QtWidgets.QSpacerItem(20, 294, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem11)
         self.Admin_Select.addTab(self.Edit_Tab, "")
         self.Create_Tab = QtWidgets.QWidget()
         self.Create_Tab.setObjectName("Create_Tab")
@@ -665,11 +692,6 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.gridLayout_6 = QtWidgets.QGridLayout()
         self.gridLayout_6.setObjectName("gridLayout_6")
-        self.Create_Prompt_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Prompt_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: Bold 14pt \"MS Shell Dlg 2\";")
-        self.Create_Prompt_Label.setObjectName("Create_Prompt_Label")
-        self.gridLayout_6.addWidget(self.Create_Prompt_Label, 0, 0, 1, 2)
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
@@ -704,8 +726,8 @@ class Ui_Admin_Interface(object):
 "}")
         self.Create_Confirm_Entry_Button.setObjectName("Create_Confirm_Entry_Button")
         self.verticalLayout_8.addWidget(self.Create_Confirm_Entry_Button)
-        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem12)
+        spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem18)
         self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.Create_Tab)
         self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(242, 51))
         self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
@@ -738,51 +760,21 @@ class Ui_Admin_Interface(object):
 "}")
         self.Import_ImportAssets_Button.setObjectName("Import_ImportAssets_Button")
         self.verticalLayout_8.addWidget(self.Import_ImportAssets_Button)
-        spacerItem13 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem13)
-        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem14)
-        spacerItem15 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem15)
-        spacerItem16 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem16)
-        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_8.addItem(spacerItem17)
-        self.gridLayout_6.addLayout(self.verticalLayout_8, 1, 1, 1, 1)
+        spacerItem19 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem19)
+        spacerItem20 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem20)
+        spacerItem21 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem21)
+        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem22)
+        spacerItem23 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_8.addItem(spacerItem23)
+        self.gridLayout_6.addLayout(self.verticalLayout_8, 0, 1, 1, 1)
         self.gridLayout_5 = QtWidgets.QGridLayout()
         self.gridLayout_5.setObjectName("gridLayout_5")
-        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem18, 0, 1, 1, 1)
-        self.Create_Asset_Description_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Asset_Description_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Description_Label.setObjectName("Create_Asset_Description_Label")
-        self.gridLayout_5.addWidget(self.Create_Asset_Description_Label, 1, 0, 1, 1)
-        self.Create_Asset_Description_Field = QtWidgets.QLineEdit(self.Create_Tab)
-        self.Create_Asset_Description_Field.setMinimumSize(QtCore.QSize(250, 30))
-        self.Create_Asset_Description_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: #282c30;\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Description_Field.setObjectName("Create_Asset_Description_Field")
-        self.gridLayout_5.addWidget(self.Create_Asset_Description_Field, 1, 2, 1, 1)
-        self.Create_RFID_Tag_Field_3 = QtWidgets.QLineEdit(self.Create_Tab)
-        self.Create_RFID_Tag_Field_3.setMinimumSize(QtCore.QSize(250, 30))
-        self.Create_RFID_Tag_Field_3.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: #282c30;\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_RFID_Tag_Field_3.setText("")
-        self.Create_RFID_Tag_Field_3.setObjectName("Create_RFID_Tag_Field_3")
-        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Field_3, 2, 2, 1, 1)
-        self.Create_Asset_Num_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_Asset_Num_Label.setObjectName("Create_Asset_Num_Label")
-        self.gridLayout_5.addWidget(self.Create_Asset_Num_Label, 0, 0, 1, 1)
-        self.Create_RFID_Tag_Label = QtWidgets.QLabel(self.Create_Tab)
-        self.Create_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 12pt \"MS Shell Dlg 2\";")
-        self.Create_RFID_Tag_Label.setObjectName("Create_RFID_Tag_Label")
-        self.gridLayout_5.addWidget(self.Create_RFID_Tag_Label, 2, 0, 1, 1)
+        spacerItem24 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem24, 0, 1, 1, 1)
         self.Create_Asset_Num_Field = QtWidgets.QLineEdit(self.Create_Tab)
         self.Create_Asset_Num_Field.setMinimumSize(QtCore.QSize(250, 30))
         self.Create_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
@@ -790,20 +782,176 @@ class Ui_Admin_Interface(object):
 "font: 12pt \"MS Shell Dlg 2\";")
         self.Create_Asset_Num_Field.setObjectName("Create_Asset_Num_Field")
         self.gridLayout_5.addWidget(self.Create_Asset_Num_Field, 0, 2, 1, 1)
-        spacerItem19 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_5.addItem(spacerItem19, 7, 2, 1, 1)
+        self.Create_Asset_Num_Label = QtWidgets.QLabel(self.Create_Tab)
+        self.Create_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.Create_Asset_Num_Label.setObjectName("Create_Asset_Num_Label")
+        self.gridLayout_5.addWidget(self.Create_Asset_Num_Label, 0, 0, 1, 1)
         self.Create_UI_Message_Prompt = QtWidgets.QLabel(self.Create_Tab)
         self.Create_UI_Message_Prompt.setMinimumSize(QtCore.QSize(0, 51))
         self.Create_UI_Message_Prompt.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 14pt \"MS Shell Dlg 2\";")
         self.Create_UI_Message_Prompt.setText("")
         self.Create_UI_Message_Prompt.setObjectName("Create_UI_Message_Prompt")
-        self.gridLayout_5.addWidget(self.Create_UI_Message_Prompt, 6, 2, 1, 1)
-        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem20, 0, 3, 1, 1)
-        self.gridLayout_6.addLayout(self.gridLayout_5, 1, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.Create_UI_Message_Prompt, 8, 2, 1, 1)
+        spacerItem25 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem25, 0, 3, 1, 1)
+        spacerItem26 = QtWidgets.QSpacerItem(20, 88, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_5.addItem(spacerItem26, 1, 2, 1, 1)
+        self.Create_Display_Help_Button = QtWidgets.QPushButton(self.Create_Tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Create_Display_Help_Button.sizePolicy().hasHeightForWidth())
+        self.Create_Display_Help_Button.setSizePolicy(sizePolicy)
+        self.Create_Display_Help_Button.setMinimumSize(QtCore.QSize(242, 50))
+        self.Create_Display_Help_Button.setMaximumSize(QtCore.QSize(100, 50))
+        self.Create_Display_Help_Button.setStyleSheet("QPushButton#Create_Display_Help_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#Create_Display_Help_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.Create_Display_Help_Button.setObjectName("Create_Display_Help_Button")
+        self.gridLayout_5.addWidget(self.Create_Display_Help_Button, 8, 0, 1, 1)
+        self.gridLayout_6.addLayout(self.gridLayout_5, 0, 0, 1, 1)
         self.verticalLayout_11.addLayout(self.gridLayout_6)
         self.Admin_Select.addTab(self.Create_Tab, "")
+        self.Assign_Tag_Tab = QtWidgets.QWidget()
+        self.Assign_Tag_Tab.setObjectName("Assign_Tag_Tab")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.Assign_Tag_Tab)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.gridLayout_7 = QtWidgets.QGridLayout()
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.AssignTag_Clear_Fields_Button = QtWidgets.QPushButton(self.Assign_Tag_Tab)
+        self.AssignTag_Clear_Fields_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.AssignTag_Clear_Fields_Button.setStyleSheet("QPushButton#AssignTag_Clear_Fields_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#AssignTag_Clear_Fields_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.AssignTag_Clear_Fields_Button.setObjectName("AssignTag_Clear_Fields_Button")
+        self.verticalLayout_9.addWidget(self.AssignTag_Clear_Fields_Button)
+        self.AssignTag_Confirm_Entry_Button = QtWidgets.QPushButton(self.Assign_Tag_Tab)
+        self.AssignTag_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.AssignTag_Confirm_Entry_Button.setStyleSheet("QPushButton#AssignTag_Confirm_Entry_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#AssignTag_Confirm_Entry_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.AssignTag_Confirm_Entry_Button.setObjectName("AssignTag_Confirm_Entry_Button")
+        self.verticalLayout_9.addWidget(self.AssignTag_Confirm_Entry_Button)
+        self.AssignTag_Remove_Tag_Button = QtWidgets.QPushButton(self.Assign_Tag_Tab)
+        self.AssignTag_Remove_Tag_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.AssignTag_Remove_Tag_Button.setStyleSheet("QPushButton#AssignTag_Remove_Tag_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#AssignTag_Remove_Tag_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.AssignTag_Remove_Tag_Button.setObjectName("AssignTag_Remove_Tag_Button")
+        self.verticalLayout_9.addWidget(self.AssignTag_Remove_Tag_Button)
+        spacerItem27 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem27)
+        spacerItem28 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem28)
+        spacerItem29 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem29)
+        spacerItem30 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem30)
+        spacerItem31 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem31)
+        spacerItem32 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem32)
+        spacerItem33 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem33)
+        self.gridLayout_7.addLayout(self.verticalLayout_9, 0, 1, 1, 1)
+        self.gridLayout_8 = QtWidgets.QGridLayout()
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        spacerItem34 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_8.addItem(spacerItem34, 0, 3, 1, 1)
+        spacerItem35 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_8.addItem(spacerItem35, 0, 1, 1, 1)
+        self.AssignTag_Asset_Num_Field = QtWidgets.QLineEdit(self.Assign_Tag_Tab)
+        self.AssignTag_Asset_Num_Field.setMinimumSize(QtCore.QSize(250, 30))
+        self.AssignTag_Asset_Num_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: #282c30;\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_Asset_Num_Field.setObjectName("AssignTag_Asset_Num_Field")
+        self.gridLayout_8.addWidget(self.AssignTag_Asset_Num_Field, 0, 2, 1, 1)
+        self.AssignTag_RFID_Tag_Label = QtWidgets.QLabel(self.Assign_Tag_Tab)
+        self.AssignTag_RFID_Tag_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_RFID_Tag_Label.setObjectName("AssignTag_RFID_Tag_Label")
+        self.gridLayout_8.addWidget(self.AssignTag_RFID_Tag_Label, 1, 0, 1, 1)
+        self.AssignTag_RFID_Tag_Field = QtWidgets.QLineEdit(self.Assign_Tag_Tab)
+        self.AssignTag_RFID_Tag_Field.setMinimumSize(QtCore.QSize(250, 30))
+        self.AssignTag_RFID_Tag_Field.setStyleSheet("color: rgb(255, 255, 255);\n"
+"background-color: #282c30;\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_RFID_Tag_Field.setText("")
+        self.AssignTag_RFID_Tag_Field.setObjectName("AssignTag_RFID_Tag_Field")
+        self.gridLayout_8.addWidget(self.AssignTag_RFID_Tag_Field, 1, 2, 1, 1)
+        self.AssignTag_Asset_Num_Label = QtWidgets.QLabel(self.Assign_Tag_Tab)
+        self.AssignTag_Asset_Num_Label.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 12pt \"MS Shell Dlg 2\";")
+        self.AssignTag_Asset_Num_Label.setObjectName("AssignTag_Asset_Num_Label")
+        self.gridLayout_8.addWidget(self.AssignTag_Asset_Num_Label, 0, 0, 1, 1)
+        self.AssignTag_Display_Help_Button = QtWidgets.QPushButton(self.Assign_Tag_Tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.AssignTag_Display_Help_Button.sizePolicy().hasHeightForWidth())
+        self.AssignTag_Display_Help_Button.setSizePolicy(sizePolicy)
+        self.AssignTag_Display_Help_Button.setMinimumSize(QtCore.QSize(242, 50))
+        self.AssignTag_Display_Help_Button.setMaximumSize(QtCore.QSize(100, 50))
+        self.AssignTag_Display_Help_Button.setStyleSheet("QPushButton#AssignTag_Display_Help_Button {\n"
+"background-color: #282c30;\n"
+"color: rgb(255, 255, 255);\n"
+"border-style: outset;\n"
+"font: 14pt \"MS Shell Dlg 2\";\n"
+"min-width: 10em;\n"
+"padding: 6px;\n"
+"}\n"
+"QPushButton#AssignTag_Display_Help_Button:pressed {\n"
+"    background-color: #577590;\n"
+"    border-style: inset;\n"
+"}")
+        self.AssignTag_Display_Help_Button.setObjectName("AssignTag_Display_Help_Button")
+        self.gridLayout_8.addWidget(self.AssignTag_Display_Help_Button, 4, 0, 1, 1)
+        spacerItem36 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_8.addItem(spacerItem36, 2, 2, 1, 1)
+        self.gridLayout_7.addLayout(self.gridLayout_8, 0, 0, 1, 1)
+        self.horizontalLayout_4.addLayout(self.gridLayout_7)
+        self.Admin_Select.addTab(self.Assign_Tag_Tab, "")
         self.Resolve_Tab = QtWidgets.QWidget()
         self.Resolve_Tab.setObjectName("Resolve_Tab")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.Resolve_Tab)
@@ -832,10 +980,9 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(3)
+        self.Admin_Select.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
-        Admin_Interface.setTabOrder(self.Home_ChangePassword_Button, self.Home_Force_Sync_Button)
-        Admin_Interface.setTabOrder(self.Home_Force_Sync_Button, self.Search_Datetime_From)
+        Admin_Interface.setTabOrder(self.Home_ChangePassword_Button, self.Search_Datetime_From)
         Admin_Interface.setTabOrder(self.Search_Datetime_From, self.Search_Datetime_To)
         Admin_Interface.setTabOrder(self.Search_Datetime_To, self.Search_Month_By_Month_Search_Dropdown)
         Admin_Interface.setTabOrder(self.Search_Month_By_Month_Search_Dropdown, self.Search_Employee_ID_Entry_Field)
@@ -843,9 +990,7 @@ class Ui_Admin_Interface(object):
         Admin_Interface.setTabOrder(self.Search_Display_Results_Table, self.Search_Print_PDF_Button)
         Admin_Interface.setTabOrder(self.Search_Print_PDF_Button, self.Edit_Asset_Field)
         Admin_Interface.setTabOrder(self.Edit_Asset_Field, self.Create_Asset_Num_Field)
-        Admin_Interface.setTabOrder(self.Create_Asset_Num_Field, self.Create_Asset_Description_Field)
-        Admin_Interface.setTabOrder(self.Create_Asset_Description_Field, self.Create_RFID_Tag_Field_3)
-        Admin_Interface.setTabOrder(self.Create_RFID_Tag_Field_3, self.Resolve_Display_Conflicts_Table)
+        Admin_Interface.setTabOrder(self.Create_Asset_Num_Field, self.Resolve_Display_Conflicts_Table)
         Admin_Interface.setTabOrder(self.Resolve_Display_Conflicts_Table, self.pushButton)
 
     def retranslateUi(self, Admin_Interface):
@@ -854,11 +999,10 @@ class Ui_Admin_Interface(object):
         self.Home_Welcome_Message.setText(_translate("Admin_Interface", "Welcome to Admin Access"))
         self.label.setText(_translate("Admin_Interface", "Select Tabs Above To Navigate"))
         self.Home_ChangePassword_Button.setText(_translate("Admin_Interface", "Change Password"))
-        self.Home_Force_Sync_Button.setText(_translate("Admin_Interface", "Sync with Central"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Home_Tab), _translate("Admin_Interface", "Home"))
         self.Search_SearchAsset_Query_Button.setText(_translate("Admin_Interface", "Search"))
         self.Search_Reset_Fields_Button.setText(_translate("Admin_Interface", "Reset Filters"))
-        self.Search_Asset_Num_From_Label.setText(_translate("Admin_Interface", "Asset Numbers:"))
+        self.Search_Asset_Num_From_Label.setText(_translate("Admin_Interface", "Asset ID(s):"))
         self.Search_Datetime_From.setDisplayFormat(_translate("Admin_Interface", "MMM d yyyy"))
         self.Search_Datetime_To.setDisplayFormat(_translate("Admin_Interface", "MMM d yyyy"))
         self.Search_Employee_ID_Label.setText(_translate("Admin_Interface", "Employee ID:"))
@@ -880,17 +1024,21 @@ class Ui_Admin_Interface(object):
         self.Search_Month_by_Month_Label.setText(_translate("Admin_Interface", "Month by Month:"))
         self.Search_Display_Results_Table.setSortingEnabled(True)
         item = self.Search_Display_Results_Table.horizontalHeaderItem(0)
-        item.setText(_translate("Admin_Interface", "Asset#"))
+        item.setText(_translate("Admin_Interface", "Asset ID"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(1)
         item.setText(_translate("Admin_Interface", "Employee ID"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(2)
         item.setText(_translate("Admin_Interface", "Status"))
         item = self.Search_Display_Results_Table.horizontalHeaderItem(3)
         item.setText(_translate("Admin_Interface", "Timestamp"))
+        self.Search_Display_Help_Button.setText(_translate("Admin_Interface", "Help"))
         self.Search_Print_PDF_Button.setText(_translate("Admin_Interface", "Print to PDF"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Search_Tab), _translate("Admin_Interface", "Search"))
-        self.Edit_Prompt1_Label.setText(_translate("Admin_Interface", "Enter Asset # to search for existing asset"))
-        self.Edit_Prompt2_Label.setText(_translate("Admin_Interface", "Edit fields then click commit to change in local database"))
+        self.Edit_Assign_To_Label.setText(_translate("Admin_Interface", "Assign To:"))
+        self.Edit_Clear_Button.setText(_translate("Admin_Interface", "Clear"))
+        self.Edit_Commit_Edits_Button.setText(_translate("Admin_Interface", "Commit Edits"))
+        self.Edit_Update_Status_Label.setText(_translate("Admin_Interface", "Update Status:"))
+        self.Edit_Asset_Label.setText(_translate("Admin_Interface", "Asset ID:"))
         self.Edit_Update_Status_Dropdown.setItemText(1, _translate("Admin_Interface", "Checked In"))
         self.Edit_Update_Status_Dropdown.setItemText(2, _translate("Admin_Interface", "Checked Out"))
         self.Edit_Update_Status_Dropdown.setItemText(3, _translate("Admin_Interface", "In Repair"))
@@ -898,21 +1046,22 @@ class Ui_Admin_Interface(object):
         self.Edit_Update_Status_Dropdown.setItemText(5, _translate("Admin_Interface", "Broken"))
         self.Edit_Update_Status_Dropdown.setItemText(6, _translate("Admin_Interface", "New Item"))
         self.Edit_Update_Status_Dropdown.setItemText(7, _translate("Admin_Interface", "New employee"))
-        self.Edit_Assign_To_Label.setText(_translate("Admin_Interface", "Assign To:"))
-        self.Edit_Clear_Button.setText(_translate("Admin_Interface", "Clear"))
-        self.Edit_Commit_Edits_Button.setText(_translate("Admin_Interface", "Commit Edits"))
-        self.Edit_Update_Status_Label.setText(_translate("Admin_Interface", "Update Status:"))
-        self.Edit_Asset_Label.setText(_translate("Admin_Interface", "Asset #:"))
+        self.Edit_Display_Help_Button.setText(_translate("Admin_Interface", "Help"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Edit_Tab), _translate("Admin_Interface", "Edit"))
-        self.Create_Prompt_Label.setText(_translate("Admin_Interface", "Enter asset info, then confirm new entry in local database"))
         self.Create_Clear_Fields_Button.setText(_translate("Admin_Interface", "Clear Fields"))
-        self.Create_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Confirm Entry"))
+        self.Create_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Enter"))
         self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "Import Employees from .xlsx file"))
         self.Import_ImportAssets_Button.setText(_translate("Admin_Interface", "Import Assets from .xlsx file"))
-        self.Create_Asset_Description_Label.setText(_translate("Admin_Interface", "Asset Description:"))
-        self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset #:"))
-        self.Create_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
+        self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset ID:"))
+        self.Create_Display_Help_Button.setText(_translate("Admin_Interface", "Help"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Create_Tab), _translate("Admin_Interface", "Create"))
+        self.AssignTag_Clear_Fields_Button.setText(_translate("Admin_Interface", "Clear Fields"))
+        self.AssignTag_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Assign Tag to Asset"))
+        self.AssignTag_Remove_Tag_Button.setText(_translate("Admin_Interface", "Remove Tag from Asset"))
+        self.AssignTag_RFID_Tag_Label.setText(_translate("Admin_Interface", "RFID Tag #:"))
+        self.AssignTag_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset ID:"))
+        self.AssignTag_Display_Help_Button.setText(_translate("Admin_Interface", "Help"))
+        self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Assign_Tag_Tab), _translate("Admin_Interface", "Assign Tag"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(0)
         item.setText(_translate("Admin_Interface", "Asset #"))
         item = self.Resolve_Display_Conflicts_Table.horizontalHeaderItem(1)
