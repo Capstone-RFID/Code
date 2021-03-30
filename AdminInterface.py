@@ -111,7 +111,6 @@ class Admin_Interface(QWidget):
 
         #Stop user from editing tables
         self.ui.Search_Display_Results_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.ui.Resolve_Display_Conflicts_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         # ****************************************Private Var(s)*********************************
         self.userLoggedIn = ""
 
@@ -1647,8 +1646,16 @@ class changePassword(QWidget):
         super(changePassword, self).__init__(parent)
         self.ui = Ui_PasswordChangeDialog()
         self.ui.setupUi(self)
-        self.ui.ok.released.connect(self.okButtonClicked)
-        #self.ui.lineEdit.setEchoMode(QLineEdit.Password)
+
+        # self.ui.CurrentPassword_Field.returnPressed.connect(self.okButtonClicked())
+        # self.ui.NewPassword_Field.returnPressed.connect(self.okButtonClicked())
+        # self.ui.ConfirmPassword_Field.returnPressed.connect(self.okButtonClicked())
+        self.ui.ok.clicked.connect(self.okButtonClicked)
+        self.ui.cancel.clicked.connect(self.cancelButtonClicked)
+
+        self.ui.CurrentPassword_Field.setEchoMode(QLineEdit.Password)
+        self.ui.NewPassword_Field.setEchoMode(QLineEdit.Password)
+        self.ui.ConfirmPassword_Field.setEchoMode(QLineEdit.Password)
         self.qm = QtWidgets.QMessageBox()
         self.userLoggedIn = ''
 
@@ -1663,8 +1670,6 @@ class changePassword(QWidget):
 
         NewPasswordValid = QtGui.QRegExpValidator(rPWFields, self.ui.ConfirmPassword_Field)
         self.ui.ConfirmPassword_Field.setValidator(NewPasswordValid)
-
-
     # setup the password and and the conditions of correct and wrong password in this method
     def okButtonClicked(self):
         try:
@@ -1750,8 +1755,25 @@ class changePassword(QWidget):
         try:
             self.userLoggedIn = userLoggedIn
             self.show()
+            self.ui.CurrentPassword_Field.setText('')
+            self.ui.NewPassword_Field.setText('')
+            self.ui.ConfirmPassword_Field.setText('')
+
             ETEK_log.info(
-                'Admin logged in as employee ID ' + self.userLoggedIn + ' opened the change password dialog from the home tab')
+                'Admin logged in as employee ID ' + self.userLoggedIn + ' opened the change password window from the home tab')
         except:
             ETEK_log.error('error occurred inside the "changePassword" class in the "open" method')
             self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, open method")
+
+    def cancelButtonClicked(self):
+        try:
+            self.ui.CurrentPassword_Field.setText('')
+            self.ui.NewPassword_Field.setText('')
+            self.ui.ConfirmPassword_Field.setText('')
+            self.close()
+            ETEK_log.info(
+                'Admin logged in as employee ID ' + self.userLoggedIn + ' closed the change password window from the home tab')
+        except:
+            ETEK_log.error('error occurred inside the "changePassword" class in the "close" method')
+            self.qm.critical(self, 'Exception thrown',
+                             "An exception was thrown in the passwordChangeWindow class, close method")
