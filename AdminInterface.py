@@ -1642,7 +1642,7 @@ class Admin_Interface(QWidget):
         self.cnxn.commit()
 
 
-class changePassword(QtWidgets.QDialog):
+class changePassword(QWidget):
     def __init__(self, parent=None):
         super(changePassword, self).__init__(parent)
         self.ui = Ui_PasswordChangeDialog()

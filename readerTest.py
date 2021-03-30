@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import *
 
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
-from AdminInterface import Admin_Interface, ETEK_log
+from AdminInterface import Admin_Interface, ETEK_log, changePassword
 
 import re
 

@@ -1184,16 +1184,6 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
              <string>Broken</string>
             </property>
            </item>
-           <item>
-            <property name="text">
-             <string>New Item</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>New employee</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="9" column="0">
@@ -1954,54 +1944,6 @@ QPushButton#AssignTag_Display_Help_Button:pressed {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="Resolve_Tab">
-      <attribute name="title">
-       <string>Resolve</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_12">
-       <item>
-        <widget class="QTableWidget" name="Resolve_Display_Conflicts_Table">
-         <column>
-          <property name="text">
-           <string>Asset #</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>RFID #</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Employee ID</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Date checked out</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Date checked in</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Conflict Msg</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Conflict Details</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
   </layout>
@@ -2016,8 +1958,6 @@ QPushButton#AssignTag_Display_Help_Button:pressed {
   <tabstop>Search_Print_PDF_Button</tabstop>
   <tabstop>Edit_Asset_Field</tabstop>
   <tabstop>Create_Asset_Num_Field</tabstop>
-  <tabstop>Resolve_Display_Conflicts_Table</tabstop>
-  <tabstop>pushButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
