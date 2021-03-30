@@ -1668,15 +1668,20 @@ class changePassword(QtWidgets.QDialog):
     # setup the password and and the conditions of correct and wrong password in this method
     def okButtonClicked(self):
         try:
+            BlankFieldCheckBoolFlag = (self.ui.CurrentPassword_Field.text() != '' and self.ui.NewPassword_Field.text() != '' and self.ui.ConfirmPassword_Field.text() != '')
             ETEK_log.info(
                 'Admin logged in as employee ID ' + self.userLoggedIn + ' clicked the ok button')
 
             #if the old password entered is correct, go ahead and write new password to existing config file
-            if self.oldPasswordCheck():
-                if self.confirmNewPassword():
-                    self.recordNewPasswordHash()
+            if BlankFieldCheckBoolFlag:
+                if self.oldPasswordCheck():
+                    if self.confirmNewPassword():
+                        self.recordNewPasswordHash()
+                else:
+                    self.qm.warning(self, 'Invalid Password', "Current password does not match what was entered, please check spelling and try again")
             else:
-                self.qm.warning("Current password does not match what was entered, please check spelling and try again")
+                self.qm.warning(self, 'Blank Fields',
+                                "Please make sure all fields are filled and try again")
 
         except:
             ETEK_log.error('error occurred inside the "changePassword" class in the "okButtonClicked" method')
