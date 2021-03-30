@@ -1652,9 +1652,24 @@ class changePassword(QtWidgets.QDialog):
         self.qm = QtWidgets.QMessageBox()
         self.userLoggedIn = ''
 
+        #Validators
+        rPWFields = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
+        CurrentPasswordValid = QtGui.QRegExpValidator(rPWFields, self.ui.CurrentPassword_Field)
+        self.ui.CurrentPassword_Field.setValidator(CurrentPasswordValid)
+
+        NewPasswordValid = QtGui.QRegExpValidator(rPWFields, self.ui.NewPassword_Field)
+        self.ui.NewPassword_Field.setValidator(NewPasswordValid)
+
+        NewPasswordValid = QtGui.QRegExpValidator(rPWFields, self.ui.ConfirmPassword_Field)
+        self.ui.ConfirmPassword_Field.setValidator(NewPasswordValid)
+
+
     # setup the password and and the conditions of correct and wrong password in this method
     def okButtonClicked(self):
         try:
+            ETEK_log.info(
+                'Admin logged in as employee ID ' + self.userLoggedIn + ' clicked the ok button')
+
             #if the old password entered is correct, go ahead and write new password to existing config file
             if self.oldPasswordCheck():
                 if self.confirmNewPassword():
@@ -1663,17 +1678,24 @@ class changePassword(QtWidgets.QDialog):
                 self.qm.warning("Current password does not match what was entered, please check spelling and try again")
 
         except:
+            ETEK_log.error('error occurred inside the "changePassword" class in the "okButtonClicked" method')
             self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, okButtonClicked method")
+
 
     def confirmNewPassword(self):
         try:
             if(self.ui.NewPassword_Field.text() == self.ui.ConfirmPassword_Field.text()):
+                ETEK_log.info(
+                    'Admin logged in as employee ID ' + self.userLoggedIn + ' entered a new password that matched what was in both boxes')
                 return True
             else:
+                ETEK_log.info(
+                    'Admin logged in as employee ID ' + self.userLoggedIn + ' entered a new password that did not match what was in both boxes')
                 self.qm.warning(self, 'New password does not match',
                                 "The new password does not match what was entered in the confirm field, please check spelling and try again")
                 return False
         except:
+            ETEK_log.error('error occurred inside the "changePassword" class in the "confirmNewPassword" method')
             self.qm.critical(self, 'Exception thrown',
                              "An exception was thrown in the passwordChangeWindow class, confirmNewPassword method")
 
@@ -1686,10 +1708,18 @@ class changePassword(QtWidgets.QDialog):
             config['password']['pass'] = hashpass;
             with open('config.ini', 'w') as configfile:
                 config.write(configfile)
+            ETEK_log.info('Admin logged in as employee ID ' + self.userLoggedIn + ' changed the application launch password')
+            self.qm.information(self,'Password Change Successful', 'New password has been sucessfully changed')
+            self.ui.NewPassword_Field.setText('')
+            self.ui.CurrentPassword_Field.setText('')
+            self.ui.ConfirmPassword_Field.setText('')
+
 
         except:
+            ETEK_log.error('error occurred inside the "changePassword" class in the "recordNewPasswordHash" method')
             self.qm.critical(self, 'Exception thrown',
                              "An exception was thrown in the passwordChangeWindow class, recordNewPasswordHash method")
+
     def oldPasswordCheck(self):
         try:
             OldPW = self.ui.CurrentPassword_Field.text().encode('utf-8')
@@ -1698,16 +1728,24 @@ class changePassword(QtWidgets.QDialog):
             config.read('config.ini')
             storedPass = config.get('password', 'pass')
             if hashpass == storedPass:  # password
-                print('You got the current PW')
+                ETEK_log.info(
+                    'Admin logged in as employee ID ' + self.userLoggedIn + ' entered current password into change password dialog')
                 return True
+
             else:
+                ETEK_log.info(
+                    'Admin logged in as employee ID ' + self.userLoggedIn + ' entered wrong password into change password dialog')
                 return False
-                print('Wrong Password')
+
         except:
+            ETEK_log.error('error occurred inside the "changePassword" class in the "oldPasswordCheck" method')
             self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, oldPasswordCheck method")
     def open(self,userLoggedIn):
         try:
             self.userLoggedIn = userLoggedIn
             self.show()
+            ETEK_log.info(
+                'Admin logged in as employee ID ' + self.userLoggedIn + ' opened the change password dialog from the home tab')
         except:
+            ETEK_log.error('error occurred inside the "changePassword" class in the "open" method')
             self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, open method")
