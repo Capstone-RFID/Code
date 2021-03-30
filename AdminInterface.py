@@ -249,7 +249,7 @@ class Admin_Interface(QWidget):
     def home_changePasswordButtonClicked(self):
 
         print("Change Password Button Clicked")
-        self.ChangePasswordWindow.open()
+        self.ChangePasswordWindow.open(self.userLoggedIn)
 
 
 
@@ -1647,24 +1647,67 @@ class changePassword(QtWidgets.QDialog):
         super(changePassword, self).__init__(parent)
         self.ui = Ui_PasswordChangeDialog()
         self.ui.setupUi(self)
-        #self.ui.ok.released.connect(self.handleLogin)
+        self.ui.ok.released.connect(self.okButtonClicked)
         #self.ui.lineEdit.setEchoMode(QLineEdit.Password)
         self.qm = QtWidgets.QMessageBox()
+        self.userLoggedIn = ''
 
     # setup the password and and the conditions of correct and wrong password in this method
-    def handleLogin(self):
-        password = self.ui.lineEdit.text().encode('utf-8')
-        hashpass = hashlib.sha256(password).hexdigest()
-        config = ConfigParser()
-        config.read('config.ini')
-        storedPass= config.get('password', 'pass')
-        if hashpass == storedPass:  # password
-            self.accept()
-        else:
-            QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
-            self.rejected()
-    def open(self):
+    def okButtonClicked(self):
         try:
+            #if the old password entered is correct, go ahead and write new password to existing config file
+            if self.oldPasswordCheck():
+                if self.confirmNewPassword():
+                    self.recordNewPasswordHash()
+            else:
+                self.qm.warning("Current password does not match what was entered, please check spelling and try again")
+
+        except:
+            self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, okButtonClicked method")
+
+    def confirmNewPassword(self):
+        try:
+            if(self.ui.NewPassword_Field.text() == self.ui.ConfirmPassword_Field.text()):
+                return True
+            else:
+                self.qm.warning(self, 'New password does not match',
+                                "The new password does not match what was entered in the confirm field, please check spelling and try again")
+                return False
+        except:
+            self.qm.critical(self, 'Exception thrown',
+                             "An exception was thrown in the passwordChangeWindow class, confirmNewPassword method")
+
+    def recordNewPasswordHash(self):
+        try:
+            NewPW = self.ui.NewPassword_Field.text().encode('utf-8')
+            hashpass = hashlib.sha256(NewPW).hexdigest()
+            config = ConfigParser()
+            config.read('config.ini')
+            config['password']['pass'] = hashpass;
+            with open('config.ini', 'w') as configfile:
+                config.write(configfile)
+
+        except:
+            self.qm.critical(self, 'Exception thrown',
+                             "An exception was thrown in the passwordChangeWindow class, recordNewPasswordHash method")
+    def oldPasswordCheck(self):
+        try:
+            OldPW = self.ui.CurrentPassword_Field.text().encode('utf-8')
+            hashpass = hashlib.sha256(OldPW).hexdigest()
+            config = ConfigParser()
+            config.read('config.ini')
+            storedPass = config.get('password', 'pass')
+            if hashpass == storedPass:  # password
+                print('You got the current PW')
+                return True
+            else:
+                return False
+                print('Wrong Password')
+        except:
+            self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, oldPasswordCheck method")
+    def open(self,userLoggedIn):
+        try:
+            self.userLoggedIn = userLoggedIn
             self.show()
         except:
-            self.qm.critical("An exception was thrown in the passwordChangeWindow class, open method")
+            self.qm.critical(self,'Exception thrown',"An exception was thrown in the passwordChangeWindow class, open method")
