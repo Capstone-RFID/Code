@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import *
 
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
-from AdminInterface import Admin_Interface
+from AdminInterface import Admin_Interface, ETEK_log
 
 import re
 
@@ -140,7 +140,9 @@ class passwordWindow(QtWidgets.QDialog):
             self.accept()
         else:
             QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
+            ETEK_log.info('Incorrect password entered. Application not run.')
             self.rejected()
+
 
 
 # ****************************Main program window *********************#
@@ -206,8 +208,10 @@ class mainWindow(QWidget):
             self.qm.setFixedSize(3000, 5000)
             self.qm.information(self, 'Help',
                                 '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press 'Mark Broken' to mark item as broken\n   (3b) Press 'Remove Item' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
+            ETEK_log.info('Help Button pressed.')
         except:
             self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: help_button')
 
     def alreadyCheckedOut(self, assetID):
         status_check_query = '''SELECT TOP(1)
@@ -253,9 +257,12 @@ class mainWindow(QWidget):
         try:
             print('clicked admin')
             self.admin.openAdmin(server, database,self.ui.Employee_ID_Input.text())
+            ETEK_log.info('Clicked admin window button')
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: adminButtonClicked')
+
 
     ##move asset from one table to another
     def move_action(self):
@@ -273,6 +280,7 @@ class mainWindow(QWidget):
                                 self.ui.New_Item_List.setItem(targetRow, column, item)
                             self.ui.Existing_Item_list.removeRow(row)
                     self.ui.Mark_Button.setEnabled(True)
+                    ETEK_log.info('Move items arrow pressed.')
                 else:
                     self.qm.information(self, 'Selection Required', "Please select an asset to move first")
                     return
@@ -281,6 +289,7 @@ class mainWindow(QWidget):
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: move_action')
 
 
 
@@ -302,12 +311,14 @@ class mainWindow(QWidget):
                     del self.markedList[p]
 
                 self.ui.New_Item_List.removeRow(row)
+                ETEK_log.info('Remove action pressed.')
             else:
                 self.qm.information(self, 'Selection Required', "Please select an asset to remove first")
                 return
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: remove_action')
 
     def Employee_enter(self):
         try:
@@ -323,6 +334,7 @@ class mainWindow(QWidget):
                 employeeName = getEmployeeName(self.ui.Employee_ID_Input.text())
                 self.ui.Name_Label.setText(str(employeeName))
                 self.ui.Employee_ID_Enter.setStyleSheet("color : rgba(0, 0, 0, 50%)")
+                ETEK_log.info('User:(' + self.ui.Employee_ID_Input.text() + ') Logged in successfully.')
             else:
                 self.qm.information(self, 'Input Required', "Enter a valid Employee ID before continuing")
                 self.ui.Employee_ID_Input.clear()
@@ -330,6 +342,7 @@ class mainWindow(QWidget):
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: Employee_enter')
 
     def mark_assets(self):
         try:
@@ -349,6 +362,7 @@ class mainWindow(QWidget):
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: mark_assets')
 
     def clear_lists(self):
         self.ui.New_Item_List.setRowCount(0)
@@ -375,6 +389,7 @@ class mainWindow(QWidget):
         self.ui.Remove_Button.setEnabled(False)
         self.error_count = 0
         self.ui.Employee_ID_Enter.setStyleSheet("color : rgba(255, 255, 255,255)")
+        ETEK_log.info('Clear lists.')
 
         self.admin.close()
         return
@@ -384,15 +399,18 @@ class mainWindow(QWidget):
             if self.ui.Check_In_Box.isChecked():
                 print('Check IN action')
                 self.check_in_action()
+                ETEK_log.info('Check IN action pressed')
             elif self.ui.Check_Out_Box.isChecked():
                 print('Check OUT action')
                 self.check_out_action()
+                ETEK_log.info('Check OUT action pressed')
             else:
                 self.confirmation_msg([])
             self.clear_lists()
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: done_button_clicked')
 
 
     def cancel_button_clicked(self):
@@ -402,8 +420,10 @@ class mainWindow(QWidget):
             self.ui.Asset_ID_Input.clear()
             self.ui.Asset_ID_Input.setEnabled(False)
             self.clear_lists()
+            ETEK_log.info('Cancel Button Clicked.')
         except:
             self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: cancel_button_clicked')
 
     def timer_timeout(self):
         print("timer running")
@@ -470,6 +490,7 @@ class mainWindow(QWidget):
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
+            ETEK_log.error('Error occurred in function: asset_enter_action')
 
     def rfid_insert(self, asset):
         self.error_count += 1
@@ -603,6 +624,7 @@ if __name__ == "__main__":
         window = mainWindow()
         work = WorkerThread()
         window.show()
+        ETEK_log.info('Application login successful.')
         logging.getLogger().setLevel(logging.INFO)
         factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
         factory.addTagReportCallback(work.cb)
@@ -616,6 +638,7 @@ if __name__ == "__main__":
                                     SERVER=' + server + ';\
                                       DATABASE=' + database + ';\
                                     Trusted_Connection=yes;')
+        ETEK_log.info('Connected to Server ' + server + ' and ' + database)
 
         # create the connection cursor
         cursor = cnxn.cursor()
