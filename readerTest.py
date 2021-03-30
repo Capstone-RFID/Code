@@ -229,10 +229,8 @@ class mainWindow(QWidget):
         elif state[1] == "1":
             flag = "gtg"
         elif state[1] == "2":  ##if asset checked out
-
             if state[0] != self.ui.Employee_ID_Input.text():  ## if asset assigned to employee is not  the current employee
                 # add name to this dialog box
-
                 response = self.qm.question(self, 'Input Required',
                                             "Asset " + assetID + " is currently assigned to Employee " + state[
                                                 0] + "\n\nDo you still wish to proceed?", self.qm.Yes | self.qm.No)
@@ -247,10 +245,19 @@ class mainWindow(QWidget):
                 self.qm.warning(self, 'Notice', "You already have asset " + assetID + " assigned to you")
                 self.RemovedItems.append(assetID)
                 flag = "discard"
+
         elif state[1] == "5" and self.ui.Check_In_Box.isChecked():
             flag = "brokenCheckIn"
         elif state[1] == "5" and self.ui.Check_Out_Box.isChecked():
             flag = "broken"
+        elif state[1] == "3" and self.ui.Check_Out_Box.isChecked():
+            flag = "InRepair"
+        elif state[1] == "3" and self.ui.Check_In_Box.isChecked():
+            flag = "RepairCheckIn"
+        elif state[1] == "4" and self.ui.Check_Out_Box.isChecked():
+            flag = "Retired"
+        elif state[1] == "4" and self.ui.Check_In_Box.isChecked():
+            flag = "RetiredCheckIn"
         return flag
 
     def adminButtonClicked(self):
@@ -480,6 +487,20 @@ class mainWindow(QWidget):
                                 row = self.ui.New_Item_List.rowCount() - 1
                                 self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
                                 self.ui.Asset_ID_Input.clear()
+                        elif flag == "InRepair":
+                            self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is in Repair. Do NOT use.")
+                            self.ui.Asset_ID_Input.clear()
+                        elif flag == "RepairCheckIn":
+                            self.qm.critical(self, 'Critical Issue', "Please contact the admin, this Asset " + Asset + " is in Repair. Do NOT use.")
+                            self.ui.Asset_ID_Input.clear()
+                        elif flag == "RetiredCheckIn":
+                            self.qm.critical(self, 'Critical Issue', "Please contact the admin, this Asset " + Asset + " is retired from field. Do NOT use.")
+                            self.ui.Asset_ID_Input.clear()
+
+                        elif flag == "Retired":
+                            self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is Retired. Do NOT use.")
+                            self.ui.Asset_ID_Input.clear()
+
                     else:
                         self.qm.warning(self, 'Check Asset',
                                         "Asset " + Asset + " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
