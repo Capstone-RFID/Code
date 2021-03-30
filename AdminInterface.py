@@ -1653,7 +1653,8 @@ class changePassword(QtWidgets.QDialog):
         self.userLoggedIn = ''
 
         #Validators
-        rPWFields = QRegExp("([Ee][0-9]{7}|[4][0-9]{6})")
+        rPWFields = QRegExp("\S*") #Reject whitespace
+
         CurrentPasswordValid = QtGui.QRegExpValidator(rPWFields, self.ui.CurrentPassword_Field)
         self.ui.CurrentPassword_Field.setValidator(CurrentPasswordValid)
 
