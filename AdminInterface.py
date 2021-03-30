@@ -606,10 +606,7 @@ class Admin_Interface(QWidget):
                     AssetStatus_Dropdown = '4'
                 elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken':
                     AssetStatus_Dropdown = '5'
-                elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Item':
-                    AssetStatus_Dropdown = '6'
-                elif self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee':
-                    AssetStatus_Dropdown = '7'
+
 
                 #This is a big logical or statement so that we don't get events w/ employee numbers that are associated
                 #with assets that are in repair, retire, broken, a new item the introduction of a new employee from the
@@ -621,31 +618,31 @@ class Admin_Interface(QWidget):
                 #This should not commit w/ any employee ID if the status is set to Retired, Broken, In Repair, New Item or New Employee
                 #If it's not any of those listed and the Assign To field isn't blank, then commit all three into the database
                 if not invalidEmployeeStatusFlag:
-                    response = self.qm.question(self, 'Input Required',
-                                                'Do you want to check out or check in this asset as your logged in admin employee ID?',
-                                                self.qm.Yes | self.qm.No)
                     # Employee field is empty and admin wants to sign this asset out
-                    if (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() == ''):
-                        Edit_Employee = self.userLoggedIn
-                        self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
+                    if self.ui.Edit_AssignTo_Field.text() == '':
+                        response = self.qm.question(self, 'Input Required',
+                                                    'Do you want to check out or check in this asset as your logged in admin employee ID?',
+                                                    self.qm.Yes | self.qm.No)
+                        if response == self.qm.Yes:
+                            Edit_Employee = self.userLoggedIn
+                            self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
 
-                        self.ui.Edit_UI_Message_Prompt.setText('')
-                        EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
-                        self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
-                        ETEK_log.info('Asset Edits Committed to Database')
+                            self.ui.Edit_UI_Message_Prompt.setText('')
+                            EmployeeName = (self.edit_FetchNameViaID(Edit_Employee))
+                            self.qm.information(self, 'Edit Confirmation', 'Asset ' + Edit_Asset +' was assigned to '+ EmployeeName[0] + ' (Employee ID: ' + Edit_Employee +') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() +'" (status code ' + AssetStatus_Dropdown +')')
+                            ETEK_log.info('Asset Edits Committed to Database')
 
-                        # clear fields after commit
-                        self.ui.Edit_AssignTo_Field.setText('')
-                        self.ui.Edit_Asset_Field.setText('')
-                        self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
-                        self.ui.Edit_UI_Message_Name_From_ID.setText('')
+                            # clear fields after commit
+                            self.ui.Edit_AssignTo_Field.setText('')
+                            self.ui.Edit_Asset_Field.setText('')
+                            self.ui.Edit_Update_Status_Dropdown.setCurrentIndex(0)
+                            self.ui.Edit_UI_Message_Name_From_ID.setText('')
                     # Employee field is empty and admin does not want to sign this asset out
-
-                    elif (response == self.qm.No) and self.ui.Edit_AssignTo_Field.text() == '':
-                        self.qm.warning(self, 'Invalid commit','Please fill in the "Assign To" field if you are not checking an asset in/out')
+                        elif response == self.qm.No:
+                            self.qm.warning(self, 'Invalid commit','Please fill in the "Assign To" field if you are not checking an asset in/out')
 
                     # Employee field is not empty and admin does not want to sign this asset out
-                    elif (response == self.qm.No) and self.ui.Edit_AssignTo_Field.text() != '':
+                    elif self.ui.Edit_AssignTo_Field.text() != '':
                         Edit_Employee = self.ui.Edit_AssignTo_Field.text()
                         self.edit_AssignTo_commitSQL(str(Edit_Employee), str(Edit_Asset),str(AssetStatus_Dropdown))
                         self.ui.Edit_UI_Message_Prompt.setText('')
@@ -655,8 +652,8 @@ class Admin_Interface(QWidget):
                                                 0] + ' (Employee ID: ' + Edit_Employee + ') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
                         ETEK_log.info('Asset Edits Committed to Database')
                     # Employee field is not empty and admin does want to sign this asset out
-                    elif (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() != ''):
-                        self.qm.warning(self, 'Invalid commit','Please leave the "Assign To" field blank if you are checking an asset in/out')
+                    # elif (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() != ''):
+                    #     self.qm.warning(self, 'Invalid commit','Please leave the "Assign To" field blank if you are checking an asset in/out')
 
                 # If it's not any of those listed and the Assign To field isn't blank, then commit all three into the
                 else:
@@ -1313,10 +1310,10 @@ class Admin_Interface(QWidget):
             self.ui.Edit_Display_Results_Table.insertRow(lastrow)
 
             # Show items on row in interface
-            self.ui.Edit_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
-            self.ui.Edit_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
-            self.ui.Edit_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][1])))
-            self.ui.Edit_Display_Results_Table.setItem(lastrow, 4, QTableWidgetItem(str(EntryList[i][4])))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][2]))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][1]))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(EntryList[i][0])))
+            self.ui.Edit_Display_Results_Table.setItem(lastrow, 4, QTableWidgetItem(str(EntryList[i][3])))
 
     def search_PopulateTable(self, EntryList):
         try:
@@ -1330,7 +1327,7 @@ class Admin_Interface(QWidget):
                 lastrow = self.ui.Search_Display_Results_Table.rowCount()
                 self.ui.Search_Display_Results_Table.insertRow(lastrow)
 
-                AssetStatus = EntryList[i][4]
+                AssetStatus = EntryList[i][3]
                 if AssetStatus == '1':
                     AssetStatus_Words = 'Checked In'
                 elif AssetStatus == '2':
@@ -1341,15 +1338,12 @@ class Admin_Interface(QWidget):
                     AssetStatus_Words = 'Retired'
                 if AssetStatus == '5':
                     AssetStatus_Words = 'Broken'
-                elif AssetStatus == '6':
-                    AssetStatus_Words = 'New Item'
-                elif AssetStatus == '7':
-                    AssetStatus_Words = 'New Employee'
+
 
                 # Show items on row in interface
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][3]))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][2]))
-                self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(EntryList[i][1])))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 0, QTableWidgetItem(EntryList[i][2]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 1, QTableWidgetItem(EntryList[i][1]))
+                self.ui.Search_Display_Results_Table.setItem(lastrow, 3, QTableWidgetItem(str(EntryList[i][0])))
                 self.ui.Search_Display_Results_Table.setItem(lastrow, 2, QTableWidgetItem(str(AssetStatus_Words)))
         except:
             self.qm.critical(self, 'Notice', 'An exception was thrown while populating the search tab table')
@@ -1501,7 +1495,7 @@ class Admin_Interface(QWidget):
     def import_commitAssetsToSQL(self, AssetID, RFID_Tag):
         insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
         # Next two lines commit the edits present in the table
-        self.cursor.execute(insert_event_query, str(AssetID), '6')
+        self.cursor.execute(insert_event_query, str(AssetID), '1')
 
         insert_event_query = ''' INSERT INTO [Asset Table] (AssetID) VALUES(?);'''
         # Next two lines commit the edits present in the table
