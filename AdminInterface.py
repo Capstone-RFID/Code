@@ -27,17 +27,15 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 from Admin_Level2_Access import Ui_Admin_Interface
+from password_change_prompt import Ui_PasswordChangeDialog
 import sys
 
-from ScrollMessageBox import ScrollMessageBox
+import hashlib
 
 
 #For reading passwords
 from configparser import ConfigParser
-
-
 import openpyxl
-
 #for generating log text file for exception handling and timestamp of all user actions
 import logging
 #format log file to save as 'ETEK.log' and store date time and message of actions or errors
@@ -46,22 +44,18 @@ from logging.handlers import TimedRotatingFileHandler
 FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s", datefmt='%d-%b-%y %H:%M:%S')
 LOG_FILE = "ETEK.log"
 IMPORT_LOG_FILE = "IMPORT.log"
-
 def get_console_handler():
    console_handler = logging.StreamHandler(sys.stdout)
    console_handler.setFormatter(FORMATTER)
    return console_handler
-
 def get_file_handler():
    file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
    file_handler.setFormatter(FORMATTER)
    return file_handler
-
 def get_file_handler2():
    file_handler = TimedRotatingFileHandler(IMPORT_LOG_FILE, when='midnight')
    file_handler.setFormatter(FORMATTER)
    return file_handler
-
 def get_logger(logger_name):
    logger = logging.getLogger(logger_name)
    logger.setLevel(logging.DEBUG) # better to have too much log than not enough
@@ -70,7 +64,6 @@ def get_logger(logger_name):
    # with this pattern, it's rarely necessary to propagate the error up to parent
    logger.propagate = False
    return logger
-
 def get_logger2(logger_name):
    logger = logging.getLogger(logger_name)
    logger.setLevel(logging.DEBUG) # better to have too much log than not enough
@@ -79,18 +72,10 @@ def get_logger2(logger_name):
    # with this pattern, it's rarely necessary to propagate the error up to parent
    logger.propagate = False
    return logger
-
-
-
 # define global logger variable using the global current user ID
 CurrentUser = ''
-
 ETEK_log = get_logger('Admin Action' + CurrentUser)
 Import_log = get_logger2('Import')
-
-
-
-
 #*********************NOTES ON HOW TO USE THIS CLASS*************************
 #Should go without saying that this file needs to be in the same directory as your main
 #
@@ -113,12 +98,16 @@ Import_log = get_logger2('Import')
 
 #*********************END NOTES ON HOW TO USE THIS CLASS*************************
 
+
+
 class Admin_Interface(QWidget):
     def __init__(self):
         super(Admin_Interface, self).__init__()
         self.reactor = reactor
         self.ui = Ui_Admin_Interface()
         self.ui.setupUi(self)
+
+        self.ChangePasswordWindow = changePassword()
 
         #Stop user from editing tables
         self.ui.Search_Display_Results_Table.setEditTriggers(QAbstractItemView.NoEditTriggers)
@@ -169,12 +158,10 @@ class Admin_Interface(QWidget):
         self.ui.AssignTag_RFID_Tag_Field.setValidator(RFIDValid)
 
         self.ui.AssignTag_Asset_Num_Field.setValidator(SingleAssetValid)
-
-
         # ****************************************End of Validators*********************************
 
         # ****************************************Home Tab Button(s)*********************************
-        #self.ui.Home_Force_Sync_Button.clicked.connect(self.home_syncButtonClicked)  # sync button connected
+        self.ui.Home_ChangePassword_Button.clicked.connect(self.home_changePasswordButtonClicked)  # sync button connected
 
         #****************************************Search Tab Button(s)*********************************
         #self.ui.Search_SearchID_Query_Button.clicked.connect(self.search_searchIDButtonClicked)
@@ -211,7 +198,6 @@ class Admin_Interface(QWidget):
         self.qm.setFixedSize(3000, 5000)
         self.qm.information(self, 'Help',
                             'The search tab allows you to list records from the event log table in the local database\n\nUse/combine filters to find records that meet the criteria specified\n\nUsing the Date/Time filters allows you to set two dates and retrieve records from between those dates\n\nMonth by Month returns records from that month across all years in the database\n\nThe Employee and Asset ID(s) allow you to look for only the employees and assets specified\n\nTo search multiple assets at once, type in each asset ID seperated by a comma')
-
     def edit_helpButton(self):
 
         self.qm.setFixedSize(3000, 5000)
@@ -222,7 +208,6 @@ class Admin_Interface(QWidget):
         self.qm.setFixedSize(3000, 5000)
         self.qm.information(self, 'Help',
                             'The create tab is where you can enter new asset ID(s) into the local database by:\n\n1. Entering in the new Asset\n\n2. Making a .xlsx file in excel as in the user manual **insert page # here**\n\nYou can also add in new employee IDs into the database by making a .xlsx file in excel as in the user manual **insert page # here**\n\nIf you need to assign an RFID tag to an individual asset, please use the "Assign Tag" tab')
-
     def AssignTag_helpButton(self):
 
         self.qm.setFixedSize(3000, 5000)
@@ -260,11 +245,14 @@ class Admin_Interface(QWidget):
 
         except:
             ETEK_log.error('Unable to connect to Server ' + server + ' and ' + database + ' please check configuration file.')
-
-
     #****************************************Class Methods for Tab Button(s)*********************************
-    def home_syncButtonClicked(self):
-        print("Home Sync Button Clicked")
+    def home_changePasswordButtonClicked(self):
+
+        print("Change Password Button Clicked")
+        self.ChangePasswordWindow.open()
+
+
+
 
 
     def search_searchResetFieldsButtonClicked(self):
@@ -1654,3 +1642,29 @@ class Admin_Interface(QWidget):
         self.cnxn.commit()
 
 
+class changePassword(QtWidgets.QDialog):
+    def __init__(self, parent=None):
+        super(changePassword, self).__init__(parent)
+        self.ui = Ui_PasswordChangeDialog()
+        self.ui.setupUi(self)
+        #self.ui.ok.released.connect(self.handleLogin)
+        #self.ui.lineEdit.setEchoMode(QLineEdit.Password)
+        self.qm = QtWidgets.QMessageBox()
+
+    # setup the password and and the conditions of correct and wrong password in this method
+    def handleLogin(self):
+        password = self.ui.lineEdit.text().encode('utf-8')
+        hashpass = hashlib.sha256(password).hexdigest()
+        config = ConfigParser()
+        config.read('config.ini')
+        storedPass= config.get('password', 'pass')
+        if hashpass == storedPass:  # password
+            self.accept()
+        else:
+            QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
+            self.rejected()
+    def open(self):
+        try:
+            self.show()
+        except:
+            self.qm.critical("An exception was thrown in the passwordChangeWindow class, open method")
