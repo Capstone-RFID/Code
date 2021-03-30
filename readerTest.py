@@ -220,7 +220,7 @@ class mainWindow(QWidget):
                                 [Event Log Table]
                                 WHERE
                                 [Event Log Table].AssetID = (?)
-                                ORDER BY [Event Log Table].Entry DESC'''
+                                ORDER BY [Event Log Table].TimeStamp DESC'''
         cursor.execute(status_check_query, assetID)
         state = cursor.fetchone()
         flag = ""
@@ -575,22 +575,22 @@ class mainWindow(QWidget):
                             FROM
                             (
                             SELECT TOP(999999999999)
-                            [Event Log Table].Entry,[Event Log Table].AssetID,[Event Log Table].Status
+                            [Event Log Table].TimeStamp,[Event Log Table].AssetID,[Event Log Table].Status
                             FROM
                             [Event Log Table]
                             WHERE
                             [Event Log Table].EmployeeID = (?)
-                            ORDER BY [Event Log Table].Entry DESC
+                            ORDER BY [Event Log Table].TimeStamp DESC
                             )AS subquery
                             WHERE
-                            Entry in (Select max(Entry) FROM  (
+                            TimeStamp in (Select max(TimeStamp) FROM  (
                             SELECT TOP(999999999999)
-                            [Event Log Table].Entry,[Event Log Table].AssetID,[Event Log Table].Status
+                            [Event Log Table].TimeStamp,[Event Log Table].AssetID,[Event Log Table].Status
                             FROM
                             [Event Log Table]
                             WHERE
                             [Event Log Table].EmployeeID = (?)
-                            ORDER BY [Event Log Table].Entry DESC
+                            ORDER BY [Event Log Table].TimeStamp DESC
                             )AS subquery group by AssetID)
                             )AS final_result
                             WHERE
@@ -601,7 +601,7 @@ class mainWindow(QWidget):
                                 [Event Log Table]
                                 WHERE
                                 [Event Log Table].AssetID = (?)
-                                ORDER BY [Event Log Table].Entry DESC'''
+                                ORDER BY [Event Log Table].TimeStamp DESC'''
 
         cursor.execute(current_asset_query, str(emID), str(emID))
         for assets in cursor.fetchall():
