@@ -1519,12 +1519,13 @@ class Admin_Interface(QWidget):
     def AssignTag_removeButtonClicked(self):
         try:
             AssetID = self.ui.AssignTag_Asset_Num_Field.text()
-            RFID_Tag = self.RFIDTable_AssetCheck(AssetID)[1][0]
+
             if not (AssetID == ''):
                 # Asset does not exist
                 if self.Asset_Check(AssetID):
                     #The asset exists in the RFID table already (it has a tag assigned already)
                     if self.RFIDTable_AssetCheck(AssetID)[0]:
+                        RFID_Tag = self.RFIDTable_AssetCheck(AssetID)[1][0]
                         response = self.qm.question(self, 'Input Required',
                                                     'The asset ID " ' + AssetID + '"has the RFID tag "' +
                                                     self.RFIDTable_AssetCheck(AssetID)[1][0] + '" associated with it\n\n Please confirm that you want to remove this RFID tag association from this asset ID,',
