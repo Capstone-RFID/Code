@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Admin_Interface(object):
     def setupUi(self, Admin_Interface):
         Admin_Interface.setObjectName("Admin_Interface")
-        Admin_Interface.resize(819, 600)
+        Admin_Interface.resize(844, 600)
         Admin_Interface.setStyleSheet("QWidget#Admin_Interface{\n"
 "    background-color: #5a5c5e;\n"
 "}\n"
@@ -693,7 +693,8 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Create_Clear_Fields_Button.setMaximumSize(QtCore.QSize(242, 50))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -709,7 +710,8 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button.setObjectName("Create_Clear_Fields_Button")
         self.verticalLayout_8.addWidget(self.Create_Clear_Fields_Button)
         self.Create_Confirm_Entry_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Create_Confirm_Entry_Button.setMaximumSize(QtCore.QSize(280, 50))
         self.Create_Confirm_Entry_Button.setStyleSheet("QPushButton#Create_Confirm_Entry_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -727,7 +729,8 @@ class Ui_Admin_Interface(object):
         spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem18)
         self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Import_ImportEmployees_Button.setMaximumSize(QtCore.QSize(280, 50))
         self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -743,7 +746,8 @@ class Ui_Admin_Interface(object):
         self.Import_ImportEmployees_Button.setObjectName("Import_ImportEmployees_Button")
         self.verticalLayout_8.addWidget(self.Import_ImportEmployees_Button)
         self.Import_ImportAssets_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(242, 51))
+        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Import_ImportAssets_Button.setMaximumSize(QtCore.QSize(280, 50))
         self.Import_ImportAssets_Button.setStyleSheet("QPushButton#Import_ImportAssets_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -803,7 +807,7 @@ class Ui_Admin_Interface(object):
         sizePolicy.setHeightForWidth(self.Create_Display_Help_Button.sizePolicy().hasHeightForWidth())
         self.Create_Display_Help_Button.setSizePolicy(sizePolicy)
         self.Create_Display_Help_Button.setMinimumSize(QtCore.QSize(242, 50))
-        self.Create_Display_Help_Button.setMaximumSize(QtCore.QSize(100, 50))
+        self.Create_Display_Help_Button.setMaximumSize(QtCore.QSize(242, 50))
         self.Create_Display_Help_Button.setStyleSheet("QPushButton#Create_Display_Help_Button {\n"
 "background-color: #282c30;\n"
 "color: rgb(255, 255, 255);\n"
@@ -953,7 +957,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(0)
+        self.Admin_Select.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
         Admin_Interface.setTabOrder(self.Home_ChangePassword_Button, self.Search_Datetime_From)
         Admin_Interface.setTabOrder(self.Search_Datetime_From, self.Search_Datetime_To)
@@ -1019,8 +1023,8 @@ class Ui_Admin_Interface(object):
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Edit_Tab), _translate("Admin_Interface", "Edit"))
         self.Create_Clear_Fields_Button.setText(_translate("Admin_Interface", "Clear Fields"))
         self.Create_Confirm_Entry_Button.setText(_translate("Admin_Interface", "Enter"))
-        self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "Import Employees from .xlsx file"))
-        self.Import_ImportAssets_Button.setText(_translate("Admin_Interface", "Import Assets from .xlsx file"))
+        self.Import_ImportEmployees_Button.setText(_translate("Admin_Interface", "Import employees from file"))
+        self.Import_ImportAssets_Button.setText(_translate("Admin_Interface", "Import assets from file"))
         self.Create_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset ID:"))
         self.Create_Display_Help_Button.setText(_translate("Admin_Interface", "Help"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Create_Tab), _translate("Admin_Interface", "Create"))

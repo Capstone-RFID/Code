@@ -206,7 +206,7 @@ class Admin_Interface(QWidget):
 
         self.qm.setFixedSize(3000, 5000)
         self.qm.information(self, 'Help',
-                            'The create tab is where you can enter new asset ID(s) into the local database by:\n\n1. Entering in the new Asset\n\n2. Making a .xlsx file in excel as in the user manual **insert page # here**\n\nYou can also add in new employee IDs into the database by making a .xlsx file in excel as in the user manual **insert page # here**\n\nIf you need to assign an RFID tag to an individual asset, please use the "Assign Tag" tab')
+                            'The create tab is where you can enter new asset ID(s) into the local database by:\n\n1. Entering in the new Asset\n\n2. Making a .xlsx file in excel as in the user manual section "Import File Formats"\n\nYou can also add in new employee IDs into the database by making a .xlsx file in excel as in the user manual "Import File Formats"\n\nIf you need to assign an RFID tag to an individual asset, please use the "Assign Tag" tab')
     def AssignTag_helpButton(self):
 
         self.qm.setFixedSize(3000, 5000)
@@ -585,6 +585,8 @@ class Admin_Interface(QWidget):
 
         try:
             print('Edit Tab Commit Button Clicked')
+
+
             Edit_Asset = self.ui.Edit_Asset_Field.text()
             #If the assign to field is blank, then record the event as the admin logged in
             if self.ui.Edit_AssignTo_Field.text() == '':
@@ -608,13 +610,13 @@ class Admin_Interface(QWidget):
                     AssetStatus_Dropdown = '5'
 
 
-                #This is a big logical or statement so that we don't get events w/ employee numbers that are associated
-                #with assets that are in repair, retire, broken, a new item the introduction of a new employee from the
-                # edit tab.
-                # Made this into a flag for ease of reference
-                invalidEmployeeStatusFlag = (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Item') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Retired') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'In Repair')
+            #This is a big logical or statement so that we don't get events w/ employee numbers that are associated
+            #with assets that are in repair, retire, broken, a new item the introduction of a new employee from the
+            # edit tab.
+            # Made this into a flag for ease of reference
+            invalidEmployeeStatusFlag = (self.ui.Edit_Update_Status_Dropdown.currentText() == '') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Employee') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'New Item') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Retired') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'In Repair')
 
-
+            if (Edit_Asset != ''):
                 #This should not commit w/ any employee ID if the status is set to Retired, Broken, In Repair, New Item or New Employee
                 #If it's not any of those listed and the Assign To field isn't blank, then commit all three into the database
                 if not invalidEmployeeStatusFlag:
@@ -651,9 +653,6 @@ class Admin_Interface(QWidget):
                                             'Asset ' + Edit_Asset + ' was assigned to ' + EmployeeName[
                                                 0] + ' (Employee ID: ' + Edit_Employee + ') with the status: "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" (status code ' + AssetStatus_Dropdown + ')')
                         ETEK_log.info('Asset Edits Committed to Database')
-                    # Employee field is not empty and admin does want to sign this asset out
-                    # elif (response == self.qm.Yes) and (self.ui.Edit_AssignTo_Field.text() != ''):
-                    #     self.qm.warning(self, 'Invalid commit','Please leave the "Assign To" field blank if you are checking an asset in/out')
 
                 # If it's not any of those listed and the Assign To field isn't blank, then commit all three into the
                 else:
@@ -693,9 +692,12 @@ class Admin_Interface(QWidget):
 
 
 
-
             else:
-                if not self.Employee_ID_Check(Edit_Employee) and self.ui.Edit_Update_Status_Dropdown.currentText() != '':
+
+                if(Edit_Asset == ''):
+                    self.qm.warning(self, 'Blank asset field',
+                                    'Please enter an asset number before pressing the commit edits button')
+                elif not self.Employee_ID_Check(Edit_Employee) and self.ui.Edit_Update_Status_Dropdown.currentText() != '':
                     self.qm.critical(self, 'Invalid Commit', 'Employee ID: ' + Edit_Employee +' does not exist in the local database')
                 elif (self.ui.Edit_Update_Status_Dropdown.currentText() == '' and self.Employee_ID_Check(Edit_Employee)):
                     print("Please fill status field before committing")
@@ -757,6 +759,10 @@ class Admin_Interface(QWidget):
     def create_commitAssetOnly(self,assetID):
         insert_event_query = ''' INSERT INTO [Event Log Table] (AssetID, Status) VALUES(?,?);'''
         self.cursor.execute(insert_event_query, str(assetID),str('6'))
+        self.cnxn.commit()
+
+        insert_event_query = ''' INSERT INTO [Asset Table] (AssetID) VALUES(?);'''
+        self.cursor.execute(insert_event_query, str(assetID))
         self.cnxn.commit()
 
     def save_PDF_Filepath(self):
@@ -969,24 +975,6 @@ class Admin_Interface(QWidget):
                     self.search_searchAssetandIDButtonClicked(AssetList)
 
 
-            # if EmployeeIdField and not AssetField and not SearchMonthFlag and NoDateRangeFlag:
-            #     self.search_searchIDButtonClicked()
-            #
-            # elif AssetField and not EmployeeIdField:
-            #     self.search_searchAssetButtonClicked()
-            #
-            # elif AssetField and EmployeeIdField:
-            #     self.search_searchAssetandIDButtonClicked()
-            #
-            # elif (SearchMonthFlag):
-            #     self.search_Find_Months()
-            #
-            # elif YesDateRangeFlag:
-            #     self.search_searchDateButtonClicked()
-            #
-            # elif not EmployeeIdField and not AssetField and NoDateRangeFlag:
-            #     print("No Asset or Employee ID or Date Range Entered!")
-            #     self.ui.Search_UI_Message_Prompt.setText('Specify Search Filters!')
         except:
             ETEK_log.error('Error while searching. In function - search_checkFieldInputs')
 

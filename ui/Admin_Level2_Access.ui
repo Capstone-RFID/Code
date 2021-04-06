@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
+    <width>844</width>
     <height>600</height>
    </rect>
   </property>
@@ -128,7 +128,7 @@ QTabBar::tab:selected {
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="iconSize">
       <size>
@@ -1307,8 +1307,14 @@ background-color: #577590;
             <widget class="QPushButton" name="Create_Clear_Fields_Button">
              <property name="minimumSize">
               <size>
+               <width>280</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
                <width>242</width>
-               <height>51</height>
+               <height>50</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1334,8 +1340,14 @@ QPushButton#Create_Clear_Fields_Button:pressed {
             <widget class="QPushButton" name="Create_Confirm_Entry_Button">
              <property name="minimumSize">
               <size>
-               <width>242</width>
-               <height>51</height>
+               <width>280</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>280</width>
+               <height>50</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1374,8 +1386,14 @@ QPushButton#Create_Confirm_Entry_Button:pressed {
             <widget class="QPushButton" name="Import_ImportEmployees_Button">
              <property name="minimumSize">
               <size>
-               <width>242</width>
-               <height>51</height>
+               <width>280</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>280</width>
+               <height>50</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1393,7 +1411,7 @@ QPushButton#Import_ImportEmployees_Button:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Import Employees from .xlsx file</string>
+              <string>Import employees from file</string>
              </property>
             </widget>
            </item>
@@ -1401,8 +1419,14 @@ QPushButton#Import_ImportEmployees_Button:pressed {
             <widget class="QPushButton" name="Import_ImportAssets_Button">
              <property name="minimumSize">
               <size>
-               <width>242</width>
-               <height>51</height>
+               <width>280</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>280</width>
+               <height>50</height>
               </size>
              </property>
              <property name="styleSheet">
@@ -1420,7 +1444,7 @@ QPushButton#Import_ImportAssets_Button:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Import Assets from .xlsx file</string>
+              <string>Import assets from file</string>
              </property>
             </widget>
            </item>
@@ -1591,7 +1615,7 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="maximumSize">
               <size>
-               <width>100</width>
+               <width>242</width>
                <height>50</height>
               </size>
              </property>
