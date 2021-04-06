@@ -528,7 +528,6 @@ class Admin_Interface(QWidget):
         self.cnxn.commit()
 
     def edit_commitButtonClicked(self):
-
         try:
             print('Edit Tab Commit Button Clicked')
 
@@ -538,8 +537,6 @@ class Admin_Interface(QWidget):
                Edit_Employee = self.userLoggedIn
             else:
                 Edit_Employee = self.ui.Edit_AssignTo_Field.text()
-
-            #AssetState = self.Asset_Return(self.edit_AssetSearchedInDatabase)
             if (self.ui.Edit_Update_Status_Dropdown.currentText() != '') and self.Employee_ID_Check(Edit_Employee):
                 if self.ui.Edit_Update_Status_Dropdown.currentText() == 'Checked In':
                     AssetStatus_Dropdown = '1'
@@ -559,59 +556,66 @@ class Admin_Interface(QWidget):
             # Made this into a flag for ease of reference
             invalidEmployeeStatusFlag = (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Broken') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'Retired') or (self.ui.Edit_Update_Status_Dropdown.currentText() == 'In Repair')
 
+            #Check if asset field is blank
             if (Edit_Asset != ''):
+                #Check if asset number is valid/complete
                 if(re.findall(r"\A[E,e][0-9]{7}$|\A[4][0-9]{6}$",Edit_Asset)):
+                    #Check if asset exists in the database
                     if(self.Asset_Check(Edit_Asset)):
+                        #Check if the status field is blank
                         if(self.ui.Edit_Update_Status_Dropdown.currentText() != ''):
+                            #Check if the status is checked in/out to guide user thru actions
                             if not invalidEmployeeStatusFlag:
-                                print('Checkin or Checkout')
+                                #If the user is not assigning an item to another ID, they are asked if they want to use theirs, if not the action is cancelled w/ no changes made
                                 if (self.ui.Edit_AssignTo_Field.text() == ''):
                                     response = self.qm.question(self,'Check in/out as admin?', 'Assign asset ID to currently logged admin ' +self.edit_FetchNameViaID(self.userLoggedIn)[0]+ ' as "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '"?', self.qm.Yes | self.qm.No)
-
                                     if response == self.qm.Yes:
                                         self.edit_AssignTo_commitSQL(self.userLoggedIn, Edit_Asset, AssetStatus_Dropdown)
                                         self.qm.information(self, 'Assignment successful',
                                                             'The asset ID "'+Edit_Asset+'" was '+self.ui.Edit_Update_Status_Dropdown.currentText()+' by employee ID "'+self.userLoggedIn+'" ('+self.edit_FetchNameViaID(self.userLoggedIn)[0]+')')
+                                        ETEK_log.info('Admin logged in as employee ID "'+self.userLoggedIn+'" ('+ self.edit_FetchNameViaID(self.userLoggedIn)[0]+') assigned an item as "'+self.ui.Edit_Update_Status_Dropdown.currentText()+'" to themselves')
                                         self.edit_clearButtonClicked()
                                     else:
+                                        ETEK_log.info('Admin logged in as employee ID "' + self.userLoggedIn + '" (' +
+                                                      self.edit_FetchNameViaID(self.userLoggedIn)[
+                                                          0] + ') pressed no on the assign to admin prompt')
                                         self.qm.information(self, 'Assignment aborted','The assignment action was cancelled, no edits were made')
                                         self.edit_clearButtonClicked()
                                 else:
-                                    #Does this employee ID exist
+                                    #If the employee ID exists, then assign the asset to that employee as checked in/out
+                                    #Else warn user that it doesn't exist
                                     if self.Employee_ID_Check(self.ui.Edit_AssignTo_Field.text()):
                                         self.edit_AssignTo_commitSQL(self.ui.Edit_AssignTo_Field.text(),Edit_Asset,AssetStatus_Dropdown)
                                         self.qm.information(self, 'Assignment successful',
                                                             'The asset ID "' + Edit_Asset + '" was assigned as "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" to employee ID "' + self.ui.Edit_AssignTo_Field.text() + '" (' +
                                                             self.edit_FetchNameViaID(self.ui.Edit_AssignTo_Field.text())[0] + ')')
+                                        ETEK_log.info('Admin logged in as employee ID "' + self.userLoggedIn + '" (' +
+                                                      self.edit_FetchNameViaID(self.userLoggedIn)[
+                                                          0] + ') assigned the asset ID "'+ Edit_Asset +'" to employee ID "'+self.ui.Edit_AssignTo_Field.text()+'" ('+self.edit_FetchNameViaID(self.ui.Edit_AssignTo_Field.text())[0] + ')')
                                         self.edit_clearButtonClicked()
                                     else:
                                         self.qm.warning(self, 'Employee ID not in database', 'The employee ID "'+self.ui.Edit_AssignTo_Field.text()+'" does not exist in the local database')
-
-
-
-
-
                             else:
-                                print('Not Checkin or Checkout')
+                                #If the status is not checked in or checked out, we'll assign the selected status to the
+                                #asset ID in the event log table
                                 if(self.ui.Edit_AssignTo_Field.text() == ''):
-                                    print('Run query with no employee ID to event log table')
                                     self.edit_UpdateStatus_commitSQL(Edit_Asset,AssetStatus_Dropdown)
                                     self.qm.information(self,'Edits committed!',
                                                         'The asset ID "'+Edit_Asset+'" was assigned the status "'+self.ui.Edit_Update_Status_Dropdown.currentText()+'"')
+                                    ETEK_log.info('Admin logged in as employee ID "' + self.userLoggedIn + '" (' +
+                                                  self.edit_FetchNameViaID(self.userLoggedIn)[
+                                                      0] + ') assigned the status "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '" to asset ID "' +Edit_Asset+'"')
                                     self.edit_clearButtonClicked()
                                 else:
                                     self.qm.warning(self, 'Blank field','You cannot assign an item to an employee with the status "' + self.ui.Edit_Update_Status_Dropdown.currentText() + '"\n\nCan only assign an item to an employee as "Checked Out" or "Checked In"')
                         else:
                             self.qm.warning(self, 'Blank field',
                                              'Please select a valid status')
-
                     else:
                         self.qm.critical(self, 'Asset does not exist',
                                         'The asset ID "'+Edit_Asset+'" does not exist in the local database')
-
                 else:
                     self.qm.warning(self, 'Invalid asset number', 'Please fill the asset field with a valid existing asset ID\n\nValid asset IDs are either Exxxxxxx or 4xxxxxx, where x is a numerical digit')
-
             else:
                 self.qm.warning(self,'Empty field', 'Please fill the asset field with an existing asset ID')
         except:
