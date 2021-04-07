@@ -353,19 +353,19 @@ class mainWindow(QWidget):
 
     def mark_assets(self):
         try:
-            if len(self.ui.New_Item_List.selectedItems()) != 0:
-                row = self.ui.New_Item_List.currentRow()
-                text = self.ui.New_Item_List.item(row, 0).text()
-                if text not in self.markedList:
-                    self.markedList.append(text)
-                y = [x for x in self.eventEntry if text in x]
-                z = self.eventEntry.index(y[0])
-                del self.eventEntry[z]
-                self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
-                self.ui.New_Item_List.clearSelection()
-            else:
-                self.qm.information(self, 'Selection Required', "Please select an asset to mark as broken first")
-                return
+                if len(self.ui.New_Item_List.selectedItems()) != 0:
+                    row = self.ui.New_Item_List.currentRow()
+                    text = self.ui.New_Item_List.item(row, 0).text()
+                    if text not in self.markedList:
+                        self.markedList.append(text)
+                        y = [x for x in self.eventEntry if text in x]
+                        z = self.eventEntry.index(y[0])
+                        del self.eventEntry[z]
+                        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
+                        self.ui.New_Item_List.clearSelection()
+                else:
+                    self.qm.information(self, 'Selection Required', "Please select an asset to mark as broken first")
+                    return
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')

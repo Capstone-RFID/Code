@@ -91,3 +91,4 @@ output/readerTest/pandas/_libs/window/aggregations.cp37-win_amd64.pyd
 output/readerTest/pandas/_libs/window/indexers.cp37-win_amd64.pyd
 output/readerTest/pandas/io/sas/_sas.cp37-win_amd64.pyd
 output/readerTest/zope/interface/_zope_interface_coptimizations.cp37-win_amd64.pyd
+.idea/workspace.xml
