@@ -1,3 +1,7 @@
+# Author: Balkaran Sidhu and Raymond Bedry
+# Describtion: End-user interface for an inventory management system
+# integrated with RFID system.
+
 from sllurp import llrp
 from twisted.internet import reactor
 import pyodbc
@@ -21,21 +25,20 @@ from configparser import ConfigParser
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
 import hashlib
 
-Event_Log_Entry = []
-reading = "on"
+Event_Log_Entry = []  # list of all the assets chosen by the current user
+reading = "on"  # read operation of RFID reader
 
 
 # ************Using PyQt5 signals and slots to read and process RFID data********
 @pyqtSlot(list)
 ##If valid employee use SQL querries to find out the Asset iD from RFID ID and call rfid_insert function with Asset ID
 def update_RFID(result):
-
     if Employee_ID_Check(window.ui.Employee_ID_Input.text()):
         for tag in result:
             rfid_check_query = '''SELECT TOP 1 * FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
             cursor.execute(rfid_check_query, str(tag))
             if cursor.fetchone():
-                get_asset_query = '''SELECT AssetID FROM [RFID Table] WHERE TagID = (?);'''  # '?' is a placeholder
+                get_asset_query = '''SELECT AssetID FROM [RFID Table] WHERE TagID = (?);'''
                 cursor.execute(get_asset_query, str(tag))
                 assetID = cursor.fetchone()
                 if window.admin.isVisible() and len(tag) != 0:
@@ -44,19 +47,15 @@ def update_RFID(result):
                     window.rfid_insert(assetID[0])
 
 
-
-
-
-
+# intializing Qthread class  to read the RFID tag and emit a signal to the slot function
 class WorkerThread(QThread):
     signal_update = pyqtSignal(list)
 
     def __init__(self):
         QThread.__init__(self)
-        # self.signals = Communicate()
         self.signal_update.connect(update_RFID)
 
-    ##reads RFID tags
+    ##reads RFID tags and them emits a signal to the slot
     def cb(self, tagReport):
         global readFlag
         if reading == "on":
@@ -71,17 +70,7 @@ class WorkerThread(QThread):
             return
 
 
-def snapshot():
-    subprocess.run(
-        ["C:\\Program Files\\Microsoft SQL Server\\150\\COM\\snapshot.exe",
-         "-Publisher", "[BALKARAN09]", "-PublisherDB", "[TEST]",
-         "-Distributor", "[BALKARAN09]", "-Publication", "[please_merge]",
-         "-ReplicationType", "2", "-DistributorSecurityMode", "1"],
-        # probably add this
-        check=True)
-
-
-##Checks whether the employee exists in the database
+# Checks whether the employee exists in the database and returns the true or false appropriately
 def Employee_ID_Check(input):
     check_query = '''SELECT TOP 1 * FROM [Employee Table] WHERE EmployeeID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
@@ -91,7 +80,7 @@ def Employee_ID_Check(input):
         return False
 
 
-# Checks whether the asset exists in the database
+# Checks whether the asset exists in the database and returns the true or false appropriately
 def Asset_Check(input):
     check_query = '''SELECT TOP 1 * FROM [Asset Table] WHERE AssetID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(input))
@@ -101,7 +90,7 @@ def Asset_Check(input):
         return False
 
 
-# Check whether the employee has the admin interface access
+# Check whether the employee has the admin interface access and returns the true or false appropriately
 def Permission_Check(employee):
     check_query = '''SELECT EMPLOYEEID FROM [Employee Access Table] WHERE (PERMISSION = '2' OR PERMISSION = '3') AND EMPLOYEEID = (?);'''  # '?' is a placeholder
     cursor.execute(check_query, str(employee))
@@ -119,7 +108,7 @@ def getEmployeeName(employeeID):
     return name[0]
 
 
-# PasswordWindow creates a password window where a generic password is entered to launch the application
+# Creates a password window where a generic password is entered to launch the application the main interface
 class passwordWindow(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(passwordWindow, self).__init__(parent)
@@ -129,20 +118,21 @@ class passwordWindow(QtWidgets.QDialog):
         self.ui.ok.released.connect(self.handleLogin)
         self.ui.lineEdit.setEchoMode(QLineEdit.Password)
 
-    # setup the password and and the conditions of correct and wrong password in this method
+    # setup the password and the conditions of correct and wrong password in this method
     def handleLogin(self):
+        # password is hashed with one way hash function
         password = self.ui.lineEdit.text().encode('utf-8')
         hashpass = hashlib.sha256(password).hexdigest()
+        # read the correct hashed password from config file
         config = ConfigParser()
         config.read('config.ini')
-        storedPass= config.get('password', 'pass')
-        if hashpass == storedPass:  # password
+        storedPass = config.get('password', 'pass')
+        if hashpass == storedPass:  # compare hashed password
             self.accept()
         else:
             QtWidgets.QMessageBox.warning(self, 'Error', 'Bad password')
             ETEK_log.info('Incorrect password entered. Application not run.')
             self.rejected()
-
 
 
 # ****************************Main program window *********************#
@@ -154,7 +144,7 @@ class mainWindow(QWidget):
         # define the server name and the database name
         config = ConfigParser()
         config.read('config.ini')
-        #server, database
+        # server, database
         self.server = config.get('database_info', 'server')
         self.database = config.get('database_info', 'database')
 
@@ -210,10 +200,14 @@ class mainWindow(QWidget):
                                 '''Welcome to E-TEK! \n\nTo use the application:\n1. Enter Employee ID\n2. Select the action to perform\n3. Confirm items in table\n   (3a) Press 'Mark Broken' to mark item as broken\n   (3b) Press 'Remove Item' to remove item from table\n4. Press 'Done' to complete transaction\n   (4a) Press 'Cancel' to clear the form''')
             ETEK_log.info('Help Button pressed.')
         except:
-            self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: help_button')
 
-    def alreadyCheckedOut(self, assetID):
+
+    #checks the previous state of the asset from the event log table to see weather the asset is ready to check-out or not
+    #and returns appropriate flag for each state
+    def assetState(self, assetID):
         status_check_query = '''SELECT TOP(1)
                                 [Event Log Table].EMPLOYEEID,[Event Log Table].Status
                                 FROM
@@ -229,7 +223,8 @@ class mainWindow(QWidget):
         elif state[1] == "1":
             flag = "gtg"
         elif state[1] == "2":  ##if asset checked out
-            if state[0] != self.ui.Employee_ID_Input.text():  ## if asset assigned to employee is not  the current employee
+            if state[
+                0] != self.ui.Employee_ID_Input.text():  ## if asset assigned to employee is not  the current employee
                 # add name to this dialog box
                 response = self.qm.question(self, 'Input Required',
                                             "Asset " + assetID + " is currently assigned to Employee " + state[
@@ -260,18 +255,18 @@ class mainWindow(QWidget):
             flag = "RetiredCheckIn"
         return flag
 
+    # launches admin interface
     def adminButtonClicked(self):
         try:
             print('clicked admin')
-            self.admin.openAdmin(server, database,self.ui.Employee_ID_Input.text())
+            self.admin.openAdmin(server, database, self.ui.Employee_ID_Input.text())
             ETEK_log.info('Clicked admin window button')
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: adminButtonClicked')
 
-
-    ##move asset from one table to another
+    ##move asset from one "Currently assigned" table to "New item" table
     def move_action(self):
         try:
             if self.ui.Check_In_Box.isChecked():
@@ -298,12 +293,10 @@ class mainWindow(QWidget):
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: move_action')
 
-
-
+    #removes items from the "New items" table
     def remove_action(self):
         try:
             if len(self.ui.New_Item_List.selectedItems()) != 0:
-                # if len(self.eventEntry) != 0: ###this is incorrect
                 row = self.ui.New_Item_List.currentRow()
                 text = self.ui.New_Item_List.item(row, 0).text()
                 if text not in self.RemovedItems:
@@ -327,6 +320,8 @@ class mainWindow(QWidget):
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: remove_action')
 
+    #Performs verification on the employee after the employee id is entered and makes the employee name visible.
+    #also enablkes admit interface access if the employee has the that access
     def Employee_enter(self):
         try:
             self.ui.Employee_ID_Enter.setEnabled(False)
@@ -351,26 +346,29 @@ class mainWindow(QWidget):
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: Employee_enter')
 
+    # connected to the "Mark broken" button, marks assets as broken and highlights them red in the "New items" table and
+    #inserts them in a special marked item list
     def mark_assets(self):
         try:
-                if len(self.ui.New_Item_List.selectedItems()) != 0:
-                    row = self.ui.New_Item_List.currentRow()
-                    text = self.ui.New_Item_List.item(row, 0).text()
-                    if text not in self.markedList:
-                        self.markedList.append(text)
-                        y = [x for x in self.eventEntry if text in x]
-                        z = self.eventEntry.index(y[0])
-                        del self.eventEntry[z]
-                        self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
-                        self.ui.New_Item_List.clearSelection()
-                else:
-                    self.qm.information(self, 'Selection Required', "Please select an asset to mark as broken first")
-                    return
+            if len(self.ui.New_Item_List.selectedItems()) != 0:
+                row = self.ui.New_Item_List.currentRow()
+                text = self.ui.New_Item_List.item(row, 0).text()
+                if text not in self.markedList:
+                    self.markedList.append(text)
+                    y = [x for x in self.eventEntry if text in x]
+                    z = self.eventEntry.index(y[0])
+                    del self.eventEntry[z]
+                    self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
+                    self.ui.New_Item_List.clearSelection()
+            else:
+                self.qm.information(self, 'Selection Required', "Please select an asset to mark as broken first")
+                return
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: mark_assets')
 
+    #clear all the fields (restoring to default) after a done or cancel button is clicked
     def clear_lists(self):
         self.ui.New_Item_List.setRowCount(0)
         self.ui.Existing_Item_list.setRowCount(0)
@@ -400,7 +398,7 @@ class mainWindow(QWidget):
 
         self.admin.close()
         return
-
+    #connected to Done button, called the check in-or check-out action functions according to action selected
     def done_button_clicked(self):
         try:
             if self.ui.Check_In_Box.isChecked():
@@ -419,7 +417,7 @@ class mainWindow(QWidget):
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: done_button_clicked')
 
-
+    #connected to Cancel Button, cancels the current transaction and restores main interface to default state
     def cancel_button_clicked(self):
         try:
             self.ui.Employee_ID_Input.setReadOnly(False)
@@ -429,21 +427,25 @@ class mainWindow(QWidget):
             self.clear_lists()
             ETEK_log.info('Cancel Button Clicked.')
         except:
-            self.qm.critical(self,'Unexpected error: Exception thrown','An unexpected error has occured, please try again or contact tech support for help')
+            self.qm.critical(self, 'Unexpected error: Exception thrown',
+                             'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: cancel_button_clicked')
 
     def timer_timeout(self):
         print("timer running")
         self.ui.Asset_ID_Input.clear()
 
+    #Inserst assets into appropriate table widgets
     def insert_into_table(self, mode, item):
         self.ui.Remove_Button.setEnabled(True)
+        #inserts assets in the "New items" table
         if mode == 1:
             lastrow_new = self.ui.New_Item_List.rowCount()
             self.ui.New_Item_List.insertRow(lastrow_new)
             self.ui.New_Item_List.setItem(lastrow_new, 0, QTableWidgetItem(item))
             if self.ui.Check_In_Box.isChecked():
                 self.ui.Mark_Button.setEnabled(True)
+        #inserts assets into the "Currently assigned" asset table
         elif mode == 2:
             lastrow_existing = self.ui.Existing_Item_list.rowCount()
             self.ui.Existing_Item_list.insertRow(lastrow_existing)
@@ -463,14 +465,12 @@ class mainWindow(QWidget):
                     if Asset_Check(Asset):
                         self.ui.Check_Out_Box.setEnabled(False)
                         self.ui.Check_In_Box.setEnabled(False)
-                        flag = self.alreadyCheckedOut(Asset)
+                        flag = self.assetState(Asset)
                         if flag == "gtg":
                             if not any(Asset in sublist for sublist in self.eventEntry):
                                 self.insert_into_table(1, Asset)
                                 # append the entries into a list
                                 self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
-                                # self.StateEntry.append(self.ui.Employee_ID_Input.text())
-                                # self.ui.New_Item_List.insertRow()
                                 self.ui.Asset_ID_Input.clear()
                         ##decided to not check out an already checked out item
                         elif flag == "discard":
@@ -491,10 +491,12 @@ class mainWindow(QWidget):
                             self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is in Repair. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
                         elif flag == "RepairCheckIn":
-                            self.qm.critical(self, 'Critical Issue', "Please contact the admin, this Asset " + Asset + " is in Repair. Do NOT use.")
+                            self.qm.critical(self, 'Critical Issue',
+                                             "Please contact the admin, this Asset " + Asset + " is in Repair. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
                         elif flag == "RetiredCheckIn":
-                            self.qm.critical(self, 'Critical Issue', "Please contact the admin, this Asset " + Asset + " is retired from field. Do NOT use.")
+                            self.qm.critical(self, 'Critical Issue',
+                                             "Please contact the admin, this Asset " + Asset + " is retired from field. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
 
                         elif flag == "Retired":
@@ -506,19 +508,21 @@ class mainWindow(QWidget):
                                         "Asset " + Asset + " is not configured for use or does not exist \n\n Please Check your Asset ID and try again or Enter a valid Asset ID")
                         self.ui.Asset_ID_Input.clear()
                 else:
-                    self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
+                    self.qm.information(self, 'Input Required',
+                                        "Please select an action to perform (Check-In or Check-Out")
                 return
         except:
             self.qm.critical(self, 'Unexpected error: Exception thrown',
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: asset_enter_action')
 
+
     def rfid_insert(self, asset):
         self.error_count += 1
         if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (
                 asset not in self.RemovedItems) and (
                 self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
-            flag = self.alreadyCheckedOut(asset)
+            flag = self.assetState(asset)
             if flag == "gtg":
                 self.eventEntry.append([self.ui.Employee_ID_Input.text(), asset])
                 self.insert_into_table(1, asset)
