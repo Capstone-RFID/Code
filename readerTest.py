@@ -5,21 +5,16 @@
 from sllurp import llrp
 from twisted.internet import reactor
 import pyodbc
-
 from threading import Thread
 import subprocess
-
 import logging
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-
 import sys
 from Etek_main_window_v2 import Ui_MainWindow
 from AdminInterface import Admin_Interface, ETEK_log, changePassword
-
 import re
-
 from password_prompt import Ui_Dialog
 from configparser import ConfigParser
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
@@ -175,13 +170,9 @@ class mainWindow(QWidget):
         self.ui.Mark_Button.setEnabled(False)
         self.ui.Help_Button.released.connect(self.help_button)
         self.ui.Asset_ID_Input.setEnabled(False)
-        # self.timer = QtCore.QTimer()
-        # self.timer.setSingleShot(True)
-        # self.timer.timeout.connect(self.timer_timeout)
         self.ui.Admin_Button.setEnabled(False)
         self.ui.Remove_Button.setEnabled(False)
-        # validator to only enter integer values into the entry fields
-        self.onlyInt = QtGui.QIntValidator()
+        self.onlyInt = QtGui.QIntValidator()  # validator to only enter integer values into the entry fields
         regExp = config.get('assetID', 'regex')
         rExp = QRegExp(regExp)
         valid = QtGui.QRegExpValidator(rExp, self.ui.Asset_ID_Input)
@@ -451,13 +442,13 @@ class mainWindow(QWidget):
             self.ui.Existing_Item_list.insertRow(lastrow_existing)
             self.ui.Existing_Item_list.setItem(lastrow_existing, 0, QTableWidgetItem(item))
 
+    #function to insert an asset to table
     def asset_enter_action(self):
         try:
             Asset = self.ui.Asset_ID_Input.text()
             if re.findall(r"\Ae", Asset):
                 Asset = str.capitalize(Asset)
-            else:
-                Asset = Asset
+            #if not already in the list to check out, continue:
             if [self.ui.Employee_ID_Input.text(), Asset] in self.eventEntry:
                 self.qm.information(self, 'Already Selected', "Asset " + Asset + " is already selected ")
             else:
@@ -472,10 +463,10 @@ class mainWindow(QWidget):
                                 # append the entries into a list
                                 self.eventEntry.append([self.ui.Employee_ID_Input.text(), Asset])
                                 self.ui.Asset_ID_Input.clear()
-                        ##decided to not check out an already checked out item
+                        #decided to not check out an already checked out item
                         elif flag == "discard":
                             self.ui.Asset_ID_Input.clear()
-                        ##broken or something
+                        #broken 
                         elif flag == "broken":
                             self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is broken. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
@@ -487,18 +478,21 @@ class mainWindow(QWidget):
                                 row = self.ui.New_Item_List.rowCount() - 1
                                 self.ui.New_Item_List.item(row, 0).setBackground(QtGui.QColor(255, 0, 0))
                                 self.ui.Asset_ID_Input.clear()
+                        #if 'in repair', do not allow check out
                         elif flag == "InRepair":
                             self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is in Repair. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
+                        #if 'in repair' and someone is returning
                         elif flag == "RepairCheckIn":
                             self.qm.critical(self, 'Critical Issue',
                                              "Please contact the admin, this Asset " + Asset + " is in Repair. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
+                        #if 'retired' and someone is returning
                         elif flag == "RetiredCheckIn":
                             self.qm.critical(self, 'Critical Issue',
                                              "Please contact the admin, this Asset " + Asset + " is retired from field. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
-
+                        #if 'retired, do notallow check out
                         elif flag == "Retired":
                             self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is Retired. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
@@ -516,19 +510,22 @@ class mainWindow(QWidget):
                              'An unexpected error has occured, please try again or contact tech support for help')
             ETEK_log.error('Error occurred in function: asset_enter_action')
 
-
+    #use rfid asset number and insert into table
     def rfid_insert(self, asset):
         self.error_count += 1
         if self.ui.Asset_ID_Input.isEnabled() and (not any(asset in sublist for sublist in self.eventEntry)) and (
                 asset not in self.RemovedItems) and (
                 self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()):
             flag = self.assetState(asset)
+            #if asset has flag 'good to go'
             if flag == "gtg":
                 self.eventEntry.append([self.ui.Employee_ID_Input.text(), asset])
                 self.insert_into_table(1, asset)
+            #if asset has flag 'broken'
             elif flag == "broken":
                 self.qm.critical(self, 'Critical Issue', "Asset " + asset + " is broken. Do NOT use.")
                 self.ui.Asset_ID_Input.clear()
+            #if flag is already broken and checking in again
             elif flag == "brokenCheckIn":
                 self.insert_into_table(1, asset)
                 # append the entries into a list
@@ -539,10 +536,12 @@ class mainWindow(QWidget):
 
         elif not (self.ui.Check_Out_Box.isChecked() or self.ui.Check_In_Box.isChecked()) and self.error_count == 1:
             self.qm.information(self, 'Input Required', "Please select an action to perform (Check-In or Check-Out")
-
+    
+    #call standard function with flag for check-in
     def check_in_action(self):
         self.sql_call("1")
 
+    #call standard function with flag for check-out
     def check_out_action(self):
         self.sql_call("2")
 
@@ -586,11 +585,9 @@ class mainWindow(QWidget):
         cnxn.commit()
         self.confirmation_msg(confirmation_list)
         Event_Log_Entry.clear()
-
-        # cursor.close
-        # cnxn.close
         return
-
+    
+    #find and return current items assocaited to logged in user
     def current_items(self, emID):
         current_asset_query = '''
                             SELECT AssetID
@@ -653,8 +650,11 @@ if __name__ == "__main__":
         logging.getLogger().setLevel(logging.INFO)
         factory = llrp.LLRPClientFactory(antennas=[1], start_inventory=True, session=0, duration=0.8)
         factory.addTagReportCallback(work.cb)
+        
+        #connect to RFID Reader - change this if you change beyond default settings of RFID Reader
         reactor.connectTCP('169.254.10.1', llrp.LLRP_PORT, factory)
 
+        #load information from config file
         server = window.server
         database = window.database
 
