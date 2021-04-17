@@ -492,7 +492,7 @@ class mainWindow(QWidget):
                             self.qm.critical(self, 'Critical Issue',
                                              "Please contact the admin, this Asset " + Asset + " is retired from field. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
-                        #if 'retired, do notallow check out
+                        #if 'retired, do not allow check out
                         elif flag == "Retired":
                             self.qm.critical(self, 'Critical Issue', "Asset " + Asset + " is Retired. Do NOT use.")
                             self.ui.Asset_ID_Input.clear()
@@ -545,6 +545,7 @@ class mainWindow(QWidget):
     def check_out_action(self):
         self.sql_call("2")
 
+#prints out appropriate confirmation after the done button is clicked
     def confirmation_msg(self, entries):
         preString = ''
         brkSring = "You have broken"
@@ -564,6 +565,7 @@ class mainWindow(QWidget):
                                 str1.join(entries))
         return
 
+#uploads the inventory transactions in a SQL database
     def sql_call(self, status):
         confirmation_list = []
         if len(self.markedList) != 0:
@@ -580,14 +582,14 @@ class mainWindow(QWidget):
             confirmation_list.append(entry[1])
             # insert the data into the database
             cursor.execute(insert_event_query, eventValues)
-        # commit the inserts
 
+        # commit the inserts
         cnxn.commit()
         self.confirmation_msg(confirmation_list)
         Event_Log_Entry.clear()
         return
     
-    #find and return current items assocaited to logged in user
+    #find and return current items associated to logged in user
     def current_items(self, emID):
         current_asset_query = '''
                             SELECT AssetID
