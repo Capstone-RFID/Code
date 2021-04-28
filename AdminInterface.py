@@ -756,7 +756,7 @@ class Admin_Interface(QWidget):
             self.ui.Create_UI_Message_Prompt.setText('')
             employeeFile = self.find_files()
 
-            if (employeeFile != False):
+            if (employeeFile != ''):
 
 
                 dataEmployee = pd.read_excel(employeeFile, engine = 'openpyxl', dtype = str)
