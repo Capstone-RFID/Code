@@ -1,0 +1,22 @@
+28-Apr-21 11:34:40 — Admin Action — INFO — Application login successful.
+28-Apr-21 11:34:41 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+28-Apr-21 11:34:56 — Admin Action — INFO — User:(000123) Logged in successfully.
+28-Apr-21 11:34:58 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+28-Apr-21 11:34:58 — Admin Action — INFO — Clicked admin window button
+28-Apr-21 12:56:24 — Admin Action — ERROR — Error In function - Import_ImportEmployees_ButtonClicked
+28-Apr-21 12:56:34 — Admin Action — ERROR — Error In function - Import_ImportEmployees_ButtonClicked
+28-Apr-21 12:56:36 — Admin Action — INFO — Admin logged in as Employee ID 000123 clicked import assets button but did not select a .xlsx file from file browser prompt
+28-Apr-21 14:45:07 — Admin Action — INFO — Admin logged in as Employee ID 000123 clicked import assets button but did not select a .xlsx file from file browser prompt
+28-Apr-21 14:45:08 — Admin Action — ERROR — Error In function - Import_ImportEmployees_ButtonClicked
+28-Apr-21 14:45:54 — Admin Action — INFO — Application login successful.
+28-Apr-21 14:45:54 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+28-Apr-21 14:45:56 — Admin Action — INFO — User:(000123) Logged in successfully.
+28-Apr-21 14:45:57 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+28-Apr-21 14:45:57 — Admin Action — INFO — Clicked admin window button
+28-Apr-21 14:46:10 — Admin Action — ERROR — Error In function - Import_ImportEmployees_ButtonClicked
+28-Apr-21 14:46:34 — Admin Action — INFO — Application login successful.
+28-Apr-21 14:46:34 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+28-Apr-21 14:46:36 — Admin Action — INFO — User:(000123) Logged in successfully.
+28-Apr-21 14:46:37 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+28-Apr-21 14:46:37 — Admin Action — INFO — Clicked admin window button
+28-Apr-21 14:46:40 — Admin Action — INFO — Admin logged in as Employee ID 000123 clicked import assets button but did not select a .xlsx file from file browser prompt

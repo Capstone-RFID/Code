@@ -1,0 +1,19 @@
+29-Apr-21 13:31:03 — Import — INFO — User:(000123) - Clicked Import Employees Button
+29-Apr-21 13:31:17 — Import — INFO — Employee: 124152 already exists in the database, Employee not imported
+29-Apr-21 13:31:17 — Import — INFO — Employee: 251241 already exists in the database, Employee not imported
+29-Apr-21 13:31:17 — Import — INFO — Employee: 123241 already exists in the database, Employee not imported
+29-Apr-21 13:31:19 — Import — INFO — User:(000123) - Clicked Import Assets Button
+29-Apr-21 13:31:41 — Import — INFO — Asset: E6394850 already exists in the database, asset not imported
+29-Apr-21 13:31:41 — Import — INFO — Asset: E0000000 already exists in the database, asset not imported
+29-Apr-21 13:31:41 — Import — INFO — Asset: E2354657 already exists in the database, asset not imported
+29-Apr-21 13:31:45 — Import — INFO — User:(000123) - Clicked Import Assets Button
+29-Apr-21 13:31:54 — Import — INFO — Asset: E6394850 already exists in the database, asset not imported
+29-Apr-21 13:31:54 — Import — INFO — Asset: E0000000 already exists in the database, asset not imported
+29-Apr-21 13:31:54 — Import — INFO — Asset: E2354657 already exists in the database, asset not imported
+29-Apr-21 13:43:25 — Import — INFO — User:(000123) - Clicked Import Employees Button
+29-Apr-21 14:42:43 — Import — INFO — User:(000123) - Clicked Import Assets Button
+29-Apr-21 14:43:18 — Import — INFO — User:(000123) - Clicked Import Assets Button
+29-Apr-21 14:43:23 — Import — INFO — Asset: (499999) in wrong format, Asset not imported
+29-Apr-21 14:43:23 — Import — INFO — Asset: E6394850 already exists in the database, asset not imported
+29-Apr-21 14:43:23 — Import — INFO — Asset: E0000000 already exists in the database, asset not imported
+29-Apr-21 15:14:07 — Import — INFO — User:(000123) - Clicked Import Assets Button

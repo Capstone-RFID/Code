@@ -1,0 +1,20 @@
+29-Apr-21 13:30:53 — Admin Action — INFO — Application login successful.
+29-Apr-21 13:30:55 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+29-Apr-21 13:30:59 — Admin Action — INFO — User:(000123) Logged in successfully.
+29-Apr-21 13:31:00 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+29-Apr-21 13:31:00 — Admin Action — INFO — Clicked admin window button
+29-Apr-21 13:31:17 — Admin Action — INFO — New Employees imported successfully through .xlsx file. Check Import log for details
+29-Apr-21 13:31:43 — Admin Action — INFO — New Assets imported successfully through .xlsx file. Check Import Log for details.
+29-Apr-21 13:31:56 — Admin Action — INFO — New Assets imported successfully through .xlsx file. Check Import Log for details.
+29-Apr-21 13:43:20 — Admin Action — INFO — Application login successful.
+29-Apr-21 13:43:20 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+29-Apr-21 13:43:22 — Admin Action — INFO — User:(000123) Logged in successfully.
+29-Apr-21 13:43:23 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+29-Apr-21 13:43:23 — Admin Action — INFO — Clicked admin window button
+29-Apr-21 14:42:37 — Admin Action — INFO — Application login successful.
+29-Apr-21 14:42:37 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+29-Apr-21 14:42:38 — Admin Action — INFO — User:(000123) Logged in successfully.
+29-Apr-21 14:42:39 — Admin Action — INFO — Connected to Server BIGACER and BALKARAN09
+29-Apr-21 14:42:39 — Admin Action — INFO — Clicked admin window button
+29-Apr-21 14:43:24 — Admin Action — INFO — New Assets imported successfully through .xlsx file. Check Import Log for details.
+29-Apr-21 15:14:22 — Admin Action — ERROR — Error In function - Import_ImportAssets_ButtonClicked

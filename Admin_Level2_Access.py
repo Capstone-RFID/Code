@@ -693,7 +693,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.Create_Clear_Fields_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Create_Clear_Fields_Button.setMinimumSize(QtCore.QSize(242, 50))
         self.Create_Clear_Fields_Button.setMaximumSize(QtCore.QSize(242, 50))
         self.Create_Clear_Fields_Button.setStyleSheet("QPushButton#Create_Clear_Fields_Button {\n"
 "background-color: #282c30;\n"
@@ -710,7 +710,7 @@ class Ui_Admin_Interface(object):
         self.Create_Clear_Fields_Button.setObjectName("Create_Clear_Fields_Button")
         self.verticalLayout_8.addWidget(self.Create_Clear_Fields_Button)
         self.Create_Confirm_Entry_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Create_Confirm_Entry_Button.setMinimumSize(QtCore.QSize(242, 50))
         self.Create_Confirm_Entry_Button.setMaximumSize(QtCore.QSize(280, 50))
         self.Create_Confirm_Entry_Button.setStyleSheet("QPushButton#Create_Confirm_Entry_Button {\n"
 "background-color: #282c30;\n"
@@ -729,7 +729,7 @@ class Ui_Admin_Interface(object):
         spacerItem18 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_8.addItem(spacerItem18)
         self.Import_ImportEmployees_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Import_ImportEmployees_Button.setMinimumSize(QtCore.QSize(242, 50))
         self.Import_ImportEmployees_Button.setMaximumSize(QtCore.QSize(280, 50))
         self.Import_ImportEmployees_Button.setStyleSheet("QPushButton#Import_ImportEmployees_Button {\n"
 "background-color: #282c30;\n"
@@ -746,7 +746,7 @@ class Ui_Admin_Interface(object):
         self.Import_ImportEmployees_Button.setObjectName("Import_ImportEmployees_Button")
         self.verticalLayout_8.addWidget(self.Import_ImportEmployees_Button)
         self.Import_ImportAssets_Button = QtWidgets.QPushButton(self.Create_Tab)
-        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(280, 50))
+        self.Import_ImportAssets_Button.setMinimumSize(QtCore.QSize(242, 50))
         self.Import_ImportAssets_Button.setMaximumSize(QtCore.QSize(280, 50))
         self.Import_ImportAssets_Button.setStyleSheet("QPushButton#Import_ImportAssets_Button {\n"
 "background-color: #282c30;\n"
@@ -957,7 +957,7 @@ class Ui_Admin_Interface(object):
         self.verticalLayout_6.addWidget(self.Admin_Select)
 
         self.retranslateUi(Admin_Interface)
-        self.Admin_Select.setCurrentIndex(3)
+        self.Admin_Select.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(Admin_Interface)
         Admin_Interface.setTabOrder(self.Home_ChangePassword_Button, self.Search_Datetime_From)
         Admin_Interface.setTabOrder(self.Search_Datetime_From, self.Search_Datetime_To)
@@ -970,7 +970,7 @@ class Ui_Admin_Interface(object):
 
     def retranslateUi(self, Admin_Interface):
         _translate = QtCore.QCoreApplication.translate
-        Admin_Interface.setWindowTitle(_translate("Admin_Interface", "Form"))
+        Admin_Interface.setWindowTitle(_translate("Admin_Interface", "E-TEK Admin Access"))
         self.Home_Welcome_Message.setText(_translate("Admin_Interface", "Welcome to Admin Access"))
         self.label.setText(_translate("Admin_Interface", "Select Tabs Above To Navigate"))
         self.Home_ChangePassword_Button.setText(_translate("Admin_Interface", "Change Password"))
@@ -1035,3 +1035,13 @@ class Ui_Admin_Interface(object):
         self.AssignTag_Asset_Num_Label.setText(_translate("Admin_Interface", "Asset ID:"))
         self.AssignTag_Display_Help_Button.setText(_translate("Admin_Interface", "Help"))
         self.Admin_Select.setTabText(self.Admin_Select.indexOf(self.Assign_Tag_Tab), _translate("Admin_Interface", "Assign Tag"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Admin_Interface = QtWidgets.QWidget()
+    ui = Ui_Admin_Interface()
+    ui.setupUi(Admin_Interface)
+    Admin_Interface.show()
+    sys.exit(app.exec_())

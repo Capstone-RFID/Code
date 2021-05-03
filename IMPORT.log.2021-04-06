@@ -1,0 +1,4 @@
+29-Mar-21 13:59:33 — Import — INFO — User:(000123) - Clicked Import Employees Button
+29-Mar-21 13:59:39 — Import — INFO — Employee: 124152 already exists in the database, Employee not imported
+29-Mar-21 13:59:39 — Import — INFO — Employee: 251241 already exists in the database, Employee not imported
+29-Mar-21 13:59:39 — Import — INFO — Employee: 123241 already exists in the database, Employee not imported

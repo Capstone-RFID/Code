@@ -141,7 +141,7 @@ class Ui_PasswordChangeDialog(object):
 
     def retranslateUi(self, PasswordChangeDialog):
         _translate = QtCore.QCoreApplication.translate
-        PasswordChangeDialog.setWindowTitle(_translate("PasswordChangeDialog", "Form"))
+        PasswordChangeDialog.setWindowTitle(_translate("PasswordChangeDialog", "Change Password"))
         self.cancel.setText(_translate("PasswordChangeDialog", "Cancel"))
         self.label_2.setText(_translate("PasswordChangeDialog", "Please enter the old password"))
         self.label_4.setText(_translate("PasswordChangeDialog", "Enter the new password twice and press ok to change it"))
@@ -149,3 +149,13 @@ class Ui_PasswordChangeDialog(object):
         self.ConfirmPassword_Label.setText(_translate("PasswordChangeDialog", "Confirm Password"))
         self.NewPassword_Label.setText(_translate("PasswordChangeDialog", "New Password"))
         self.ok.setText(_translate("PasswordChangeDialog", "OK"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    PasswordChangeDialog = QtWidgets.QWidget()
+    ui = Ui_PasswordChangeDialog()
+    ui.setupUi(PasswordChangeDialog)
+    PasswordChangeDialog.show()
+    sys.exit(app.exec_())
